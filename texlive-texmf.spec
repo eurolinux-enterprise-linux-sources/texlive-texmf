@@ -14,7 +14,7 @@
 
 Name:		texlive-texmf
 Version:	2007
-Release:	35%{?dist}
+Release:	38%{?dist}
 Summary:	Architecture independent parts of the TeX formatting system
 
 Group:		Applications/Publishing
@@ -67,11 +67,13 @@ Patch4:		texlive-2007-romanian.patch
 Patch5:		texlive-2007-euro.patch
 Patch6:		texlive-2007-beamerblocks.patch
 Patch7:		texlive-2007-latin.patch
+Patch8:		texlive-2007-5yr-old.patch
+Patch9:		texlive-2007-nolatex.patch
 
 # Patch1000-: Japanese pTeX
 Patch1001: texlive-2007-texmf.cnf-ptex.patch
 
-BuildRequires:  sed >= 3.95 ghostscript lzma tex(latex)
+BuildRequires:  sed >= 3.95 ghostscript lzma
 
 Requires:	texlive-texmf-errata = %{version}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -193,6 +195,7 @@ unzip %{SOURCE102}
 # extract IEEEconf
 unzip %{SOURCE103}
 
+mkdir -p texmf-dist/tex/latex/IEEEconf
 mkdir texmf-var
 unzip -d texmf-var %{SOURCE1}
 install -p -m644 %{SOURCE50} texmf-var/dvips/config/config.generic
@@ -205,6 +208,8 @@ install -p -m644 %{SOURCE50} texmf-var/dvips/config/config.generic
 %patch5  -p0
 %patch6  -p0
 %patch7  -p1
+%patch8  -p1
+%patch9  -p1
 
 cp -p %{SOURCE91} .
 
@@ -372,45 +377,31 @@ rm -rf texmf/ttf2pk/
 rm -f texmf/tex/latex/jknapltx/ubbold.fd
 
 # build envlab
-rm -f texmf-dist/tex/latex/envlab/*
+rm -f texmf-dist/tex/latex/envlab/*.cfg
 rm -f texmf-dist/doc/latex/envlab/*
 pushd envlab
-latex envlab.ins
-install -p -m 644 *.sty ../texmf-dist/tex/latex/envlab/
 install -p -m 644 *.pdf ../texmf-dist/doc/latex/envlab/
 install -p -m 644 README ../texmf-dist/doc/latex/envlab/
 popd
 
 # build perltex
-rm -f texmf-dist/tex/latex/perltex/*
 rm -f texmf-dist/doc/latex/perltex/*
 pushd perltex
-latex perltex.ins
-%{__sed} -i 's,^#! /usr/bin/env perl$,#!%{__perl},' perltex.pl
-install -p -m 644 *.sty ../texmf-dist/tex/latex/perltex/
+%{__sed} -i 's,^#! /usr/bin/env perl$,#!%{__perl},' ../texmf-dist/tex/latex/perltex/perltex.pl
 install -p -m 644 *.pdf ../texmf-dist/doc/latex/perltex/
 install -p -m 644 README ../texmf-dist/doc/latex/perltex/
 popd
 
 # build achemso
-rm -f texmf-dist/tex/latex/achemso/*
 rm -f texmf-dist/doc/latex/achemso/*
 pushd achemso
-latex achemso.ins
-install -p -m 644 *.sty ../texmf-dist/tex/latex/achemso/
-install -p -m 644 *.cls ../texmf-dist/tex/latex/achemso/
-install -p -m 644 *.bst ../texmf-dist/tex/latex/achemso/
-install -p -m 644 *.cfg ../texmf-dist/tex/latex/achemso/
 install -p -m 644 *.pdf ../texmf-dist/doc/latex/achemso/
 install -p -m 644 README ../texmf-dist/doc/latex/achemso/
 popd
 
 # build IEEEconf
-mkdir -p texmf-dist/tex/latex/IEEEconf
 mkdir -p texmf-dist/doc/latex/IEEEconf
 pushd IEEEconf
-latex IEEEconf.ins
-install -p -m 644 *.cls ../texmf-dist/tex/latex/IEEEconf/
 install -p -m 644 *.pdf ../texmf-dist/doc/latex/IEEEconf/
 install -p -m 644 README ../texmf-dist/doc/latex/IEEEconf/
 popd
@@ -496,7 +487,8 @@ rm -rf %{buildroot}%{_texmf_main}/dvipdfm
 
 # install perltex
 install -d -m755 %{buildroot}%{_bindir}
-install -p -m755 perltex/perltex.pl %{buildroot}%{_bindir}/perltex
+install -p -m755 texmf-dist/tex/latex/perltex/perltex.pl %{buildroot}%{_bindir}/perltex
+rm -f %{buildroot}%{_texmf_main}/tex/latex/perltex/perltex.pl
 
 # fix permissions of /var/lib/texmf/web2c
 chmod 755 %{buildroot}%{_texmf_var}/web2c
@@ -900,6 +892,18 @@ fi
 %doc %{_texmf_main}/doc/
 
 %changelog
+* Thu Aug 04 2011 Jindrich Novy <jnovy@redhat.com> 2007-38
+- do not use latex at all at build time, use prebuilt sources
+
+* Wed Aug 03 2011 Jindrich Novy <jnovy@redhat.com> 2007-37
+- workaround manual confirmation needed by latex so that
+  automatic build succeeds
+
+* Wed Aug 03 2011 Jindrich Novy <jnovy@redhat.com> 2007-36
+- allow to make LaTeX format from source more than 5 years old
+  (it gives a warning instead of an error)
+  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=531569#56
+
 * Tue Jan 12 2010 Jindrich Novy <jnovy@redhat.com> 2007-35
 - use tar.gz tarball instead of tar.bz2, it is no more present
   on upstream servers
