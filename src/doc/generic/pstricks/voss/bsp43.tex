@@ -1,0 +1,34 @@
+\documentclass[]{article}
+\usepackage{pstricks}
+\usepackage{multido}
+\pagestyle{empty}
+\parindent=0pt
+\begin{document}
+
+\begin{center}
+\def\kreisFuellung#1{%
+  \psset{unit=#1}
+  \begin{pspicture}(-1,-1)(1,1)
+    \multido{\nHue=0.01+0.01}{100}{%
+      \xdefinecolor{MyColor}{hsb}{\nHue,1,1}%
+      \pscircle[linewidth=0.01,linecolor=MyColor]{\nHue}%
+    }
+  \end{pspicture}
+}
+\begin{pspicture}(-2.5,-2.5)(2.5,2.5)
+\psset{unit=3}%
+\multido{\nHue=0.01+0.01}{100}{%
+  \definecolor{MyColor}{hsb}{\nHue,1,1}%
+  \pscircle[linewidth=0.01,linecolor=MyColor]{\nHue}%
+}
+\end{pspicture}
+\hspace{1em}
+\begin{pspicture}(-2.5,-2.5)(2.5,2.5)
+\psclip{\psframe(-2.5,-2.5)(2.5,2.5)}
+    \rput(0,0){\kreisFuellung{3.5}}
+\endpsclip
+\end{pspicture}
+\end{center}
+
+\end{document}
+

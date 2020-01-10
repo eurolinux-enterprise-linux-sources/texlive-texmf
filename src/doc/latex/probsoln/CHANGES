@@ -1,0 +1,10 @@
+probsoln package versions:
+
+Version 2.02: Added \selectallproblems which selects all the problems
+in a given database, in the order in which they were defined.
+
+Version 2.01: Provided means to customise the way in which randomly
+selected problems are displayed. Added \doforrandN command (like \@for
+but for a random subset of the specified list.) Added \random command
+which stores a random number in the given range in the specified 
+counter.

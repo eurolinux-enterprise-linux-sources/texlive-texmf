@@ -1,0 +1,55 @@
+#! /bin/csh
+set HEADER=duplex2v.pro
+if ( -f minitoc.dtx ) then
+echo 'Creating the english documentation...'
+if ( -f minitoc.maf ) then
+   \rm minitoc.maf
+endif
+# create the english documentation (DVI): 4 latex runs, with index and biblio
+latex minitoc.dtx
+sed -e's/:>/=/' < minitoc.idx > minitoc.idx1; mv minitoc.idx1 minitoc.idx
+bibtex minitoc
+makeindex -s minitoc.ist -o minitoc.ind minitoc.idx
+mv minitoc.ilg minitoc.ilg1
+#
+latex minitoc.dtx
+sed -e's/:>/=/' < minitoc.idx > minitoc.idx1; mv minitoc.idx1 minitoc.idx
+makeindex -s minitoc.ist -o minitoc.ind minitoc.idx
+mv minitoc.ilg minitoc.ilg1
+#
+latex minitoc.dtx
+sed -e's/:>/=/' < minitoc.idx > minitoc.idx1; mv minitoc.idx1 minitoc.idx
+makeindex -s minitoc.ist -o minitoc.ind minitoc.idx
+mv minitoc.ilg minitoc.ilg1
+#
+latex minitoc.dtx
+sed -e's/:>/=/' < minitoc.idx > minitoc.idx1; mv minitoc.idx1 minitoc.idx
+# convert the .dvi into PostScript
+# change the printer type
+dvips -h $HEADER -o minitoc.ps minitoc
+cp minitoc.log ps-minitoc.log
+# create the documentation (PDF): 4 pdflatex runs, with index and biblio
+pdflatex minitoc.dtx
+sed -e's/:>/=/' < minitoc.idx > minitoc.idx1; mv minitoc.idx1 minitoc.idx
+bibtex minitoc
+makeindex -s minitoc.ist -o minitoc.ind minitoc.idx
+mv minitoc.ilg minitoc.ilg1
+#
+pdflatex minitoc.dtx
+sed -e's/:>/=/' < minitoc.idx > minitoc.idx1; mv minitoc.idx1 minitoc.idx
+makeindex -s minitoc.ist -o minitoc.ind minitoc.idx
+mv minitoc.ilg minitoc.ilg1
+#
+pdflatex minitoc.dtx
+sed -e's/:>/=/' < minitoc.idx > minitoc.idx1; mv minitoc.idx1 minitoc.idx
+makeindex -s minitoc.ist -o minitoc.ind minitoc.idx
+mv minitoc.ilg minitoc.ilg1
+#
+pdflatex minitoc.dtx
+sed -e's/:>/=/' < minitoc.idx > minitoc.idx1; mv minitoc.idx1 minitoc.idx
+# cleaning
+echo 'Cleaning'
+if ( -f minitoc.maf ) then
+   cat minitoc.maf | xargs -i -t \rm {}
+endif
+endif

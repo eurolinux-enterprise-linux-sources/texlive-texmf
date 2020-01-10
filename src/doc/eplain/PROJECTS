@@ -1,0 +1,18 @@
+This file is public domain.
+
+How about list processing macros like those in ``Tex in Practice''? 
+
+In TUGboat volume 11 number 3, Amy Hendrickson gives some modified
+routines for \newcount that do work inside groups.  Perhaps they should
+be included.
+
+FABROADI@CUGSBVM.BITNET suggests that the verbatim macros be extended to
+allow things like:
+    \verbatim{first line
+    second line 
+    third line}
+to optionally have line numbers.
+
+Generalize toc files to other kinds of generated listings (e.g., figures).
+
+Define a spec for \ifempty and write a robust macro to implement it.

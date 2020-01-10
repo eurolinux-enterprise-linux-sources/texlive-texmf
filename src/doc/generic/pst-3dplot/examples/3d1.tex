@@ -1,0 +1,14 @@
+\documentclass[12pt]{article}
+\usepackage{pst-3dplot}
+\begin{document}
+
+\psset{unit=3cm,Beta=10,Alpha=60}
+
+\begin{pspicture}(-1,-1)(1,1)
+\pstThreeDCoor[xMax=2.5,yMax=2.5,zMax=2.5,drawing=false]
+\pstThreeDBox(1,1,-1)(-2,0,0)(0,-2,0)(0,0,2)
+\psplotThreeD[linecolor=blue,drawStyle=xyLines](-1,1)(-1,1){x 2 exp y mul}
+\psplotThreeD[linecolor=red,drawStyle=yLines](-1,1)(-1,1){x 2 exp y mul}
+\end{pspicture}
+
+\end{document}

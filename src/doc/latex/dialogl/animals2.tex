@@ -1,0 +1,26 @@
+\openin\inp=animal.dat
+\ifeof\inp \errmessage{Unable to open animal.dat!}\fi
+\loop
+ \temp=\curcode
+ \Scan
+ \Query
+ \mainlreptrue
+ \ifnum\curcode=0
+   \immediate\write16{%
+     Thank you for using Animals.  I'm glad I got it right.}
+   \mainlrepfalse
+ \else
+   \ifnum\curcode=-1 \NewAnimal\mainlrepfalse\fi
+ \fi
+\ifmainlrep
+\repeat
+
+\closein\inp
+\message{Wanna go again? }%
+\GetYN
+\ifyn
+  \curcode=1 % initialization
+\else
+  \def\maybecontinue{}%
+\fi
+\endinput

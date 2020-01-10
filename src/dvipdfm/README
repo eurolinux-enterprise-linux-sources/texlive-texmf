@@ -1,0 +1,4 @@
+The files here are for dvipdfmx, which pretends to be dvipdfm.
+The files for the original dvipdfm are in the config/ subdirectory.
+
+--karl, 29jun05.  (public domain)

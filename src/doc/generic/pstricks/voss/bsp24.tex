@@ -1,0 +1,55 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{pstricks}
+\usepackage{pst-plot}
+\usepackage{pstricks-add}
+\pagestyle{empty}
+
+\begin{document}
+\psset{xunit=10cm, yunit=0.03cm,%
+	xLabel={\scriptsize\sffamily}, yLabel={\scriptsize\sffamily}%
+}
+\begin{pspicture}(-0.1,-40)(1.5,240.0)
+	\psaxes[Dx=0.25,Dy=40,tickstyle=bottom]{->}(0,0)(0,-20)(1.4,220)
+	\rput(-0.1,90){\rotateleft{\small\sffamily pressure [mmHg]}}
+	\psline[linestyle=dashed,linewidth=1.5pt,linecolor=red](0.6,120)(0.8,120)
+	\rput[l](0.85,120){\small\sffamily Aorta}
+	\psline[linewidth=1.5pt,linecolor=blue](0.6,145)(0.8,145)
+	\rput[l](0.85,145){\small\sffamily LV}
+	\uput[0](1.4,0){\textsf{t [s]}}
+	\psdot*(0.4,0.04)
+	\uput[90](0.4,0){$t_0$}
+	\psdot*(1.307,0.04)
+	\uput[90](1.307,0){$0.37\cdot T_p+t_0$}
+	\uput[90](0,220){\footnotesize{\textsf{v [m/s]}}}
+	\fileplot[linewidth=1.5pt,linestyle=dashed,linecolor=red]{data1.dat}
+	\fileplot[linewidth=1.5pt,linecolor=blue]{data2.dat}
+\end{pspicture}
+
+\psset{xunit=10cm,yunit=0.01cm}
+\begin{pspicture}(-0.1,-100)(1.5,550.0)
+	\psaxes[Dx=0.25,Dy=100,tickstyle=bottom]{->}(0,0)(0,-100)(1.4,520)
+	\uput[0](1.4,0){\textsf{t [s]}}
+	\rput(-0.1,200){\rotateleft{\small\sffamily flow [ml/s]}}
+	\psline[linestyle=dashed,linewidth=.01](0.02,-100.0)(0.02,1300)
+	\psline[linestyle=dashed,linewidth=.01](0.3625,-100.0)(0.3625,1300)
+	\psline[linestyle=dashed,linewidth=.01]{<->}(0.02,1290)(0.3625,1290)
+	\rput(0.19,1320){\footnotesize\sffamily forward flow}
+	\rput(0.19,1260){\footnotesize\sffamily (systole)}
+	\psline[linestyle=dashed,linewidth=.01]{<->}(0.3625,1290)(1,1290)
+	\rput(0.68,1320){\footnotesize\sffamily regurgitation}
+	\rput(0.68,1260){\footnotesize\sffamily (diastole)}
+	\fileplot[linewidth=1.5pt,linecolor=blue]{data3.dat}
+	\pscustom[linewidth=1pt,linecolor=blue,liftpen=1]{%
+		\fileplot{data4.dat}
+		\pscurve(1.20,300)(1,300)(0.760,300)
+		\fill[fillstyle=hlines,fillcolor=gray,hatchwidth=0.4pt,hatchsep=1.5pt]
+	}
+        \psline[linewidth=0.5pt]{<-}(0.4,20)(0.7,300)
+	\pscurve[linewidth=0.5pt](1.20,300)(1,300)(0.760,300)
+	\psline[linewidth=.01]{->}(1,290)(1.1,440)
+	\rput(1.1,470){\footnotesize\sffamily leak volume}
+	\psline[linewidth=.01]{->}(0.78,200)(1,100)
+	\rput[l](1.02,100){\footnotesize\sffamily closing volume}
+\end{pspicture}
+
+\end{document}

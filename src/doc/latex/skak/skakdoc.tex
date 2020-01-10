@@ -1,0 +1,417 @@
+\documentclass[11pt,twocolumn]{article}
+
+\usepackage{lambda,ifthen,calc}
+\usepackage{tabularx}
+\usepackage[ps,mover]{skak}
+
+\newcommand{\package}[1]{\textsf{#1}}
+\newcommand{\pgn}{PGN\ }
+\newcommand{\san}{SAN\ }
+\newcommand{\fen}{FEN\ }
+\newcommand{\xboard}{xboard}
+\newcommand{\metafont}{\textsc{Metafont}\ }
+\newcommand{\filename}[1]{\texttt{#1}}
+%\usepackage[a5paper]{anysize}
+%\tracingmacros=1
+
+\newcommand{\Guido}{Guido Governatori\ }
+\newcommand{\Harri}{Harri Haanpaa\ }
+\newcommand{\Ingo}{Ingo Sander\ }
+\newcommand{\Dirk}{Dirk B\"achle\ }
+\newcommand{\Ulrike}{Ulrike Fischer\ }
+\newcommand{\Andreas}{Andreas Wilm\ }
+ 
+\title{Typesetting Chess in \LaTeX with the \package{skak} Package\\
+Version 1.3}
+\author{Torben Hoffmann\\ e-mail: \texttt{Torben.Hoffmann@motorola.com}}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  This user guide shows how to use an enhancement to the existing
+  package for typesetting chess in \LaTeX (\package{skak}). The
+  primary improvement over the old package is that it has become
+  easier to typeset chess games with this new package.
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Change History}
+\label{sec:change-history}
+
+
+\subsection*{Version 1.3}
+\label{sec:version-1.3}
+
+\begin{itemize}
+\item \Dirk has reworked the typesetting of chess moves:
+  \begin{itemize}
+  \item A new capture symbol has been introduced to make the spacing around
+    it better.
+  \item The figurine symbols have been improved so that the spacing around
+    them are more uniform --- it looks really good now, at least to my eyes.
+  \item A proposal for what syntax the \package{skak} package should handle in
+    the future has been included in the distribution.
+  \item The Informator symbols ``novelty'', ``comment'' and ``various'' needed
+    another pair of curly braces in order to work right within the
+    ``mainline'' and ``variation'' environments.
+  \item The check for trailing spaces in the macro ``typeset@cmoves'' had to
+    be removed because it led to problems at the end of a ``mainline'' or
+    ``variation'' environment when an additional Informator symbol was
+    involved.      
+  \end{itemize}
+\item A reference to the \textsf{pgn2ltx} tool created by \Dirk has been added
+  to the document.
+\item A reference to an URL decribing the \pgn standard has been added.
+\end{itemize}
+
+
+\subsection*{Version 1.2}
+\label{sec:version-1.2}
+
+\begin{itemize}
+\item \Dirk has --- once again --- done a great job:
+  \begin{itemize}
+  \item the informator symbols have been improved and now scale as
+    they should (I have in the same go done some \metafont clean-up
+    associated with the symbols).
+  \item he has also discovered that the selection of other fonts for
+    the typesetting of moves can be done by redefining the
+    \verb|\skakfamily| command!
+  \item added the \verb|\movecomment| for flexible typesetting of
+    comments --- see the Reference Manual for details.
+  \item The PostScript file are now 10 times smaller (for large files)
+    and a comprehensive test of the PostScript ornaments has been
+    created. 
+  \end{itemize}
+\item All dead code has been removed from \texttt{skak.sty}.
+\end{itemize}
+
+
+\subsection*{Version 1.1}
+\label{sec:version-1.1}
+
+\begin{itemize}
+\item \Dirk's enhancements have been incorporated:
+  \begin{itemize}
+  \item extension of the \verb|\highlight| command; it now accepts X,
+    x, O and o as optional arguments and produces a cross and a
+    circle on the square, respectively, instead of a frame around the
+    square.
+  \item unwanted generation of spaces removed.
+  \item a set of Informator symbols were added to the fonts and made
+    available through commands documented in the
+    \texttt{informator.ps} file.
+  \end{itemize}
+\item Two fixes by \Ulrike have been incorporated:
+  \begin{itemize}
+  \item a bug in \verb|\ParseCoordinates|.
+  \item a problem in the fonts regarding size.
+  \end{itemize}
+\item \Ulrike reported a problem with opening spaces causing the input
+  to be ignored --- this has been fixed and \filename{test/test2.tex}
+  verifies this.
+\end{itemize}
+
+
+
+\subsection*{Version 1.0}
+\label{sec:version-1.0}
+
+The major novelty in this release is that the documentation has been
+updated and a reference manual has been created.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Terms of Usage}
+\label{sec:terms-usage}
+
+This package is distributed under the terms described in the Latex
+Project Public Licence, i.e.,    
+
+\begin{quote}
+  This software is copyright but you are granted a license which gives
+  you, the ``user'' of the software, legal permission to copy,
+  distribute, and/or modify the software. However, if you modify the
+  software and then distribute it (even just locally) you must change
+  the name of the software to avoid confusion.
+\end{quote}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Acknowledgements}
+\label{sec:acknowledgements}
+
+I would like to thank the creator of the \package{lambda} package,
+Alan Jeffrey, for making a splendid package that made this package
+possible.
+
+For discussions and alpha-testing I send my thanks to \Guido --- some
+of his ideas have already been implemented; the rest? Time will show.
+
+Thanks to \Harri for finding a nasty bug in the castling routine.
+
+A big thank goes to \Dirk for adding the Informator symbols to the
+fonts and for removing a couple of nasty bugs as well as improving
+some of the commands.
+
+I thank \Ulrike for spotting as well as fixing a big problem with the
+parsing of moves and for her hints to improving the fonts.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Old \package{chess} Package Versus the New \package{skak}
+  Package}
+\label{sec:old-vs-new}
+
+The main reason for considering an improvement of the \package{chess}
+package that Piet Tutelaers made back in 1991 is the cumbersome user
+interface the package has when one wants to write about a chess game
+and display a diagram every now and then. Typesetting the two opening
+moves where white and black move their kingside knights is done as
+follows in the \package{chess} package:
+
+\begin{verbatim}
+\move g1f3 g8f6
+\end{verbatim}
+
+The package then produces a nice typesetting of these moves in figurine
+notation, but it is hard to keep track of what is going on because one usually
+uses the \san (Short Algebraic Notation, employed in the \pgn standard for
+typing the moves --- see \texttt{http://pgn.freeservers.com/standard.txt} for
+details) to write down the moves of a chess game. The \san version of the two
+moves above is: \verb|1. Nf3 Nf6|, which is much clearer to most chess
+players. In the \package{skak} package the author of a chess article is
+allowed to use the \san notation as input to the command that updates the
+chess board. In addition to making it easier for the author to write about
+chess using a familiar notation it also provides an easy way to include moves
+generated by a chess program such as \xboard\ in the document---most other
+chess programs can also output a \pgn version of a chess game and from that
+you can extract the \san recording of the moves.
+
+The \package{skak} package can also input chess board positions given
+in the \fen notation (also used in the \pgn standard), which is also quite
+standard in the domain of chess programs. 
+
+Apart from a better user interface the \package{skak} chess font
+contains three small modifications of the font created by Piet
+Tutelaers: the knight now looks a bit more ``youthful'', the contour
+of the queen has been smoothened and all the chess pieces have been
+shrunk such that they do not fill as much of a square as before. I
+find this font nicer to look at, but your milage may vary.
+
+
+
+
+\section{How to use the \package{skak} Package}
+\label{sec:how-use-skak-package}
+
+Writing about a chess game can be done straightforward:
+
+\begin{verbatim}
+\newgame
+
+\mainline{1. e4 e5 2. Nf3 Bc5}
+\end{verbatim}
+ 
+\newgame
+\noindent
+starts a new game and produces the following in your document: 
+
+\mainline{1. e4 e5 2. Nf3 Bc5}
+
+So far, so good. If you want to show the current position you just
+type \verb|\[\showboard\]| in your document to get:
+
+\[\showboard\]
+
+\noindent
+(the use of math \verb|\[...\]| is just to make sure the board is centered.)
+
+This is the basic functionality of the \package{skak} package, but it
+offers many different ways in which one can talk about chess
+games. I think that a good way to show how the \package{skak} package
+can be used is to typeset the Fischer--Tal game from the old
+\package{chess} package. The result is in the file named
+\filename{tuggame.ps}.
+
+Further information about all the bells and whistles the
+\package{skak} package provides can be found in the \emph{Reference
+  Manual} where all commands of relevance are described.
+
+
+\subsection{Handling of Variations}
+\label{sec:handling-variations}
+
+
+The \package{skak} package does \emph{not} support
+\pgn variations such as
+\begin{verbatim}
+\mainline{12. Bb4 (12. Ng5 h6) 12... Ra8}
+%gives an error
+\end{verbatim}
+
+You have to type this as
+\begin{verbatim}
+\mainline{12. Bb4}
+\variation{12. Ng5 h6}
+\mainline{12...Ra8}
+\end{verbatim}
+
+I do not have the nerves to update the parsing algorithm to cope with
+this so the best thing to do would be to craft a tool for translating
+\pgn to \TeX (see \ref{sec:transl-pgn-files}).
+
+
+\subsection{Changing the Font}
+\label{sec:changing-font}
+
+(New in Version 1.2)
+
+\Dirk has discovred that you can change the font used for typesetting
+of moves if you redefine the \verb|\skakfamily| font.
+
+I do not --- however --- know how to handle different chess fonts, so
+if someone could work this out I'll include that in a future version.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Installing the \package{skak} Package}
+\label{sec:install}
+
+I could not get the makefile to do the job, so if someone could help
+me out on this I would be very glad indeed.
+
+Basically all you have to do is to follow the guidelines in the
+makefile. First you create all the required directories (stated in the
+\texttt{install} section of the makefile) and then you run the
+\texttt{make install} command. Remember to run \texttt{texhash} after
+you have updated your texmf tree.
+
+Sorry that it is not working $100\%$--- I just do not have the time for
+it right now.
+
+If you cannot get the things working just put the files where \TeX and
+the other tools can find them and you will be just fine. 
+
+
+\subsection{Using the \package{lambda} Package}
+\label{sec:using-lambda}
+
+The \package{skak} package uses the \package{lambda} package to do
+some of the hard processing necessary to allow the \pgn notation as
+input --- since it is not standard in \LaTeX distributions it is
+included in the distribution of the \package{skak} package.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Future Additions/Wish-list}
+\label{sec:future-additions}
+
+
+\subsection{Choosing Language for \texttt{mainline}}\label{sec:choos-lang-mainline}
+
+(Proposal date: mid 2002.)
+
+It would be nice if one could choose the language for the
+\verb|mainline|, \verb|variation| and \verb|\hidemoves| for each invocation
+as it allows for easier inclusion of analysis from chess programs when
+using a non-english language.
+
+
+\subsection{Algebraic Notation used for Typesetting}
+\label{sec:algebraic-notation-in-typesetting}
+
+(Proposal date: mid 2001.)
+
+\Ingo has suggested that the output of the typesetting should be the
+old algebraic notation where the from and to squares always are
+given. This requires a modification to the game engine: after each
+move has been made you should store the algebraic notation of the move
+since you have the to and from squares calculated at that
+moment. Changing the game engine is a bit hairy --- even for me --- so I'll
+postpone this.
+
+
+\subsection{Fonts}
+\label{sec:ps-font}
+
+(Proposal date: dec-2002.)
+
+\Ulrike has suggested the creation PostScript version of the \metafont
+font.
+
+I do not know how to do this, but perhaps someone can help me?
+
+Furthermore, \Ulrike would like to see a more transparent
+fonthandling, so that it becomes easy to change to another chess-font.
+(Version 1.2 news: see Section~\ref{sec:changing-font}.)
+
+
+\subsection{Optimisation of the Implementation}
+\label{sec:optim-impl}
+
+(Proposal date: 2-Jan-2003.)
+
+I would like to improve some areas of the implementation since they
+are unnecessary slow and/or complicated, e.g., \verb|\IsPieceName|
+could easily be implemented as a case statement instead of a list
+look-up. I have a strong feeling that this would be a lot faster than
+the current implementation which has a very functional programming
+flavour --- this was very helpful during the development, but it has a
+tendency to be a bit inefficient. 
+
+Another great improvement would be to let the commands
+\verb|\Mainline| and \verb|\typeset@A| use the same parsing algorithm
+--- then one could implement the long algebraic notation as suggested
+by \Ingo by letting the action taken on a move be both updating of the
+board \emph{and} typesetting of the move!
+
+\subsection{Test Suite}
+\label{sec:test-suite}
+
+(Proposal date: 03-Jan-2003.)
+
+It would be a very good idea to create a test suite created using
+normal testing techniques. 
+Areas of test should include:
+\begin{itemize}
+\item resolving ambiguous moves, i.e., ensuring that moves like
+  \wmove{Rad1} moves the right rook.
+\item all legal \san moves are accepted.
+\end{itemize}
+
+
+
+\subsection{Translating \pgn Files}
+\label{sec:transl-pgn-files}
+
+(Proposal date: 03-Jan-2003.)
+
+It would be very nice if one had a command line tool that could
+translate \pgn files to a \TeX file.
+
+27-Sep-2003: Take a look at \texttt{http://pgn2ltx.sourceforge.net} for a nice
+helper tool.
+
+
+\subsection{Typesetting \textsl{e.p.} after en passant moves}
+\label{sec:typeset-en-passant}
+
+\Andreas asked how one should input en passant moves, especially the addition
+of \textsl{e.p.} after the capture. 
+
+This is not part of the \san notation as described in the \pgn standard and it
+requires that the improvement described in Section \ref{sec:optim-impl} is in
+place before it is possible to add the possibility to add the
+\textsl{e.p.}. It has to be this way because I do not want to support more
+than what is described by the \pgn standard.
+
+
+\end{document}
+
+
+
+
+

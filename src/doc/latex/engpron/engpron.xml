@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE entry SYSTEM "../catalogue.dtd">
+<entry id="engpron" 
+       datestamp="2004/04/14"
+       modifier="Yvon.Henel@wanadoo.fr">
+  <about>
+    <name>engpron</name>
+    <caption>Helps to type the pronunciation of English words. Uses tipa.sty.</caption>
+    <author>
+      <name>Yvon Henel</name>
+      <email>Yvon.Henel@wanadoo.fr</email>
+    </author>
+    <license type="lppl"/>
+    <version>
+      <number>1</number>
+    </version>
+  </about>
+  <description>
+    <abstract>
+      This package provides macros beginning with the £ (pound) 
+character,      made active, which enable us to write the British or 
+America English      pronunciation as one can find it in the ``English 
+Pronouncing      Dictionary'' by Daniel Jones. There is an option to 
+typeset the      pronunciation in the style of the Harrap's.
+    </abstract>
+  </description>
+  <distribution>
+    <texlive>latex</texlive>
+    <ctan>macros/latex/contrib/engpron</ctan>
+  </distribution>
+</entry>

@@ -1,0 +1,14 @@
+
+# ptex and platex formats
+ptex-euc        ptex  -                 --kanji=euc   ptex.ini
+platex-euc      ptex  language.dat      --kanji=euc   platex.ini
+platex209-euc   ptex  language.dat      --kanji=euc   platex.ini
+ptex-sjis       ptex  -                 --kanji=sjis  ptex.ini
+platex-sjis     ptex  language.dat      --kanji=sjis  platex.ini
+platex209-sjis  ptex  language.dat      --kanji=sjis  platex.ini
+ptex-jis        ptex  -                 --kanji=euc   ptex.ini
+platex-jis      ptex  language.dat      --kanji=euc   platex.ini
+platex209-jis   ptex  language.dat      --kanji=euc   platex.ini
+ptex            ptex  -                 --kanji=euc   ptex.ini
+platex          ptex  language.dat      --kanji=euc   platex.ini
+platex209       ptex  language.dat      --kanji=euc   platex.ini

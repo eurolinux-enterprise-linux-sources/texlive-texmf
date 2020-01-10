@@ -1,0 +1,21 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp10.tex ---
+%% Autor           : Herbert Voss <voss@perce.de>
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{article}
+\usepackage{pst-plot}
+\begin{document}
+\psset{xunit=10,yunit=2}
+\begin{pspicture}(-0.05,-1.5)(1,1.5)
+	\psaxes[Dx=0.2]{->}(0,0)(0,-1.25)(1,1.25)
+	\psplot[plotpoints=3000,linecolor=red]%
+		{0.01}{0.075}{/k 180 3.14159265 div def 1 x div k mul sin} 
+	\psplot[plotpoints=500,linecolor=blue]%
+		{0.075}{1}{/k 180 3.14159265 div def 1 x div k mul sin} 
+	\uput[-45](1,0){$x$}
+	\uput[180](0,1.25){$y$}
+	\rput[l](0.4,-0.75){$\mathbf{f(x)=\sin\frac{1}{x}}$}
+\end{pspicture}
+
+\end{document}

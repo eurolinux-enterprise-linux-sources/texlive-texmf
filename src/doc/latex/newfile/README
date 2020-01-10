@@ -1,0 +1,32 @@
+    The newfile package provides convenient user level commands for reading
+and writing new files during a LaTeX run. The package requires the standard
+verbatim package. 
+
+Changes in version 1.0a (2002/07/07)
+o Corrected aspects of the documentation, no technical changes
+
+Changes in version 1.0 (2002/06/22)
+o First public release
+
+    The distribution consists of the following files:
+README (this file)
+newfile.ins
+newfile.dtx
+
+    The distribution is provided under the terms of the LaTeX
+Project Public License (LPPL).
+
+    To install the package:
+o run: latex newfile.ins (which will generate newfile.sty)
+o run: latex newfile.dtx
+o run: makeindex -s gind.ist newfile
+o run: latex newfile.dtx
+o Print newfile.dvi for a hardcopy of the package manual 
+o Move newfile.sty to a location where LaTeX will find it.
+
+    See the FAQ (http://www.tex.ac.uk/faq) if you need more information
+about installation.
+
+2002/07/07
+Peter Wilson
+peter.r.wilson@boeing.com

@@ -1,0 +1,43 @@
+\documentclass[10pt,a4paper,twoside]{article}
+
+\usepackage{gcheck}
+\usepackage{calc}
+\usepackage[showframe]{geometry}
+
+\geometry{textwidth=\widthof{\texttt{M}}*80,
+          lines=40+5*2-4, centering, includeheadfoot,
+          top=\heightof{\texttt{N}}*10}
+
+\setlength{\parindent}{0pt}
+\begin{document}
+{\ttfamily
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM%
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM%
+% 80 characters
+}
+
+\bigskip
+\manyfoxes\manyfoxes\manyfoxes\manyfoxes
+\manyfoxes\manyfoxes\manyfoxes\manyfoxes
+
+\typeout{}
+\dcheck\paperwidth{597.50787pt}
+\dcheck\paperheight{845.04684pt}
+\dcheck\textwidth{419.99634pt}
+\dcheck\textheight{550.0pt}
+\dcheck\oddsidemargin{16.48578pt}
+\dcheck\evensidemargin{16.48578pt}
+\dcheck\topmargin{-11.15884pt}
+\dcheck\headheight{12pt}
+\dcheck\headsep{25pt}
+\dcheck\footskip{30pt}
+\dcheck\marginparwidth{111.0pt}
+\dcheck\marginparsep{11pt}
+\dcheck\columnsep{10pt}
+\dcheck\hoffset{0pt}
+\dcheck\voffset{0pt}
+\ccheck\mag{1000}
+\checkresults
+\typeout{}
+
+\end{document}

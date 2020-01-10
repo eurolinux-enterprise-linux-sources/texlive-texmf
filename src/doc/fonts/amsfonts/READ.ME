@@ -1,0 +1,226 @@
+AMSFonts 2.2 READ.ME                                           January 1995
+This is a documentation file to accompany the AMSFonts 2.2 distribution.
+
+Copy all of the files in this directory (/pub/tex/amsfonts) and the following
+subdirectories, into a corresponding directory tree on your system:
+
+      All users:
+               /pub/tex/amsfonts/plaintex
+               /pub/tex/amsfonts/doc
+               /pub/tex/amsfonts/doc/latex
+               /pub/tex/amsfonts/latex
+               /pub/tex/amsfonts/tfm
+
+      Users of Cyrillic text:
+               /pub/tex/amsfonts/alt-cyr
+
+      Users who wish to use .pk files provided with the distribution:
+               appropriate subdirectories of /pub/tex/amsfonts/pk-files,
+               depending on resolution of output device
+
+      Users who wish to generate their own .pk files:
+               /pub/tex/amsfonts/sources and its subdirectories
+
+Read the section below, "Installing AMSFonts 2.2 on your system," for
+instructions for correct installation.
+
+If you are preparing to obtain the files in this distribution by ftp,
+please note that transmission time can be improved by getting the files
+in compressed format, if you have the necessary unpacking tools at your
+end.
+
+From a CTAN archive, you can for example request dirname.zip to get the
+contents of any directory in zipped form, and similarly for other common
+compression formats; see the CTAN help information for more details.
+(NOTE: subdirectories are automatically included; but in the case of the
+AMSFonts distribution you should be careful to avoid retrieving all the
+pk-files subdirectories, as they contain hundreds of files and it's
+highly unlikely that you will require them all.)
+
+From the AMS archive at e-math.ams.org, .tar.Z or .tar files for
+various common selections are available in the parent directory `ams'. 
+To unpack these you need `tar' and `uncompress' programs.
+
+-----------------------------------------------------------------
+
+What changes were made between AMSFonts 2.1 and AMSFonts 2.2?
+
+The primary change is the inclusion of LaTeX support macro files as
+part of the AMSFonts distribution. The files in the "latex" subdirectory
+of this directory are compatible with LaTeX2e, the current LaTeX standard.
+Users of LaTeX 2.09 are strongly encouraged to upgrade to LaTeX2e, as
+we do not support the use of AMSFonts with LaTeX 2.09.
+
+The only significant change to the characters in the fonts was a bug
+fix which corrected an anomaly in the Blackboard Bold N character from
+the MSBM fonts. That character printed incorrectly at a few
+resolutions (including 600dpi), and it now prints correctly at all
+resolutions. The metrics for AMSFonts 2.2 are not different from those
+for AMSFonts 2.1. 
+
+There has also been a slight change to the file amssym.tex, and very
+significant changes to the User's Guide.
+
+-----------------------------------------------------------------
+
+INSTALLING AMSFonts 2.2 ON YOUR SYSTEM
+
+1. Installing the fonts:
+
+The files from the appropriate subdirectory of the pk-files
+subdirectory of this directory (/pub/tex/amsfonts/pk-files/dpi118 for
+118dpi fonts, /pub/tex/amsfonts/pk-files/dpi180 for 180dpi fonts,
+etc.) should be copied into the directory/ies where your device
+drivers look for .pk files to translate .dvi files into printed or
+displayed output.
+
+If your TeX looks at one directory, where the magnifications and resolutions 
+of the pk files are indicated as part of the extension of the filename, then 
+you may copy them precisely as they are. If your TeX expects all pk files to 
+have the extension simply `.pk' and the magnifications and resolutions are
+determined by the name of the subdirectory in which they appear, then you 
+will want to copy them into subdirectories named similarly to their current
+extensions, and rename them all to have extension `.pk'. For example, if your
+TeX looks for a subdirectory named DPI300 for 300dpi pk files, then you will
+want to copy all of the files *.300pk into that directory and then rename 
+them all to *.pk; also copy *.329pk into DPI329 (or whatever name your TeX 
+uses) and then rename them all to *.pk; etc...
+
+The .tfm files from the directory /pub/tex/amsfonts/tfm should be
+copied into the directory on your system where your implementation of
+TeX looks for .tfm files.
+
+2. Installing the auxiliary files:
+
+There are two sets of files which provide macros necessary for using
+AMSFonts 2.2 in TeX. One set is for Plain TeX or AMS-TeX, and one set
+is for LaTeX.  If you use Plain TeX or AMS-TeX, then the files in
+/pub/tex/amsfonts/plaintex should be placed in the directory (or a
+directory in the path) which your implementation of TeX searches for
+input files. If you use LaTeX2e, then the files in
+/pub/tex/amsfonts/latex should be placed in that directory. 
+
+WARNING: If your version of LaTeX2e is earlier than December 1996, and
+if your operating system and TeX implementation both refer to
+filenames in a case-sensitive manner, you will need to use the .fd
+files in the obsolete subdirectory of the latex directory, instead of
+the .fd files in the latex directory. Note that this generally does
+not apply to you if you are using DOS/Windows or using Textures
+on the Macintosh.  However, if you are using TeX in Unix or using
+OzTeX on a Macintosh, this warning does apply to you.
+
+If you are likely to use LaTeX2e as well as Plain TeX or AMS-TeX, then
+install the files from both directories where your TeX will find them
+for input.
+
+If you use LaTeX 2.09, then we strongly encourage you to upgrade your
+installation to LaTeX2e, as this is the current standard for LaTeX
+throughout the world, and we do not provide support for use of
+AMSFonts in LaTeX 2.09. 
+
+3. The User's Guide:
+
+The `doc' subdirectory (/pub/tex/amsfonts/doc) contains five files which
+have filenames beginning with `amsfndoc'. In order to TeX and print
+the entire User's Guide, you must first install the fonts.  When you
+have completed all of the above installation steps, run the file
+`amsfndoc.tex' through TeX. It will input the other four `amsfndoc'
+files. The output will be a complete guide to the use of AMSFonts 2.1.
+NOTE: Do NOT use AMS-TeX or LaTeX to TeX amsfndoc.tex; simply use
+Plain TeX. 
+
+This directory also contains a file called "amsfonts.faq" in which we
+will place frequently asked questions about AMSFonts.
+
+The /latex subdirectory of the "doc" directory contains LaTeX .dtx
+files containing technical commentary on the source code for the LaTeX
+support files in the AMSFonts distribution. Although these .dtx files
+are included for reference, most users can ignore them.
+
+4. Other files:
+
+Some PC device drivers have a font table which needs to be updated in order
+for the driver to recognize the fonts. For instance, the TeX Preview software
+provided by ArborText has a file called `preview.fnt' which contains the names
+of all fonts which the Preview program is expected to find, and the effective
+resolutions (resolution multiplied by magnification) at which to find them. In
+order to use AMSFonts with this, or any other software which uses such a table,
+you must enter the names of each of the fonts in the AMSFonts package and the
+effective resolutions at which you have them installed.  The file
+`amsfonts.lst' in the /pub/tex/amsfonts directory contains a list of all of the
+font names and all of the resolutions for the 118dpi and 300dpi distribution.
+You may have to alter the format of this file to make it conform to your
+driver's needs or to reflect installation of only some of the fonts, or
+globally some of the resolutions with different ones (e.g. replace all
+magnifications of 300dpi with corresponding magnifications of 240dpi). See the
+documentation for your device driver to see what format is required. IF YOUR
+DEVICE DRIVER DOES NOT DEPEND ON SUCH A TABLE, THIS FILE IS NOT NECESSARY.
+
+-----------------------------------------------------------------
+
+USE OF THE LATEX `amsfonts' PACKAGE
+
+Version 2.2 of the LaTeX package amsfonts.sty is carefully constructed
+to allow it to be used for processing pre-existing documents originally
+written for AMS-LaTeX 1.2beta or earlier. This means that documents that
+loaded amsfonts.sty through statements such as the following should
+continue to work without change.
+
+1.  \documentstyle[amsfonts]{article}
+
+2.  \documentstyle[amstex]{article}
+
+3.  \documentstyle[amssymb]{article}
+
+4.  \documentstyle{amsart}
+
+5.  \documentclass{amsart}
+
+6.  \documentclass{article}
+    \usepackage{amsfonts}
+
+7.  \documentclass{article}
+    \usepackage{amstex}
+
+8.  \documentclass{article}
+    \usepackage{amssymb}
+
+There is an exception, however, for the variants 6 and 7: If your document
+was written for AMS-LaTeX 1.2beta, some time in 1994, AND if it uses any
+of the symbols
+
+  \square                \Box
+  \lozenge               \Diamond
+  \vartriangleright      \rhd
+  \vartriangleleft       \lhd
+  \trianglerighteq       \unrhd
+  \trianglelefteq        \unlhd
+  \rightsquigarrow       \leadsto
+                         \Join
+
+then you may find that those symbol commands now produce `Undefined
+control sequence' errors. The easiest way to fix this is to load
+the amssymb package, i.e. change variants 6 and 7 to
+
+6a.  \documentclass{article}
+     \usepackage{amssymb}
+
+7a.  \documentclass{article}
+     \usepackage{amssymb,amstex}
+
+For symbols \Box, etc, you have a choice of either adding the latexsym
+package or defining them in terms of the equivalent symbols from the
+amssymb package.
+
+-----------------------------------------
+Questions concerning the use of AMSFonts may be directed to:
+ 
+Technical Support 
+Electronic Products and Services
+American Mathematical Society
+201 Charles Street
+P.O. Box 6248
+Providence, RI 02940   USA
+     (800) 321-4AMS (321-4267) ext. 4080
+     (401) 455-4080
+Internet:  tech-support@math.ams.org

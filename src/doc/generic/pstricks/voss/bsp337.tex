@@ -1,0 +1,118 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -*- Mode: Latex -*- %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Boltzmann.tex --- Networks at 15 and 19 speeds for the simulation of
+%%                   Navier-Stokes equations by the Boltzmann Method on network
+%%                   (description and specification given by Laurent Giraud
+%%                   <lgiraud@mema.ucl.ac.be>)
+%% 
+%% Author          : Denis GIROU (CNRS/IDRIS - France) <Denis.Girou@idris.fr>
+%% Created the     : Fri May  9 18:12:44 1997
+%% Last mod. by    : hv
+%% Last mod. the   : 2005-11-19
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+\usepackage{pstricks}             % PSTricks with the `color' extension
+\usepackage{pst-node}           % PSTricks package for nodes
+\usepackage{pst-3d}             % PSTricks package for 3d graphics
+\usepackage{multido}            % `multido' package
+\usepackage[dvips,landscape]{geometry}
+% Definition of new colors
+\definecolor{LightBlue}{rgb}{0.68,0.85,0.9}
+
+% The node
+\newcommand{\MyNode}[1][LightBlue]{{%
+\psset{unit=0.15}
+\begin{pspicture}(-0.5,-0.5)(0.5,0.5)
+  \pscircle*[linecolor=#1]{0.5}
+  \pscircle*[linecolor=white](0.15,0.15){0.2}
+\end{pspicture}}}
+
+\newpsobject{MyGrid}{psframe}{linestyle=dotted,dotsep=5pt}
+
+% The cube
+\newcommand{\MyCube}[1][LightBlue]{%
+\begin{pspicture}(-0.5,-0.35)(2.85,2.45)
+\multido{\i=0+1}{3}{%
+  \ThreeDput[normal=1 0 0](\i,0,0){%
+    \ifnum\i=1
+    \else
+      \MyGrid(2,2)
+    \fi
+    % Definitions of all nodes to do connections later
+    \ifnum\i=0
+      \pnode(0,0){NodeAAA}
+      \pnode(1,0){NodeABA}
+      \pnode(2,0){NodeACA}
+      \pnode(0,1){NodeBAA}
+      \pnode(1,1){NodeBBA}
+      \pnode(2,1){NodeBCA}
+      \pnode(0,2){NodeCAA}
+      \pnode(1,2){NodeCBA}
+      \pnode(2,2){NodeCCA}
+    \fi
+    \ifnum\i=1
+      \pnode(0,0){NodeAAB}
+      \pnode(1,0){NodeABB}
+      \pnode(2,0){NodeACB}
+      \pnode(0,1){NodeBAB}
+      \pnode(1,1){NodeBBB}
+      \pnode(2,1){NodeBCB}
+      \pnode(0,2){NodeCAB}
+      \pnode(1,2){NodeCBB}
+      \pnode(2,2){NodeCCB}
+    \fi
+    \ifnum\i=2
+      \pnode(0,0){NodeAAC}
+      \pnode(1,0){NodeABC}
+      \pnode(2,0){NodeACC}
+      \pnode(0,1){NodeBAC}
+      \pnode(1,1){NodeBBC}
+      \pnode(2,1){NodeBCC}
+      \pnode(0,2){NodeCAC}
+      \pnode(1,2){NodeCBC}
+      \pnode(2,2){NodeCCC}
+    \fi}
+  \ThreeDput[normal=0 -1 0](0,\i,0){
+    \ifnum\i=1
+    \else
+      \MyGrid(2,2)
+    \fi
+    % We must draw all the nodes in the same \ThreeDput to have
+    % the same projection for all nodes...
+    \multirput(0,0)(0,1){3}{\MyNode[#1]}
+    \multirput(1,0)(0,1){3}{\MyNode[#1]}
+    \multirput(2,0)(0,1){3}{\MyNode[#1]}}
+  \ifnum\i=1
+  \else
+    \ThreeDput[normal=0 0 1](0,0,\i){\MyGrid(2,2)}
+  \fi}
+\end{pspicture}}
+
+% Main connections
+\newcommand{\MainConnections}{{%
+\psset{linewidth=0.8mm}
+\ncline{NodeBBA}{NodeBBC}
+\ncline{NodeABB}{NodeCBB}
+\ncline{NodeBAB}{NodeBCB}}}
+
+% First cube
+\newcommand{\MyCubeA}[1][LightBlue]{{%
+\MyCube[#1]
+% Connections
+\psset{arrows=<->,arrowsize=4pt 3,arrowinset=0}
+\MainConnections
+\psset{linecolor=red}
+\ncline{NodeAAA}{NodeCCC}
+\ncline{NodeAAC}{NodeCCA}
+\ncline{NodeCAA}{NodeACC}
+\ncline{NodeACA}{NodeCAC}}}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\psset{unit=3cm,viewpoint=0.8 1.4 -0.4}
+\MyCubeA
+
+\end{document}

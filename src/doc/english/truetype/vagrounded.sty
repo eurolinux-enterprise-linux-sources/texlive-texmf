@@ -1,0 +1,9 @@
+\ProvidesPackage{vagrounded}
+[2000/05/12 VAG-Rounded font as default sf font]
+%%
+\renewcommand{\sfdefault}{bvr}
+%%
+\AtEndDocument{\PackageWarningNoLine{vagrounded.sty}%
+  {Ensure to use dvips with the option -Pvagrounded}}
+%%
+\endinput

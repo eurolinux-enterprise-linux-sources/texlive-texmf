@@ -1,0 +1,37 @@
+This package add some simply command to manage structure of folder that match structure of chapter and section and so. To do this, this package add the following command
+
+To insert "normal" part, etc :
+
+\cfpart[short title]{title}{folder that contains part}{main file of the part}
+
+\cfchapter[short title]{title}{folder that contains chapter}{main file of the chapter}
+
+\cfsection[short title]{title}{folder that contains section}{main file of the section}
+
+\cfsubsection[short title]{title}{folder that contains subsection}{main file of the subsection}
+
+To insert "star" part, etc :
+
+\cfpartstar[short title]{title}{folder that contains part}{main file of the part}
+
+\cfchapterstar[short title]{title}{folder that contains chapter}{main file of the chapter}
+
+\cfsectionstar[short title]{title}{folder that contains section}{main file of the section}
+
+\cfsubsectionstar[short title]{title}{folder that contains subsection}{main file of the subsection}
+
+
+\cfinput{short name of the file to include (within the current folder)}
+
+\cfcurrentfolder (Path of the current folder)
+
+\cfcurrentfolderfigure (Path of the current figure folder)
+
+\cfcurrentfolderlistings (Path of the current listings folder)
+
+Just look at documentation.tex for a example of use of the chapterfolder package.
+
+On Unix system, you can use the "configure-make" tool to install this package
+
+Licence : lppl
+This material is subject to the LaTeX Project Public License. See http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html  for the details of that license.

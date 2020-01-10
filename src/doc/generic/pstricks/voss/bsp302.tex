@@ -1,0 +1,34 @@
+\documentclass[12pt,ngerman]{article}% bsp302.tex -- H.Voss 2005
+\listfiles
+\usepackage[latin1]{inputenc}
+\usepackage{pstricks}
+\usepackage{pstricks-add,babel}
+\parindent=0pt
+\begin{document}
+
+\psset{xunit=0.75\linewidth,yunit=0.75\linewidth,trueAngle}%
+\begin{pspicture}(1,0.6)%\psgrid
+  \pnode(.3,.35){Vk} \pnode(.375,.35){D} \pnode(0,.4){DST1} \pnode(1,.18){DST2}
+  \pnode(0,.1){A1}   \pnode(1,.31){A1}
+  { \psset{linewidth=.02,linestyle=dashed,linecolor=gray}%
+    \pcline(DST1)(DST2) % <- Druckseitentangente
+    \pcline(A2)(A1) % <- Anstr"omrichtung
+    \lput*{:U}{\small Anstr"omrichtung $v_{\infty}$} }%
+  \psIntersectionPoint(A1)(A2)(DST1)(DST2){Hk}
+  \pscurve(Hk)(.4,.38)(Vk)(.36,.33)(.5,.32)(Hk)
+  \psParallelLine[linecolor=red!75!green,arrows=->,arrowscale=2](Vk)(Hk)(D){.1}{FtE}
+  \psRelLine[linecolor=red!75!green,arrows=->,arrowscale=2,angle=90](D)(FtE){4}{Fn}% why "4"?
+  \psParallelLine[linestyle=dashed](D)(FtE)(Fn){.1}{Fnr1}
+  \psRelLine[linestyle=dashed,angle=90](FtE)(D){-4}{Fnr2} % why "-4"?
+  \psline[linewidth=1.5pt,arrows=->,arrowscale=2](D)(Fnr2)
+  \psIntersectionPoint(D)([nodesep=2]D)(Fnr1)([offset=-4]Fnr1){Fh}
+  \psIntersectionPoint(D)([offset=2]D)(Fnr1)([nodesep=4]Fnr1){Fv}
+  \psline[linecolor=blue,arrows=->,arrowscale=2](D)(Fh)
+  \psline[linecolor=blue,arrows=->,arrowscale=2](D)(Fv)
+  \psline[linestyle=dotted](Fh)(Fnr1)  \psline[linestyle=dotted](Fv)(Fnr1)
+  \uput{.1}[0](Fh){\blue $F_{H}$}   \uput{.1}[180](Fv){\blue $F_{V}$}
+  \uput{.1}[-45](Fnr1){$F_{R}$}     \uput{.1}[90](Fn){\color{red!75!green}$F_{N}$}
+  \uput{.25}[-90](FtE){\color{red!75!green}$F_{T}$}
+\end{pspicture}
+
+\end{document}

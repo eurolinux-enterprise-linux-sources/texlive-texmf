@@ -1,0 +1,100 @@
+\documentclass[a4paper]{article}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pst-vue3d}
+\usepackage{pst-grad}
+\usepackage[nomessages]{fp}
+\input random
+%
+\newpsstyle{sol}{fillstyle=vlines,hatchcolor=lightgray,%
+	hatchwidth=0.2\pslinewidth,hatchsep=1\pslinewidth}
+\newpsstyle{section}{fillstyle=vlines,hatchcolor=yellow,%
+	hatchwidth=0.2\pslinewidth,hatchsep=1\pslinewidth}
+\newpsstyle{plan}{fillstyle=vlines,hatchcolor=green,%
+	hatchwidth=0.1\pslinewidth,hatchsep=1\pslinewidth}
+\newpsstyle{Side}{fillstyle=solid,fillcolor=yellow}%grandes faces
+\newpsstyle{side}{fillstyle=solid,fillcolor=magenta}%coins facettes
+\SpecialCoor
+\newpsstyle{sol}{fillstyle=vlines,hatchcolor=green,%
+	hatchwidth=0.2\pslinewidth,hatchsep=1\pslinewidth}
+\pagestyle{empty}
+\parindent=0pt
+
+\psset{dimen=middle}
+\newcount\diex
+\newcount\diey
+\newdimen{\diez}
+\newcount\CY
+\newdimen{\vuePhi}
+\newdimen{\vueTheta}
+\newcommand\ThreeDies[3]{%
+	\randomi=#1
+	\begin{pspicture}(-5,-5)(5,5)
+		\setrannum{\diex}{-2}{2}
+		\setrannum{\diey}{-2}{2}
+		\setrandim{\diez}{0pt}{360pt}
+		\setrandim{\vuePhi}{10pt}{80pt}
+		\setrandim{\vueTheta}{0pt}{90pt}
+		\FPeval\ithetax{(\the\diex)*(90)}
+		\FPeval\ithetay{(\the\diey)*(90)}
+		\psset{RotX=\ithetax,RotY=\ithetay,RotZ={\pointless\diez},%
+			PHI={\pointless\vuePhi},THETA={\pointless\vueTheta}}
+		\DieThreeD(-10,-15,0)]
+		\randomi=#2
+		\setrannum{\diex}{-2}{2}
+		\setrannum{\diey}{-2}{2}
+		\setrandim{\diez}{0pt}{360pt}
+		\FPeval\ithetax{(\the\diex)*(90)}
+		\FPeval\ithetay{(\the\diey)*(90)}
+		\psset{RotX=\ithetax,RotY=\ithetay,RotZ={\pointless\diez}}
+		\DieThreeD(-20,15,0)
+		\randomi=#3
+		\setrannum{\diex}{-2}{2}
+		\setrannum{\diey}{-2}{2}
+		\setrandim{\diez}{0pt}{360pt}
+		\FPeval\ithetax{(\the\diex)*(90)}
+		\FPeval\ithetay{(\the\diey)*(90)}
+		\psset{RotX=\ithetax,RotY=\ithetay,RotZ={\pointless\diez}}
+		\DieThreeD(20,12,0)
+\end{pspicture}}
+
+\begin{document}
+% \ThreeDies{seed1}{seed2}{seed2}
+% ne pas dépasser 2^31-1=2147483647
+% voir la doc de ramdom.tex
+\ThreeDies{214048360}{2147483647}{384523}
+
+\begin{pspicture}(-5,-5)(5,5)
+\randomi=49312715
+\setrannum{\diex}{-2}{2}
+\setrannum{\diey}{-2}{2}
+%\setrannum{\CY}{0}{8}
+\setrandim{\diez}{0pt}{360pt}
+\setrandim{\vuePhi}{0pt}{60pt}
+\setrandim{\vueTheta}{0pt}{90pt}
+\FPeval\ithetay{(\the\diey)*(90)}
+\FPeval\ithetax{(\the\diex)*(90)}
+\psset{RotX=\ithetax}
+\psset{RotY=\ithetay,RotZ={\pointless\diez},%
+    PHI={\pointless\vuePhi},THETA={\pointless\vueTheta}}
+\DieThreeD(-3,\the\CY,0)
+\randomi=99460966
+\setrannum{\diex}{-2}{2}
+\setrannum{\diey}{-2}{2}
+\setrannum{\CY}{-8}{8}
+\setrandim{\diez}{0pt}{360pt}
+\FPeval\ithetay{(\the\diey)*(90)}
+\FPeval\ithetax{(\the\diex)*(90)}
+\psset{RotX=\ithetax}
+\psset{RotY=\ithetay,RotZ={\pointless\diez}}
+\DieThreeD(0,\the\CY,0)
+\randomi=03101945
+\setrannum{\diex}{-2}{2}
+\setrannum{\diey}{-2}{2}
+\setrandim{\diez}{0pt}{360pt}
+\setrannum{\CY}{0}{8}
+\psset{RotX=-45,RotY=45,RotZ={\pointless\diez}}
+\DieThreeD(8,\the\CY,0)
+\end{pspicture}
+
+\end{document}

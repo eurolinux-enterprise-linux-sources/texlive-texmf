@@ -1,0 +1,42 @@
+         
+
+			   ticket.sty v0.4a
+	    Making labels, visting cards, pins with LaTeX
+
+	    Author: Thomas Emmel <thomas@family-emmel.de>
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+This is README, last changed November 6, 2005
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Idea of ticket:
+ticket.sty provides an easy to handle interface to produce 
+visiting cards, labels for your files, stickers, pins and
+other stuff for your office, conferences etc.
+All you need is a definition of your "ticket" included in
+a ticket definition file  and the two commands 
+\ticketdefault and \ticket.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Content:
+
+README ............... this file
+
+ticket.sty ........... the style file
+
+doc .................. documentation and examples
+doc/manual.xxx ....... a short introduction
+doc/ex_.....xxx ...... example files
+
+tdf .................. ticket definitions
+                       Send me more tdf-files!!!
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Please read the manual for further info.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+License:
+
+The bundle is placed under the LaTeX Project Public License 
+(macros/latex/base/lppl.txt on CTAN).

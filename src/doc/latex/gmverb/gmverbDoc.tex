@@ -1,0 +1,22 @@
+\documentclass[nochanges]{gmdocc}
+\twocoltoc
+\begin{document}
+\DocInput{gmverb.sty}%e:/texmf/tex/latex/gm/
+\typeout{%
+  Produce index with^^J%
+  makeindex -r \jobnamewoe^^J}
+\end{document}
+
+% And for the future, when the changes' history is nonempty
+\typeout{%
+  Produce change log with^^J%
+  makeindex -r -s gmglo.ist -o \jobnamewoe.gls \jobnamewoe.glo^^J
+  (gmglo.ist should be put into some texmf/makeindex directory.)^^J}
+
+
+% The following is just my GNU Emacs stuff. 
+%
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

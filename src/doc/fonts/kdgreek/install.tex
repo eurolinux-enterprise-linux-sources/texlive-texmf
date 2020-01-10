@@ -1,0 +1,87 @@
+% This file requires plain TeX for typesetting and NO special fonts
+% Use tex install.tex to produce the file install.dvi
+% install.tex 7-Dec-92
+%
+%INSTALLATION PROCEDURE FOR KD FONTS
+\magnification=\magstep1
+\parindent=0pt
+\centerline{\bf INSTALLATION PROCEDURE}
+\smallskip
+\centerline{\bf FOR Greek\TeX\ PACKAGE}
+\bigskip
+\centerline{\bf NOTE: This document does not describe installation of %
+the grlatex part of the package}
+\bigskip
+This documents gives a brief description of the installation
+procedure of the Greek\TeX\ Package. It is assumed that \TeX\ version
+3.0 or higher is installed in your system and you also have access to
+Metafont (v 2.00 or higher). Most of the systems are also equiped
+with a scirpt, or batch file or even a small program that will create
+a font at a given magnification with a single command. Let us assume
+that this command is {\tt newfont} $<FontName>$ {\tt scaled}
+$<Magnfification>$. You must also have access to {\tt plain.tex} and
+{\tt hyphen.tex} (plain format version 3.00)  or higher, as well as
+to INITEX for building formats. If you are interested in building
+the grlatex format as well, the the files for building lplain must
+also be available.
+
+\medskip
+\leftline{\bf Installing the Fonts}
+\smallskip
+Here is a table of the fonts and suggested magnifications:
+$$\vbox{\divide\hsize by2
+\halign{\strut\tt #\hfill\tabskip=2em&\hfil#\hfil&\hfil#\hfil&\hfil#\hfil&%
+\hfil#\hfil&\hfil#\hfil&\hfil#\hfil&\hfil#\hfil\cr
+&750&800&900&1000&1200&1440&1795\cr
+kdgr10&&&&*&*&*&*\cr
+kdgr9&&&&*&*&*&*\cr
+kdgr8&*&&&*&*&*&*\cr
+kdbf10&&&&*&*&*&*\cr
+kdbf9&&&&*&*&*&*\cr
+kdbf8&*&&&*&*&*&*\cr
+kdsl10&&*&*&*&*&*&*\cr
+kdti10&&*&*&*&*&*&*\cr
+kdtt10&&*&*&*&*&*&*\cr
+}}
+$$
+Each font is installed by a command of the form\par
+{\tt newfont kdgr10 scaled 1200}\par
+After installing all the fonts you are ready to move to the
+installation of the greek format.
+\medskip
+\leftline{\bf Format Installation}
+\smallskip
+Make sure that the file {\tt plain.tex} and {\tt hyphen.tex} are in
+your path and enter the command:\par
+{\tt INITEX greek}\par
+When INITEX has finished enter {\tt $\backslash$ dump}. Hopefully the file
+{\tt greek.fmt} must be ready to use. Just place it in your \TeX\ path
+and issue the command\par
+{\tt tex \& greek foo.tex}\par
+to run GREEK\TeX.
+
+You can also place the file {\tt greektex.tex} in you TEXINPUT path
+so that it can be included in short greek documents or replace the
+greek format file if the latter does not exist in your system. Note
+that the hyphenation will only work under the greek format and {\bf
+not} when you include the {\tt greektex} file to your document.
+Hyphenation apart, no other differences exist between the greek
+format and {\tt greektex.tex}.
+
+
+If you are building the latex extension grlatex, issue the command:\par
+{\tt INITEX lgreek}\par
+This will built the lgreek format. The lgreek format can be used
+instead of the standard latex format since it is simply and extension
+of the latex package enriched with several language dependant macros
+and the hyphenation patterns for greek tex. 
+
+If during the procedure of creating the greek latex INITEX complains
+about too many font families then the lplain format must be modified
+to define only 10 font families (older version of lfonts.tex defined
+the {\tt uit} family of fonts which you might be able to eliminate
+without mamy losses).
+
+
+
+\bye

@@ -1,0 +1,24 @@
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Schola.txt
+% and README-TeX-Gyre-Schola.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+\ProvidesFile{ly1qcs.fd}[2006/11/01 v1.0 font definition file for LY1/qcs]
+
+\DeclareFontFamily{LY1}{qcs}{}
+\DeclareFontShape{LY1}{qcs}{b}{sc}{<->texnansi-qcsb-sc}{}
+\DeclareFontShape{LY1}{qcs}{b}{n}{<->texnansi-qcsb}{}
+\DeclareFontShape{LY1}{qcs}{b}{scit}{<->texnansi-qcsbi-sc}{}
+\DeclareFontShape{LY1}{qcs}{b}{it}{<->texnansi-qcsbi}{}
+\DeclareFontShape{LY1}{qcs}{m}{sc}{<->texnansi-qcsr-sc}{}
+\DeclareFontShape{LY1}{qcs}{m}{n}{<->texnansi-qcsr}{}
+\DeclareFontShape{LY1}{qcs}{m}{scit}{<->texnansi-qcsri-sc}{}
+\DeclareFontShape{LY1}{qcs}{m}{it}{<->texnansi-qcsri}{}
+\DeclareFontShape{LY1}{qcs}{bx}{n}{<->ssub * qcs/b/n}{}
+\DeclareFontShape{LY1}{qcs}{bx}{it}{<->ssub * qcs/b/it}{}
+\DeclareFontShape{LY1}{qcs}{bx}{sc}{<->ssub * qcs/b/sc}{}
+\DeclareFontShape{LY1}{qcs}{bx}{scit}{<->ssub * qcs/b/scit}{}
+\endinput
+% End of ly1qcs

@@ -1,0 +1,40 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp09.tex ---
+%% Autor           : Herbert Voss <voss@perce.de>
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{pstricks}
+\SpecialCoor
+\definecolor{colorA}{rgb}{0.95 ,0.9, 0.9}
+\definecolor{colorB}{rgb}{0.65 ,0.95, 0.9}
+\definecolor{colorC}{rgb}{0.93 ,0.5, 0.9}
+\definecolor{colorD}{rgb}{0.65 ,0.7, 0.95}
+
+\begin{document}
+\begin{center}
+
+\psset{framesep=1.5pt,unit=1.75cm}
+\begin{pspicture}(-2.1,-2.1)(2.1,2.1)
+\degrees[100]
+\pswedge[fillstyle=solid,fillcolor=colorA]{2}{ 0 }{17 }
+\rput(1.2; 8){\psframebox*{\small 17 \%}}
+\uput{2.2}[ 8](0;0){\large Typ A}
+\pswedge[fillstyle=solid,fillcolor=colorB]{2}{17 }{42 }
+\rput(1.2;29){\psframebox*{\large 25 \%}}
+\uput{2.2}[29](0;0){\large Typ AB}
+\pswedge[fillstyle=solid,fillcolor=colorC]{2}{42 }{58 }
+\rput(1.2;50){\psframebox*{\large 17 \%}}
+\uput{2.2}[50](0;0){\large Typ C}
+\pswedge[fillstyle=solid,fillcolor=colorD]{2}{58 }{83 }
+\rput(1.2;71){\psframebox*{\large 25 \%}}
+\uput{2.2}[71](0;0){\large Typ B}
+\pswedge[shadow=true,shadowsize=3mm](0.2,-0.1){2}{83 }{100 }
+\rput(1.2;92){\psframebox*{\large 17 \%}}
+\uput{2.5}[92](0;0){\large Typ BC}
+\rput(0;0){\psframebox*{\bfseries 0/0}}
+\end{pspicture}
+
+\end{center}
+\end{document}

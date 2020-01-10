@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE entry SYSTEM "../catalogue.dtd">
+<entry id="subfloat" 
+       datestamp="2003/08/21" 
+       modifier="h.harders@tu-bs.de">
+  <about>
+    <name>subfloat</name>
+    <caption>Sub-numbering for figures and tables.</caption>
+    <author>
+      <name>Harald Harders</name>
+      <email>h.harders@tu-bs.de</email>
+    </author>
+    <license type="lppl"/>
+    <version>
+      <number>2.14</number>
+    </version>
+  </about>
+  <description>
+    <abstract>
+      This package enables sub-numbering of floats (figures
+      and tables) similar to the subequations-environment of the <xref
+      refid="amsmath">amsmath</xref> package. It is not the same as
+      the <xref refid="subfigure">subfigure</xref> package which
+      generates sub-figures within one normal figure.
+    </abstract>
+  </description>
+  <distribution>
+    <texlive>latex3</texlive>
+    <ctan>macros/latex/contrib/supported/subfloat</ctan>
+  </distribution>
+</entry>

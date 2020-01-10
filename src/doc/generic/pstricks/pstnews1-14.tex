@@ -1,0 +1,94 @@
+\documentclass[12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+%\usepackage{geometry}
+\usepackage{pst-all}
+\usepackage{showexpl}
+\usepackage{tabularx}
+\SpecialCoor
+%\usepackage[ps2pdf,colorlinks,linktocpage]{hyperref}
+\usepackage[colorlinks,linktocpage]{hyperref}
+\def\UrlFont{\small\ttfamily}
+\makeatletter
+\def\verbatim@font{\small\normalfont\ttfamily}
+\makeatother
+%\usepackage{color}
+\definecolor{hellgelb}{rgb}{1,1,0.8}
+\definecolor{colKeys}{rgb}{0,0,1}
+\definecolor{colIdentifier}{rgb}{0,0,0}
+\definecolor{colComments}{rgb}{1,0,0}
+\definecolor{colString}{rgb}{0,0.5,0}
+%
+\usepackage{listings}
+\lstset{%
+    language=PSTricks,%
+    float=hbp,%
+    basicstyle=\ttfamily\small, %
+    identifierstyle=\color{colIdentifier}, %
+    keywordstyle=\color{colKeys}, %
+    stringstyle=\color{colString}, %
+    commentstyle=\color{colComments}, %
+    columns=flexible, %
+    tabsize=4, %
+    frame=single, %
+    extendedchars=true, %
+    showspaces=false, %
+    showstringspaces=false, %
+    numbers=left, %
+    numberstyle=\tiny, %
+    breaklines=true, %
+%    backgroundcolor=\color{hellgelb}, %
+    breakautoindent=true, %
+    captionpos=b,%
+	xleftmargin=0pt%
+}
+
+%\parindent=0pt
+\newcommand\verbI[1]{{\small\texttt{#1}}}
+\newcommand\CMD[1]{{\texttt{\textbackslash#1}}}
+%
+%\psset{subgriddiv=0,griddots=5,gridlabels=7pt}
+%
+\DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
+\def\PS{PostScript}
+%
+\begin{document}
+\title{\texttt{PSTricks -- version 1.14}\\new macros and bugfixes for \texttt{pstricks}}
+\author{Herbert Voﬂ\thanks{%
+\url{Herbert.Voss@perce.de}}}
+\date{\today}
+
+\maketitle
+
+\begin{abstract}
+This new version of \texttt{pstricks.tex} depends on the also new prologue file
+\texttt{pstricks.pro} (v 1.00), which should go into the local \TeX-directory \url{$TEXMFLOCAL/dvips/}.
+\end{abstract}
+
+
+\tableofcontents
+
+%--------------------------------------------------------------------------------------
+\section{Color handling}
+%--------------------------------------------------------------------------------------
+The new color package \verb+xcolor+ has a lot of interesting features, but it needs
+some modification to the code of \verb+pstricks.sty+ and \verb+pstricks.tex+. The
+package \verb+pstricks.sty+ superseded the old package \verb+pstcol.sty+, which is
+now obsolet. The version on CTAN now does nothing else as loading \verb+pstricks.sty+.
+
+There are some important facts for using colors inside PSTricks with \LaTeX:
+
+\begin{itemize}
+\item load always \verb+pstricks+ as first package;
+\item use always the \LaTeX\ syntax for defining colors and \textbf{not} the PSTricks own one.\\
+    \verb+\definecolor ...+ is the correct setting!
+\item do not use the PSTricks style for using color, use always \verb+\color{<name>}+.
+\end{itemize}
+
+%--------------------------------------------------------------------------------------
+\section{Missing star version}
+%--------------------------------------------------------------------------------------
+\verb+\psdot*+ and \verb+\psdots*+ are now supported by PSTricks. Both were missing
+in the old versions.
+
+\end{document}

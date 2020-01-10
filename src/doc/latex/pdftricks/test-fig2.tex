@@ -1,0 +1,28 @@
+\documentclass{article}
+\input tmp.inputs
+\pagestyle{empty}
+\usepackage{amssymb,amsbsy}
+\begin{document}
+\definecolor{lightblue}{rgb}{0,0,.5}
+\definecolor{Navy}{rgb}{0,0,0.5}
+\definecolor{LemonChiffon}{rgb}{1,0.98,0.8}
+\definecolor{ForestGreen}{rgb}{0.13,0.55,0.13}
+\SpecialCoor
+\begin{pspicture}(-6,-6)(6,6)
+  \psaxes{<->}(0,0)(-6,-6)(6,6)
+  \psset{arrows=->}
+  \multido{\ia=-5+1}{11}{%
+\multido{\ib=-5+1}{11}{%
+ \pstVerb{/x \ia\space def
+    /y \ib\space def
+    y 0 eq
+      {/ValueTempA 0 def
+       /ValueTempB 0.5 def}
+      {/ValueTempZ 2 1 x x mul y y mul div add sqrt mul def
+       /ValueTempA 1 ValueTempZ div def
+       /ValueTempB x y ValueTempZ mul div def}
+      ifelse}
+ \psline(! x ValueTempA sub y ValueTempB sub)
+        (! x ValueTempA add y ValueTempB add)}}
+\end{pspicture}
+\end{document}

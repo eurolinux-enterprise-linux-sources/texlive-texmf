@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage{bm}% boldmath
+\usepackage{pstricks}
+\usepackage{pst-grad}
+\usepackage{pstricks-add} % psellipsearc
+\newrgbcolor{braun}{0.6 0.1 0.2}
+\SpecialCoor
+\parindent=0pt
+\pagestyle{empty}
+
+
+\begin{document}
+
+%\psset{unit=0.6}
+\begin{pspicture}(-4.5,-5)(5.5,3)
+%\psgrid[subgriddiv=0,griddots=10]
+\pscustom[fillstyle=solid,fillcolor=braun]{%
+  \psline(2.3,0.2)(4,0.2)
+  \psarcn(4,0){0.2}{90}{-90}
+  \psline(4,-0.2)(2.3,-0.2)
+}
+\psline(0,2.5)(0.3,2.5)
+\psellipse(0.3,0)(2,2.5)
+\psline(0.3,-2.5)(0,-2.5)
+\psellipse[fillstyle=gradient,gradangle=90,gradbegin=white,%
+    gradend=braun,gradmidpoint=1](0,0)(2,2.5)
+\pscustom[fillstyle=solid,fillcolor=braun]{%
+  \psline(-4,0.2)(0,0.2)
+  \psarcn(0,0){0.2}{90}{-90}
+  \psline(0,-0.2)(-4,-0.2)
+}
+\psline[linecolor=white,linewidth=0.1]{->}(0,0)(2.5;-90)
+\rput(-0.25,-1.5){\white\Large$\bm{\vec{r}}$}
+\pscircle[fillstyle=solid](-4,0){0.2}
+\psline[linewidth=0.2]{|-}(-3.5,-3)(-3.5,-0.2)
+\psline[linewidth=0.2]{|-}(3.5,-3)(3.5,-0.2)
+\pscustom[fillstyle=solid,fillcolor=lightgray]{%
+    \psellipticarcn(0,0)(2,2.5){90}{50}
+    \psline(2.25;50)(4.9,-4)(5.2,-4)(2.5;50)
+    \psellipticarc(0.3,0)(2,2.5){50}{90}
+}
+\psline[linewidth=0.2,linecolor=red]{->}(5,-4)(5.65,-5)
+\uput[0](4,-4.5){\Large $\vec{F}$}
+\end{pspicture}
+
+\end{document}

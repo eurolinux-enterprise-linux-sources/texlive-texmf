@@ -1,0 +1,37 @@
+\documentclass[12pt]{article}% voss-20051106 bsp320.tex
+\usepackage{pst-3dplot}
+\usepackage{pstricks-add}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\begin{pspicture}(10,6)% the easy solution
+  \Large\bfseries
+  \psline(0,5)(5,7)\psline(5,5)(10,7)\psline(0,0)(5,2)\psline(5,0)(10,2)
+  \psframe[style=TGreen](5,2)(10,7)
+  \rput(6,6){1}\rput(9,6){0}\rput(6,3){0}\rput(9,3){-1}
+  \psframe[style=TBlue](2.5,1)(7.5,6)
+  \rput(3.5,5){0}\rput(6.5,5){-1}\rput(3.5,2){-1}\rput(6.5,2){0}
+  \psframe[style=TRed](0,0)(5,5)
+  \rput(1,4){0}\rput(4,4){1}\rput(1,1){1}\rput(4,1){0}
+\end{pspicture}
+
+\begin{pspicture}(-6,-6)(6,6)% the 3d-solution
+\psset{Alpha=70,Beta=10}
+%\pstThreeDCoor
+\Large\bfseries
+\pstThreeDSquare[style=TRed](-6,0,0)(0,5,0)(0,0,5)
+\pstThreeDPut(-6,1,4){1}\pstThreeDPut(-6,4,4){0}
+\pstThreeDPut(-6,1,1){0}\pstThreeDPut(-6,4,1){-1}
+\pstThreeDSquare[style=TGreen](0,0,0)(0,5,0)(0,0,5)
+\pstThreeDPut(0,1,4){0}\pstThreeDPut(0,4,4){-1}
+\pstThreeDPut(0,1,1){-1}\pstThreeDPut(0,4,1){0}
+\pstThreeDSquare[style=TBlue](6,0,0)(0,5,0)(0,0,5)
+\pstThreeDPut(6,1,4){0}\pstThreeDPut(6,4,4){1}
+\pstThreeDPut(6,1,1){1}\pstThreeDPut(6,4,1){0}
+\pstThreeDLine(6,0,5)(-6,0,5)\pstThreeDLine(6,5,5)(-6,5,5)
+\pstThreeDLine(6,0,0)(-6,0,0)\pstThreeDLine(6,5,0)(-6,5,0)
+\end{pspicture}
+
+\end{document}

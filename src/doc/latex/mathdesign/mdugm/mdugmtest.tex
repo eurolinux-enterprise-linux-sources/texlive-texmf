@@ -1,0 +1,506 @@
+\documentclass[fleqn]{article}
+
+\usepackage[fraktur,mdugm]{mathdesign}
+
+\title{A \LaTeX\ math test document}
+\author{for fonts created by Math Design}
+
+\raggedbottom
+
+\newcommand{\testsize}[1]{
+   #1 \texttt{\string#1}: \(a_{c_e}, b_{d_f}, C_{E_G}, 0_{1_2},
+      a_{0_a}, 0_{a_0},
+      \sum_{i=0}^\infty\) \\
+}
+
+\newcommand{\testdelims}[3]{\sqrt{
+   #1|#1\|#1\uparrow
+   #1\downarrow#1\updownarrow#1\Uparrow#1\Downarrow
+   #1\Updownarrow#1\lfloor#1\lceil
+   #1(#1\{#1[#1\langle
+      #3
+   #2\rangle#2]#2\}#2)
+   #2\rceil#2\rfloor#2\Updownarrow#2\Downarrow
+   #2\Uparrow#2\updownarrow#2\downarrow#2\uparrow
+   #2\|#2|
+}\\}
+
+\newcommand{\testglyphs}[1]{
+\begin{quote}
+   #1a#1b#1c#1d#1e#1f#1g#1h#1i#1j#1k#1l#1m
+   #1n#1o#1p#1q#1r#1s#1t#1u#1v#1w#1x#1y#1z
+   #1A#1B#1C#1D#1E#1F#1G#1H#1I#1J#1K#1L#1M
+   #1N#1O#1P#1Q#1R#1S#1T#1U#1V#1W#1X#1Y#1Z
+   #10#11#12#13#14#15#16#17#18#19
+   #1\Gammait#1\Deltait#1\Thetait#1\Lambdait#1\Xiit
+   #1\Piit#1\Sigmait#1\Upsilonit#1\Phiit#1\Psiit#1\Omegait
+   #1\alpha#1\beta#1\gamma#1\digamma#1\delta#1\epsilon
+   #1\varepsilon#1\zeta#1\eta#1\theta#1\vartheta
+   #1\iota#1\kappa#1\varkappa#1\lambda#1\mu#1\nu#1\xi#1\omicron
+   #1\pi#1\varpi#1\rho#1\varrho
+   #1\sigma#1\varsigma#1\tau#1\upsilon#1\phi
+   #1\varphi#1\chi#1\psi#1\omega
+   #1\Gamma#1\Delta#1\Theta#1\Lambda#1\Xi
+   #1\Pi#1\Sigma#1\Upsilon#1\Phi#1\Psi#1\Omega
+   #1\alphaup#1\betaup#1\gammaup#1\digammaup#1\deltaup#1\epsilonup
+   #1\varepsilonup#1\zetaup#1\etaup#1\thetaup#1\varthetaup
+   #1\iotaup#1\kappaup#1\varkappaup#1\lambdaup#1\muup#1\nuup#1\xiup#1\omicron
+   #1\piup#1\varpiup#1\rhoup#1\varrhoup
+   #1\sigmaup#1\varsigmaup#1\tauup#1\upsilonup#1\phiup
+   #1\varphiup#1\chiup#1\psiup#1\omegaup
+   #1\partial#1\ell#1\imath#1\jmath#1\wp
+\end{quote}
+}
+
+\newcommand{\parenthesis}[1]{ $(#1)$ }
+\newcommand{\sidebearings}[1]{ $|#1|$  }
+\newcommand{\subscripts}[1]{ $#1_\circ$  }
+\newcommand{\supscripts}[1]{ $#1^\_$  }
+\newcommand{\scripts}[1]{ $#1^2_\circ$  }
+\newcommand{\vecaccents}[1]{ $\vec#1$  }
+\newcommand{\tildeaccents}[1]{ $\tilde#1$  }
+
+
+\ifx\omicron\undefined
+   \let\omicron=o
+\fi
+
+\parindent 0pt
+\mathindent 1em
+
+\def\test#1{#1}
+
+\def\testnums{%
+  \test 0 \test 1 \test 2 \test 3 \test 4 \test 5 \test 6 \test 7
+  \test 8 \test 9 }
+\def\testupperi{%
+  \test A \test B \test C \test D \test E \test F \test G \test H
+  \test I \test J \test K \test L \test M }
+\def\testupperii{%
+  \test N \test O \test P \test Q \test R \test S \test T \test U
+  \test V \test W \test X \test Y \test Z }
+\def\testupper{%
+  \testupperi\testupperii}
+
+\def\testloweri{%
+  \test a \test b \test c \test d \test e \test f \test g \test h
+  \test \imath \test \jmath \test k \test l \test m }
+\def\testlowerii{%
+  \test n \test o \test p \test q \test r \test s \test t \test u
+  \test v \test w \test x \test y \test z
+  \test\imath \test\jmath }
+\def\testlower{%
+  \testloweri\testlowerii}
+
+\def\testupgreeki{%
+  \test A \test B \test\Gamma \test\Delta \test E \test Z \test H
+  \test\Theta \test I \test K \test\Lambda \test M }
+\def\testupgreekii{%
+  \test N \test\Xi \test O \test\Pi \test P \test\Sigma \test T
+  \test\Upsilon \test\Phi \test X \test\Psi \test\Omega
+  \test\nabla }
+\def\testupgreek{%
+  \testupgreeki\testupgreekii}
+
+\def\testlowgreeki{%
+  \test\alpha \test\beta \test\gamma \test\delta \test\epsilon
+  \test\zeta \test\eta \test\theta \test\iota \test\kappa \test\lambda
+  \test\mu }
+\def\testlowgreekii{%
+  \test\nu \test\xi \test o \test\pi \test\rho \test\sigma \test\tau
+  \test\upsilon \test\phi \test\chi \test\psi \test\omega }
+\def\testlowgreekiii{%
+  \test\varepsilon \test\vartheta \test\varpi \test\varrho
+  \test\varsigma \test\varphi}
+\def\testlowgreek{%
+  \testlowgreeki\testlowgreekii\testlowgreekiii}
+
+\DeclareMathSymbol{\dit}{\mathord}{letters}{`d}
+\DeclareMathSymbol{\dup}{\mathord}{operators}{`d}
+
+\newenvironment{boldface}{\bgroup\mathversion{bold}%
+  \def\it{\fontseries{m}\fontshape{it}\selectfont}%
+  \fontseries{m}\selectfont }{\egroup}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+
+This document tests the math capabilities of the mdugmpackage, and is
+strongly modelled after a similar document by Alan Jeffrey.
+
+This test exercises the {\tt MathDesign mdugm} math fonts combined with the
+{\tt ugm} text fonts.
+
+\section*{Math Alphabets}
+
+Math italic:
+$$
+   ABCDEFGHIJKLMNOPQRSTUVWXYZ
+   abcdefghijklmnopqrstuvwxyz
+$$
+Text italic:
+$$
+   \mathit{ABCDEFGHIJKLMNOPQRSTUVWXYZ
+      abcdefghijklmnopqrstuvwxyz}
+$$
+Roman:
+$$
+   \mathrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ
+      abcdefghijklmnopqrstuvwxyz}
+$$
+Bold:
+$$
+   \mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ
+      abcdefghijklmnopqrstuvwxyz}
+$$
+Typewriter:
+$$
+   \mathtt{ABCDEFGHIJKLMNOPQRSTUVWXYZ
+      abcdefghijklmnopqrstuvwxyz}
+$$
+
+AMS like Symbol:
+$$
+   \yen \geqq \circeq \daleth \varkappa \leftarrowtail \because
+   \eqslantless  \eqslantgtr \curlyeqprec
+$$
+
+Greek:
+$$
+   \Gamma\Delta\Theta\Lambda\Xi\Pi\Sigma\Upsilon\Phi\Psi\Omega
+  \alpha\beta\gamma\delta\epsilon\varepsilon\zeta\eta\theta\vartheta
+   \iota\kappa\lambda\mu\nu\xi\omicron\pi\varpi\rho\varrho
+   \sigma\varsigma\tau\upsilon\phi\varphi\chi\psi\omega
+$$
+{\mathversion{bold}
+$$
+       \Gamma\Delta\Theta\Lambda\Xi\Pi\Sigma\Upsilon\Phi\Psi\Omega
+  \alpha\beta\gamma\delta\epsilon\varepsilon\zeta\eta\theta\vartheta
+   \iota\kappa\lambda\mu\nu\xi\omicron\pi\varpi\rho\varrho
+   \sigma\varsigma\tau\upsilon\phi\varphi\chi\psi\omega
+$$}
+
+Calligraphic:
+$$A\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ}Z$$
+Sans:
+$$
+   A\mathsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ}Z \quad
+      a\mathsf{abcdefghijklmnopqrstuvwxyz}z
+$$
+Fraktur:
+$$
+   A\mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ}Z 
+$$
+$$
+   a\mathfrak{abcdefghijklmnopqrstuvwxyz}z
+$$
+
+Blackboard Bold:
+$$
+   A\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ}Z
+$$
+
+\section*{Symbols}
+
+$$ \frac{\partial f}{\partial x} $$
+
+$$
+   a \hookrightarrow b \hookleftarrow c \longrightarrow d
+   \longleftarrow e \Longrightarrow f \Longleftarrow g
+   \longleftrightarrow h \Longleftrightarrow i
+   \mapsto j
+$$
+$$\textstyle
+   \oint \int \quad
+   \bigodot \bigoplus \bigotimes \sum \prod
+   \bigcup \bigcap \biguplus \bigwedge \bigvee \coprod
+$$
+$$
+   \oint \int \quad
+   \bigodot \bigoplus \bigotimes \sum \prod
+   \bigcup \bigcap \biguplus \bigwedge \bigvee \coprod
+$$
+$$ \bigodot_{i=1}^n \gamma_i = \bigoplus_{i=1}^n \gamma_i
+=\bigotimes_{i=1}^n \gamma_i = \sum_{i=1}^n \gamma_i = \prod_{i=1}^n
+\gamma_i = \bigcup_{i=1}^n \gamma_i = \bigcap_{i=1}^n \gamma_i =
+\biguplus_{i=1}^n \gamma_i = \bigwedge_{i=1}^n \gamma_i=
+\bigvee_{i=1}^n \gamma_i = \coprod_{i=1}^n \gamma_i
+$$
+
+\clearpage
+
+\section*{Big operators}
+
+\def\testop#1{#1_{i=1}^{n} x^{n} \quad}
+\begin{displaymath}
+  \testop\sum
+  \testop\prod
+  \testop\coprod
+  \testop\int
+  \testop\oint
+\end{displaymath}
+\begin{displaymath}
+  \testop\bigotimes
+  \testop\bigoplus
+  \testop\bigodot
+  \testop\bigwedge
+  \testop\bigvee
+  \testop\biguplus
+  \testop\bigcup
+  \testop\bigcap
+  \testop\bigsqcup
+% \testop\bigsqcap
+\end{displaymath}
+
+
+\section*{Radicals}
+
+\begin{displaymath}
+  \sqrt{x+y} \qquad \sqrt{x^{2}+y^{2}} \qquad
+  \sqrt{x_{i}^{2}+y_{j}^{2}} \qquad
+  \sqrt{\left(\frac{\cos x}{2}\right)} \qquad
+  \sqrt{\left(\frac{\sin x}{2}\right)}
+\end{displaymath}
+
+\begingroup
+\delimitershortfall-1pt
+\begin{displaymath}
+  \sqrt{\sqrt{\sqrt{\sqrt{\sqrt{\sqrt{\sqrt{x+y}}}}}}}
+\end{displaymath}
+\endgroup % \delimitershortfall
+
+
+\section*{Over- and underbraces}
+
+\begin{displaymath}
+  \overbrace{x} \quad
+  \overbrace{x+y} \quad
+  \overbrace{x^{2}+y^{2}} \quad
+  \overbrace{x_{i}^{2}+y_{j}^{2}} \quad
+  \underbrace{x} \quad
+  \underbrace{x+y} \quad
+  \underbrace{x_{i}+y_{j}} \quad
+  \underbrace{x_{i}^{2}+y_{j}^{2}} \quad
+\end{displaymath}
+
+
+\section*{Normal and wide accents}
+
+\begin{displaymath}
+  \dot{x} \quad
+  \ddot{x} \quad
+  \vec{x} \quad
+  \bar{x} \quad
+  \overline{x} \quad
+  \overline{xx} \quad
+  \tilde{x} \quad
+  \widetilde{x} \quad
+  \widetilde{xx} \quad
+  \widetilde{xxx} \quad
+  \hat{x} \quad
+  \widehat{x} \quad
+  \widehat{xx} \quad
+  \widehat{xxx} \quad
+\end{displaymath}
+
+\def\testwilde#1{
+    \begin{displaymath}
+        #1{a} \quad
+        #1{ab} \quad 
+        #1{abc} \quad 
+        #1{abcde} \quad 
+        #1{abcdefg} \quad 
+        #1{abcdefghi} \quad 
+        #1{abcdefghijk} \quad 
+    \end{displaymath}}
+
+\testwilde\widehat
+\testwilde\widetilde
+\testwilde\widetriangle
+\testwilde\wideparen
+
+
+\section*{Long arrows}
+
+\begin{displaymath}
+    \leftrightarrow \quad
+  \longleftarrow  \quad
+  \longrightarrow \quad
+  \longleftrightarrow \quad
+  \Leftrightarrow \quad
+  \Longleftarrow  \quad
+  \Longrightarrow \quad
+  \Longleftrightarrow \quad
+\end{displaymath}
+
+
+\section*{Left and right delimters}
+
+\def\testdelim#1#2{ - #1 f #2 - }
+\begin{displaymath}
+  \testdelim()
+  \testdelim[]
+  \testdelim\lfloor\rfloor
+  \testdelim\lceil\rceil
+  \testdelim\langle\rangle
+  \testdelim\{\}
+\end{displaymath}
+
+\clearpage
+\section*{Big-g-g delimters}
+
+\def\testdelim#1#2{
+  -
+  \left#1\left#1\left#1\left#1\left#1\left#1\left#1\left#1\left#1\left#1\left#1
+  #1 -
+  #2 \right#2\right#2\right#2\right#2\right#2\right#2\right#2\right#2\right#2\right#2\right#2 -}
+
+\begingroup
+\delimitershortfall-1pt
+\begin{displaymath}
+  \testdelim\lfloor\rfloor
+  \qquad
+  \testdelim()
+\end{displaymath}
+\begin{displaymath}
+  \testdelim\lceil\rceil
+  \qquad
+  \testdelim\{\}
+\end{displaymath}
+\begin{displaymath}
+  \testdelim\llbracket\rrbracket 
+  \qquad 
+  \testdelim\lwave\rwave
+\end{displaymath}
+\begin{displaymath}
+  \testdelim[]
+  \qquad
+  \testdelim\lgroup\rgroup
+\end{displaymath}
+\begin{displaymath}
+  \testdelim\langle\rangle
+  \qquad
+  \testdelim\lmoustache\rmoustache
+\end{displaymath}
+\begin{displaymath}
+  \testdelim\uparrow\downarrow \quad
+  \testdelim\Uparrow\Downarrow \quad
+\end{displaymath}
+\endgroup % \delimitershortfall
+
+\section*{Delimiters}
+
+Each row should be a different size, but within each row the delimiters
+should be the same size.  First with \verb|\big|, etc:
+$$\begin{array}{c}
+   \testdelims\relax\relax{J}
+   \testdelims\bigl\bigr{J}
+   \testdelims\Bigl\Bigr{J}
+   \testdelims\biggl\biggr{J}
+   \testdelims\Biggl\Biggr{J}
+\end{array}$$
+Then with \verb|\left| and \verb|\right|:
+$$\begin{array}{c}
+   \testdelims\left\right{\begin{array}{c} f \end{array}}
+   \testdelims\left\right{\begin{array}{c} a\\f \end{array}}
+   \testdelims\left\right{\begin{array}{c} a\\a\\f \end{array}}
+   \testdelims\left\right{\begin{array}{c} a\\a\\a\\f \end{array}}
+\end{array}$$
+
+\section*{Sizing}
+
+$$
+    abcde + x^{abcde} + 2^{x^{abcde}}
+$$
+
+The subscripts should be appropriately sized:
+\begin{quote}
+\testsize\tiny
+\testsize\scriptsize
+\testsize\footnotesize
+\testsize\small
+\testsize\normalsize
+\testsize\large
+\testsize\Large
+\testsize\LARGE
+\testsize\huge
+\testsize\Huge
+
+\end{quote}
+
+\clearpage
+
+\section*{Spacing}
+
+This paragraph should appear to be a monotone grey texture.  Suppose
+\(f \in \mathcal{S}_n\) and \(g(x) = (-1)^{|\alpha|}x^\alpha
+f(x)\).  Then \(g \in \mathcal{S}_n\); now (\emph{c}) implies
+that \(\hat g = D_\alpha \hat f\) and \(P \cdot D_\alpha\hat
+f = P \cdot \hat g = (P(D)g)\hat{}\), which is a bounded function,
+since \(P(D)g \in L^1(R^n)\).  This proves that \(\hat f \in
+\mathcal S_n\).  If \(f_i \rightarrow f\) in \(\mathcal S_n\),
+then \(f_i \rightarrow f\) in \(L^1(R^n)\).  Therefore \(\hat
+f_i(t) \rightarrow \hat f(t)\) for all \(t \in R^n\).  That \(f
+\rightarrow \hat f\) is a \emph{continuous} mapping of
+\(\mathcal S_n\) into \(\mathcal S_n\) follows now from the
+closed graph theorem.  And thus for \(x_1\) through \(x_i\).
+\emph{Functional Analysis}, W.~Rudin,
+McGraw--Hill, 1973.
+
+\begin{boldface}
+This paragraph should appear to be a monotone dark texture.  Suppose
+\(f \in \mathcal{S}_n\) and \(g(x) = (-1)^{|\alpha|}x^\alpha
+f(x)\).  Then \(g \in \mathcal{S}_n\); now (\emph{c}) implies
+that \(\hat g = D_\alpha \hat f\) and \(P \cdot D_\alpha\hat
+f = P \cdot \hat g = (P(D)g)\hat{}\), which is a bounded function,
+since \(P(D)g \in L^1(R^n)\).  This proves that \(\hat f \in
+\mathcal S_n\).  If \(f_i \rightarrow f\) in \(\mathcal S_n\),
+then \(f_i \rightarrow f\) in \(L^1(R^n)\).  Therefore \(\hat
+f_i(t) \rightarrow \hat f(t)\) for all \(t \in R^n\).  That \(f
+\rightarrow \hat f\) is a \emph{continuous} mapping of
+\(\mathcal S_n\) into \(\mathcal S_n\) follows now from the
+closed graph theorem.  And thus for \(x_1\) through \(x_i\).
+\emph{Functional Analysis}, W.~Rudin, McGraw--Hill, 1973.
+\end{boldface}
+
+{\itshape This paragraph should appear to be a monotone grey texture.
+Suppose \(f \in \mathcal{S}_n\) and \(g(x) =
+(-1)^{|\alpha|}x^\alpha f(x)\).  Then \(g \in \mathcal{S}_n\);
+now (\emph{c}) implies that \(\hat g = D_\alpha \hat f\) and
+\(P \cdot D_\alpha\hat f = P \cdot \hat g = (P(D)g)\hat{}\),
+which is a bounded function, since \(P(D)g \in L^1(R^n)\).  This
+proves that \(\hat f \in \mathcal S_n\).  If \(f_i \rightarrow
+f\) in \(\mathcal S_n\), then \(f_i \rightarrow f\) in
+\(L^1(R^n)\).  Therefore \(\hat f_i(t) \rightarrow \hat f(t)\)
+for all \(t \in R^n\).  That \(f \rightarrow \hat f\) is a
+\emph{continuous} mapping of \(\mathcal S_n\) into \(\mathcal
+S_n\) follows now from the closed graph theorem.  \emph{Functional
+Analysis}, W.~Rudin, McGraw--Hill, 1973.}
+
+The text in these boxes should spread out as much as the math does:
+$$\begin{array}{c}
+   \framebox[.95\width][s]{For example \(x+y = \min\{x,y\}
+      + \max\{x,y\}\) is a formula.} \\
+   \framebox[.975\width][s]{For example \(x+y = \min\{x,y\}
+      + \max\{x,y\}\) is a formula.} \\
+   \framebox[\width][s]{For example \(x+y = \min\{x,y\}
+      + \max\{x,y\}\) is a formula.} \\
+   \framebox[1.025\width][s]{For example \(x+y = \min\{x,y\}
+      + \max\{x,y\}\) is a formula.} \\
+   \framebox[1.05\width][s]{For example \(x+y = \min\{x,y\}
+      + \max\{x,y\}\) is a formula.} \\
+   \framebox[1.075\width][s]{For example \(x+y = \min\{x,y\}
+      + \max\{x,y\}\) is a formula.} \\
+   \framebox[1.1\width][s]{For example \(x+y = \min\{x,y\}
+      + \max\{x,y\}\) is a formula.} \\
+   \framebox[1.125\width][s]{For example \(x+y = \min\{x,y\}
+      + \max\{x,y\}\) is a formula.} \\
+\end{array}$$
+\end{document}
+
+%% Local Variables:
+%% mode: latex
+%% End:

@@ -1,0 +1,131 @@
+The Maple Technical Newsletter Styles  (LaTeX2e)
+================================================
+
+This directory contains latex2e style files and sample documents of
+interest to contributors to the Maple Technical NewsLetter.  In
+particular, see the sample article MTNarticle.tex.  This article is
+also available as an HTML document. See the file:
+
+    ftp://ftp.maplesoft.com/pub/maple/MTN/MTNarticle/MTNarticle.html
+
+Author's Guide Lines
+--------------------
+
+When preparing an article for MTN, the following general guidelines should 
+be followed.
+
+  - Prepare the article exactly as you would a standard LaTeX
+  "article", indicating the \title and \author.  Abstracts will not be
+  used in the final publication.
+
+  - When giving examples in Maple, both input and output must
+    be shown.  Include Maple commands and and Maple results using the
+    same macros as used by "Export to LaTeX".  (See below)
+
+  - The reader should be able to reproduce the output by simply
+    entering every Maple input, i.e. you should not hide some steps.
+
+To prepare your article, structure it exactly as you would a standard
+latex "article".  For example,
+
+	- Specify the title using the \title{...} macro.
+
+	- Specify the author / authors  using \author{...} and their
+	institutions by using \thanks{...}
+
+	- Include the title by using the \maketitle macro.
+
+	- Use ordinary \section{...}, and \subsection{...} commands to
+	break up your article.
+
+The final document will be processed using the the document class
+mtn.cls.  Thus, a typical article will have the structure
+
+    \documentclass[11pt]{mtn}
+    \usepackage{palatino}
+    \begin{document}
+    \title{The D Operator and Algorithmic \\ Differentiation}
+    \author{Michael Monagan
+    \thanks{Informatik E.T.H., Z\"{u}rich, Switzerland. monagan@inf.ethz.ch}
+    \and J. S. Devitt\thanks{Faculty  of Mathematics, University of Waterloo,
+    Canada, jsdevitt@daisy.uwaterloo.ca}
+    }
+    \shorttitle{D Operator}
+    \maketitle
+    \begin{document}
+    \section{Introduction}
+    ...
+    \end{document}
+
+You can use the standard LaTeX "article" style for preparation just by
+omitting the "\shorttitle".  Use the macro package found in
+"mapleenv.sty".  In that case the document would begin
+
+    \documentclass[11pt]{article}
+    \usepackage{mapleenv}
+    \begin{document}
+    \title{...}
+    \author{...}
+    \maketitle
+    ...
+
+In either case, Maple input and output should be inserted in a format
+analogous to that produced by "Export to LaTeX" from a Maple V Release 3
+worksheet.  Examples of Maple input and output are
+
+	Input:
+
+		\begin{mapleinput}
+		x + y^2;
+		\end{mapleinput}
+
+	Output:
+
+		\begin{maplelatex}
+		\[
+		x + y^2
+		\]
+		\end{maplelatex}
+
+	TTYOutput:
+
+		\begin{maplettyout}
+		           2
+		      x + y 
+		\end{maplettyout}
+
+	Plots:
+
+	 	\mapleplot{filename.ps}
+
+
+Required LaTeX2e Macro Packages and Styles
+-------------------------------------------
+
+Before processing your document with LaTeX2e you will require 
+the style files
+	
+	mtn.cls   (fileversion 1.8 or newer)
+	mapleenv.sty (fileversion 4.0 or newer)
+
+and the "graphics" package that is part of LaTeX2e distribution must be
+installed as part of your LaTeX environment.  A copy is located in the
+"graphics" subdirectory.  The graphics macros must be expanded for
+installation by running the command
+
+	% latex2e  graphics.ins
+
+The result of expanding this macro package is found in the subdirectory
+"graphics_expanded".  The master graphics source files are available from
+
+    ftp://ftp.shsu.edu/tex-archive/macros/latex2e/packages/graphics
+
+The Maple styles are available from
+
+    ftp://ftp.maplesoft.com/pub/maple/MTN
+    ftp://ftp.shsu.edu/tex-archive/macros/latex2e/contrib/supported/maple
+
+The document maplems.tex provides additional documentation on how to use
+the styles.  For additional information, contact doc@maplesoft.on.ca .  
+
+Feb, 1995.

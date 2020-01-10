@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE entry SYSTEM "../catalogue.dtd">
+<entry id="rotfloat"
+       datestamp="2004/01/04"
+       modifier="rotfloat@sommerfeldt.net">
+  <about>
+    <name>rotfloat</name>
+    <caption>Combines the float and the rotating package</caption>
+    <author>
+      <name>Axel Sommerfeldt</name>
+      <email>rotfloat@sommerfeldt.net</email>
+    </author>
+    <license type="lppl"/>
+    <version>
+      <number>1.2</number>
+    </version>
+  </about>
+  <description>
+    <abstract>
+      The float package provides commands to define new floats
+      of various styles (plain, boxed, ruled, and userdefined ones);
+      the rotating package provides new environments (sidewaysfigure
+      and sidewaystable) which are rotated by 90 or 270 degrees.
+      But what about new rotated floats, e.g. a rotated ruled one?
+      This package makes this possible; it builds a bridge between both
+      packages and extend the commands from the float package to define
+      rotated versions of the new floats, too.
+    </abstract>
+  </description>
+  <distribution>
+    <ctan>macros/latex/contrib/rotfloat</ctan>
+  </distribution>
+</entry>

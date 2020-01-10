@@ -1,0 +1,28 @@
+\documentclass[12pt]{article}
+\usepackage{pstricks}              % PSTricks with the `color' extension
+\usepackage[tiling]{pst-fill}      % PSTricks package for filling/tiling
+\usepackage{pst-char}              % PSTricks package for character path
+\usepackage{pst-grad}              % PSTricks package for gradient filling
+%
+\newcommand{\WriteBig}[5] {%
+  \DeclareFixedFont{\bigsf}{T1}{phv}{b}{n}{#2}%
+  \DeclareFixedFont{\smallrm}{T1}{ptm}{m}{n}{#3}%
+  \psboxfill{\small #1} %
+      \centerline{%
+         \pscharpath[fillstyle=gradient,%
+	    gradangle=-45,%
+	    gradmidpoint=0.5,%
+	    addfillstyle=boxfill,%
+		gradbegin=#4,%
+		gradend=#5,%
+	    fillangle=45,%
+	    fillsep=0.7mm]{\rput[b](0,0){\bigsf#1}}}
+}
+
+\begin{document}
+\thispagestyle{empty}
+\WriteBig{Java}{4.5cm}{3mm}{blue}{white}
+
+\vspace*{7cm}
+\WriteBig{2004}{7cm}{7mm}{red}{green}
+\end{document}

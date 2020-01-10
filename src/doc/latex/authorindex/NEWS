@@ -1,0 +1,19 @@
+November 2006:
+
+- Include an enhancement by Pieter Eendebak for natbib.cfg (part
+  of the documentation)
+
+March 2005:
+
+- Support for authauthor and autheditor fields in BibTeX data base.
+  These fields serve to provide a consistent spelling of author names
+
+- Bugfix: When using multiple BibTeX data bases, they will be queried
+  in the sequence given in the LaTeX source.  This is important when
+  some data bases define @STRINGs used in others.
+
+October 2004:
+
+- Bugfix: Gracefully handle spaces in citation commands with multiple
+  arguments.  Previous versions included the space in the key, which
+  cased the search in the BibTeX data base to fail.

@@ -1,0 +1,58 @@
+\documentclass{article}
+\usepackage{array,ifthen}
+\usepackage{zefonts}
+\title{Testing the `ze' fonts
+       (virtual T1 fonts)}
+\author{Robert Fuster\\
+        \footnotesize Departament de Matem\`atica Aplicada\\
+        \footnotesize Universitat Polit\`ecnica de Val\`encia\\
+        \footnotesize 46071 Val\`encia (Spain)\\
+        \footnotesize e-mail: \texttt{rfuster\@ mat.upv.es}\\
+        \footnotesize URL: \texttt{HTTP://www.upv.es/\~{}rfuster}}
+\date{June 24, 1997\\
+      September 22, 1998 (version 2.0)}
+\setlength{\extrarowheight}{2pt}
+\newcounter{n} \newcounter{p}
+\newcommand{\taula}{%
+    \setcounter{n}{0}
+    \setcounter{p}{0}
+    \begin{center}
+    \setcounter{n}{0}
+    \setcounter{p}{0}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    \whiledo{\value{n} < 255}{%
+     \symbol{\then}\stepcounter{p}\stepcounter{n}\ifthenelse{\value{p} = 16}{%
+                                  \setcounter{p}{0}\\\hline
+                                 }{\ifthenelse{\value{n} < 256}{&}{}%
+                                     }}
+    \symbol{\then}\\\hline
+    \end{tabular}
+    \end{center}
+}
+\begin{document}
+\maketitle
+This is a test of the `ze' fonts. In the following figures you can compare
+these fonts with the real `ec' fonts.
+\begin{figure}
+    \caption{Roman virtual font zerm1000 \label{fig:zerm1000}}
+    \taula
+    \caption{Roman font ecrm1000 \label{fig:ecrm1000}}
+    {\renewcommand{\rmdefault}{cmr}\rmfamily\selectfont\taula
+    }
+\end{figure}
+\begin{figure}
+    \caption{Sans Serif virtual font zess1000 \label{fig:zess1000}}
+    \sffamily\taula
+    \caption{Sans Serif font ecss1000 \label{fig:ecss1000}}
+    {\renewcommand{\sfdefault}{cmss}\sffamily\selectfont\taula
+    }
+\end{figure}
+\begin{figure}
+    \caption{Typewriter virtual font zett1000 \label{fig:zett1000}}
+    \ttfamily\taula
+    \caption{Typewriter font ectt1000 \label{fig:ectt1000}}
+    {\renewcommand{\ttdefault}{cmtt}\ttfamily\selectfont\taula
+    }
+\end{figure}
+\end{document}

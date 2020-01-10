@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Evoke bibtex for each .aux file in the present directory.
+#
+# Thorsten Hansen, 2003-03-24 
+
+for file in *.aux ; do
+  bibtex `basename $file .aux`
+done

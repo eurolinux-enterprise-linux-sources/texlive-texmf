@@ -1,0 +1,34 @@
+\documentclass[12pt,a4paper]{article} % Herbert Voss 2004-05-05
+\usepackage{pstricks}
+\xdefinecolor{lightred}{rgb}{1.0, 0.8, 0.8}
+\newsavebox\pstBox
+\newlength\pstWidth
+\newlength\pstHeight
+\makeatletter
+\def\psLBox{\@ifnextchar[{\psLBox@i}{\psLBox[]}}
+\def\psLBox@i[#1]#2{%
+  \psset{linearc=0.4,shadow=true,shadowsize=0.2,%
+      fillstyle=solid,fillcolor=white}
+  \ifx#1\empty\else\psset{#1}\fi
+  \sbox\pstBox{#2}
+  \pstWidth=\wd\pstBox
+  \pstHeight=\ht\pstBox
+  \advance\pstHeight by \dp\pstBox
+  \advance\pstHeight by \pslinearc
+  \advance\pstWidth by \pslinearc
+  \begin{pspicture}(\pstWidth,\pstHeight)
+    \psline(\pstWidth,0)(0,0)(0,\pstHeight)(\pstWidth,\pstHeight)%
+    \psline[shadow=false](\pstWidth,\pstHeight)(\pstWidth,0)
+    \rput(0.5\pstWidth,0.5\pstHeight){#2}
+  \end{pspicture}
+}
+\makeatother
+\begin{document}
+
+\psLBox[fillcolor=lightred]{Some text in a box}% 
+\psLBox[fillcolor=yellow]{%
+\parbox{3cm}{Some text in a box with line arcs only 
+    on the left side}
+}% 
+\end{document}
+

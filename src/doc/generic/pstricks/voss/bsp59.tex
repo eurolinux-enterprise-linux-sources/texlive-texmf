@@ -1,0 +1,38 @@
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\usepackage{pst-plot}
+\usepackage{pstricks-add}
+\usepackage{bm}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\begin{center}
+\begin{pspicture}(-0.5,-0.5)(7,5)
+  \pscustom[linewidth=1pt,fillstyle=hlines,hatchcolor=red]{
+    \psplot[linewidth=1pt]{2}{5}{%
+     x x mul neg x 6 mul add 5 sub}
+    \psplot[linewidth=1pt]{5}{2}{%
+     x x mul neg 3 div x 4 mul 3 div add 5 3 div add}
+  }
+  \pscustom[linewidth=1pt,fillstyle=vlines,hatchcolor=blue]{
+    \psline(0,1.666667)
+    \psplot[linewidth=1pt]{0}{2}{%
+       x x mul neg 3 div x 4 mul 3 div add 5 3 div add}
+    \psplot[linewidth=1pt]{2}{1}{%
+     x x mul neg x 6 mul add 5 sub}
+  }
+  \psaxes[xyLabel=\footnotesize]{->}(0,0)(-0.5,-0.5)(7,5)
+  \uput[-90](7,0){$\bm{x}$}
+  \uput[0](0,5){$\bm{y}$}
+  \psplot[linewidth=1pt]{0.75}{5.25}{%
+     x x mul neg x 6 mul add 5 sub}
+  \psplot[linewidth=1pt]{0}{5.25}{%
+     x x mul neg 3 div x 4 mul 3 div add 5 3 div add}
+  \rput(5,2){$\bm{f}$}
+  \rput(3,2){$\bm{g}$}
+\end{pspicture}
+\end{center}
+
+\end{document}

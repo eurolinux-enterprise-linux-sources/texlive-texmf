@@ -1,0 +1,617 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Using TrueType fonts with TEX via Postscript Type1 format</TITLE>
+<META NAME="description" CONTENT="Using TrueType fonts with TEX via Postscript Type1 format">
+<META NAME="keywords" CONTENT="ttf-tetex">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ttf-tetex.css">
+
+</HEAD>
+
+<BODY >
+
+<P>
+<H1 ALIGN="CENTER">Using TrueType fonts with T<SMALL>E</SMALL>X via Postscript Type1 format</H1><DIV>
+
+<P ALIGN="CENTER"><STRONG>Harald Harders 
+  (<A NAME="tex2html2"
+  HREF="mailto:h.harders@tu-bs.de"><TT>h.harders@tu-bs.de</TT></A>)</STRONG></P>
+<P ALIGN="CENTER"><STRONG>2003-10-31</STRONG></P>
+</DIV>
+
+<P>
+
+<H3>Abstract:</H3>
+<DIV>
+This document describes how I have managed to use TrueType
+fonts with teT<SMALL>E</SMALL>X 1.0 under SuSE Linux 6.2.<A NAME="tex2html3"
+  HREF="#foot30"><SUP>1</SUP></A> The way described in
+``Using TrueType fonts with T<SMALL>E</SMALL>X (L<SUP><SMALL>A</SMALL></SUP>T<SMALL>E</SMALL>X) and pdfT<SMALL>E</SMALL>X (pdfL<SUP><SMALL>A</SMALL></SUP>T<SMALL>E</SMALL>X)''
+[<A
+ HREF="ttf-tetex.html#rakityansky">Rak</A>] did work with MiKT<SMALL>E</SMALL>X, but I did not manage to use
+the fonts with teT<SMALL>E</SMALL>X. 
+
+<P>
+Strictly speaking this document doesn't describe how to use TrueType
+fonts with teT<SMALL>E</SMALL>X but how to convert TrueType fonts to PostScript
+Type1 format which can be used with T<SMALL>E</SMALL>X.
+
+<P>
+The shown shell commands are unix style. 
+Similar commands should also work under Windows.
+Please try yourself to find the according commands.
+
+<P>
+If I have made any errors or if you have a suggestion please mail it
+to me.
+
+<P>
+A <A NAME="tex2html4"
+  HREF="ftp://ftp.dante.de/tex-archive/info/TrueType/ttf-tetex.pdf"><TT>PDF version</TT></A>
+is also available.
+<P>
+</DIV>
+<P>
+
+<P>
+<BR>
+
+<H2><A NAME="SECTION00010000000000000000">
+Contents</A>
+</H2>
+<!--Table of Contents-->
+
+<UL>
+<LI><A NAME="tex2html39"
+  HREF="ttf-tetex.html#SECTION00020000000000000000">1 Disclaimer</A>
+<LI><A NAME="tex2html40"
+  HREF="ttf-tetex.html#SECTION00030000000000000000">2 Preparing the conversion</A>
+<LI><A NAME="tex2html41"
+  HREF="ttf-tetex.html#SECTION00040000000000000000">3 Generating the Postscript Type1 fonts</A>
+<LI><A NAME="tex2html42"
+  HREF="ttf-tetex.html#SECTION00050000000000000000">4 Generating the TEX related font files</A>
+<LI><A NAME="tex2html43"
+  HREF="ttf-tetex.html#SECTION00060000000000000000">5 Move the files to the right places</A>
+<LI><A NAME="tex2html44"
+  HREF="ttf-tetex.html#SECTION00070000000000000000">6 Make dvips find the new font</A>
+<UL>
+<LI><A NAME="tex2html45"
+  HREF="ttf-tetex.html#SECTION00071000000000000000">6.1 Use an additional map file</A>
+<LI><A NAME="tex2html46"
+  HREF="ttf-tetex.html#SECTION00072000000000000000">6.2 Append data to the global map file</A>
+</UL><BR>
+<LI><A NAME="tex2html47"
+  HREF="ttf-tetex.html#SECTION00080000000000000000">7 Usage of the new font</A>
+<LI><A NAME="tex2html48"
+  HREF="ttf-tetex.html#SECTION00090000000000000000">A. To do</A>
+<LI><A NAME="tex2html49"
+  HREF="ttf-tetex.html#SECTION000100000000000000000">B. Links</A>
+<LI><A NAME="tex2html50"
+  HREF="ttf-tetex.html#SECTION000110000000000000000">C. References</A>
+<LI><A NAME="tex2html51"
+  HREF="ttf-tetex.html#SECTION000120000000000000000">Bibliography</A>
+</UL>
+<!--End of Table of Contents-->
+<P>
+
+<H1><A NAME="SECTION00020000000000000000">
+1 Disclaimer</A>
+</H1>
+
+<P>
+This document is provides as is.
+I will not guarantee that the described conversion works and that it
+doesn't course any damage.
+I also will not give any support for problems doing the conversion.
+Please refer to the newsgroups, e.g., comp.text.tex or
+de.comp.text.tex.
+My email address is given to give feedback (suggestions, error
+reports), not for support.
+
+<P>
+I don't know if the shown conversion violates any copyrights.
+
+<P>
+
+<H1><A NAME="SECTION00030000000000000000">
+2 Preparing the conversion</A>
+</H1>
+
+<P>
+As an example I will show how to convert the font ``VAG Rounded BT'' which
+is part of Microsoft Windows 98 (<code>tt0756m_.TTF</code>).
+
+<P>
+First copy the fonts you want to convert into a temporary directory
+(e.g., a Windows disk is mounted on /dos/c):
+<BLOCKQUOTE>
+<code>$ mkdir ~/ttf</code>
+<BR><code>$ cp /dos/c/windows/fonts/tt0756m_.TTF ~/ttf</code>  
+</BLOCKQUOTE>
+Then rename the files to a name conforming the fontname scheme by K.&nbsp;Berry
+[<A
+ HREF="ttf-tetex.html#berry1999a">Ber99</A>]. In this case the supplier is ``Bitstream'' (Filename
+<code>b*******.ttf</code>)<A NAME="tex2html5"
+  HREF="#foot43"><SUP>2</SUP></A>. The Shortcut for the typeface is ``vr'' (Filename
+<code>*vr*****.ttf</code>) taken from [<A
+ HREF="ttf-tetex.html#berry1999a">Ber99</A>]. The weight is
+``regular'' (Filename <code>***r****.ttf</code>). The variant is omitted
+because itself and the width are normal. The encoding is set to ``8a''
+which means Adobe standard encoding<A NAME="tex2html6"
+  HREF="#foot45"><SUP>3</SUP></A> (Filename <code>****8a**.ttf</code>). Because the
+width is standard and the font is linearly scaled, these parts of the
+filename are omitted. Finally the filename results in <code>bvrr8a.ttf</code>. Move
+the original file to this filename: 
+<BLOCKQUOTE>
+<code>$ mv tt0756m_.TTF bvrr8a.ttf</code> 
+</BLOCKQUOTE>
+A more detailed description on the naming conventions can be found in
+[<A
+ HREF="ttf-tetex.html#berry1999a">Ber99</A>]. 
+
+<P>
+
+<H1><A NAME="SECTION00040000000000000000">
+3 Generating the Postscript Type1 fonts</A>
+</H1>
+
+<P>
+To convert the TrueType font to Postscript Type1 format I used the program
+<code>ttf2pt1</code> by Andrew Weeks et&nbsp;al.
+(<TT><A NAME="tex2html7"
+  HREF="http://ttf2pt1.sourceforge.net/">http://ttf2pt1.sourceforge.net/</A></TT>). Generate the font files
+<code>bvrr8a.afm</code>, <code>bvrr8a.pfa</code>, and <code>bvrr8a.pfb</code> by using
+these commands: 
+<BLOCKQUOTE>
+<code>$ ttf2pt1 -a -e bvrr8a.ttf bvrr8a</code>
+<BR><code>$ ttf2pt1 -a -b bvrr8a.ttf bvrr8a</code>
+
+</BLOCKQUOTE>
+The switch <code>-a</code> switches the conversion of some ligatures
+(e.g., fi) on (thanks to Hume Smith for that hint).
+In one of the last lines of the output the fontname is noted:
+<BLOCKQUOTE>
+<code>FontName VAGRoundedBT_Regular</code>
+
+</BLOCKQUOTE>
+Note the name on a sheet of paper--You will need it later again.
+
+<P>
+The script
+<A NAME="tex2html8"
+  HREF="ftp://ftp.dante.de/tex-archive/info/TrueType/ttf2type1"><TT>ttf2type1</TT></A>
+does these conversion automaticaly for all files with 
+the extension <code>ttf</code> in the present working directory. To get the
+font names you should start it as follows:
+<BLOCKQUOTE>
+<code>$ ./ttf2type1 2&gt;&amp;1 | grep FontName</code> 
+</BLOCKQUOTE>
+
+<P>
+
+<H1><A NAME="SECTION00050000000000000000">
+4 Generating the T<SMALL>E</SMALL>X related font files</A>
+</H1>
+
+<P>
+Use ``fontinst'' by Alan Jeffrey and Rowland McDonnell
+(<TT><A NAME="tex2html9"
+  HREF="ftp://ftp.tex.ac.uk/tex-archive/fonts/utilities/fontinst">ftp://ftp.tex.ac.uk/tex-archive/fonts/utilities/fontinst</A></TT>) to
+generate the files that T<SMALL>E</SMALL>X needs to use the fonts:
+<BLOCKQUOTE>
+<code>$ tex fontinst.sty</code>
+<BR><code>* \latinfamily{bvr}{} \bye</code> 
+</BLOCKQUOTE>
+If you use fonts with different variants you have to append the letter of
+the variant to the family name of the font (e.g., VAGRoundedBT_Condensed
+would be bvrc).
+This automatic conversion only works if you are using a text font and
+if you have used file names according to the fontname scheme by
+K.&nbsp;Berry&nbsp;[<A
+ HREF="ttf-tetex.html#berry1999a">Ber99</A>].
+Otherwise, you will get some nearly empty <code>.fd</code> files and nothing
+more.
+
+<P>
+Now use pltotf on every file with the extension <code>.pl</code> and
+vptovf on all files with the extension <code>.vpl</code>:
+<BLOCKQUOTE>
+<code>$ for a in *.pl; do pltotf $a; done</code>
+<BR><code>$ for a in *.vpl; do vptovf $a; done</code> 
+
+</BLOCKQUOTE>
+Now you may delete all files that are not used anymore:
+<BLOCKQUOTE>
+<code>$ rm *.pl *.vpl *.mtx</code> 
+</BLOCKQUOTE>
+The manual of the fontinst package includes a better description.
+
+<P>
+
+<H1><A NAME="SECTION00060000000000000000">
+5 Move the files to the right places</A>
+</H1>
+
+<P>
+Now all files have to be moved to a position where T<SMALL>E</SMALL>X can find them. I
+suggest to put them in the <code>TEXMFLOCAL</code> tree. 
+One possibility to get its location is to view the file <code>texmf.cnf</code>.
+You can locate it by using <code>kpsewhich</code>:
+<BLOCKQUOTE>
+<code>$ kpsewhich texmf.cnf</code> 
+</BLOCKQUOTE>
+e.g., on SuSE&nbsp;6.2 and teT<SMALL>E</SMALL>X&nbsp;1.0 <code>texmf.cnf</code> is located in the directory
+<code>/etc/texmf/</code>.
+Another possibility to get <code>TEXMFLOCAL</code> is to use <code>kpsexpand</code>:
+<BLOCKQUOTE>
+<code>$ kpsexpand '$TEXMFLOCAL'</code>
+
+</BLOCKQUOTE>
+On my computer the <code>TEXMFLOCAL</code> tree starts at
+<code>/usr/local/teTeX/share/texmf.local</code>. The <code>TEXMFMAIN</code> tree starts at
+<code>/usr/local/teTeX/share/texmf</code>.
+In order to have less work I set the shell variable <code>TMF</code> to the
+local T<SMALL>E</SMALL>X tree by typing:
+<BLOCKQUOTE>
+<code>$ export TMF=`kpsexpand '$TEXMFLOCAL'`</code>
+</BLOCKQUOTE>
+
+<P>
+The files of each file type are installed in an own directory tree
+which has this structure:
+<BLOCKQUOTE>
+<code>$TMF/fonts/</code>&lt;extension&gt;<code>/</code>&lt;supplier&gt;<code>/</code>&lt;fontname&gt;<code>/</code>
+
+</BLOCKQUOTE>
+In this case:
+<BLOCKQUOTE>
+<code>$TMF/fonts/</code>&lt;extension&gt;<code>/bitstream/vagrounded/</code>
+
+</BLOCKQUOTE>
+The extensions are: <code>tfm</code>, <code>vf</code>, <code>pfa</code>, 
+<code>afm</code>, and <code>ttf</code>. 
+The extension <code>pfb</code> is an exception, its files have to be copied
+to the subdirectory ...<code>/type1/</code>....
+Copy the files by typing:
+<BLOCKQUOTE>
+<code>$ for a in tfm vf pfa afm ttf; do</code>
+<BR><code>&gt; mkdirhier $TMF/fonts/$a/bitstream/vagrounded;</code>
+<BR><code>&gt; mv *.$a $TMF/fonts/$a/bitstream/vagrounded;</code>
+<BR><code>&gt; done</code>
+<BR><code>$ mkdirhier $TMF/fonts/type1/bitstream/vagrounded;</code>
+<BR><code>$ mv *.pfb $TMF/fonts/type1/bitstream/vagrounded;</code>
+<BR>
+</BLOCKQUOTE>
+You do not really need to copy the <code>ttf</code> and <code>pfa</code> files
+into the directory because T<SMALL>E</SMALL>X does not use them. 
+I just did it to save them at a special place where I surely find
+them, if I need them for other purposes later.
+
+<P>
+Move the <code>*.fd</code> files to the directory
+<code>$TMF/tex/latex/psnfss/</code>: <BLOCKQUOTE>
+<code>$ mkdirhier $TMF/tex/latex/psnfss</code>
+<BR><code>$ mv *.fd $TMF/tex/latex/psnfss</code>
+<BR>
+</BLOCKQUOTE>
+
+<P>
+
+<H1><A NAME="SECTION00070000000000000000"></A><A NAME="sec:mapping"></A><BR>
+6 Make dvips find the new font
+</H1>
+
+<P>
+There are at least two possibilities to make dvips find the new font. 
+The first has a simple installation but it' usage is a little bit more
+complicated and it does not enable xdvi to use the font. The second
+possibility has a more complicated installation
+and may leed to problems when updating L<SUP><SMALL>A</SMALL></SUP>T<SMALL>E</SMALL>X later. But it enables
+xdvi to use the new fonts.
+
+<P>
+
+<H2><A NAME="SECTION00071000000000000000">
+6.1 Use an additional map file</A>
+</H2>
+
+<P>
+Create the file
+<A NAME="tex2html10"
+  HREF="ftp://ftp.dante.de/tex-archive/info/TrueType/config.vagrounded"><TT>$TMF/dvips/vagrounded/config.vagrounded</TT></A>
+with these contents:
+<BLOCKQUOTE>
+<code>o</code>
+<BR><code>p +vagrounded.map</code>
+
+</BLOCKQUOTE>
+Create the file <A NAME="tex2html11"
+  HREF="ftp://ftp.dante.de/tex-archive/info/TrueType/vagrounded.map"><TT>$TMF/dvips/vagrounded/vagrounded.map</TT></A>
+with these contents (<I>Each font definition is in one single
+  line.</I> So in this example each line starts with <code>bvr</code> and ends
+with <code>&lt;bvrr8a.pfb</code>. ):
+<BLOCKQUOTE>
+<code>bvrr8r VAGRoundedBT_Regular</code><code>     "TeXBase1Encoding ReEncodeFont" &lt;8r.enc &lt;bvrr8a.pfb</code>
+<BR><code>bvrro8r VAGRoundedBT_Regular</code><code>     "0.167 SlantFont TeXBase1Encoding ReEncodeFont"</code><code>     &lt;8r.enc &lt;bvrr8a.pfb</code>
+
+</BLOCKQUOTE>
+<P>
+The first item is the filename of the TrueType font with ``8r'' instead of
+``8a''. The second item is the font name you held in mind,
+hopefully. The next items are the same all times. The last one is the
+filename of the TrueType font with the extension <code>.pfb</code>.
+Don't use the tabulator character in the mapping file because this
+causes trouble with the <code>updmap</code> tool generating the map file for 
+pdfL<SUP><SMALL>A</SMALL></SUP>T<SMALL>E</SMALL>X. Use one single space instead.
+
+<P>
+In the second line the slanted shape of the font is defined. 
+The fontinst package generates slanted, italic and small capital
+shapes of the font automatically if no special font file is available.
+To use the generated slanted shape the second line is necessary.
+
+<P>
+Additional font effects can be reached by using afm2tfm. Type 
+<BLOCKQUOTE>
+<code>$ info afm2tfm</code> 
+</BLOCKQUOTE>
+and go to the section ``Special font effects'' (This was a hint of
+Thomas Henlich (<A NAME="tex2html12"
+  HREF="mailto:henlich@mmers1.mw.tu-dresden.de"><TT>henlich@mmers1.mw.tu-dresden.de</TT></A>)).
+
+<P>
+Finally type
+<BLOCKQUOTE>
+<code>$ texhash</code> 
+</BLOCKQUOTE>
+to update the T<SMALL>E</SMALL>X file database.
+
+<P>
+
+<H2><A NAME="SECTION00072000000000000000">
+6.2 Append data to the global map file</A>
+</H2>
+
+<P>
+This technique was suggested by Nguy&#234;n-Dai Quý
+(<A NAME="tex2html13"
+  HREF="mailto:daiquy.nguyen@ulg.ac.be"><TT>daiquy.nguyen@ulg.ac.be</TT></A>) [<A
+ HREF="ttf-tetex.html#quy2000a">Qu&#253;00</A>].
+There are different possibilities to append the map lines to the
+global map file.
+Here, only the simplest (and best) possibility is described.
+It works with all relativley recent teT<SMALL>E</SMALL>X versions.
+
+<P>
+Before you can do it the T<SMALL>E</SMALL>X file database has to be updated if that
+has not been done, yet:
+<BLOCKQUOTE>
+<code>$ texhash</code> 
+</BLOCKQUOTE>
+
+<P>
+Then, just type
+<BLOCKQUOTE>
+<code>$ updmap --enable Map vagrounded.map</code> 
+</BLOCKQUOTE>
+If you have generated more than one map file you have to repeat that
+line for each map file.
+It is not possible to enable multiple map files in one call of
+<TT>updmap</TT>.
+
+<P>
+When you install a new version of teT<SMALL>E</SMALL>X probably the added map
+entries get lost.
+Then you have to repeat the <TT>updmap</TT> calls again.
+
+<P>
+
+<H1><A NAME="SECTION00080000000000000000">
+7 Usage of the new font</A>
+</H1>
+
+<P>
+To use the new font you simple have to insert
+<BLOCKQUOTE>
+<code>\renewcommand{\rmdefault}{bvr}\rmfamily</code>
+
+</BLOCKQUOTE>
+into you T<SMALL>E</SMALL>X sourcecode. For example <A NAME="tex2html15"
+  HREF="ftp://ftp.dante.de/tex-archive/info/TrueType/sample.tex"><TT>sample.tex</TT></A>
+<BLOCKQUOTE>
+<code>\documentclass{article}</code>
+<BR><code>\begin{document}</code>
+<BR><code>\renewcommand{\rmdefault}{bvr}\rmfamily</code>
+<BR><code>\noindent Hello, I am VAG Rounded BT</code>
+<BR><code>{\slshape Hello, I am VAG Rounded BT slanted}\\</code>
+<BR><code>{\scshape Hello, I am VAG Rounded BT small capitals}\\</code>
+<BR><code>\end{document}</code>
+
+</BLOCKQUOTE>
+It is more elegant to create an new style file that switches to your
+new font. 
+The style file <A NAME="tex2html16"
+  HREF="ftp://ftp.dante.de/tex-archive/info/TrueType/vagrounded.sty"><TT>vagrounded.sty</TT></A>
+is an
+example how this can be done.
+<BLOCKQUOTE>
+<code>\ProvidesPackage{vagrounded}</code>
+<BR><code>[2000/05/12 VAG-Rounded font as default sf font]</code>
+<BR><code>%%</code>
+<BR><code>\renewcommand{\sfdefault}{bvr}</code>
+<BR><code>%%</code>
+<BR><code>\AtEndDocument{\PackageWarningNoLine{vagrounded.sty}%</code>
+<BR><code>  {Ensure to use dvips with the option -Pvagrounded}}</code>
+<BR><code>%%</code>
+<BR>
+</BLOCKQUOTE>
+
+<P>
+If you have not included the mapping entries to the file
+<code>psfonts.map</code> (section&nbsp;<A HREF="#sec:mapping">6</A>) you also have to tell
+dvips that it should use the font: 
+<BLOCKQUOTE>
+<code>$ latex sample</code>
+<BR><code>$ dvips -Pvagrounded sample</code>
+
+</BLOCKQUOTE>
+This should produce the PostScript file
+<A NAME="tex2html17"
+  HREF="ftp://ftp.dante.de/tex-archive/info/TrueType/sample.ps"><TT>sample.ps</TT></A>
+which looks like figure&nbsp;<A HREF="#fig:beispiel">1</A>.
+
+<DIV ALIGN="CENTER"><A NAME="fig:beispiel"></A><A NAME="135"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 1:</STRONG>
+Sample of the font VAGRounded&nbsp;BT</CAPTION>
+<TR><TD><DIV ALIGN="CENTER"><IMG
+ WIDTH="328" HEIGHT="52" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.gif"
+ ALT="\includegraphics{sample_eps}">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00090000000000000000">
+A. To do</A>
+</H1>
+
+<P>
+Nguy&#234;n-Dai Quý has complained that the fontnames contain the
+underscore (<code>_</code>) instead of the minus (<code>-</code>).
+I have not been able to find out whether this causes problems using
+the fonts. 
+But I also know that nobody uses fonts with an underscore in the name.
+So I should find out whether the underscores may cause problems e.g., 
+when including eps files which use these fonts (e.g., from Adobe
+Illustrator).
+
+<P>
+
+<H1><A NAME="SECTION000100000000000000000">
+B. Links</A>
+</H1>
+
+<P>
+Nguy&#234;n-Dai Qu&#253; has written a script that does all or most of the
+conversion automatically [<A
+ HREF="ttf-tetex.html#quy2000a">Qu&#253;00</A>]. 
+It is available from
+<TT><A NAME="tex2html18"
+  HREF="http://iris.ltas.ulg.ac.be/viettug/contrib/q/">http://iris.ltas.ulg.ac.be/viettug/contrib/q/</A></TT>. 
+This script also replaces the underscores by minuses in the
+fontnames.
+
+<P>
+Hume Smith has developed a method that does not include the Type1
+fonts into the postscript file but tells ghostscript to use the
+TrueType fonts directly [<A
+ HREF="ttf-tetex.html#smith2001a">Smi01</A>].
+He says that this approach avoids some problems with some fonts. 
+But these files are not portable anymore because they do not contain
+the used fonts.
+His description is available from
+<TT><A NAME="tex2html19"
+  HREF="http://geocities.com/kwantus/ttf.html">http://geocities.com/kwantus/ttf.html</A></TT>.
+
+<P>
+
+<H1><A NAME="SECTION000110000000000000000">
+C. References</A>
+</H1>
+
+<H2><A NAME="SECTION000120000000000000000">
+Bibliography</A>
+</H2><DL COMPACT><DD><P></P><DT><A NAME="berry1999a">Ber99</A>
+<DD>
+K.&nbsp;Berry.
+<BR>Fontname, March 1999.
+<BR><TT><A NAME="tex2html20"
+  HREF="ftp://ftp.dante.de/tex-archive/info/fontname/">ftp://ftp.dante.de/tex-archive/info/fontname/</A></TT>.
+
+<P></P><DT><A NAME="quy2000a">Qu&#253;00</A>
+<DD>
+Nguy&#234;n-Dai Qu&#253;.
+<BR>Truetype with tetex : Quick and dirty, 2000.
+<BR><TT><A NAME="tex2html21"
+  HREF="http://iris.ltas.ulg.ac.be/viettug/contrib/q/">http://iris.ltas.ulg.ac.be/viettug/contrib/q/</A></TT>.
+
+<P></P><DT><A NAME="rakityansky">Rak</A>
+<DD>
+Damir Rakityansky.
+<BR>Using TrueType with TeX (LaTeX) and pdfTeX (pdfLaTeX).
+<BR><TT><A NAME="tex2html22"
+  HREF="http://www.radamir.com/tex/ttf-tex.htm">http://www.radamir.com/tex/ttf-tex.htm</A></TT>.
+
+<P></P><DT><A NAME="smith2001a">Smi01</A>
+<DD>
+Hume Smith.
+<BR>Kwantus' TTF/teTeX notes, 2001.
+<BR><TT><A NAME="tex2html23"
+  HREF="http://geocities.com/kwantus/ttf.html">http://geocities.com/kwantus/ttf.html</A></TT>.
+</DL>
+
+<P>
+
+<H1><A NAME="SECTION000130000000000000000">
+About this document ...</A>
+</H1>
+ <STRONG>Using TrueType fonts with T<SMALL>E</SMALL>X via Postscript Type1 format</STRONG><P>
+This document was generated using the
+<A HREF="http://www.latex2html.org/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2002-2-1 (1.70)
+<P>
+Copyright &#169; 1993, 1994, 1995, 1996,
+<A HREF="http://cbl.leeds.ac.uk/nikos/personal.html">Nikos Drakos</A>, 
+Computer Based Learning Unit, University of Leeds.
+<BR>Copyright &#169; 1997, 1998, 1999,
+<A HREF="http://www.maths.mq.edu.au/~ross/">Ross Moore</A>, 
+Mathematics Department, Macquarie University, Sydney.
+<P>
+The command line arguments were: <BR>
+ <STRONG>latex2html</STRONG> <TT>-split 0 -show_section_numbers -local_icons -no_navigation -image_type gif -dir html/ ttf-tetex</TT>
+<P>
+The translation was initiated by Harald Harders on 2003-10-31<BR><HR><H4>Footnotes</H4>
+<DL>
+<DT><A NAME="foot30">... 6.2.</A><A
+ HREF="ttf-tetex.html#tex2html3"><SUP>1</SUP></A></DT>
+<DD>The updmap
+  section has been updated to teT<SMALL>E</SMALL>X 2.0.
+
+</DD>
+<DT><A NAME="foot43">...
+<code>b*******.ttf</code>)</A><A
+ HREF="ttf-tetex.html#tex2html5"><SUP>2</SUP></A></DT>
+<DD>You can find this out by viewing the
+  file with less.
+
+</DD>
+<DT><A NAME="foot45">... encoding</A><A
+ HREF="ttf-tetex.html#tex2html6"><SUP>3</SUP></A></DT>
+<DD>Maybe the TrueType font
+  is in Windows encoding, but the approach using ``8a'' worked fine,
+  so I won't change it.
+
+</DD>
+</DL><BR><HR>
+<ADDRESS>
+Harald Harders
+2003-10-31
+</ADDRESS>
+</BODY>
+</HTML>

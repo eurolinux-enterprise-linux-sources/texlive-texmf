@@ -1,0 +1,171 @@
+\documentclass[]{article}
+\usepackage{pstricks}
+\usepackage{pst-vue3d}
+\usepackage{longtable}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+\bgroup
+\def\arraystretch{0.5}
+\begin{longtable}{p{0.4\linewidth}p{0.4\linewidth}}
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+	\pNodeThreeD(15,18,15){P}
+	\uput[0](P){P}
+	\psset{linecolor=red}
+	\qdisk(P){3pt}
+	\showCoorThreeD[linecolor=red](15,18,15)
+\end{pspicture}
+&
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+	\FrameThreeD[linecolor=red](5,10,10)(10,0)(0,10)
+	\showCoorThreeD[linecolor=red](5,10,10)
+\end{pspicture}
+\tabularnewline
+
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+	\psset{normaleLongitude=0,normaleLatitude=90}
+	\FrameThreeD(0,0,0)(0,15)(-15,0)
+	\QuadrillageThreeD[linewidth=0.1mm,grille=5](0,0,0)(-15,0)(0,15)%
+\end{pspicture}
+&
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+	\CircleThreeD[linecolor=red](5,10,10){5}
+	\showCoorThreeD[linecolor=red](5,10,10)
+\end{pspicture}
+\tabularnewline
+%
+\begin{pspicture}(-1.5,-0.5)(2.5,2)
+	\AxesThreeD(20,10,15)
+	\bgroup
+	\psset{CubeColorFaceOne= 1 1 0 ,
+		CubeColorFaceTwo= 0.9 0.9 0 ,
+		CubeColorFaceThree= 0.8 0.8 0 ,
+		CubeColorFaceFour= 0.7 0.7 0 ,
+		CubeColorFaceFive= 0.6 0.6 0 ,
+		CubeColorFaceSix= 0.5 0.5 0 }
+	\CubeThreeD[A=5,B=7.5,C=5](5,7.5,5)
+	\egroup
+\end{pspicture}
+&
+\begin{pspicture}(-1.5,-0.5)(2.5,2)
+	\AxesThreeD(20,10,15)
+	\bgroup
+	\psset{CubeColorFaceOne= 1 1 0 ,
+		CubeColorFaceTwo= 0.9 0.9 0 ,
+		CubeColorFaceThree= 0.8 0.8 0 ,
+		CubeColorFaceFour= 0.7 0.7 0 ,
+		CubeColorFaceFive= 0.6 0.6 0 ,
+		CubeColorFaceSix= 0.5 0.5 0 }
+	\DieThreeD[A=5,B=5,C=5](5,5,5)
+	\egroup
+\end{pspicture}
+\tabularnewline
+%
+\begin{pspicture}(-1.5,-0.5)(2.5,2.25)
+	\AxesThreeD(20)
+	\psset{A=7.5,B=7.5,C=7.5}
+	\PyramideThreeD[fillstyle=solid](7.5,7.5,0){18}
+\end{pspicture}
+&
+
+\begin{pspicture}(-1.5,-0.5)(2.5,2.25)
+	\AxesThreeD(20)
+	\psset{A=7.5,B=7.5,C=7.5}
+	\PyramideThreeD[fillstyle=solid,fracHeight=0.5](7.5,7.5,0){18}
+\end{pspicture}
+\tabularnewline
+
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+	\TetraedreThreeD[Rtetraedre=12,fillcolor=blue,fillstyle=solid](12,12,0)
+\end{pspicture}
+&
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+	\DodecahedronThreeD[fillstyle=solid,fillcolor=cyan,linewidth=0.1pt](7.5,10,5)
+\end{pspicture}
+\tabularnewline
+%
+\begin{pspicture}(-1.5,-0.5)(2.5,2.25)
+	\AxesThreeD(20)
+	\ConeThreeD[fillstyle=solid,fillcolor=cyan,linewidth=0.1pt](7.5,10,0){7.5}{18}
+\end{pspicture}
+&
+\begin{pspicture}(-1.5,-0.5)(2.5,2.25)
+	\AxesThreeD(20)
+	\ConeThreeD[fillstyle=solid,fillcolor=yellow,%
+		fracHeight=0.5,linewidth=0.1pt](7.5,10,0){7.5}{18}
+\end{pspicture}
+\tabularnewline
+%
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+	\CylindreThreeD[fillstyle=solid,fillcolor=cyan,%
+		linewidth=0.1pt](7.5,10,0){7.5}{18}
+\end{pspicture}
+&
+
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+	\SphereThreeD[fillstyle=solid,fillcolor=yellow,%
+		linewidth=0.1pt](7.5,7.5,7.5){10}
+\end{pspicture}
+\tabularnewline
+
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+	\SphereInverseThreeD[fillstyle=solid,fillcolor=yellow,%
+		linewidth=0.1pt](7.5,7.5,7.5){10}
+\end{pspicture}
+&
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+	\SphereCercleThreeD[linecolor=red,linewidth=0.1pt](7.5,7.5,7.5){10}
+\end{pspicture}
+\tabularnewline
+
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+	\SphereMeridienThreeD[linecolor=red,linewidth=0.1pt](7.5,7.5,7.5){10}
+\end{pspicture}
+&
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+	\psset{PHI=20}
+	\DemiSphereThreeD[fillstyle=solid,fillcolor=yellow,%
+		linewidth=0.1pt](7.5,7.5,7){10}
+\end{pspicture}
+\tabularnewline
+\begin{pspicture}(-1.5,-0.75)(2.5,2)
+	\AxesThreeD(20,20,15)
+	\psset{PHI=20}
+	\DemiSphereThreeD[fillstyle=solid,fillcolor=yellow,%
+		linewidth=0.1pt,RotX=180](7.5,7.5,10){10}
+\end{pspicture}
+&
+\begin{pspicture}(-1.5,-0.75)(2.5,2)
+	\AxesThreeD(20,10,15)
+	\psset{PHI=20}
+	\DemiSphereThreeD[fillstyle=solid,fillcolor=cyan,%
+		linewidth=0.1pt,RotX=180](7.5,7.5,10){10}
+	\SphereCreuseThreeD[fillstyle=solid,fillcolor=cyan,%
+		linewidth=0.1pt,RotX=180](7.5,7.5,10){10}
+\end{pspicture}
+\tabularnewline
+\begin{pspicture}(-1.5,-1)(2.5,2.25)
+	\AxesThreeD(20)
+	\psset{PortionSphereTHETA=60,PortionSpherePHI=45}
+	\SphereThreeD[fillstyle=solid,fillcolor=cyan,%
+		linewidth=0.1pt](0,0,0){10}
+	\PortionSphereThreeD[fillstyle=solid,fillcolor=red](0,0,0){10}
+\end{pspicture}
+\tabularnewline[15pt]
+\end{longtable}
+\egroup
+
+\end{document}

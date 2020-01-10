@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<HTML>
+
+<HEAD>
+<META CONTENT="Axel Franke,  SAE, latex, tex, class, style, paper" HTTP-EQUIV="keywords">
+ <TITLE>A LaTeX style for writing an SAE Technical Paper</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFF8DC" TEXT="#23238E">
+
+
+
+<!-- AS-TOC_BEGIN{ -->
+<H1 ALIGN=center>Table of Contents</H1>
+
+<UL>
+	<LI><A HREF="#as-h3-80061">Background</A>
+	<LI><A HREF="#as-h3-80062">Creating the style</A>
+	<LI><A HREF="#as-h3-6020">System Requirements</A>
+	<LI><A HREF="#as-h3-80063">Download</A>
+	<LI><A HREF="#as-h3-6021">Changes</A>
+	<LI><A HREF="#as-h3-80064">Usage</A>
+	<LI><A HREF="#as-h3-80066">Contact</A>
+</UL>
+<!-- AS-TOC_END} -->
+<H2><A NAME="as-h2-80060">A LaTeX style for writing an SAE Technical Paper</A></H2>
+<H3><A NAME="as-h3-80061">Background</A></H3>
+The SAE Technical meetings are one of the most important publication medium for the research I am doing. Unfortunately, the SAE did not accept papers typeset in LaTeX by now. After many frustrating days trying to get a few so called <EM>wysiwyg</EM> text processors to behave in a reasonable way, I made up my mind and attempted to write an own style meeting the requirements of SAE. I had only been a LaTeX <EM>user</EM> by then, and I had no idea about how to change a titlepage, section styles and the fonts for a whole document. 
+<P>
+I hope the style will be useful for many authors, especially for those making extensive use of mathematical formula. 
+<H3><A NAME="as-h3-80062">Creating the style</A></H3>
+The first step was of course to ask <A HREF="http://www.altavista.com/"> AltaVista</A>, where I - after a while - found a link to <A HREF="http://www.ifs.hr/ifs/razno/doc/TeX/clsguide.html">LaTeX2e for class and package writers</A>. This helped me a lot. Many of the problems I encountered during the five days of creation could be solved with the help of  <EM>The LaTeX Companion</EM> by Goossens, Mittelbach and Samarin.
+<P>
+The <TT>sae</TT> document class inherits all from the <TT>article</TT> class. However, the definition of the titlepage within the <TT>article</TT> class was not suitable. So I had a look at the <TT>article.cls</TT> file to find out how I should write this. The problem was finally solved by creating <TT>savebox</TT>es. This makes it possible to add as many author/affiliation pairs as wished. With each <TT>\AddAuthor</TT> command the old <TT>savebox</TT> is redefined and the new two lines are appended. The <TT>\SAECopyright</TT> command takes a year as the only argument, the surrounding text is created by the style. 
+
+<H3><A NAME="as-h3-6020">System Requirements</A></H3>
+I have tested the style with a <EM>TeTeX</EM> (version pre0.9) distribution containing <EM>LaTeX</EM> (Web2C 7.2) 3.14159 and <EM>pdfTeX</EM> (Web2C 7.2) 3.14159-0.12r. The style has been tested with <EM>MiKTeX</EM> as well. The <STRONG>geometry</STRONG> style required by the latest version can be obtained from your closest CTAN mirror (teTeX has it installed by default!). Search for <TT>geometry</TT> at <A HREF="http://www.ctan.org/search/" TARGET="new">http://www.ctan.org/search/</A>. Download the files <STRONG>geometry.dtx, geometry.ins and Readme</STRONG>. Follow the instructions in the Readme file.
+
+<H3><A NAME="as-h3-80063">Download</A></H3>
+The style can be downloaded <A HREF="sae.cls">here</A>. The copyright notice is included in the file. The old version (before 2000-06-28) can still be obtained <A HREF="saeold.cls">here.</A>
+
+<H3><A NAME="as-h3-6021">Changes</A></H3>
+<TABLE>
+<TR><TD>2000-06-28<TD>Cleaned up the code. Now using <TT>geometry</TT> package instead of <TT>\setlength{}{}</TT> commands. New <TT>pdftex</TT> option, which is forwarded to the <TT>article</TT> class and the <TT>geometry</TT> package. 
+<TR><TD>2000-08-28<TD>Due to numerous questions I received during the past weeks, I decided to add a few instructions on how to obtain the geometry.sty file which is obviously missing in some TeX-distributions.
+</TABLE>
+
+
+<H3><A NAME="as-h3-80064">Usage</A></H3>
+Well, I put an <A HREF="example.tex">example</A> in the same directory. It should explain most. Please contact me if you get trouble using the style. Tell me what kind of LaTeX version you're using.
+<P>
+
+The class is compatible with the <TT>hyperref</TT> package and <TT>pdflatex</TT> and can be used to produce PDF files suitable for electronic publication and printing. There are no features in <TT>sae.cls</TT>which could prevent the usage together with other packages. I recommend the <TT>graphicx</TT>, <TT>natbib</TT> and <TT>tabularx</TT> styles to include figures, handle citations and build tables, respectively.
+
+<H3><A NAME="as-h3-80066">Contact</A></H3>
+Feel free to contact <A HREF="mailto:axel.franke@forbrf.lth.se">me</A> if you  want to suggest improvements or tell me about problems.
+<HR>
+<A HREF="..">Back to my homepage.</A>
+</BODY>
+</HTML>

@@ -1,0 +1,2 @@
+cslatex         pdftex         -       -etex -translate-file=cp227.tcx cslatex.ini
+pdfcslatex      pdftex         -       -etex -translate-file=cp227.tcx cslatex.ini

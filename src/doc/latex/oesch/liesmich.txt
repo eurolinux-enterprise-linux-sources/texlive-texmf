@@ -1,0 +1,81 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                               %
+%  liesmich.txt                                                                 %
+%                                                                               %
+%  Oesterreichische Schulschrift 1995 (Austrian School Writing Letters 1995)    %
+%  Version 18. Mai 2001                                                         %
+%                                                                               %
+%  Design by Gerhard A. Bachmaier                                               %
+%                                                                               %
+%  Email:      gerhard.bachmaier@uni-graz.at                                    %
+%                                                                               %
+%  You're free to use or copy this file as long as you leave this               %
+%  header intact and don't change the contents.                                 %
+%                                                                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Diese METAFONT-Files erzeugen einen Font, der die "Osterreichische Schulschrift 
+von 1995 darstellt. Es gibt ihn in den Gr"o"sen 10pt und 20 pt.
+
+Die "Osterreichische Schulschrift unterscheidet sich in vielen Details von der deutschen
+Schreibschrift; so muss man z.B. nach F,H und Z am Mittelstrich weiter schreiben.
+
+Der Font beinhaltet alle Buchstaben inklusive scharfes s, Ziffern, ein paar typografische
+Zeichen .,;:()!? deutsche Anf"uhrungszeichen und Querstriche. Es gibt nur den Umlaut-Akzent.
+Damit sollten deutsche und englische Texte m"oglich sein.
+
+Zus"atzlich existieren einige Buchstabenvarianten f"ur Ligaturen. Es sollte im Normalfall
+NICHT notwendig sein, eine explizit aufzurufen, da die im Font definierten Ligaturen
+die Arbeit verrichten.
+
+Der Font ist auf Basis der neuen T1-Encoding konzipiert und verarbeitet auch Ligaturen
+mit Umlauten problemlos. Alle Umlaute (inklusive \"e und \"i) sind als eigene Zeichen
+vorhanden.
+
+Umlaute kann man auf 3 Arten eingeben:
+.) (sicherer Weg) z.B. \"a funktioniert garantiert.
+.) z.B. "a (ohne \) geht auch ohne Package german innerhalb der Text-Umgebung, weil die
+German-Ligaturen "a,"o,"u,"A,"O,"U,"s,"`,"``,"' und "'' als Fontligaturen enthalten sind.
+Hat man auch Umlaute im normalen Font, kann man das Package german verwenden und erh"alt
+in beiden Umgebungen die richtigen Umlaute. Nur die Anf"uhrungszeichen in der 
+Text-Umgebung muss man als \gsqon/\gsqoff bzw. \gqon/\gqoff aufrufen, da german
+einen OT1-Font(!) voraussetzt, und die entsprechenden Zeichen nicht findet.
+.) Windows-Umlaute ä,ö,ü,Ä,Ö und Ü werden in der Text-Umgebung auch korrekt wiedergegeben,
+nur ß (scharfes s) funktioniert nicht. In normalem Font (Computer Modern) funktioniert 
+diese Variante nicht.
+
+Die meisten speziellen Zeichen kann man extra aufrufen:
+\i  \j        i bzw. j ohne Punkt
+\ii \jj       i bzw. j ohne Punkt (Variante f"ur Kombination mit FHZ)
+\ae \oe \ue   f"ur Umlaute in Kombination mit FHZ
+\B \D \I \N \O \Oe \P \S \T \V \W Grossbuchstaben mit einem kleinen Anfangsstrich
+\x \r         spezielle Zeichen am Anfang eines Wortes
+\s            Schluss-s (s hat einen kleinen Fortsetzungsstrich)
+\Fe \He \Ze \Pf Ligaturen    
+
+Dateien:
+oesch.sty          Package oesch
+oe.def             Encoding oe 
+oesch.mf           Metafontsteuerdatei f"ur 10pt Schrift
+oeschb.mf          Metafontsteuerdatei f"ur 20pt Schrift
+oesch_m.mf         Metafont-Hauptdatei 
+lig.mf             Ligaturtabellen zum Font
+readme.txt         liesmich.txt auf Englisch
+liesmich.txt       dieser Text
+beispiel.tex       Beispiel
+example.tex        Beispiel auf Englisch
+
+Installation:
+oesch.sty und oe.def in ein Verzeichnis stellen, wo LaTeX sie findet z.B. TeX/LaTex/misc
+*.mf in ein Verzeichnis stellen, wo MetaFont sie findet z.B. fonts/source/public/misc.
+
+Verwendung:
+Bei nur kurzen Beispielen Aufruf "uber \textoesch{Text}. Lange Texte sollte man
+mit \oeschfamily bzw. \oeschbfamily schreiben.  Ich empfehle weiters 
+\renewcommand{\baselinestretch}{1.4} zu verwenden.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                                 %
+%  End of File                                                                    %
+%                                                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

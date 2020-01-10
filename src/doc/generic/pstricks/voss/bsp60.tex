@@ -1,0 +1,20 @@
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\usepackage{pstricks-add}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+\begin{center}
+\bgroup
+\begin{pspicture}(7.5,0.5)
+  \psset{linewidth=15pt,dashNo=10}
+  \pslineII[%
+    linecap=1,dashColorI=yellow,%
+    dashColorII=cyan](0,0.25)(7.5,0.25)%
+\end{pspicture}
+\egroup
+\figcaption{\texttt{bsp61.tex}: Besondere Linien mit \texttt{pstricks-add}.}
+\end{center}
+
+\end{document}

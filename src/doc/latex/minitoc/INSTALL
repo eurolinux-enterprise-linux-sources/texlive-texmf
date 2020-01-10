@@ -1,0 +1,142 @@
+Installation of the minitoc package (version #51 2007/01/09).
+
+This package contains a lot of files. The list of all files
+is given in minitoc.l.
+
+The files are sorted into ``classes'' below (a file can
+appear in more than one class). Each class specifies
+the function and the placement of its files.
+
+(0) The files minitoc.ins and minitoc.dtx are the basic source files
+    of this package. The file fminitoc.dtx loads minitoc.dtx but
+    selects the french documentation. The language selection is done
+    by using \ifcase ... \or ... \fi constructs.
+
+(1) The files minitoc.sty, mtcoff.sty, mtcmess.sty, and ALL *.mld and
+    *.mlo files are the package itself. They must be all installed
+    in a directory where LaTeX finds the .sty files.
+    mtcmempatch.sty is a temporary fix for compatibility with
+    the memoir class.
+
+(2) INSTALL   is a file describing the installation of the package.
+              You are reading it.
+    minitoc.l contains the list of all files of the minitoc
+              distribution.
+    README    is a file describing briefly the minitoc package,
+              plus some useful infos.
+    CATALOG   contains basic infos about the minitoc package
+              (abstract, date, author, version, licence).
+    TODO      lists some suggested developments of the package.
+              Comments and suggestions are welcome.
+(3) Examples of documents:
+              mtc-2c.tex, mtc-2nd.tex, mtc-add.tex, mtc-ads.tex,
+              mtc-amm.tex, mtc-apx.tex, mtc-art.tex, mtc-bk.tex,
+              mtc-bo.tex, mtc-ch0.tex, mtc-cri.tex, mtc-fo1.tex,
+              mtc-fo2.tex, mtc-gap.tex, mtc-hi1.tex, mtc-hi2.tex,
+              mtc-hia.tex, mtc-hir.tex, mtc-hop.tex, mtc-liv.tex,
+              mtc-mem.tex, mtc-mm1.tex, mtc-mu.tex, mtc-sbf.tex,
+              mtc-scr.tex, mtc-syn.tex, mtc-tbi.tex, mtc-tlc.tex,
+              mtc-tlo.tex, mtc-tsf.tex, are example files,
+              to play with. The associated .pdf files are provided.
+              Another (short) examples are welcome.
+(4) minitoc.bug, minitoc.sum
+              are plain text documentation: list of problems (faq)
+              and summary of commands.
+(5) minitoc.dtx, minitoc.ins, minitoc.bib, minitoc.ist, minitoc.lan,
+              en-mtc.bst, are the source of the documentation
+              in (non perfect) english. 
+              The files lamed.eps and lamed.pdf are images to include,
+              lamed.tex is the source code.
+(6) fminitoc.dtx, fminitoc.bib, fminitoc.ist, frbib.sty,
+    fr-mtc.bst, fminitoc.lan
+              are the source (and tools) of the documentation in french.
+(7) minitoc.pdf
+              is the documentation in (non perfect) english,
+              in PDF format.
+(8) fminitoc.pdf
+              is the documentation in french, in PDF format.
+
+(9) pmk       is a shell script to prepare the package and its
+              documentation; the pmk script uses the /tmp/`whoami`.imk
+              and /tmp/`whoami`.tmk directories to not waste disk space
+              under your home directory; there are also six partial
+              scripts (to be adapted):
+              -- imk, which prepares the package from minitoc.ins and
+                 minitoc.dtx; note that imk must be run before emk or
+                 fmk; it creates also some .sty files necessary
+                 to prepare the documentation but they must be
+                 installed with it; the imk script uses the
+                 /tmp/`whoami`.imk directory to not waste disk space
+                 under your home directory;
+              -- emk, which prepares the english documentation from
+                 minitoc.dtx;
+              -- fmk, which prepares the french documentation from
+                 fminitoc.dtx and minitoc.dtx;
+              -- xmk, which typesets the example files (into PDF).
+              -- rmk, which sorts the files into classes (one directory
+                 for each class);
+              -- tmk, which creates a TDS-conformant hierarchy
+                 (to be tailored for your system); this
+		 hierarchy is saved in minitoc-texmf.zip.
+              These scripts are currently written in C-shell, but there
+              are very simple, and should be easy to convert in another
+              classic shell. The documentation in PostScript format is
+              no more distributed on the CTAN sites, but these scripts
+              prepare it (using the duplex2v.pro PostScript Header file
+              to try printing recto-verso).
+(10)          minitoc-texmf.zip is a ZIP-archive file containing a
+              TDS-compliant hierarchy with all the files of the
+              minitoc package.
+
+Some remarks about the rmk, tmk and pmk scripts (which you should tailor
+to your needs):
+* with rmk:
+   -- the files of (1) must be installed in a directory where LaTeX
+      finds .sty files;
+   -- the files of (2), (3), (4), (5), (6) and (9) must be installed
+      in a separate directory, but must not be omitted;
+   -- the files of (7) and (8) must be installed as on-line
+      documentation;
+   -- the directories created by the rmk script are under
+      /tmp/`whoami`.rmk to not waste disk space under your home
+      directory.
+* with tmk:
+   -- the hierarchy is TDS-compliant;
+   -- each file appears only once in the hierarchy;
+   -- the installation is much easier: you only need a .zip or a .tar
+      (or .tgz} dump file of the hierarchy to be deployed into the
+      installed TDS hierarchy; you should examine VERY CAREFULLY (by
+      comparison with you TDS installation) and tailor the tmk script
+      before using it;
+   -- the directories created by the \texttt{tmk} script are under
+      /tmp/`whoami`.tmk to not waste disk space under your home
+      directory;
+   -- the file minitoc-texmf.zip (10) should not be installed;
+      it is just a method to help making a TDS-compliant installation.
+* with pmk:
+   -- the pmk script performs the actions of imk (preparation of the
+      basic files), emk and fmk (preparation of the english and french
+      documentation), xmk (preparation of the examples of documents),
+      rmk and tmk (repartition of files into classes and in a
+      TDS-compliant hierarchy);
+   -- the directories created by the pmk script are under the
+      /tmp/`whoami`.rmk and /tmp/`whoami`.tmk directories to not waste
+      disk space under your home directory.
+   -- the SAME PRECAUTIONS as for tmk are needed.
+
+The file minitoc-texmf.zip contains a ZIP archive of a TDS-compliant
+hierarchy of all files of the minitoc package. It has been prepared by
+the pmk or tmk scripts.
+
+Note that the PostScript documentation files may be printed
+recto-verso on some printers. They are no more distributed on
+the CTAN archives but the scripts prepare them.
+
+Note that minitoc.dtx and fminitoc.dtx are (not so trivial) examples
+of using minitoc with hyperref. They show how the combinaison of
+these two packages may be useful.
+
+For a more detailed description of the installation of the
+minitoc package, see the ``Installation'' chapter in
+minitoc.pdf (in english) ou in fminitoc.pdf (in french).
+

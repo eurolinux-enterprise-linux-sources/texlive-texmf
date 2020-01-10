@@ -1,0 +1,23 @@
+\documentclass{article}
+\usepackage{german}
+\setlength{\textwidth}{150mm}
+\begin{document}
+\setlength{\unitlength}{1.5mm}
+\noindent
+\begin{picture}(100,50)
+  \put(0,0){Das erste Bild}
+  \put(0,47){oben links}
+  \put(70,40){irgendwo oben rechts}
+  \put(25,25){\parbox[t]{60mm}{Eine Absatzbox der Breite 60mm mit dem
+        Bezugspunkt bei der obersten Zeile der Absatzbox}}
+\end{picture}
+
+\bigskip\noindent
+\begin{picture}(100,50)
+  \put(0,0){Das erste Bild}
+  \put(0,47){oben links}
+  \put(70,40){irgendwo oben rechts}
+  \put(25,25){\parbox[b]{60mm}{Eine Absatzbox der Breite 60mm mit dem
+        Bezugspunkt bei der untersten Zeile der Absatzbox}}
+\end{picture}
+\end{document}

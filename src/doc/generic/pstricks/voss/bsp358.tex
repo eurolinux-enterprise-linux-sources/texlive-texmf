@@ -1,0 +1,26 @@
+\documentclass{minimal}
+\usepackage{filecontents,pstricks-add}
+
+\begin{filecontents*}{c_x.dat}
+[67,6.5]
+[3300,5.1]
+[9983,3.6]
+\end{filecontents*}
+\begin{filecontents*}{t_x.dat}
+[80,553]
+[3300,600]
+[9920,639]
+\end{filecontents*}
+\begin{document}
+
+\begin{pspicture}(-0.5,-0.5)(12.5,10)
+  \psaxes[axesstyle=frame](10,8)
+  \psaxes[axesstyle=none,Oy=540,Dy=20,dy=1.333](10,0)(10,8)
+  \fileplot[plotstyle=dots,dotstyle=triangle*,xunit=0.001cm]{c_x.dat}
+  \readdata{\data}{t_x.dat}
+  \pstScalePoints(1,0.05){}{ 540 sub } % 0.05=8cm/(120*1.333)
+  \listplot[plotstyle=line,xunit=0.001cm]{\data}
+\end{pspicture}
+
+\end{document}
+

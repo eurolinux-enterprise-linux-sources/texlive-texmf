@@ -1,0 +1,81 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{pst-circ}
+\begin{document}
+\section*{Potentiometer tripole}
+
+\psset{griddots=5,gridlabels=7pt,subgriddiv=0}
+\begin{pspicture}(3,3)
+  \psgrid
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \pnode(3,2){C}
+  \potentiometer[labeloffset=0pt](A)(B)(C){P}
+\end{pspicture}
+\hfill
+\begin{pspicture}(3,3)
+  \psgrid
+  \pnode(0,2.5){A}
+  \pnode(3,2.5){B}
+  \pnode(0,1){C}
+  \potentiometer[labeloffset=0pt](A)(B)(C){P}
+\end{pspicture}
+\hfill
+\begin{pspicture}(3,3)
+  \psgrid
+  \pnode(0,0){A}
+  \pnode(3,2){B}
+  \pnode(2.5,3){C}
+  \potentiometer[labeloffset=0pt,labelangle=:U](A)(B)(C){P}
+\end{pspicture}
+
+\vspace{1cm}
+\begin{pspicture}(3,3)
+  \psgrid
+  \pnode(1,0){A}
+  \pnode(1,3){B}
+  \pnode(2.5,0){C}
+  \potentiometer[labeloffset=0pt](A)(B)(C){P}
+\end{pspicture}
+\hfill
+\begin{pspicture}(3,3)
+  \psgrid
+  \pnode(0,3){A}
+  \pnode(3,0){B}
+  \pnode(2,0){C}
+  \potentiometer[labeloffset=0pt,labelangle=:U](A)(B)(C){P}
+\end{pspicture}
+\hfill
+\begin{pspicture}(3,3)
+  \psgrid
+  \pnode(0,2){A}
+  \pnode(3,2){B}
+  \pnode(1.5,0){C}
+  \potentiometer[labeloffset=0pt](A)(B)(C){P}
+\end{pspicture}
+
+
+\vspace{1cm}
+\begin{pspicture}(3,3)
+  \psgrid
+  \pnode(1,0){A}
+  \pnode(1,3){B}
+  \pnode(2.5,0){C}
+  \potentiometer[dipolestyle=zigzag](A)(B)(C){P}
+\end{pspicture}
+\hfill
+\begin{pspicture}(3,3)
+  \psgrid
+  \pnode(0,3){A}
+  \pnode(3,0){B}
+  \pnode(2,0){C}
+  \potentiometer[dipolestyle=zigzag,labelangle=:U](A)(B)(C){P}
+\end{pspicture}
+\hfill
+\begin{pspicture}(3,3)
+  \psgrid
+  \pnode(0,2){A}
+  \pnode(3,2){B}
+  \pnode(1.5,0){C}
+  \potentiometer[dipolestyle=zigzag](A)(B)(C){P}
+\end{pspicture}
+\end{document}

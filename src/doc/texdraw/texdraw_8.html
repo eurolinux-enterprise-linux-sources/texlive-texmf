@@ -1,0 +1,342 @@
+<HTML>
+<HEAD>
+<!-- Created by texi2html 1.56k from texdraw.texi on 10 March 2004 -->
+
+<TITLE>TeXdraw - C. Examples</TITLE>
+</HEAD>
+<BODY>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_7.html">previous</A>, <A HREF="texdraw_9.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+<P><HR><P>
+
+
+<H1><A NAME="SEC35" HREF="texdraw_toc.html#TOC35">C. Examples</A></H1>
+<P>
+<A NAME="IDX183"></A>
+
+
+<P>
+This appendix shows examples of the use of TeXdraw.
+
+
+
+<UL>
+<LI><A HREF="texdraw_8.html#SEC36">Block diagram</A>
+<LI><A HREF="texdraw_8.html#SEC37">Filter response graph</A>
+<LI><A HREF="texdraw_8.html#SEC38">Geometric construction</A>
+</UL>
+
+
+
+<H2><A NAME="SEC36" HREF="texdraw_toc.html#TOC36">C.1 Block diagram of a lattice filter</A></H2>
+
+<P>
+The block diagram of a lattice filter uses a library of extended
+commands built from the basic TeXdraw commands.
+
+
+<P>
+The block diagram uses a "delay" block.  This is defined as a segment
+which leaves the current position at the end of this block.  A second
+macro, <CODE>\bdot</CODE>, draws a "big" dot which is used to mark junctions
+of lines.  The <CODE>\Ttext</CODE> command centers text above a given point.
+The offset to position the text is local to a segment, resulting in no
+change to the current point.  Similar macros to position text below a
+point (<CODE>\Btext</CODE>), to the left of a point (<CODE>\Ltext</CODE>) and to the
+right of a point (<CODE>\Rtext</CODE>) are used in the final drawing.
+
+<PRE>
+\def\delay {\bsegment
+              \setsegscale 0.3
+              \lvec (0 +0.5) \lvec (1 +0.5) \lvec (1 -0.5)
+              \lvec (0 -0.5) \lvec (0 0)
+              \textref h:C v:C  \htext (0.5 0){$z^{-1}$}
+              \savepos (1 0)(*ex *ey)
+            \esegment
+            \move (*ex *ey)}
+\def\bdot {\fcir f:0 r:0.02 }
+\def\Ttext #1{\bsegment
+                \textref h:C v:B  \htext (0 +0.06){#1}
+              \esegment}
+</PRE>
+
+<P>
+Several of the block diagram elements scale with the size of the summing
+nodes.  The radius of the circles for the summing nodes is defined as
+the macro <CODE>\cradius</CODE>.  The summing nodes will have enclosed plus
+signs, appropriately scaled.  The plus sign is drawn by the macro
+<CODE>\pluss</CODE>.  The macro <CODE>\pcir</CODE> draws both the circle and the
+plus sign.  The incoming lines to a summing node will be labelled with
+plus or minus signs (characters this time), placed at the appropriate
+position with respect to the center of the summing node.  These
+positions are given in terms of compass directions.  The macro
+<CODE>\putwnw</CODE> places text west by north-west relative to the center of
+the summing node.
+
+<PRE>
+\def\cradius {0.08}
+\def\pluss {\bsegment
+               \setsegscale {\cradius}
+               \move (-0.5 0) \lvec (+0.5 0)
+               \move (0 -0.5) \lvec (0 +0.5)
+             \esegment}
+\def\pcir {\lcir r:{\cradius} \pluss}
+\def\puttext (#1 #2)#3{\bsegment
+                         \setsegscale {\cradius}
+                         \textref h:C v:C \htext (#1 #2){#3}
+                       \esegment}
+\def\putwnw #1{\puttext (-1.7 +1.2){#1}}
+</PRE>
+
+<P>
+The block diagram has vectors arriving and departing from the summing
+nodes (circles).  One could calculate the points of intersection of the
+lines with the circles, and then enter the values into the TeXdraw
+code.  However, in this example, we implement an automated procedure.
+Two macros are needed, an arrow vector to a circle (<CODE>\avectoc</CODE>) and
+an arrow vector leaving from a circle (<CODE>\avecfrc</CODE>).  The macros
+will calculate the point of intersection with the circle and start or
+end the vector at the intersection point.
+
+
+<P>
+The arrow macros use scaling and relative positioning inside of a
+drawing segment.  In the case of the macro <CODE>\avectoc</CODE>, a move is
+made to the final point (center of the circle), then within a drawing
+segment, a scaled move is made back towards the initial point to
+determine the intersection point with the circle.
+
+
+
+<PRE>
+\def\avectoc (#1 #2){\currentpos \xa\ya
+                     \cossin ({\xa} \ya)(#1 #2)\cosa\sina
+                     \savepos (#1 #2)(*tx *ty)
+                     \bsegment
+                       \move (*tx *ty)
+                       \setsegscale {\cradius}
+                       \rmove ({-\cosa} -\sina)
+                       \savecurrpos (*ex *ey)
+                     \esegment
+                     \avec (*ex *ey)
+                     \move (#1 #2)}
+\def\avecfrc (#1 #2){\currentpos \xa\ya
+                     \cossin ({\xa} \ya)(#1 #2)\cosa\sina
+                     \bsegment
+                       \setsegscale {\cradius}
+                       \move ({\cosa} \sina)
+                       \savecurrpos (*ex *ey)
+                     \esegment
+                     \move (*ex *ey)
+                     \avec (#1 #2)}
+</PRE>
+
+<P>
+Having defined these macros, we are ready to draw the block diagram.
+The first and last sections of the lattice filter are very similar,
+differing mainly in the text labels.  With more effort, code could be
+shared between the commands used to draw these blocks.
+
+<PRE>
+\centertexdraw{
+\drawdim in
+\arrowheadtype t:F  \arrowheadsize l:0.08 w:0.04
+\def\pl {$\scriptscriptstyle +$} \def\mn {$\scriptscriptstyle -$}
+
+\move (0 +0.63) \move (0 -0.60) \move (0 0) % compensate for the text size
+
+% Input to the first stage
+\bsegment
+  \Ltext{$x(n)$}
+  \lvec (0.3 0) \bdot \lvec (0.3 +0.4) \move (0.3 0) \lvec (0.3 -0.4)
+  \savepos (0.3 0)(*ex *ey)
+\esegment
+\move (*ex *ey)
+
+% first lattice stage
+\bsegment
+  \move (0 +0.4)  \avectoc (1.7 +0.4)
+  \pcir \putwnw{\pl} \puts{\mn}
+  \avecfrc (2.1 +0.4)
+  \move (0 -0.4)  \avec (0.4 -0.4) \delay \avectoc (1.7 -0.4)
+  \pcir \putwsw{\pl} \putn{\mn}
+  \avecfrc (2.1 -0.4)
+  \move (0.9 +0.4)  \bdot  \avectoc (1.7 -0.4)
+  \move (0.9 -0.4)  \bdot  \avectoc (1.7 +0.4)
+  \move (0.1 +0.42) \Ttext {$f_0(n)$}
+  \move (2.0 +0.42) \Ttext {$f_1(n)$}
+  \move (0.1 -0.4)  \Btext {$b_0(n)$}
+  \move (2.0 -0.4)  \Btext {$b_1(n)$}
+  \textref h:L v:B  \htext (1.15 +0.2){$K_1$}
+  \textref h:L v:T  \htext (1.15 -0.2){$K_1$}
+  \savepos (2.1 0)(*ex *ey)
+\esegment
+\move (*ex *ey)
+
+% center section
+\bsegment
+  \textref h:C v:C \htext (0.3 +0.4){$\cdots$}
+  \htext (0.3 -0.4){$\cdots$}
+  \savepos (0.6 0)(*ex *ey)
+\esegment
+\move (*ex *ey)
+
+% last lattice stage
+\bsegment
+  \move (0 +0.4)  \avectoc (1.7 +0.4)
+  \pcir \putwnw{\pl} \puts{\mn}
+  \avecfrc (2.3 +0.4) \Rtext{$e(n)$}
+  \move (0 -0.4)  \avec (0.4 -0.4) \delay \avectoc (1.7 -0.4)
+  \pcir \putwsw{\pl} \putn{\mn}
+  \avecfrc (2.1 -0.4)
+  \move (0.9 +0.4)  \bdot  \avectoc (1.7 -0.4)
+  \move (0.9 -0.4)  \bdot  \avectoc (1.7 +0.4)
+  \move (0.1 +0.42) \Ttext {$f_{P-1}(n)$}
+  \move (2.0 +0.42) \Ttext {$f_P(n)$}
+  \move (0.1 -0.4)  \Btext {$b_{P-1}(n)$}
+  \move (2.0 -0.4)  \Btext {$b_P(n)$}
+  \textref h:L v:B  \htext (1.15 +0.2){$K_P$}
+  \textref h:L v:T  \htext (1.15 -0.2){$K_P$}
+\esegment
+}
+</PRE>
+
+<P>
+The macros used in this example are similar to the block diagram macros
+defined in the file <TT>`blockdiagram.tex'</TT>.
+
+
+
+
+<H2><A NAME="SEC37" HREF="texdraw_toc.html#TOC37">C.2 Filter response graph</A></H2>
+<P>
+<A NAME="IDX184"></A>
+
+
+<P>
+This example shows the response of a canonical filter.  TeXdraw is
+not well suited for general purpose graphing -- it has no coordinate
+translation facility nor does it have separate <VAR>x</VAR> and <VAR>y</VAR>
+scaling.  Nonetheless, for certain simple graphs, TeXdraw is
+adequate.
+
+
+<P>
+In this example, macro <CODE>\ticklab</CODE> places a labelled axis tick at a
+given position.  The data is specified in a straightforward manner,
+having been scaled beforehand to give the desired aspect ratio for the
+graph.
+
+
+
+<PRE>
+\centertexdraw{
+\arrowheadtype t:F  \arrowheadsize l:0.08 w:0.04
+\def\ds {\displaystyle}
+\def\ticklab (#1 #2)#3{\move(#1 #2)
+                       \bsegment
+                         \lvec (0 0.05)
+                         \textref h:C v:T \htext (0 -0.05){#3}
+                       \esegment}
+\def\Rtext #1{\bsegment
+                \textref h:L v:C \htext (+0.08 0){#1}
+              \esegment}
+
+\move (2.4 -0.3)    % move to set the size
+
+\move (0 0)
+% Axes
+\avec (0 +1.4)
+\move (0 0) \avec (2.2 0) \Rtext{$\omega$}
+\ticklab (0 0)   {0}
+\ticklab (0.8 0) {$\ds {\pi \over 2N} $}
+\ticklab (1.2 0) {$\omega_s$}
+\ticklab (1.6 0) {$\ds {\pi \over N} $}
+
+\linewd 0.025
+\move (0 1)
+\lvec (0.4 1)
+\lvec (0.44 0.998)
+\lvec (0.48 0.988)
+\lvec (0.52 0.973)
+\lvec (0.56 0.951)
+ ...
+\lvec (1.08 0.233)
+\lvec (1.12 0.156)
+\lvec (1.16 0.078)
+\lvec (1.20 0)
+\lvec (1.9 0)
+}
+</PRE>
+
+
+
+<H2><A NAME="SEC38" HREF="texdraw_toc.html#TOC38">C.3 Geometric construction</A></H2>
+<P>
+<A NAME="IDX185"></A>
+
+
+<P>
+This example shows a geometric construction which places an ellipse
+tangent to an enclosing circle.  The size of the ellipse is determined
+from geometric considerations.  Macros are used to modularize the code.
+The example alters the unit scale factor.  This allows the drawing to be
+carried out in units normalized to the radius of the circle.
+
+
+
+<PRE>
+\centertexdraw{
+\arrowheadtype t:V \arrowheadsize l:0.08 w:0.04
+\linewd 0.01
+\setunitscale 1.5            % circle will have radius 1.5 inches
+
+\def\Btext #1{\bsegment
+                \textref h:C v:T \htext (0 -0.04){#1}
+              \esegment}
+\def\Ttext #1{\bsegment
+                \textref h:C v:B \htext (0 +0.04){#1}
+              \esegment}
+\def\Ltext #1{\bsegment
+                \textref h:R v:C \htext (-0.04 0){#1}
+              \esegment}
+\def\bdot {\fcir f:0 r:0.0133 }
+\def\vtick {\bsegment
+              \move (0 -0.05) \lvec (0 +0.05)
+            \esegment}
+\def\htick {\bsegment
+              \move (-0.05 0) \lvec (+0.05 0)
+            \esegment}
+\def\Hlen #1#2{\bsegment
+                 \vtick \avec ({#1} 0) \vtick \avec (0 0)
+                 \relsegscale 0.5
+                 \move ({#1} 0) \Ttext {#2}
+               \esegment}
+\def\Vlen #1#2{\bsegment
+                 \htick \avec (0 {#1}) \htick \avec (0 0)
+                 \relsegscale 0.5
+                 \move (0 {#1}) \Ltext {#2}
+               \esegment}
+
+\lcir r:1                         % circle
+\move (-1.05 0) \lvec ( 1.05 0)   % axes
+\move (0 -1.05) \lvec (0  1.05)
+
+\move (0 0) \lvec (0.707 0.707) \bdot
+\rmove (0.02 0.02) \textref h:L v:B \htext {X}
+\move (0.707 -0.707) \bdot
+\textref h:R v:T \htext(-0.02 -0.02){O}
+
+\move (0.5 0)                     % center of ellipse
+\bsegment
+  \lellip rx:0.435 ry:0.804
+  \bdot \Btext {$\beta_2$}
+  \move (0 0.15) \Hlen {0.435}{$|\beta_1{+}\beta_3|$}
+  \move (-0.7 0) \Vlen {0.804}{$|\beta_1{-}\beta_3|$}
+\esegment
+}
+</PRE>
+
+<P><HR><P>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_7.html">previous</A>, <A HREF="texdraw_9.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+</BODY>
+</HTML>

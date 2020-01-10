@@ -1,0 +1,76 @@
+% -*- mode: LaTeX; coding: iso-8859-15 -*-
+\documentclass[a4paper,12pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[tame]{paresse}
+\usepackage{amsmath,xspace,array,fancyvrb}
+\usepackage[frenchb]{babel}
+\IfFileExists{lmodern.sty}{\usepackage{lmodern}}{}
+\setlength{\parindent}{0pt}
+\begin{document}
+\pagestyle{empty}
+
+\begin{center}\large
+  Examples of \texttt{paresse} package usage.\\
+  le \TeX nicien de surface\\
+  2004-04-17
+\end{center}
+
+This file loads the \texttt{amsmath} package and, if it locally exists, the
+\texttt{lmodern} package.
+
+\vspace{\baselineskip}
+
+With the macro \verb!\ActiveLaParesse! to make the § character active.
+
+\begin{Verbatim}[frame=single]
+{\ActiveLaParesse
+\(§a^{§b}_{§g}\) and also \(§D^§a_§d\)
+}
+\end{Verbatim}
+
+to obtain:
+{\ActiveLaParesse
+\(§a^{§b}_{§g}\) and also \(§D^§a_§d\)
+}
+
+\vspace{\baselineskip}
+
+With the environment \verb!ParesseActive!.
+
+\begin{Verbatim}[frame=single]
+\begin{ParesseActive}\large
+\begin{tabular}{*4{||>{\ttfamily \§}c|c}||} \hline
+a & §a & b & §b & g & §g & d & §d\\ \hline
+e & §e & z & §z & h & §h & v & §v\\ \hline
+...
+X & §X & P & §P & S & §S & U & §U\\ \hline
+F & §F & Q & §Q & W & §W &\multicolumn{1}{c|}{}& \\ \hline 
+\end{tabular}
+\end{ParesseActive}  
+\end{Verbatim}
+
+\medskip
+
+\begin{center}
+\begin{ParesseActive}\large
+\begin{tabular}{*4{||>{\ttfamily \§}c|c}||} \hline
+a & §a & b & §b & g & §g & d & §d\\ \hline
+e & §e & z & §z & h & §h & v & §v\\ \hline
+i & §i & k & §k & l & §l & m & §m\\ \hline
+n & §n & x & §x & p & §p & r & §r\\ \hline
+s & §s & y & §y & u & §u & f & §f\\ \hline
+c & §c & q & §q & w & §w &\multicolumn{1}{c|}{}& \\ \hline\hline
+G & §G & D & §D & V & §V & L & §L\\ \hline
+X & §X & P & §P & S & §S & U & §U\\ \hline
+F & §F & Q & §Q & W & §W &\multicolumn{1}{c|}{}& \\ \hline 
+\end{tabular}
+\end{ParesseActive}
+\end{center}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

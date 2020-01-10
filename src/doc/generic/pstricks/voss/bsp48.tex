@@ -1,0 +1,29 @@
+\documentclass[]{article}
+\usepackage{pstricks}
+\usepackage{pst-slpe}
+\usepackage{pst-plot}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\begin{center}
+\bgroup
+\begin{pspicture}(5.5,2.5)
+  \psframe[fillstyle=ccslope](2.5,2.5)
+  \psframe[fillstyle=ccslopes](3,0)(5.5,2.5)
+\end{pspicture}
+\begin{pspicture}(5.5,2.5)
+  \psframe[fillstyle=radslope](2.5,2.5)
+  \psframe[fillstyle=radslopes](3,0)(5.5,2.5)
+\end{pspicture}
+
+\begin{pspicture}(0,-0.25)(\linewidth,0.75cm)
+\psaxes[axesstyle=frame,tickstyle=bottom](\linewidth,0.5cm)
+\psframe[fillstyle=slopes](\linewidth,0.5cm)
+\end{pspicture}
+\egroup
+\end{center}
+
+
+\end{document}

@@ -1,0 +1,80 @@
+\documentclass[a4paper,%		% Papiergröße A4
+				12pt, %				%
+				BCOR0mm, %		% Bindekorrektur
+				DIVcalc, %		% Satzspiegel wird unten neu berechnet
+				automark, %		% lebende Kolumnentitel
+				pagesize%			% Seitengröße wird bei dvi und pdf richtig gesetzt
+				]{scrartcl}		% entspricht article
+
+\usepackage{ngerman, graphicx, sets} %, listing}
+
+%----------------  Schriften  ------------------------------------------------
+\usepackage{mathpazo} % Palatino
+\usepackage[scaled=0.95]{helvet} % Sansserif-Schrift: Frutiger
+\usepackage{courier}								% TeleType-Schrift Courier
+
+\usepackage{setspace}								% 1.05-facher Zeilenabstand wegen Palatino
+\linespread{1.05}
+
+\usepackage[T1]{fontenc}						% T1-Schriften verwenden
+\usepackage[latin1]{inputenc}				% Zeichenkodierung latin 1
+%-----------------------------------------------------------------------------
+
+%----------------  Hyperref  -------------------------------------------------
+\usepackage{hyperref}
+\hypersetup{%				% Einstellung der pdf-Dokumenteigenschaften
+  pdftitle  = {Die Pakete sets und vhistory},		% Titel
+  pdfsubject = {Beschreibung der LaTeX-Pakete},	% Thema
+  pdfauthor = {Jochen Wertenauer},		% Autor
+  pdfkeywords = {sets, sets.sty, vhistory, vhistory.sty, Beschreibung, Dokumentation, LaTeX}}	% Stichworte
+%-----------------------------------------------------------------------------
+
+%----------------  Kopf- und Fußzeilen  --------------------------------------
+\usepackage{scrpage2}
+\pagestyle{scrheadings}
+%-----------------------------------------------------------------------------
+
+\typearea[current]{calc} % Neuberechnung des Satzspiegels
+
+%----------------  Indexerstellung (Vorbereitung)  ----------------------------
+%\usepackage{makeidx}
+
+% Ordnet im Index die Punkte so an, dass sie untereinander stehen
+%\newcommand{\symDotfill}{\leaders\hbox to 5pt{\hss.\hss}\hfill}
+
+%\makeindex
+
+%-----------------------------------------------------------------------------
+
+%\renewcommand{\bibname}{Referenzen}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%--------  TITELSEITE(N)  -----------------------------------------------%%%
+
+\subject{Beschreibung der \LaTeX-Pakete}				% Typisierung: Unmittelbar über Titel
+\title{sets und vhistory}					% Titel
+\author{Jochen Wertenauer\\
+	\normalsize{\href{mailto:jwertenauer@gmx.de}
+					{jwertenauer\,@\,gmx.de}}}
+\date{\today}						% Datum
+\publishers{\vskip 2ex \small Dieses Dokument steht unter der
+	\href{http://www.latex-project.org/lppl.txt}{\LaTeX\ Project Public License}.}%
+\maketitle
+%%%---------- ENDE TITELSEITE(N) ------------------------------------------%%%
+
+\tableofcontents\clearpage
+
+\input{de_einleitung}
+\clearpage
+\input{de_vhistory}
+\clearpage
+\input{de_sets}
+
+%\printindex %Index
+
+\end{document} 

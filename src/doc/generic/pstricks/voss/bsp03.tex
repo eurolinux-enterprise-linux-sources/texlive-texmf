@@ -1,0 +1,37 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp03.tex ---
+%% Autor           : Herbert Voss <voss@perce.de> (nach einer Idee von
+%%                   Christophe Jorssen)
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{article}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{multido}
+\SpecialCoor
+
+\parindent=0pt
+\pagestyle{empty}
+\begin{document}
+
+\sffamily
+\psset{unit=1.3,dimen=middle}
+\newrgbcolor{Orange}{0.4 0.8 0.1}
+\begin{pspicture}(-5.5,-0.5)(5.5,5.5)
+  \pnode(-5,0){A}\pnode(5,0){B}\pnode(0,5){C}\pnode(0,0){MC}
+%  \pspolygon(A)(B)(C)
+  \psclip{\pspolygon(A)(B)(C)}
+    \multido{\nA=1+1}{179}{%
+       \psline[linewidth=.25\pslinewidth,linecolor=Orange](3;\nA)(5;\nA)
+    }
+  \endpsclip
+  \pspolygon*[linecolor=white](-4.7,0)(0,4.7)(4.7,0)
+  \psclip{\pspolygon(A)(B)(C)}
+    \multido{\nA=5+10,\nB=10+10}{18}{%
+       \psline[linewidth=.5\pslinewidth,linecolor=Orange](3;\nA)(5;\nA)
+       \psline[linecolor=Orange](0.5;\nA)(5;\nA)
+       \rput*(3;\nA){\nA}
+    }
+  \endpsclip
+\end{pspicture}
+\end{document}

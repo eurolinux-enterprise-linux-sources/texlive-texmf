@@ -1,0 +1,24 @@
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Pagella.txt
+% and README-TeX-Gyre-Pagella.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+\ProvidesFile{l7xqpl.fd}[2006/11/01 v1.0 font definition file for L7x/qpl]
+
+\DeclareFontFamily{L7x}{qpl}{}
+\DeclareFontShape{L7x}{qpl}{b}{sc}{<->l7x-qplb-sc}{}
+\DeclareFontShape{L7x}{qpl}{b}{n}{<->l7x-qplb}{}
+\DeclareFontShape{L7x}{qpl}{b}{scit}{<->l7x-qplbi-sc}{}
+\DeclareFontShape{L7x}{qpl}{b}{it}{<->l7x-qplbi}{}
+\DeclareFontShape{L7x}{qpl}{m}{sc}{<->l7x-qplr-sc}{}
+\DeclareFontShape{L7x}{qpl}{m}{n}{<->l7x-qplr}{}
+\DeclareFontShape{L7x}{qpl}{m}{scit}{<->l7x-qplri-sc}{}
+\DeclareFontShape{L7x}{qpl}{m}{it}{<->l7x-qplri}{}
+\DeclareFontShape{L7x}{qpl}{bx}{n}{<->ssub * qpl/b/n}{}
+\DeclareFontShape{L7x}{qpl}{bx}{it}{<->ssub * qpl/b/it}{}
+\DeclareFontShape{L7x}{qpl}{bx}{sc}{<->ssub * qpl/b/sc}{}
+\DeclareFontShape{L7x}{qpl}{bx}{scit}{<->ssub * qpl/b/scit}{}
+\endinput
+% End of l7xqpl

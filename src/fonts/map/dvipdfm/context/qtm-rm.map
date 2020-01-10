@@ -1,0 +1,15 @@
+rm-qtmr q-rm qtmr
+rm-qtmri q-rm qtmri
+rm-qtmb q-rm qtmb
+rm-qtmbi q-rm qtmbi
+rm-qtmr-sc q-rm-sc qtmr
+rm-qtmri-sc q-rm-sc qtmri
+rm-qtmb-sc q-rm-sc qtmb
+rm-qtmbi-sc q-rm-sc qtmbi
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Termes.txt
+% and README-TeX-Gyre-Termes.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+% 

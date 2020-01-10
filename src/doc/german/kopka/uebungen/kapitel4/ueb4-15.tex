@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage{german}
+	\setlength{\textwidth}{130mm}
+\begin{document}
+\newcommand{\rb}[1]{\raisebox{1.5ex}[-1.5ex]{#1}}
+\begin{center}\small
+\begin{tabular}{|l||c|l|c|l|c|l|} 
+\hline
+& \multicolumn{2}{c|}{18.15--19.15} & \multicolumn{2}{c|}{19.20--20.20}
+& \multicolumn{2}{c|}{20.30--21.30}\\ \cline{2-7}
+&& Lehrer && Lehrer && Lehrer\\ \cline{3-3}\cline{5-5}\cline{7-7}
+\rb{Tag} & \rb{Fach} & Raum & \rb{Fach} & Raum & \rb{Fach} & Raum\\ \hline\hline
+
+&& Dr.\ Schmidt && Frau Schulz && Herr Meier\\
+\cline{3-3}\cline{5-5}\cline{7-7}
+\rb{Mo.} & \rb{UNIX} & Rechenraum & \rb{FORTRAN} & H"orsaal 
+& \rb{Num.\ Math.} & H"orsaal\\ \hline 
+&& Frl.\ M"uller && Frau Schulz && Herr Meier\\
+\cline{3-3}\cline{5-5}\cline{7-7}
+\rb{Di.} & \rb{\LaTeX} & Praktikum & \rb{FORTRAN} & Praktikum 
+& \rb{Num.\ Math.} & H"orsaal\\ \hline
+&& Dr.\ Schmidt && Dr.\ Nolte && Dr.\ Nolte\\
+\cline{3-3}\cline{5-5}\cline{7-7}
+\rb{Do.} & \rb{UNIX} & Rechenraum & \rb{C-Theorie} & H"orsaal
+& \rb{Informatik} & H"orsaal\\ \hline
+&& Frl.\ M"uller && Frau Schulz & \multicolumn{2}{c|}{}\\
+\cline{3-3}\cline{5-5}
+\rb{Fr.} & \rb{\LaTeX} & Praktikum & \rb{C-Praxis} & Praktikum 
+& \multicolumn{2}{c|}{\rb{entf"allt}}\\ \hline
+\end{tabular}\end{center}
+\end{document}

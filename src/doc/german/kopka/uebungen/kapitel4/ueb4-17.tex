@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage{german}
+\setlength{\textwidth}{130mm}
+\begin{document}
+\begin{table}
+\begin{tabular*}{130mm}%
+   {@{}ll@{\extracolsep{\fill}}r@{\hspace{1em}}@{\extracolsep{1em}}rr@{}}
+\hline
+\multicolumn{2}{@{}l}{Energietr"ager} & 1975 & 1980 & 1986\\ \hline
+\multicolumn{2}{@{}l}{Gesamtverbrauch}&&& \\
+\multicolumn{2}{@{}l}{(in Mio.\ t SKE)} & 347.7 & 390.2 & 385.0 \\
+davon & (Anteile in \%)\\
+& Mineral"ol & 52.1 & 47.6 & 43.2 \\
+& Steinkohle   & 19.1 & 19.8 & 20.0 \\
+& Braunkohle   &  9.9 & 10.0 &  8.6 \\
+& Erdgas       & 14.2 & 16.5 & 15.1 \\
+& Kernenergie  &  2.0 &  3.7 & 10.1 \\
+& Sonstiges    &  2.7 &  2.3 &  3.0 \\ \hline
+\end{tabular*}
+
+\emph{Quelle:} Arbeitsgemeinschaft Energiebilanzen, Essen 1987.
+\end{table}
+
+\noindent \textbf{Antworten der "Ubungsfragen}:
+
+\begin{enumerate}
+\item Mit \verb=@{}= am Anfang und Ende des Formatierungsfeldes wird
+      horizontaler Leerraum von der H"alfte des standardm"a"sigen 
+      Spaltenzwischenraums vor und nach der Tabelle unterdr"uckt.
+\item Mit \verb=@{\extracolsep{\hfill}}= am Anfang des Formatierungsfeldes
+      w"urde zwischen allen nachfolgenden Spalten bis zum Auftreten eines
+      neuen \texttt{\@}-Ausdrucks der gleiche Spaltenzwischenraum eingef"ugt,
+      um die geforderte Tabellenbreite zu erhalten. Bitte als Sonder"ubung
+      nachvollziehen!
+\item Der Ausdruck \verb=@{\extracolsep{\hfill}}= steht f"ur die 
+      "Ubungstabelle nach dem zweiten Spaltenparameter. Die diesen Ausdruck
+      aufhebende Befehlsgruppe \verb=@{\hspace{1em}@{\extracolsep{1em}}= steht
+      nach dem dritten Spaltenparameter.
+\end{enumerate}
+\end{document}
+

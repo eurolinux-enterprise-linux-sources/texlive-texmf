@@ -1,0 +1,40 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -*- Mode: Latex -*- %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% T3E-Partitions.tex --- Partitions of processors on the SGI-CRAY T3E
+%%                        multiprocessors supercomputer
+%% 
+%% Author          : Denis GIROU (CNRS/IDRIS - France) <Denis.Girou@idris.fr>
+%% Created the     : 1995
+%% Last mod. by    : hv
+%% Last mod. the   : 2005-11-23
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+\usepackage{pstricks}         % PSTricks with the `color' extension
+\usepackage{pst-3d}           % PSTricks package for 3d grids
+\usepackage{pst-gr3d}         % PSTricks package for 3d grids
+
+\pagestyle{empty}
+
+\begin{document}
+
+\psset{unit=1.5}
+
+% Superposed grids (for the partitions of processors)
+\renewcommand{\PstGridThreeDHookEnd}{{%
+  \psset{PstPicture=false,gridwidth=1mm}%
+  {\renewcommand{\PstGridThreeDHookNode}{%
+     \PstGridThreeDNodeProcessor{blue}}%
+   \PstGridThreeD[gridcolor=blue,GridThreeDZPos=4](1,8,1)}%
+  {\renewcommand{\PstGridThreeDHookNode}{%
+     \PstGridThreeDNodeProcessor{red}}%
+   \PstGridThreeD[gridcolor=red,%
+                  GridThreeDXPos=2,GridThreeDZPos=2](1,4,2)}
+  {\renewcommand{\PstGridThreeDHookNode}{%
+     \PstGridThreeDNodeProcessor{green}}%
+   \PstGridThreeD[gridcolor=green,GridThreeDYPos=7](2,2,2)}}}
+
+% Three dimensional grid (for the three dimensional tore)
+\PstGridThreeD[gridwidth=0.4mm,GridThreeDNodes=true](2,8,4)%
+
+\end{document}

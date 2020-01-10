@@ -1,0 +1,45 @@
+\documentclass{minimal}% Uwe Ziegenhagen/Herbert Voss
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{amsmath}
+
+\parindent=0pt
+\pagestyle{empty}
+\begin{document}
+
+\begin{psmatrix}[rowsep=.5cm, colsep=2cm]
+  &  &  & & empty & \boxed{S_0^{+\dots+}}\\
+  &  &  & \boxed{S_0^{+++}} & empty & leer \\
+  &  & \boxed{S_0^{++}} & leer & empty & \boxed{S_0^{+\dots+-}}\\
+  & \boxed{S_0^+} & leer & \boxed{S_0^{++-}} & empty & leer\\
+ \boxed{S_0} & leer & \boxed{S_0^{+-}} & leer & empty & \dots\\
+  & \boxed{S_0^-} & leer & \boxed{S_0^{+--}} & empty & leer\\
+  &  & \boxed{S_0^{--}} & leer & empty & \boxed{S_T^{+\dots-}}\\
+  &  & & \boxed{S_0^{---}} & empty & leer\\
+  &  & & & empty & \boxed{S_T^{-\dots-}}\\
+ \psset{linewidth=1pt}
+ \ncline{5,1}{4,2}>{$p$}
+ \ncline{4,2}{3,3}>{$p$}
+ \ncline{6,2}{5,3}>{$p$}
+ \ncline{3,3}{2,4}>{$p$}
+ \ncline{5,3}{4,4}>{$p$}
+ \ncline{7,3}{6,4}>{$p$}
+ \ncline{5,1}{6,2}<{$1-p$}
+ \ncline{4,2}{5,3}<{$1-p$}
+ \ncline{6,2}{7,3}<{$1-p$}
+ \ncline{3,3}{4,4}<{$1-p$}
+ \ncline{5,3}{6,4}<{$1-p$}
+ \ncline{7,3}{8,4}<{$1-p$}
+ \psset{linewidth=0.5pt,linestyle=dotted}
+ \ncline{2,4}{1,5}
+ \ncline{2,4}{3,5}
+ \ncline{4,4}{3,5}
+ \ncline{4,4}{5,5}
+ \ncline{6,4}{5,5}
+ \ncline{6,4}{7,5}
+ \ncline{8,4}{7,5}
+ \ncline{8,4}{9,5}
+\end{psmatrix}
+
+\end{document}
+

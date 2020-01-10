@@ -1,0 +1,56 @@
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\definecolor{light}{rgb}{0.3,0.4,0.6}
+\usepackage{pst-3dplot}
+\pagestyle{empty}
+\def\drawCircles{%
+%	\pstThreeDCoor[xMax=14,yMax=14,zMax=7.5,linewidth=0.1pt]
+  \parametricplotThreeD[xPlotpoints=100](80,360)(0,360){%
+	/k 2 def /k2 4 def
+	t cos k mul 3 u sin k mul add mul
+	t sin k mul 3 u sin k mul add mul
+	u cos k2 mul
+  }
+  \parametricplotThreeD[yPlotpoints=75](0,360)(80,360){%
+	/k 2 def /k2 4 def
+	u cos k mul 3 t sin k mul add mul
+	u sin k mul 3 t sin k mul add mul
+	t cos k2 mul
+  }
+%	\parametricplotThreeD[xPlotpoints=100,yPlotpoints=1,linecolor=red,linewidth=2pt](80,360)(0,360){%
+%		/k 2 def /k2 4 def
+%		t cos k mul 2 u sin k mul add mul
+%		t sin k mul 2 u sin k mul add mul
+%		u cos k2 mul
+%	}
+  \parametricplotThreeD[yPlotpoints=1,linecolor=red,linewidth=2pt](0,360)(80,360){%
+	/k 2 def /k2 4 def
+	u cos k mul 3 t sin k mul add mul
+	u sin k mul 3 t sin k mul add mul
+	t cos k2 mul
+  }
+}
+
+\begin{document}
+
+\psset{unit=0.75}
+\begin{pspicture}(-5,-5)(5,5)
+	\psset{Beta=20,Alpha=50,linewidth=0.1pt,linecolor=light}
+	\drawCircles
+\end{pspicture}
+
+\clearpage
+%\psset{unit=0.75}
+\begin{pspicture}(-5,-5)(5,5)
+	\psset{Beta=90,Alpha=50,linewidth=0.1pt,linecolor=light}
+	\drawCircles
+\end{pspicture}
+
+\clearpage
+%\psset{unit=0.75}
+\begin{pspicture}(-5,-5)(5,5)
+	\psset{Beta=0,Alpha=50,linewidth=0.1pt,linecolor=light}
+	\drawCircles
+\end{pspicture}
+
+\end{document}

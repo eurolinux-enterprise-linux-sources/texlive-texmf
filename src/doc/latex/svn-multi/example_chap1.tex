@@ -1,0 +1,31 @@
+% Version control information:
+\svnidlong
+{$HeadURL: file://somewhere/example_chap1.tex $}
+{$LastChangedDate: 2006-05-26 14:37:12 +0100 (Fri, 26 May 2006) $}
+{$LastChangedRevision: 14 $}
+{$LastChangedBy: johnd $}
+\svnid{$Id: example_chap1.tex 14 2006-05-26 14:37:12Z johnd $}
+
+\chapter{Example Chapter}
+Text ...
+
+\section{Version}
+\subsection*{This chapter}
+% \url is needed because there is an underscore in the name
+% The package 'underscore' seems not to work properly, so the 'hyperref' 
+% package is used which is not the best solution. Avoid underscore in LaTeX filenames.
+Filename: \url{\svnkw{Filename}}\\
+URL: \url{\svnkw{HeadURL}}\\
+% Something like \href{\svnkw{HeadURL}}{Download} works also!
+Last change:\\
+Revision: \svnfilerev\\
+Date: \svnfiledate\\
+Author: \svnfileauthor\\
+
+\subsection*{Whole document}
+Last change:\\
+Revision: \svnrev\\
+Date: \svndate\\
+Author: \svnauthor\\
+
+% [...]

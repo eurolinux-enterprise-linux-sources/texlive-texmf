@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head><title>e-TeX reference site</title>
+</HEAD><BODY>
+<H1>The e-T<sub><big>E</big></sub>X Reference Site</H1>
+Welcome to the <a href="#etex-orthography">e-TeX<sup>1</sup></a>
+reference site: e-TeX V1.1 (the first production release) is now available for
+general access; please read the document describing the 
+<a href="legal.html">legal status of e-TeX</a> before proceeding further.  
+A brief description of the functionality provided by e-TeX may be found in the
+on-line <a href="etex_ref.html#NewFeatures">Reference Manual</a>. 
+<p> 
+The following resources are intended to be of use to e-TeX implementors, but
+may be of interest to anyone considering using e-TeX; they be accessed directly
+from the hyperlinks on this page, via 
+<a href="ftp://vms.rhbnc.ac.uk/e-TeX/">ftp</a>
+(<code>ftp://vms.rhbnc.ac.uk/e-TeX/</code>), or via NFS using the pseudo-URL:
+<code>nfs://vms.rhbnc.ac.uk/disk36/export/anonymous/e-TeX</code>. 
+<ul>
+<li><a href="etex_ref.html">
+	The e-TeX reference manual</a>, abridged version
+		(<code>etex_ref.html</code>)
+<li><a href="etex.ch">
+	The master e-TeX change file</a> 
+		(<code>etex.ch</code>)
+<li><a href="etex_gen.tex">
+	Instructions for building e-TeX</a> 
+		(<code>etex_gen.tex</code>)
+<li><a href="webmerge.tex">WebMerge</a>,
+	Peter Breitenlohner's program 	for merging changefiles
+		(<code>webmerge.tex</code>)
+<li><a href="xbmc10.mf">MetaFont source</a>,
+	needed for TeX--XeT logo
+		(<code>xbmc10.mf</code>)
+<li><a href="etex_gen.zip">A zip file</a>, 
+        containing all of the above
+		(<code>etex_gen.zip</code>)
+</ul>
+
+The e-TeX team recommend that e-TeX be configured such that the command by
+which it is invoked be the same as the default name for the format to be used.
+Since it is expected that most sites will choose to install e-TeX so that it
+can be invoked with the command "etex", we provide a source file which can be
+used to build the "etex" format (an analogous "elatex" source file will be
+provided in due course, ideally in collaboration with the 
+<a href="http://www.tex.ac.uk/CTAN/latex/latex3.html">LaTeX3 team</a>). 
+A few adjunct source files, required or optionally used by the "etex" source
+file, are also supplied: 
+<ul>
+<li><a href="src/etex.src">
+	The "etex" format source</a> 
+		(<code>etex.src</code>)
+<li><a href="src/beta/etex.src">Beta-test "etex" format source</a>, 
+        allows for single-read O/S's 
+		(<code>etex.src</code>)
+<li><a href="src/etex_src.html">
+	The manual for the "etex" format source</a>
+		(<code>etex_src.html</code>)
+<li><a href="src/etexdefs.lib">e-TeX library file</a>
+	containing symbolic names for e-TeX's constants
+		(<code>etexdefs.lib</code>)
+<li><a href="src/examples/language.def"> 
+	Example language definition file</a> 
+        (<code>language.def</code>)
+<li><a href="etex_src.zip">A zip file</a>,
+        containing all of the above
+		(<code>etex_src.zip</code>)
+</ul>
+
+A reference implementation, developed by 
+<a href="mailto:spieler@linac.ikp.physik.th-darmstadt.de">Christian Spieler</a>
+for VAX/VMS and AXP/VMS, is also provided, to which 
+<a href="mailto:knappen@vkpmzd.kph.uni-mainz.de">J&ouml;rg Knappen</a> 
+has recently contributed a modified "weave" changefile and a RUNOFF file
+containing the source for a VMS HELP library for e-TeX: 
+<ul>
+<li><a href="vms/makeetex.com">
+	DCL procedure for creating VMS e-TeX</a>
+		(<code>makeetex.com</code>)
+<li><a href="vms/makeetex.tex">TeX steering file</a>,
+	produces VMS e-TeX changefile from component changefiles
+		 (<code>makeetex.tex</code>) 
+<li><a href="vms/tex_vms.ch">
+	Christian Spieler's change file for VMS TeX</a>
+		(<code>tex_vms.ch</code>) 
+<li><a href="vms/etex_vms.ech">
+	Christian Spieler's ancilliary change file for VMS e-TeX</a>
+		(<code>etex_vms.ech</code>) 
+<li><a href="vms/etex_cli.cld">
+	The internal CLD file used by VMS e-TeX</a>
+		(<code>etex_cli.cld</code>) 
+<li><a href="vms/weave.ch">
+	J&ouml;rg Knappen's modified "weave" changefile</a>
+                (<code>weave.ch</code>)
+<li><a href="vms/etex.rnh">
+	J&ouml;rg Knappen's RUNOFF source file for VMS HELP on e-TeX</a>
+                (<code>etex.rnh</code>) 
+<li><a href="etex_vms.zip">
+	A zip file containing all of the above</a>
+		(<code>etex_vms.zip</code>)
+</ul>
+
+A further reference implementation (PubliC e-TeX, a.k.a. "pubtex" and "dos-tp") 
+by <a href="mailto:peb@mppmu.mpg.de">Peter Breitenlohner</a>
+for MS/DOS is also available:
+<ul>
+<li><a href="ftp://ftp.dante.de/tex-archive/systems/msdos/dos-tp/README">
+	the README file</a> 
+		(<code>README</code>)
+<li><a href="ftp://ftp.dante.de/tex-archive/systems/msdos/dos-tp/">
+	the directory root</a> 
+	     (<code>ftp://ftp.dante.de/tex-archive/systems/msdos/dos-tp/</code>)
+</ul>
+
+An e-TeX implementation must be validated by performing the 
+<a href="etrip.zip">e-TRIP</a> test
+(the e-TeX equivalent of Knuth's <a href="knuth/tripman.tex">TRIP</a> test).
+The components of the e-TRIP suite are as follows: 
+<ul>
+<li><a href="trip/etripman.tex">Manual for the e-TRIP test</a> 
+		<code>(etripman.tex)</code>
+<li><a href="trip/etrip.tex">Source file for the e-TRIP test</a>    
+		<code>(etrip.tex)</code>
+<li><a href="trip/etrip.pl">Property-list file for the e-TRIP font</a>     
+		<code>(etrip.pl)</code>
+<li><a href="trip/etripin.log">
+	Log file for the e-TRIP test format-creation run</a>  
+		<code>(etripin.log)</code>
+<li><a href="trip/etrip.log">Log file for the e-TRIP test</a>    
+		<code>(etrip.log)</code>
+<li><a href="trip/etrip.fot">
+	"Photo" (terminal log) file for the e-TRIP test</a>    
+		<code>(etrip.fot)</code>
+<li><a href="etrip.zip">A ZIP file</a>, 
+	containing all of the above
+		<code>(<code>etrip.zip</code>)</code> 
+</ul>
+
+Finally we provide the definitive (Knuthian) TeX and Trip files:
+<ul>
+<li><a href="knuth/tripman.tex">Manual for the TRIP test</a> 
+		<code>(tripman.tex)</code>
+<li><a href="knuth/trip.tex">Source file for the TRIP test</a>    
+		<code>(trip.tex)</code>
+<li><a href="knuth/trip.pl">Property-list file for the TRIP font</a>     
+		<code>(trip.pl)</code>
+<li><a href="knuth/tripin.log">
+	Log file for the TRIP test format-creation run</a>  
+		<code>(tripin.log)</code>
+<li><a href="knuth/trip.log">Log file for the TRIP test</a>    
+		<code>(trip.log)</code>
+<li><a href="knuth/trip.fot">
+	"Photo" (terminal log) file for the TRIP test</a>    
+		<code>(trip.fot)</code>
+<li><a href="knuth/trip.typ">DVItype output for the TRIP test</a>    
+		<code>(trip.typ)</code>
+<li><a href="knuth/tripos.tex">I/O file from the TRIP test</a>  
+		<code>(tripos.tex)</code>
+<li><a href="knuth/tex.web">Source of TeX-the-program</a>     
+		<code>(tex.web)</code>
+<li><a href="knuth/texbook.tex">Source of <em>The TeXbook</em></a> 
+		<code>(texbook.tex)</code>
+<li><a href="knuth/glue.web">Fixed-point arithmetic for TeX</a>    
+		<code>(glue.web)</code>
+<li><a href="knuth.zip">A zip file</a>,
+	containing all of the above
+		<code>(knuth.zip)</code>
+</ul>
+
+Any problems encountered when using e-TeX which cannot be replicated
+when using a TRIP-validated implementation of TeX should be reported to
+<a href="mailto:etex-support@vms.rhbnc.ac.uk">the e-TeX team</a>,
+and accompanied by sufficient information to enable the scenario
+to be reproduced at another site; the exact version and implementation
+of e-TeX should of course be specified.
+<hr>
+<h4><a name="etex-orthography">[1]</a> 
+	The orthography of e-T<sub><big>E</big></sub>X
+</h4> 
+The e-TeX team request that wherever e-TeX is referred to in text, it be
+represented by the use of its (e-)TeX logo (<code>$\varepsilon$-\TeX</code>),
+by the nearest HTML equivalent
+(<code>e-T&lt;sub&gt;&lt;big&gt;E&lt;/big&gt;&lt;/sub&gt;X</code>), or if
+all else fails, by the simple ASCII string "e-TeX". However, bearing in mind
+(a)&nbsp;<a
+href="ftp://ftp.dl.ac.uk/src/backupa/Documents/Standards/iso/9660/">
+the current
+ISO standard for CD-ROMs</a> 
+(which precludes the use of a hyphen in filenames), and (b)&nbsp;the problems
+of moving files between case-sensitive (e.g.&nbsp;Unix) and case-insensitive
+(e.g.&nbsp;VMS, MS/DOS) operating systems, it is strongly recommended that
+wherever "e-TeX" occurs in the context of a filename, logical name, DCL symbol
+or analogous construct it be spelled (a)&nbsp;without the hyphen, and
+(b)&nbsp;entirely in lower case. It is further recommended that the component
+"etex" of such a name be separated from any subsequent component(s) by an
+underscore, unless this would (in the case of a filename) cause it
+to exceed the MS/DOS limit of 8+3 characters in which case the
+underscore should be omitted.  Similar considerations may also
+be taken into account when constructing logical names, DCL symbols, etc,
+although the upper bound will then be system-dependent. 
+<hr>
+Please notify any errors in this document to 
+<a href="http://www.vms.rhbnc.ac.uk/~chaa006/">its creator</a>;<br> 
+Last updated:  7-JUL-1997 17:23:32 /PT.<br>
+<FORM METHOD="POST" ACTION="http://www.webtechs.com/cgi-bin/html-check.pl">
+<INPUT NAME="recommended" VALUE="0" TYPE="hidden">
+<INPUT NAME="level" VALUE="Wilbur" TYPE="hidden">
+<INPUT NAME="input" VALUE="0" TYPE="hidden">
+<INPUT NAME="esis" VALUE="0" TYPE="hidden">
+<INPUT NAME="render" VALUE="0" TYPE="hidden">
+<a href="http://ugweb.cs.ualberta.ca/~gerald/validate
+	/?url=http://www.rhbnc.ac.uk/e-TeX/">
+<img src="/www/logos/valid_html3_2.gif" alt="HTML 3.2 Checked!">
+</a>
+<INPUT NAME="URLs" 
+       VALUE="http://www.rhbnc.ac.uk/e-TeX/"
+       TYPE="hidden"
+>
+<INPUT TYPE="image" SRC="/www/logos/valid_html_wilbur.gif">
+</FORM>
+</body>
+</html>

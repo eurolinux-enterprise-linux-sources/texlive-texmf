@@ -1,0 +1,43 @@
+22.01.2007: no version change
+* Lithuanian *.fd files corrected (reported by Sigitas Tolusis): L7X -> L7x
+
+Ver. 1.010, 16.01.2007:
+* important bugs fixed (R. Kinch in 1995, http://www.truetex.com/tug95ps.zip,
+  Karel P\'{\i}\v{s}ka http://www-hep.fzu.cz/~piska/lm2006.html -- thanks
+  to both), moreover, `perthousand' and `permyriad' corrected in all italic
+  fonts (wrong path directions)
+* LaTeX support fixed and enhanced with LM math (thanks to Marcin
+  Woli\'nski)
+* math text metric files (rm-*.tfm) provided
+* the letter `mu' corrected (other Greek letters must wait for a while)
+* `[lL]dotaccent' renamed to `[lL]dot', wrong shapes (dot above) corrected
+* `cedilla' adjusted in lmri*, lmu10, and lmdunh10
+* `[CcSs]cedilla' reprogrammed in lmri* and lmu10
+* `ogonek' and `cedilla' have forced height=0 now (in TFMs)
+* new encodings (cs, l7x) added
+* some glyphs renamed: `*superior' -> `*.superior', `*.oldstyle' ->
+  `*.taboldstyle', `*.oldstyle.prop' -> `*.oldstyle' (names `*oldstyle',
+  i.e., without a dot, removed)
+* several glyphs added: combining accents, `sfthyphen' (a duplicate of
+  `hyphen' for non-TeX applications), `[eE].reversed', `[tT]cedilla',
+  Romanized Sanskrit letters (`[dD]dotbelow', `[hH]dotbelow', `[lL]dotbelow',
+  `[lL]dotbelowmacron', `[mM]dotbelow', `[nN]dotaccent', `[nN]dotbelow',
+  `[rR]dotbelow', `[rR]dotbelowmacron', `[tT]dotbelow' -- the suggestion
+  of R (Chandra) Chandrasekhar)
+* the structure of OTF files corrected -- grouping within families changed
+  (following Adam Twardoch's suggestions -- thanks), features made more
+  reasonable, glyph naming adjusted to standard recommendations, OTF version
+  number consistent with the PS one
+* the technical documentation provided
+* a few minor changes in sources
+
+Ver. 1.000, 13.04.2006: the first official release
+
+...
+
+Ver. 0.500, 09.11.2002: the first Latin Modern pre-release
+
+Ver. 0.100, 17.09.2002: the first results (then called AE, after L. Engebretsen)
+
+Ver. 0.000, 29.04.2002--03.05.2002: project started (EuroBachoTeX)
+

@@ -1,0 +1,17 @@
+\ignorespaces 
+\onlylanguage{english}
+\put(0,0){(0,0)}
+\put(20,20){(20,20)}
+\put(30,30){(30,30)}
+\put(100,0){(100,0)}
+\endonlylanguage
+\iflanguage{french}{\put(0,70){(0;70)}}{\put(0,70){(0,70)}}
+
+%%% French variations of the legends
+
+\onlylanguage{french}
+\put(0,0){(0;0)}
+\put(20,20){(20;20)}
+\put(30,30){(30;30)}
+\put(100,0){(100;0)}
+\endonlylanguage

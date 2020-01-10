@@ -1,0 +1,16 @@
+\documentclass{article}
+\usepackage{pstricks}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\psset{griddots=0,subgriddiv=5}
+\xdefinecolor{orange}{cmyk}{0,0.61,0.87,0}
+\begin{pspicture}(10,5)
+  \psgrid[subgriddiv=10,gridlabels=0,%
+     gridwidth=1pt,gridcolor=orange,%
+     subgridwidth=0.1pt,subgridcolor=orange]
+\end{pspicture} 
+
+\end{document}

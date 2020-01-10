@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage{pstricks,pst-3dplot}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{pspicture}(-5,-4.75)(2.75,6)
+ \psset{Alpha=20,Beta=40}
+ \pstThreeDCoor[xMax=5,yMin=-2,yMax=8,zMax=7]
+ \pstThreeDDot[drawCoor](4,4,4)
+ \pstThreeDDot[drawCoor](2,7,7)
+ \pstThreeDDot[drawCoor](2,-2,4)
+ \pstThreeDSphere(4,4,4){2}
+ \pstThreeDSphere[SegmentColor={[cmyk]{0,0,0, 0}},linecolor=black](2,7,7){1.5}
+ \psset{Beta=-40}
+ \pstThreeDSphere[SegmentColor={[cmyk]{0.8,0.1,.11,0}},linecolor=black](2,-2,6){1.5}
+\end{pspicture}%
+
+\end{document}
+

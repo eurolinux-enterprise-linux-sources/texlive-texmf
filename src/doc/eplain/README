@@ -1,0 +1,50 @@
+(This file is public domain.)
+
+This file describes the Eplain (expanded or extended plain, take your
+pick) distribution.  The current version number is at the beginning and
+end of eplain.tex, among other places.
+
+See INSTALL for installation and basic usage hints.
+
+eplain.tex is the macros.  This file is generated (by the Unix shell
+script merge) from xeplain.tex, btxmac.tex, arrow.tex, and other files.
+Unless you are hacking the macros, you should have no need to regenerate
+the file; just use the one that's provided.  If you do regenerate it,
+you will need a date program which understands the %B format (GNU date does).
+
+doc/eplain.texi and other .texi files in the doc directory describe the
+features currently provided.  If you think of additional features that
+would be useful, or extensions to existing ones, see email below.
+
+doc/eplain.info is the Info file resulting from doc/eplain.texi and
+other .texi files in the doc directory, which GNU Emacs and GNU Info
+can read.  You'll need makeinfo, from the GNU Texinfo distribution, to
+process it, if you happen to need to.  Here is the line I added to the
+dir file, in the top-level Emacs info directory:
+        * Eplain: (eplain).     Expansions to plain TeX.
+See http://www.gnu.org/software/texinfo for more information about Texinfo.
+
+The files in the test subdirectory are of course for testing of various
+features, but also provide some examples of usage.
+
+The util subdirectory contains some useful scripts to help with "see"
+and "see also" index entries, and making index entries with
+hyperlinks.
+
+You can get the current development sources for Eplain via CVS from
+sarovar, http://sarovar.org/projects/eplain.
+
+Most of these macros, like most of the manual, are in the public domain.
+The exceptions are the commutative diagram macros (the file arrow.tex)
+and the documentation for them (the file doc/arrow.texi).  Both of
+arrow.tex and doc/arrow.texi are under the GNU General Public
+License (see the file headers for details).
+
+Eplain was developed as part of the book TeX for the Impatient,
+published by Addison-Wesley in 1990.  It is now freely available, from
+http://tug.org/ftp/tex/impatient, with a free French translation.
+
+Eplain is currently maintained by Oleg Katsitadze.
+
+email: bug-eplain@tug.org
+www:   http://www.tug.org/eplain

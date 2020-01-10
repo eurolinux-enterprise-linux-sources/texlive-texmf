@@ -1,0 +1,7 @@
+This package supersedes, up to our knowledge, macros and manual of
+packages ``IPA'' and ``WSUIPA'' also available through CTAN. However,
+the metafont files for this package are the same as ones for the
+``WSUIPA'' package and, hence, can be found there.
+
+Authors
+July 16, 1994

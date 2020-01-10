@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<!-- Created by texi2html 1.56k from texdraw.texi on 10 March 2004 -->
+
+<TITLE>TeXdraw - 4. Using TeXdraw with LaTeX</TITLE>
+</HEAD>
+<BODY>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_3.html">previous</A>, <A HREF="texdraw_5.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+<P><HR><P>
+
+
+<H1><A NAME="SEC20" HREF="texdraw_toc.html#TOC20">4. Using TeXdraw with LaTeX</A></H1>
+<P>
+<A NAME="IDX97"></A>
+<A NAME="IDX98"></A>
+<A NAME="IDX99"></A>
+<A NAME="IDX100"></A>
+
+
+<P>
+The LaTeX typesetting system uses a structured approach to declaring
+typesetting environments.  For LaTeX2e, the <CODE>texdraw</CODE> package
+defines the <CODE>texdraw</CODE> environment.  The TeXdraw environment is
+started with a <CODE>\begin{texdraw}</CODE> command and terminated with an
+<CODE>\end{texdraw}</CODE> command.  All of the basic TeXdraw commands
+can be used within the <CODE>texdraw</CODE> environment.
+
+
+<P>
+As an example, a LaTeX2e variant of an earlier example can be
+constructed as follows.
+
+<PRE>
+\documentclass{article}
+\usepackage{texdraw}
+ ...
+\begin{document}
+ ...
+\newcommand{\tbox}[1]{%
+   \bsegment
+     \lvec (0 +0.25)    \lvec (0.75 +0.25)
+     \lvec (0.75 -0.25) \lvec (0 -0.25) \lvec (0 0)
+     \textref h:C v:C \htext (0.375 0){#1}
+     \savepos (0.75 0)(*ex *ey)
+   \esegment
+   \move (*ex *ey)}
+\begin{center}
+\begin{texdraw}
+  \ravec (1 0) \tbox{$H(z)$} \ravec (1 0)
+\end{texdraw}
+\end{center}
+ ...
+\end{document}
+</PRE>
+
+<P>
+This example illustrates the use of the LaTeX command
+<CODE>\newcommand</CODE> as an alternative to the plain TeX command
+<CODE>\def</CODE>.  Instead of the basic TeXdraw command
+<CODE>\centertexdraw</CODE>, a nested combination of the LaTeX centering
+environment and the TeXdraw environment is used.
+
+
+
+<UL>
+<LI><A HREF="texdraw_4.html#SEC21">PostScript printer drivers</A>
+</UL>
+
+
+
+<H2><A NAME="SEC21" HREF="texdraw_toc.html#TOC21">4.1 PostScript printer drivers</A></H2>
+<P>
+<A NAME="IDX101"></A>
+<A NAME="IDX102"></A>
+
+
+<P>
+<A NAME="IDX103"></A>
+The <CODE>texdraw</CODE> package uses the printer driver interface provided by
+the standard LaTeX2e <CODE>graphics</CODE> package.  Any options to the
+<CODE>texdraw</CODE> package are passed to the <CODE>graphics</CODE> package.
+Specifically, the name of the PostScript driver to be used can be
+specified as an option to the <CODE>texdraw</CODE> package.  With no explicit
+printer driver option, the default printer driver associated with the
+<CODE>graphics</CODE> package is used.
+
+
+<P>
+<A NAME="IDX104"></A>
+<A NAME="IDX105"></A>
+<A NAME="IDX106"></A>
+<A NAME="IDX107"></A>
+<A NAME="IDX108"></A>
+<A NAME="IDX109"></A>
+<A NAME="IDX110"></A>
+<A NAME="IDX111"></A>
+<A NAME="IDX112"></A>
+<A NAME="IDX113"></A>
+<A NAME="IDX114"></A>
+<A NAME="IDX115"></A>
+<A NAME="IDX116"></A>
+<A NAME="IDX117"></A>
+<A NAME="IDX118"></A>
+The <CODE>texdraw</CODE> package can be used with any of the printer drivers
+supported by the <CODE>graphics</CODE> package that allow for the importation
+of PostScript graphics files, viz., <CODE>dvips</CODE>, <CODE>xdvi</CODE>,
+<CODE>dvi2ps</CODE>, <CODE>dvialw</CODE>, <CODE>dvilaser</CODE>, <CODE>dvipsone</CODE>,
+<CODE>dviwindo</CODE>, <CODE>dvitops</CODE>, <CODE>oztex</CODE>, <CODE>psprint</CODE>,
+<CODE>textures</CODE>, <CODE>pctexps</CODE>, and <CODE>pctexwin</CODE>.  Not all of these
+drivers support the text rotation needed for the TeXdraw commands
+<CODE>\vtext</CODE> and <CODE>\rtext</CODE>.  Of the drivers listed above, only the
+following support support text rotation: <CODE>dvips</CODE>, <CODE>xdvi</CODE>,
+<CODE>dvi2ps</CODE>, <CODE>dvitops</CODE>, <CODE>textures</CODE>, and <CODE>pctexps</CODE>.
+
+
+<P><HR><P>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_3.html">previous</A>, <A HREF="texdraw_5.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+</BODY>
+</HTML>

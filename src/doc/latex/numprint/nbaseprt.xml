@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE entry SYSTEM "../catalogue.dtd">
+<entry id="nbaseprt" 
+       datestamp="2004/08/08"
+       modifier="h.harders@tu-bs.de">
+  <about>
+    <name>nbaseprt</name>
+    <caption>Print numbers in different number bases with separators.</caption>
+    <author>
+      <name>Harald Harders</name>
+      <email>h.harders@tu-bs.de</email>
+    </author>
+    <license type="lppl"/>
+    <version>
+      <number>0.10</number>
+    </version>
+  </about>
+  <description>
+    <abstract>
+This package prints integer numbers in different bases (octal,
+decimal, hexadecimal, binary) similarly to the numprint package.
+But here, the number of digits within one group depends on the
+base.
+
+This version of nbaseprt.sty is a BETA VERSION.
+The main command \nbaseprint will stay stable but
+all configuration commands and the output of
+\nbaseprint may change in future.
+Please give me feedback what can be improved and if the
+abbreviations for the different number bases are correct.
+    </abstract>
+  </description>
+  <distribution>
+    <texlive>latex3</texlive>
+    <ctan>macros/latex/contrib/nbaseprt</ctan>
+  </distribution>
+</entry>

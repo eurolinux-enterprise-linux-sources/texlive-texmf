@@ -1,0 +1,76 @@
+		      This is the README file for FiNK,
+			the LaTeX2e File Name Keeper
+
+                    Copyright (C) 1999-2002 Didier Verna
+
+
+
+* Copyright
+===========
+
+This file is part of FiNK.
+
+FiNK may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either version 1.1
+of this license or (at your option) any later version.
+The latest version of this license is in
+http://www.latex-project.org/lppl.txt
+and version 1.1 or later is part of all distributions of LaTeX
+version 1999/06/01 or later.
+
+FiNK consists of the following files:
+
+- README (this file)
+- fink.ins
+- fink.dtx
+- fink.el
+
+
+* Description
+=============
+
+	This package looks over your shoulder and keeps track of files
+\input'ed (the LaTeX way) or \include'ed in your document. You then have a
+permanent access to the name of the file currently being processed through the
+macro \finkfile. FiNK also comes with support for AUC-TeX.
+
+
+* Changes
+=========
+
+** Version 1.2
+--------------
+*** Fixed conflict with \includegraphics
+reported by Jim Crumley <crumley@belka.space.umn.edu>
+
+** Version 1.1
+--------------
+*** Fixed missing 3rd arg to \PackageError call from \finkextension.
+
+
+* Installation
+==============
+
+	To install the package, please follow these steps:
+
+- Run LaTeX on the file `fink.ins' to create the style file `fink.sty'.
+- Run LaTeX on the file `fink.dtx' to create the doc   file `fink.dvi'.
+- Install these files anywhere you see fink^H^H^H^Hfit.
+
+	If you're an AUC-TeX user, you can also install the file `fink.el' in
+a suitable AUC-TeX style directory.
+
+
+	Have fun!
+
+--
+Didier Verna, didier@lrde.epita.fr, http://www.lrde.epita.fr/~didier
+
+EPITA / LRDE, 14-16 rue Voltaire   Tel.+33 (1) 53 14 59 47
+94276 Le Kremlin-Bicêtre, France   Fax.+33 (1) 53 14 59 22   didier@xemacs.org
+
+
+
+Local Variables:
+mode: outline
+End:

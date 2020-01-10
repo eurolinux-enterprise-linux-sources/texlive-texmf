@@ -1,0 +1,60 @@
+This directory contains some unrelated packages which I grouped for 
+not to clutter the contrib directory.
+
+There is a manual with the basics of all of these packages
+as bezos.pdf.
+
+Contact: http://www.texytipografia.com/contact.html
+
+accents
+~~~~~~~
+Tools for math accents: multiple and newly defined ones.
+
+Manual: accents.tex
+
+tensind
+~~~~~~~
+Tensorial indexes, with fine tuning and optional subtitution
+of letters (a -> \alpha, for instance)
+
+Both accents and tensind takes into account the 
+slight displacement of indexes in some letters (like $f^1_1$).
+
+Manual: tensind.tex
+
+dotlessi
+~~~~~~~~
+Another math tool. It provides dotless i's and j's for
+use in any math font (\mathrm, etc.). A single file---it is
+documented in the sty file itself.
+
+Manual: clear text in dotless.sty
+
+esindex
+~~~~~~~
+A tool to easy typing of Spanish index entries.
+
+Manual: esindex.tex (in Spanish)
+
+checkend
+~~~~~~~~
+More useful error messages when there are open environments
+at \end{document}.
+
+Manual: clear text in checkend.sty
+
+arabicfront
+~~~~~~~~~~~
+Arabic page numbering starting from the front matter.
+
+Manual: clear text in arabicfront.sty
+
+_________________________________________________________________
+Javier Bezos                    | http://www.texytipografia.com
+иииииииииииииииииииииииииииииииииииииииииииииииииииииииииииииииии
+
+2006/09/03
+
+
+
+

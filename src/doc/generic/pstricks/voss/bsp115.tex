@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp115.tex ---
+%% Autor           : Herbert Voss <voss@perce.de>
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt,ngerman]{book}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}% 
+\usepackage{geometry}% 
+\geometry{%
+    paperheight=240mm,%
+    paperwidth=163mm,%
+    headheight=12pt,%
+%    topskip=10pt,%
+    textheight=195mm,%
+    textwidth=125mm,%
+    rmargin=1.5cm}
+%
+\usepackage{pstricks}
+\usepackage{pst-blur}
+\usepackage{pst-char}
+\usepackage{pst-grad}
+\usepackage{graphicx}
+\usepackage{nonfloat}
+\setcounter{chapter}{25}% this page is part of the book
+\usepackage{babel}
+
+\parindent=0pt
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+\DeclareFixedFont{\RM}{T1}{ptm}{b}{n}{4cm}
+
+\vspace*{3cm}
+\psset{shadow=true,blur=true,shadowsize=10pt,blurradius=5pt}
+\rotatebox{90}{%
+\parbox{\linewidth}{
+\pscharpath{\RM Graphics}\\
+\pscharpath{\RM with}\\[20pt]
+\pscharpath{\RM PSTricks}
+}}
+
+\figcaption{\texttt{bsp115.tex}: Schattenspiele \ldots}
+
+\end{center}
+
+\end{document}

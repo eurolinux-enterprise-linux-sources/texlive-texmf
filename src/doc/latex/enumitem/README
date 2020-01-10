@@ -1,0 +1,25 @@
+Enumitem
+~~~~~~~~
+
+A package to customize the three basic lists (enumerate,
+itemize and description) by means of a set of parameters.
+It provides most of the flexibility you may want to
+design your own lists:
+- fancy labels and fancy refs,
+- leftmargin, labelsep and labelwidth automatically set,
+- changes applied globally or only in one of the three
+  types or even in a single list (including topsep) by
+  means of a sort of "inheritance",
+- several description styles (which fix some bad
+  spacing, too),
+- starting value and counter resuming,
+- trivlists properly formatted,
+- control on page breaking
+
+_________________________________________________________________
+Javier Bezos                    | http://www.texytipografia.com
+.................................................................
+2005/05/12
+
+
+

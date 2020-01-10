@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage{pstricks}
+\usepackage{pst-circ}
+\usepackage{pst-node}
+
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+
+
+  \begin{pspicture}(9,11)
+%  \psgrid[subgriddiv=1,griddots=10]
+  % Node definitions
+  \pnode(0,0){A}
+  \pnode(9,0){B}
+  \pnode(0,6){C}
+  \pnode(9,6){D}
+  \pnode(4.5,1){E}
+  \pnode(4.5,10.5){F}
+  %
+  \switch[tension=false](A)(C){K}
+  \multidipole(A)(B)\resistor{$R$}%
+    \battery[intensitylabel=$i$]{$V$}.
+  \wire(B)(D)
+  \multidipole(C)(D)\diode{$D$}\wire.
+  \resistor[tensionlabel=U)](C)(F){R1}
+  \resistor(C)(E){$R_4$}
+  \capacitor[parallel,parallelarm=1.2,
+    parallelsep=1.5](C)(E){$C_2$}
+  \coil(E)(D){$L$}
+  \capacitor[parallel,parallelarm=1.2,
+    parallelsep=1.5](E)(D){$C_3$}
+  \capacitor[tensionlabel=U](F)(D){C1}
+  \multidipole(E)(F)\wire%
+    \wire[intersect,
+    intersectA=C,intersectB=D]%
+    \circledipole[labeloffset=-0.7]{E}%
+    \resistor[parallel,
+      parallelsep=.6,parallelarm=.8]{$R$}.
+  \end{pspicture}
+
+
+
+\end{document}

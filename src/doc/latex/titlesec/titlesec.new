@@ -1,0 +1,16 @@
+% titlesec 2.6, patch
+% (c) Javier Bezos 2005, as stated in titlesec.sty
+% 
+% Level 0
+%
+%\def\ttl@a{2005/01/22 v2.6 Sectioning titles}
+%\expandafter\ifx\csname ver@titlesec.sty\endcsname\ttl@a
+%  \message{*** titlesec 2.6, loading patch level 1 ***}
+%\else
+%  \PackageError{titlesec}{Wrong patch version}
+%    {This patch is intended for titlesec v2.6\MessageBreak
+%     and you are using a different version. If you have 
+%     installed a later release, please remove titlesec.new}
+%\fi
+
+\endinput

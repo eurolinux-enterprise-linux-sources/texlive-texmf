@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage{german}
+\begin{document}
+\noindent\textbf{Erste L"osungsbeispieli}:\\[1ex]
+Der k"urzeste Abstand zweier Geraden, deren Gleichungen
+in der Form
+\[ \frac{x-x_1}{l_1} = \frac{y-y_1}{m_1} = \frac{z-z_1}{n_1}\quad\mbox{und}%
+\quad%
+   \frac{x-x_2}{l_2} = \frac{y-y_2}{m_2} = \frac{z-z_2}{n_2}               \]
+gegeben sind, l"a\3t sich nach der Formel
+\[ \frac{\pm\;\begin{array}{|ccc|}
+     x_1 - x_2 & y_1 - y_2 & z_1 - z_2 \\
+	 l_1   &     m_1   &    n_1    \\
+	 l_2   &     m_2   &    n_2
+    \end{array}}{
+    \sqrt{\left|\begin{array}{cc} l_1 & m_1 \\ l_2 & m_2 \end{array}\right|^2
+	+ \left|\begin{array}{cc} m_1 & n_1 \\ m_2 & n_2 \end{array}\right|^2
+	+ \left|\begin{array}{cc} n_1 & l_1 \\ n_2 & l_2 \end{array}\right|^2}
+		}   \]
+berechnen. Verschwindet der Z"ahler, so schneiden sich die Geraden im Raum.
+
+\bigskip
+\noindent\textbf{Zweites L"osungsbeispiel}:\\[1ex]
+Der k"urzeste Abstand zweier Geraden, deren Gleichungen
+in der Form
+\[ \frac{x-x_1}{l_1} = \frac{y-y_1}{m_1} = \frac{z-z_1}{n_1}\quad\mbox{und}%
+\quad%
+   \frac{x-x_2}{l_2} = \frac{y-y_2}{m_2} = \frac{z-z_2}{n_2}               \]
+gegeben sind, l"a\3t sich nach der Formel
+\[ \frac{\pm\;\begin{array}{|ccc|}
+     x_1 - x_2 & y_1 - y_2 & z_1 - z_2 \\
+	 l_1   &     m_1   &    n_1    \\
+	 l_2   &     m_2   &    n_2
+    \end{array}}{
+    \sqrt{\begin{array}{|cc|} l_1 & m_1 \\ l_2 & m_2 \end{array}^2
+	    + \begin{array}{|cc|} m_1 & n_1 \\ m_2 & n_2 \end{array}^2
+	    + \begin{array}{|cc|} n_1 & l_1 \\ n_2 & l_2 \end{array}^2}
+		}   \]
+berechnen. Verschwindet der Z"ahler, so schneiden sich die Geraden im Raum.
+\end{document}
+

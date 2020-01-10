@@ -1,0 +1,442 @@
+% This file installs three samples-variants of setting
+% of Continued and Finished pages of long table
+% 1) s-longtable1.tex
+%    Adds words in the table label: ``Table 1. Continued''
+%    and ``Table 1. Finished''
+% 2) s-longtable2.tex
+%    Adds words in the caption text: ``Continued'' and ``Finished''
+% 3) s-longtable3.tex
+%    Redefines \tablename command: ``Continuation of table 1.
+%    and ``Finishing of table 1.'' (Is that correct English form?)
+\begin{filecontents}{t-longtable.sty}
+% \iffalse
+% t-longtable.sty - Patch to longtable package
+\ProvidesPackage{t-longtable}
+    [2006/06/23 v0.0a (ALPHA-temp) Patch to longtable package]
+% \fi
+%    \begin{macrocode}
+\RequirePackage{longtable}[2004/02/01]
+%    \end{macrocode}
+% The box for last head. Defined in the same way as others.
+%    \begin{macrocode}
+\newbox\LT@lasthead
+%    \end{macrocode}
+% This counter register to count long table pages.
+%    \begin{macrocode}
+\newcounter{LTpage}
+%    \end{macrocode}
+% This command (number of longtable's page) defined by hand for
+% each table. The default number is~2.
+%    \begin{macrocode}
+\newcommand\LTlastpage{2}
+%    \end{macrocode}
+% Storing of original definition of |\longtable|.
+% In new definition was added counter of longtable's pages.
+%    \begin{macrocode}
+\@ifdefinable\TeXr@ori@longtable{\let\TeXr@ori@longtable\longtable}
+\def\longtable{%
+  \setcounter{LTpage}\@ne
+  \TeXr@ori@longtable}
+%    \end{macrocode}
+% Storing original definition of |\LT@ouput|.
+% Here, in new definition, added increasing of \texttt{LTpage}.
+% In the case of defined |\lasthead| contents and last page was
+% checked, the contents of last head loaded.
+%    \begin{macrocode}
+\@ifdefinable\TeXr@ori@LT@output{\let\TeXr@ori@LT@output\LT@output}
+\def\LT@output{%
+  \addtocounter{LTpage}\@ne
+  \ifvoid\LT@lasthead\else
+     \ifnum\value{LTpage}=\LTlastpage
+        \let\LT@head\LT@lasthead
+     \fi
+  \fi
+  \TeXr@ori@LT@output}
+%    \end{macrocode}
+% The definition of last head box. Defined in the same way as others.
+%    \begin{macrocode}
+\def\endlasthead{\LT@end@hd@ft\LT@lasthead}
+%    \end{macrocode}
+%
+\endinput
+\end{filecontents}
+\begin{filecontents}{s-longtable.tex}
+alpha              & GREEK SMALL LETTER ALPHA            & 03B1\\
+beta               & GREEK SMALL LETTER BETA             & 03B2\\
+chi                & GREEK SMALL LETTER CHI              & 03C7\\
+\empty
+Delta              & GREEK CAPITAL LETTER DELTA          & 0394\\
+delta              & GREEK SMALL LETTER DELTA            & 03B4\\
+epsi               & GREEK SMALL LETTER EPSILON          & 03B5\\
+epsis              & GREEK LUNATE EPSILON SYMBOL         & 03F5\\
+epsiv              & GREEK SMALL LETTER EPSILON          & 03B5\\
+eta                & GREEK SMALL LETTER ETA              & 03B7\\
+Gamma              & GREEK CAPITAL LETTER GAMMA          & 0393\\
+gamma              & GREEK SMALL LETTER GAMMA            & 03B3\\
+gammad             & GREEK SMALL LETTER DIGAMMA          & 03DD\\
+iota               & GREEK SMALL LETTER IOTA             & 03B9\\
+kappa              & GREEK SMALL LETTER KAPPA            & 03BA\\
+kappav             & GREEK KAPPA SYMBOL                  & 03F0\\
+Lambda             & GREEK CAPITAL LETTER LAMDA          & 039B\\
+lambda             & GREEK SMALL LETTER LAMDA            & 03BB\\
+mu                 & GREEK SMALL LETTER MU               & 03BC\\
+nu                 & GREEK SMALL LETTER NU               & 03BD\\
+Omega              & GREEK CAPITAL LETTER OMEGA          & 03A9\\
+omega              & GREEK SMALL LETTER OMEGA            & 03C9\\
+Phi                & GREEK CAPITAL LETTER PHI            & 03A6\\
+phis               & GREEK PHI SYMBOL                    & 03D5\\
+phiv               & GREEK SMALL LETTER PHI              & 03C6\\
+Pi                 & GREEK CAPITAL LETTER PI             & 03A0\\
+pi                 & GREEK SMALL LETTER PI               & 03C0\\
+piv                & GREEK PI SYMBOL                     & 03D6\\
+Psi                & GREEK CAPITAL LETTER PSI            & 03A8\\
+psi                & GREEK SMALL LETTER PSI              & 03C8\\
+rho                & GREEK SMALL LETTER RHO              & 03C1\\
+rhov               & GREEK RHO SYMBOL                    & 03F1\\
+Sigma              & GREEK CAPITAL LETTER SIGMA          & 03A3\\
+sigma              & GREEK SMALL LETTER SIGMA            & 03C3\\
+sigmav             & GREEK SMALL LETTER FINAL SIGMA      & 03C2\\
+tau                & GREEK SMALL LETTER TAU              & 03C4\\
+Theta              & GREEK CAPITAL LETTER THETA          & 0398\\
+thetas             & GREEK SMALL LETTER THETA            & 03B8\\
+thetav             & GREEK THETA SYMBOL                  & 03D1\\
+Upsi               & GREEK UPSILON WITH HOOK SYMBOL      & 03D2\\
+upsi               & GREEK SMALL LETTER UPSILON          & 03C5\\
+Xi                 & GREEK CAPITAL LETTER XI             & 039E\\
+xi                 & GREEK SMALL LETTER XI               & 03BE\\
+zeta               & GREEK SMALL LETTER ZETA             & 03B6\\
+%
+%
+%
+alpha              &  SMALL LETTER ALPHA            & 03B1\\
+beta               &  SMALL LETTER BETA             & 03B2\\
+chi                &  SMALL LETTER CHI              & 03C7\\
+\empty
+Delta              &  CAPITAL LETTER DELTA          & 0394\\
+delta              &  SMALL LETTER DELTA            & 03B4\\
+epsi               &  SMALL LETTER EPSILON          & 03B5\\
+epsis              &  LUNATE EPSILON SYMBOL         & 03F5\\
+epsiv              &  SMALL LETTER EPSILON          & 03B5\\
+eta                &  SMALL LETTER ETA              & 03B7\\
+Gamma              &  CAPITAL LETTER GAMMA          & 0393\\
+gamma              &  SMALL LETTER GAMMA            & 03B3\\
+gammad             &  SMALL LETTER DIGAMMA          & 03DD\\
+iota               &  SMALL LETTER IOTA             & 03B9\\
+kappa              &  SMALL LETTER KAPPA            & 03BA\\
+kappav             &  KAPPA SYMBOL                  & 03F0\\
+Lambda             &  CAPITAL LETTER LAMDA          & 039B\\
+lambda             &  SMALL LETTER LAMDA            & 03BB\\
+mu                 &  SMALL LETTER MU               & 03BC\\
+nu                 &  SMALL LETTER NU               & 03BD\\
+Omega              &  CAPITAL LETTER OMEGA          & 03A9\\
+omega              &  SMALL LETTER OMEGA            & 03C9\\
+Phi                &  CAPITAL LETTER PHI            & 03A6\\
+phis               &  PHI SYMBOL                    & 03D5\\
+phiv               &  SMALL LETTER PHI              & 03C6\\
+Pi                 &  CAPITAL LETTER PI             & 03A0\\
+pi                 &  SMALL LETTER PI               & 03C0\\
+piv                &  PI SYMBOL                     & 03D6\\
+Psi                &  CAPITAL LETTER PSI            & 03A8\\
+psi                &  SMALL LETTER PSI              & 03C8\\
+rho                &  SMALL LETTER RHO              & 03C1\\
+rhov               &  RHO SYMBOL                    & 03F1\\
+Sigma              &  CAPITAL LETTER SIGMA          & 03A3\\
+sigma              &  SMALL LETTER SIGMA            & 03C3\\
+sigmav             &  SMALL LETTER FINAL SIGMA      & 03C2\\
+tau                &  SMALL LETTER TAU              & 03C4\\
+Theta              &  CAPITAL LETTER THETA          & 0398\\
+thetas             &  SMALL LETTER THETA            & 03B8\\
+thetav             &  THETA SYMBOL                  & 03D1\\
+Upsi               &  UPSILON WITH HOOK SYMBOL      & 03D2\\
+upsi               &  SMALL LETTER UPSILON          & 03C5\\
+Xi                 &  CAPITAL LETTER XI             & 039E\\
+xi                 &  SMALL LETTER XI               & 03BE\\
+zeta               &  SMALL LETTER ZETA             & 03B6\\
+%
+%
+%
+alpha              &  SMALL LETTER ALPHA            & 03B1\\
+beta               &  SMALL LETTER BETA             & 03B2\\
+chi                &  SMALL LETTER CHI              & 03C7\\
+\empty
+Delta              &  CAPITAL LETTER DELTA          & 0394\\
+delta              &  SMALL LETTER DELTA            & 03B4\\
+epsi               &  SMALL LETTER EPSILON          & 03B5\\
+epsis              &  LUNATE EPSILON SYMBOL         & 03F5\\
+epsiv              &  SMALL LETTER EPSILON          & 03B5\\
+eta                &  SMALL LETTER ETA              & 03B7\\
+Gamma              &  CAPITAL LETTER GAMMA          & 0393\\
+gamma              &  SMALL LETTER GAMMA            & 03B3\\
+gammad             &  SMALL LETTER DIGAMMA          & 03DD\\
+iota               &  SMALL LETTER IOTA             & 03B9\\
+kappa              &  SMALL LETTER KAPPA            & 03BA\\
+kappav             &  KAPPA SYMBOL                  & 03F0\\
+Lambda             &  CAPITAL LETTER LAMDA          & 039B\\
+lambda             &  SMALL LETTER LAMDA            & 03BB\\
+mu                 &  SMALL LETTER MU               & 03BC\\
+nu                 &  SMALL LETTER NU               & 03BD\\
+Omega              &  CAPITAL LETTER OMEGA          & 03A9\\
+omega              &  SMALL LETTER OMEGA            & 03C9\\
+Phi                &  CAPITAL LETTER PHI            & 03A6\\
+phis               &  PHI SYMBOL                    & 03D5\\
+phiv               &  SMALL LETTER PHI              & 03C6\\
+Pi                 &  CAPITAL LETTER PI             & 03A0\\
+pi                 &  SMALL LETTER PI               & 03C0\\
+piv                &  PI SYMBOL                     & 03D6\\
+Psi                &  CAPITAL LETTER PSI            & 03A8\\
+psi                &  SMALL LETTER PSI              & 03C8\\
+rho                &  SMALL LETTER RHO              & 03C1\\
+rhov               &  RHO SYMBOL                    & 03F1\\
+Sigma              &  CAPITAL LETTER SIGMA          & 03A3\\
+sigma              &  SMALL LETTER SIGMA            & 03C3\\
+sigmav             &  SMALL LETTER FINAL SIGMA      & 03C2\\
+tau                &  SMALL LETTER TAU              & 03C4\\
+Theta              &  CAPITAL LETTER THETA          & 0398\\
+thetas             &  SMALL LETTER THETA            & 03B8\\
+thetav             &  THETA SYMBOL                  & 03D1\\
+Upsi               &  UPSILON WITH HOOK SYMBOL      & 03D2\\
+upsi               &  SMALL LETTER UPSILON          & 03C5\\
+Xi                 &  CAPITAL LETTER XI             & 039E\\
+xi                 &  SMALL LETTER XI               & 03BE\\
+zeta               &  SMALL LETTER ZETA             & 03B6\\
+%
+%
+%
+alpha              &  SMALL LETTER ALPHA            & 03B1\\
+beta               &  SMALL LETTER BETA             & 03B2\\
+chi                &  SMALL LETTER CHI              & 03C7\\
+\empty
+Delta              &  CAPITAL LETTER DELTA          & 0394\\
+delta              &  SMALL LETTER DELTA            & 03B4\\
+epsi               &  SMALL LETTER EPSILON          & 03B5\\
+epsis              &  LUNATE EPSILON SYMBOL         & 03F5\\
+epsiv              &  SMALL LETTER EPSILON          & 03B5\\
+eta                &  SMALL LETTER ETA              & 03B7\\
+Gamma              &  CAPITAL LETTER GAMMA          & 0393\\
+gamma              &  SMALL LETTER GAMMA            & 03B3\\
+gammad             &  SMALL LETTER DIGAMMA          & 03DD\\
+iota               &  SMALL LETTER IOTA             & 03B9\\
+kappa              &  SMALL LETTER KAPPA            & 03BA\\
+kappav             &  KAPPA SYMBOL                  & 03F0\\
+Lambda             &  CAPITAL LETTER LAMDA          & 039B\\
+lambda             &  SMALL LETTER LAMDA            & 03BB\\
+mu                 &  SMALL LETTER MU               & 03BC\\
+nu                 &  SMALL LETTER NU               & 03BD\\
+Omega              &  CAPITAL LETTER OMEGA          & 03A9\\
+omega              &  SMALL LETTER OMEGA            & 03C9\\
+Phi                &  CAPITAL LETTER PHI            & 03A6\\
+phis               &  PHI SYMBOL                    & 03D5\\
+phiv               &  SMALL LETTER PHI              & 03C6\\
+Pi                 &  CAPITAL LETTER PI             & 03A0\\
+pi                 &  SMALL LETTER PI               & 03C0\\
+piv                &  PI SYMBOL                     & 03D6\\
+Psi                &  CAPITAL LETTER PSI            & 03A8\\
+psi                &  SMALL LETTER PSI              & 03C8\\
+rho                &  SMALL LETTER RHO              & 03C1\\
+rhov               &  RHO SYMBOL                    & 03F1\\
+Sigma              &  CAPITAL LETTER SIGMA          & 03A3\\
+sigma              &  SMALL LETTER SIGMA            & 03C3\\
+sigmav             &  SMALL LETTER FINAL SIGMA      & 03C2\\
+tau                &  SMALL LETTER TAU              & 03C4\\
+Theta              &  CAPITAL LETTER THETA          & 0398\\
+thetas             &  SMALL LETTER THETA            & 03B8\\
+thetav             &  THETA SYMBOL                  & 03D1\\
+Upsi               &  UPSILON WITH HOOK SYMBOL      & 03D2\\
+upsi               &  SMALL LETTER UPSILON          & 03C5\\
+Xi                 &  CAPITAL LETTER XI             & 039E\\
+xi                 &  SMALL LETTER XI               & 03BE\\
+zeta               &  SMALL LETTER ZETA             & 03B6\\
+\endinput
+% end of s-longtable.tex
+\end{filecontents}
+\begin{filecontents}{s-longtable1.tex}
+\documentclass{book}
+
+\usepackage{array,t-longtable}
+\usepackage{floatrow}
+\usepackage[labelsep=newline]{caption}
+\floatsetup[longtable]{font={small,sf},LTcapwidth=table,margins=centering,
+    captionskip=5pt}
+\captionsetup[longtable]{font={small,rm}}
+
+\DeclareCaptionLabelFormat{rightlabelcont}%
+  {\rightline{\bothIfFirst{#1}{ }#2\ContTable}}
+%
+% Then define text for continued/finished table head, \ldots
+\newcommand\ContTable{}
+%
+% caption for continued head, \ldots
+\newcommand\LTcontcaption[1]{%
+ \noalign{\gdef\ContTable{\captioncontinued}}
+ \caption{#1}}
+%
+% and caption for finished head. (At the |\lastfoot| definition the |\ContTable|
+% must be defined as empty).
+\newcommand\LTfincaption[1]{%
+ \noalign{\gdef\ContTable{\captionfinished}}
+ \caption{#1}}
+%
+% The examples of continued and finished heads.
+\newcommand\captioncontinued{. \emph{Continued}}
+\newcommand\captionfinished{. \emph{Finished}}
+
+\begin{document}
+
+\chapter{Defining head of last page of long table: variant~1}
+
+Here is example of defining of last head in long table. The words ``Continued'' and ``Finished'' defined by \verb|\ContTable| and added at the label of table caption: label format \texttt{rightlabelcont} (it will be defined for long table in group). These definitions are loaded in \verb|\LTcontcaption| and \verb|\LTfincaption| macros. At the \verb|\lastfoot| set \verb|\ContTable| emptied.
+
+The last page (number of table pages) of table defined ``by hand'' by command \verb|\LTlastpage|. Here:
+\begin{verbatim}
+\def\LTlastpage{5}
+\end{verbatim}
+
+\begingroup
+\captionsetup[table]{labelformat=rightlabelcont}
+\def\LTlastpage{5}
+
+\begin{longtable}{@{}lll}
+\caption{The ISOGRK3 entity set and more more more more more more more more more     more more more more more more more more more text}\\
+   \bfseries Entity&\bfseries  Unicode Name&\bfseries  Unicode\\ \hline
+\endfirsthead
+\LTcontcaption{}\\
+   \bfseries Entity&\bfseries  Unicode Name&\bfseries  Unicode\\ \hline
+\endhead
+\LTfincaption{}\\
+   \bfseries Entity&\bfseries  Unicode Name&\bfseries  Unicode\\ \hline
+\endlasthead
+   \hline \multicolumn{3}{@{}r@{}}{\emph{Continued on next page}}
+\endfoot
+\noalign{\gdef\Continued{}}
+   \hline
+\endlastfoot
+\input s-longtable.tex
+\end{longtable}
+
+\endgroup
+\end{document}
+% end of s-longtable1.tex
+\end{filecontents}
+\begin{filecontents}{s-longtable2.tex}
+\documentclass{book}
+
+\usepackage{array,t-longtable}
+\usepackage{floatrow}
+\usepackage[labelsep=period,singlelinecheck=no]{caption}
+\floatsetup[table]{LTcapwidth=table,margins=raggedright,captionskip=5pt}
+
+\DeclareCaptionLabelFormat{rightlabelcont}%
+  {\rightline{\bothIfFirst{#1}{ }#2\ContTable}}
+%
+% caption for continued head, \ldots
+\newcommand\LTcontcaption[1]{%
+ \caption{\emph{Continued}. #1}}
+%
+% and caption for finished head.
+\newcommand\LTfincaption[1]{%
+ \caption{\emph{Finished}. #1}}
+
+\begin{document}
+
+\chapter{Defining head of last page of long table: variant~2}
+
+Here is example of defining of last head in long table. The words ``Continued'' and ``Finished'' added in caption text. The last page (number table of pages) of table defined by hand by command \verb|\LTlastpage|. Here:
+\begin{verbatim}
+\def\LTlastpage{5}
+\end{verbatim}
+(If you use \verb|\caption| instead of \verb|\LTcontcaption| and \verb|\LTfincaption| definitions, you ought to reduce \verb|\LTlastpage| by~1, in this example equal~4.)
+\def\LTlastpage{5}
+
+\begingroup
+%\captionsetup[table]{labelformat=rightlabelcont}
+
+\begin{longtable}{@{}lll}
+\caption{The ISOGRK3 entity set and more more more more more more more more more more more more more more more more more more text}\\
+   \bfseries Entity&\bfseries  Unicode Name&\bfseries  Unicode\\ \hline
+\endfirsthead
+\LTcontcaption{}\\
+   \bfseries Entity&\bfseries  Unicode Name&\bfseries  Unicode\\ \hline
+\endhead
+\LTfincaption{}\\
+   \bfseries Entity&\bfseries  Unicode Name&\bfseries  Unicode\\ \hline
+\endlasthead
+   \hline \multicolumn{3}{@{}r@{}}{\emph{Continued on next page}}
+\endfoot
+\noalign{\gdef\Continued{}}
+   \hline
+\endlastfoot
+\input s-longtable.tex
+\end{longtable}
+
+\endgroup
+\end{document}
+% end of s-longtable2.tex
+\end{filecontents}
+\begin{filecontents}{s-longtable3.tex}
+\documentclass{book}
+
+\usepackage{array,t-longtable}
+\usepackage{floatrow}
+\usepackage[labelsep=newline]{caption}
+\floatsetup[table]{font={small,sf},LTcapwidth=table,margins=raggedright,
+    captionskip=5pt}
+\captionsetup[longtable]{font={small,rm}}
+
+\DeclareCaptionLabelFormat{labelcont}%
+  {\rightline{\bothIfFirst{\ContTable}{ }#2}}
+%
+% Then define text for continued/finished table head, \ldots
+\newcommand\ContTable{\tablename}
+%
+% caption for continued head, \ldots
+\newcommand\LTcontcaption[1]{%
+ \noalign{\gdef\ContTable{\emph{Continuation of \tablename}}}
+ \caption{#1}}
+%
+% and caption for finished head. (At the |\lastfoot| definition the
+% |\ContTable| must be defined as empty).
+\newcommand\LTfincaption[1]{%
+ \noalign{\gdef\ContTable{\emph{Finishing of \tablename}}}
+ \caption{#1}}
+
+\begin{document}
+
+\chapter{Defining head of last page of long table: variant~3}
+
+Here is example of defining of last head in long table. The words ``Continuation of'' and ``Finishing of'' added in the \verb|\ContTable| definition. This command used instead of \verb|\tablename| in tale label. The last page (number of table pages) of table defined by hand by command \verb|\LTlastpage|. Here:
+\begin{verbatim}
+\def\LTlastpage{5}
+\end{verbatim}
+
+\def\LTlastpage{5}
+
+\begingroup\sffamily
+\captionsetup[table]{labelformat=labelcont}
+
+\begin{longtable}{@{}lll}
+\caption{The ISOGRK3 entity set and more more more more more more more more more more more more more more more more more more text}\\
+   \bfseries Entity&\bfseries  Unicode Name&\bfseries  Unicode\\ \hline
+\endfirsthead
+\LTcontcaption{}\\
+   \bfseries Entity&\bfseries  Unicode Name&\bfseries  Unicode\\ \hline
+\endhead
+\LTfincaption{}\\
+   \bfseries Entity&\bfseries  Unicode Name&\bfseries  Unicode\\ \hline
+\endlasthead
+   \hline \multicolumn{3}{@{}r@{}}{\emph{Continued on next page}}
+\endfoot
+\noalign{\gdef\Continued{}}
+   \hline
+\endlastfoot
+\input s-longtable.tex
+\end{longtable}
+
+\endgroup
+\end{document}
+% end of s-longtable3.tex
+\end{filecontents}
+%Run LaTeX trough one of the following files
+\input s-longtable1.tex
+%\input s-longtable2.tex
+%\input s-longtable3.tex
+\endinput

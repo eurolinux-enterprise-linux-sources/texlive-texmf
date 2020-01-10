@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE entry SYSTEM "../catalogue.dtd">
+<entry id="numprint" 
+       datestamp="2005/07/12"
+       modifier="h.harders@tu-bs.de">
+  <about>
+    <name>numprint</name>
+    <caption>Print numbers with separators and exponent if necessary.</caption>
+    <author>
+      <name>Harald Harders</name>
+      <email>h.harders@tu-bs.de</email>
+    </author>
+    <license type="lppl"/>
+    <version>
+      <number>1.36</number>
+    </version>
+  </about>
+  <description>
+    <abstract>
+Print numbers with a separator every three digits and convert numbers
+given as 12345.6e789 to 12\,345,6\cdot 10^{789}. Numbers are printed
+in the current mode (text or math) in order to use the correct font.
+  Many things, including the decimal sign, the thousand separator, as
+well as the product sign can be changed by the user, e.g., to reach
+12,345.6\times 10^{789}. If requested, numprint can round numbers to
+a given number of digits.
+  If an optional argument is given it is printed upright as unit.
+Numbers can be rounded to a given number of digits.
+  The package supports an automatic, language-dependent change of the
+number format.
+  Tabular alignment using the tabular(*), array, tabularx, and longtable
+environments (similar to the dcolumn and rccol packages) is supported
+using all features of numprint. Additional text can be added before and
+after the formatted number.
+    </abstract>
+  </description>
+  <distribution>
+    <texlive>latex3</texlive>
+    <ctan>macros/latex/contrib/numprint</ctan>
+  </distribution>
+</entry>

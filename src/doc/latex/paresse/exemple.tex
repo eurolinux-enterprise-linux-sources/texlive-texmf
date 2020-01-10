@@ -1,0 +1,76 @@
+% -*- mode: LaTeX; coding: iso-8859-15 -*-
+\documentclass[a4paper,12pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[tame]{paresse}
+\usepackage{amsmath,xspace,array,fancyvrb}
+\usepackage[frenchb]{babel}
+\IfFileExists{lmodern.sty}{\usepackage{lmodern}}{}
+\setlength{\parindent}{0pt}
+\begin{document}
+\pagestyle{empty}
+
+\begin{center}\large
+  Exemples d'utilisation de l'extension \texttt{paresse}.\\
+  le \TeX nicien de surface\\
+  2004-02-07
+\end{center}
+
+Ce fichier charge les extensions \texttt{amsmath} et, si elle est disponible
+localement, \texttt{lmodern}.
+
+\vspace{\baselineskip}
+
+Avec la commande \verb!\ActiveLaParesse! pour activer le caractère §.
+
+\begin{Verbatim}[frame=single]
+{\ActiveLaParesse
+\(§a^{§b}_{§g}\) et encore \(§D^§a_§d\)
+}
+\end{Verbatim}
+
+pour obtenir :
+{\ActiveLaParesse
+\(§a^{§b}_{§g}\) et encore \(§D^§a_§d\)
+}
+
+\vspace{\baselineskip}
+
+Avec l'environnement \verb!ParesseActive!.
+
+\begin{Verbatim}[frame=single]
+\begin{ParesseActive}\large
+\begin{tabular}{*4{||>{\ttfamily \§}c|c}||} \hline
+a & §a & b & §b & g & §g & d & §d\\ \hline
+e & §e & z & §z & h & §h & v & §v\\ \hline
+...
+X & §X & P & §P & S & §S & U & §U\\ \hline
+F & §F & Q & §Q & W & §W &\multicolumn{1}{c|}{}& \\ \hline 
+\end{tabular}
+\end{ParesseActive}  
+\end{Verbatim}
+
+\medskip
+
+\begin{center}
+\begin{ParesseActive}\large
+\begin{tabular}{*4{||>{\ttfamily \§}c|c}||} \hline
+a & §a & b & §b & g & §g & d & §d\\ \hline
+e & §e & z & §z & h & §h & v & §v\\ \hline
+i & §i & k & §k & l & §l & m & §m\\ \hline
+n & §n & x & §x & p & §p & r & §r\\ \hline
+s & §s & y & §y & u & §u & f & §f\\ \hline
+c & §c & q & §q & w & §w &\multicolumn{1}{c|}{}& \\ \hline\hline
+G & §G & D & §D & V & §V & L & §L\\ \hline
+X & §X & P & §P & S & §S & U & §U\\ \hline
+F & §F & Q & §Q & W & §W &\multicolumn{1}{c|}{}& \\ \hline 
+\end{tabular}
+\end{ParesseActive}
+\end{center}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

@@ -1,0 +1,2461 @@
+%%% ====================================================================
+%%%  @LaTeX-file{
+%%%     filename        = "codialog.tex",
+%%%     version         = "1.1a",
+%%%     date            = "2-Dec-1994",
+%%%     time            = "15:24:21 EST",
+%%%     checksum        = "06649 2461 14834 104289",
+%%%     author          = "Michael Downes",
+%%%     address         = "49 Weeks Street
+%%%                        North Smithfield, RI 02986, USA",
+%%%     email           = "mjd@math.ams.org (Internet)",
+%%%     docstring       = "The checksum field above contains: CRC-16
+%%%       checksum, number of lines, number of words, and number of
+%%%       characters, as produced by Robert Solovay's checksum utility.",
+%%%  }
+%%% ====================================================================
+\documentstyle[dialogl%
+,draft%
+]{article}
+
+\title{Carrying on Dialog with \TeX}
+\author{Michael J. Downes\\
+49 Weeks Street\\
+North Smithfield, RI 02895\\
+E-mail: {\tt mjd@math.ams.org}}
+\date{November 1994}
+
+\hyphenation{ams-tex back-slash-char base-line-skip circle circlew
+  cnv-units con-trol-seq end-line-char err-help err-mes-sage
+  error-con-text-lines escape-char Hel-vet-ica hyphen-char
+  hyphen-pen-alty include-only lcircle lcirclew new-line-char
+  open-out par-fill-skip report-math-code show-box-depth show-prog-ress
+  show-hyphens tables}
+\allowtthyphens
+
+\typeout{}
+\typeout{%
+--- This document can be printed in landscape or portrait orientation;}
+\typeout{%
+--- landscape is recommended for better presentation of the examples.}
+\typein[\answer]{%
+--- If you need portrait, enter P; otherwise, just press <return> now:}
+
+\def\p{p}\def\P{P}
+\ifx\p\answer \let\answer=\P\fi
+\ifx\P\answer
+  \portraitlayout
+\else
+  \defaultlayout % defined in dialogl.sty
+\fi
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\tableofcontents
+
+%    If we don't have at least half of the current column open, go to
+%    the next page.
+\reqspace{.5\textheight}
+
+\section{Introduction}
+
+A common task in any programming language is to send a question to the
+user, and to read (and act on) the user's response. In \tex/, this
+usually involves the \cw{read}, \cw{message}, and \cw{write} commands.
+The use of these commands, however, is beset at every turn by odd
+hindrances and technical stumbling blocks, so that even experienced
+macro writers, faced with an application that requires a bit of
+dialog, usually find it troublesome to make that bit of dialog
+good-looking, reliable, convenient for the user, and tolerant of
+typical human mistakes such as minor mistyping in a response. The
+purpose of this article is to analyze the capabilities that \tex/ has
+for dialog and survey all the best relevant macro-writing techniques
+that fall within the scope of my experience and research.%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{This is an overhauled and amplified version of my paper
+``Dialog with \tex/'' in {\sl TUGboat}, vol~12 no~3, Part 2, December
+1991 (proceedings of the 1991 TUG conference in Dedham,
+Massachusetts).}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In \texbook/, near the end of Chapter 20, Knuth writes
+  \begin{quote} It's easy to have dialogs with the user, by using
+  \cw{read} together with the \cw{message} command
+  \end{quote}
+and there follows a brief example involving reading the user's name
+into a macro \verb"\myname". It's clear from this passage that Knuth
+means, by \term{dialog}, ordinary communication between computer programs
+and users at the early-1980s level of technology: printing
+character-based information on a video screen, displaying menus, asking
+questions, and handling user responses.  (Speech recognition and voice
+synthesis are not part of the picture for most \tex/ users, yet.) For the
+purposes of this article, I define \term{dialog} as any communication
+between \tex/ and the user that takes place while \tex/ is running.
+Forms of communication that do not take place while \tex/ is running
+are excluded: for example, the black box that \tex/ prints to indicate
+an overfull line in a paragraph is useful information, but not dialog
+because the communication occurs after \tex/ has stopped running.%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{This distinction is blurring, however, with
+the advent of software like Blue Sky Research's Lightning Textures.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+On the other hand, the {\tt Overfull \string\hbox} message
+printed on screen whenever \tex/ adds a black box to the
+current paragraph {\em is} dialog, because it does occur while \tex/ is
+running.
+
+Since the entire section of \texbook/ where Knuth's dialog example appears
+is marked off with double dangerous bend signs, it seems that Knuth
+didn't intend his words ``It's easy'' to be taken completely
+literally---particularly when we look at the next thing in that
+section, Exercise 20.18, which reads,
+  \begin{quote}
+  The \cw{myname} example just given doesn't work quite right, because the
+  $\langle$return$\rangle$ at the end of the line gets translated
+  into a space.  Figure out how to fix that glitch.
+  \end{quote}
+That line-ending space is only one of a number of complications that
+can hamper the efforts of macro writers to write dialog for practical
+applications.  In fact, the word {\em easy} is far from the first
+adjective that comes to mind when I remember my own early attempts at
+writing dialogical macros. Though my thrashing and floundering for
+the most part took place behind the scenes, invisible to others, it
+eventually reached the point of threatening my secret belief that I
+was a hot-shot macro writer. That spurred me to start paying special
+attention to anything related to the idea of dialog in \tex/, and
+accumulating scraps and  pieces of assorted useful techniques. This
+article is more or less a survey of what I've learned so far.
+Sections \ref{s:messages} and~\ref{s:receiving} review the functions
+\tex/ provides to support dialog; sections~\ref{s:stumblewrite}
+and~\ref{s:stumbleread} discuss common difficulties and how to handle
+them.
+
+\subsection{Terminology}
+Rather than assume all readers know well enough the meaning of terms
+like \term{primitive}, \term{token}, or \term{control word} that will
+be bandied about hereinafter, I offer a quick review of some standard
+\tex/ terminology, to aid those who want it, and to be skipped by the
+rest of you.
+
+A \tex/ command is either a \term{control sequence}---a string of
+characters starting with an \term{escape character}---or a single
+\term{active character}, such as \verb|~|. The usual escape character
+is the \term{backslash}, \verb|\|. A control sequence that consists of
+a backslash plus one nonletter character is called a \term{control
+symbol}; a control sequence that consists of a backslash plus one or
+more letters is called a \term{control word}. Spaces are ignored after
+a control word, but not after a control symbol. A control sequence is
+either a \term{\tex/ primitive}---a command built into the \tex/
+program---or a macro: a composition of primitives or other macros,
+defined by the user or by a \term{macro package} such as \latex/ or
+\plaintex/. A control sequence may require one or more following
+\term{arguments}; an argument is a piece of text that is grabbed up by
+the control sequence in order to do something with it. Arguments
+typically are enclosed in \term{curly braces} \verb|{| and \verb|}|.
+For example, the command \cw{sqrt} is a macro with one argument, and
+is used thus: \verb|\sqrt{x^2+y^2}|, producing the printed output
+$\sqrt{x^2+y^2}$.
+
+Macros are \term{expandable}; some primitives are
+expandable, more are not. An expandable control
+sequence will be replaced by its expansion if it is used inside the
+argument of a \cw{message} command, or anywhere else where \tex/ is
+in an expansive mood (\cw{write}, \cw{errmessage}, \cw{edef},
+\cw{xdef}, \cw{mark}, \cw{special} [\texbook/, p216]).
+
+The term \term{parameter} is used to mean a numeric or dimensional
+variable such as \cw{hyphenpenalty}, \cw{hsize}, or \cw{baselineskip}. A
+\term{token} is eithera character (with associated catcode) or a control
+sequence, {\em after\/} it has been read by \tex/ from some file and
+entered into \tex/'s active memory. Character tokens can only have
+category codes 1--4, 6--8, or 10--13; there's no such thing as a
+`character token' with category code 0, 5, 9, 14, or 15: those catcodes
+only control the process of creating tokens, they aren't designed for
+permanent association to a token.
+
+Under normal circumstances, each line in a file is understood by
+\tex/ to have a \ctrl{M} character, {\sc ascii} 13, at the end of it,
+even if your text editor actually puts some other character, or
+no character, at the end of a line when you press the \return/ or
+{\sc enter} key.
+
+\subsection{Basic dialog principles}
+It's not hard to identify a number of principles that make for good
+dialog:
+\begin{enumerate}
+\item When asked a yes/no question, users should
+be able to enter \verb|y|, \verb|yes|, or even \verb|ye|,
+in lowercase, uppercase, or even mixed case, and have the
+answer understood to be ``yes''.
+
+\item For any menu or question, a default answer
+should be provided (when this makes sense), and the default
+answer should be made as easy as possible to select.
+
+\item Users' answers should be repeated back to them,
+to allow them to verify that the program's impression
+of the answer entered by the user is indeed correct.
+
+\item Users should be given a chance to undo mistakes,
+\eg., by going back to a specified point earlier in the
+dialog and starting over from there. For example, it shouldn't be necessary to
+stop \tex/ and restart just to fix a typing error.
+
+\item When practical, users' answers should be checked to make sure
+they're not nonsense; for example, if a program requests an integer,
+it should check the response to make sure the user didn't enter
+something else entirely, rather than assume an integer was entered and
+start to perform operations on it. In \tex/ this would create a risk
+of losing control to low-level errors such as
+{\tt Missing number, treated as~0} or {\tt Arithmetic overflow}.
+
+\item Information given to users should be provided in the ``best
+possible form'', where the meaning of ``best possible'' must be
+determined by common sense from the circumstances of a particular
+application and the targeted user group. For example, a
+straightforward use of the \cw{the} command to report the value of a
+\tex/ dimension parameter such as \cw{vsize} to the user will produce
+the value in points, down to five or six decimal places. It will
+normally be more useful to report the value rounded to the nearest
+whole point, or to report it in picas, inches, or
+centimeters---whatever is most convenient for the user. A
+typographical designer or compositor would probably prefer picas,
+while someone with little knowledge of typography would probably
+prefer inches or centimeters.
+
+\end{enumerate}
+
+\section{\tex/'s Message-Sending Capabilities}
+\label{s:messages}
+
+Table~\ref{t:sending} lists the various means in \tex/ for sending
+messages to the user.
+
+\begin{table*}
+\vspace{-\medskipamount} % needed because \caption has wrong spacing
+                         % when used at the top rather than the bottom
+                         % of a float environment.
+\caption[]{\label{t:sending}Commands that can be used for
+sending messages}
+\writepage{Table}
+\vskip1pc
+\def\hline{\noalign{\vskip3pt\hrule\vskip2pt\relax}}
+\tabskip0pt
+\halign to\hsize{#\hfil\tabskip1em plus.2\hsize minus0.7em&
+  #\hfil& \parbox[t]{.6\hsize}{\rightskip0pt plus2em\relax#}\cr
+\hline
+Command& Example& Result\cr
+\hline
+\cw{message}& \verb'\message{Hey you}'& {\tt ... Hey you ...}\cr
+\hline
+\cw{write}& \verb'\immediate\write{Hey you}'& {\tt ...\newline
+Hey you\newline
+...}\cr
+\hline
+\cw{errmessage}& \verb'\errmessage{Hey you}'&
+{\tt !\ Hey you.\newline
+l.217 \string\errmessage\string{Hey you\string}}\cr
+\hline
+\cw{show}& \verb'\show\footnote'&
+{\tt> \string\footnote=macro:\newline
+->\string\@ifnextchar\space [\string{\string\@xfootnote\space
+\string} ...\newline
+l.218 \string\show\string\footnote}\cr
+\hline
+\cw{showthe}& \verb'\showthe\textwidth'&
+{\tt> 570.93257pt.\newline
+l.219 \string\showthe\string\textwidth}\cr
+\hline
+\cw{showbox}& \verb'\showbox 0'&
+{\tt> \string\box0=\newline
+\string\hbox(0.0+0.0)x15.0\newline
+\null\newline
+!\ OK.\newline
+l.220 \string\showbox 0}\cr
+\hline
+\cw{showlists}& \verb'\showlists'&
+\tt
+\string#\string#\string# vertical mode entered at line 0\newline
+\string#\string#\string# current page:\newline
+\string\glue(\string\topskip) 3.75\newline
+...\newline
+total height 403.47491 plus 14.64996 minus~8.77498\newline
+ goal height 751.60756\newline
+prevdepth 0.0, prevgraf 2 lines\newline
+\null\newline
+! OK.\newline
+l.221 \string\showlists\cr
+\hline
+\crcr}
+\end{table*}
+
+Although it could be argued that the token register \cw{errhelp} is
+another way of sending a message, it is excluded from
+Table~\ref{t:sending} on the grounds that it is passive rather than
+active, unlike the other commands listed. To put it another way,
+\cw{errhelp} is merely a storage area associated with \cw{errmessage},
+where auxiliary text can be placed; the user won't ever see
+\cw{errhelp} except by way of \cw{errmessage}.
+
+\subsection{The \cw{message} primitive}\label{ss:message}
+
+The \cw{message} command is a \tex/ primitive that prints its argument
+on screen.  If the current screen position is not at the beginning of
+a line, \tex/ will add a blank space at the beginning of the message
+text to separate it from the preceding material---except that if there
+isn't enough room on the current line to fit the entire message text,
+then \tex/ will go to the next line before starting to print the
+message, and not add an extra blank at the beginning. The maximum
+length of message lines is controlled by the constant {\it
+max\underscore print\underscore line}, which is compiled into \tex/;
+the normal value is 79. (In a windowing environment the width of the
+current window may also affect the maximum length of message lines.)
+
+Thus one way to force a message to start on a new line is to add lots
+of \cw{space}'s at the end.  But a better way to start a message on a
+new line, or break up a long message into lines, is to indicate line
+breaks with the current \cw{newlinechar} character. For example,
+we can set the newline character to be \verb|+| and use it in
+a message as follows:
+\def\next{\begin{verbatim}\string\begingroup{ }\string\newlinechar=`+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{Use of \cw{+} instead of {\tt+} here would normally be
+recommended but the outerness of \cw{+} in \plaintex/ makes this an
+exception.}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\endgraf}%
+\next
+\message{+This is a+three-line+message ...}
+\endgroup
+\end{verbatim}
+ which produces on screen (regardless of the length of any immediately
+preceding message)
+\begin{verbatim}
+This is a
+three-line
+message ...
+\end{verbatim}
+ In any one message, a given character
+can either produce newlines, or represent itself, but not both.
+As a consequence, if we wanted a plus character in a message
+to actually print on screen instead of causing a line break,
+we would have to set \cw{newlinechar} to some other value
+before sending the message. From this knowledge it's a short step
+to the insight that for general message-sending purposes it would
+be convenient to set \cw{newlinechar} to the character that
+is least likely to be needed in a message text. The nonprinting
+ASCII characters in the range 0--31 are obvious candidates.
+
+But here we encounter an inconvenient idiosyncrasy of \tex/: A control
+character---such as control-J, or \verb|^^J| (using \tex/'s double
+caret notation), which is the default value for \cw{newlinechar} in
+\amstex/ and \latex/---doesn't ever produce line breaks
+in a \cw{message}, even if it is currently selected as
+\cw{newlinechar}.%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{Or rather, it didn't up until version 3.141 or so of \tex/.
+See also the mention of em\tex/'s {\tt/r} option (which allows you to
+use control characters for output purposes) in \secref{ss:8bit}.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Instead, it will always be printed as three characters using the
+double caret convention.%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{This suggests the following experiment: set
+\cw{newlinechar=`\string\^} and send a \cw{message} containing a
+\ctrl{J} character.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Therefore, if you want to use \cw{message} as your normal
+message-sending function, you should choose one of the seldom-used
+printable characters as your default \cw{newlinechar}. One possibility
+would be to use the double quote character for this purpose, since
+single quote characters can normally be substituted
+for double quote characters in message texts. \fn{Testfont.tex}
+\cite{testfont} uses the {\tt @} character.
+
+Unlike \cw{message}, however, the \cw{write} command is capable of
+using a control character as a newline character (see
+\S\ref{ss:write}). By using \cw{write} for multiline messages, and
+making \verb|^^J| the default newline character, \amstex/ and
+\latex/ avoid taking any of the printable characters out of
+circulation for dialog purposes.
+
+If no line breaks are indicated in a \cw{message} that is longer than
+{\it max\underscore print\underscore line}, \tex/ will introduce
+arbitrary breaks at the screen column equal to {\it max\underscore
+print\underscore line}, which usually means
+ \[\settowidth{\dimen0}{\tt random brea}
+\parbox{\dimen0}{\tt
+random brea\\
+ks in the m\\
+iddle of wo\\
+rds.}\]
+Those of you who use \cw{tracingmacros} will have noticed that its
+output also has line breaks like this. Which can make it rather
+difficult to search for instances of a given string in the trace log;
+to find all instances of {\tt xyz} you need a regular expression
+something like
+\begin{verbatim}
+x\n?y\n?z
+\end{verbatim}
+(\verb'\n' meaning `newline', {\tt?\@} meaning 0 or 1 occurrences of
+the preceding subpattern).
+
+\subsection{The \cw{write} primitive}
+\label{ss:write}
+The \cw{write} command, like \cw{message}, just prints a message.  But
+the message doesn't necessarily appear on screen, because
+communication with the user is not the purpose for which
+\cw{write} was originally designed: Its initial purpose was to send index or
+table of contents information, including the associated page number,
+to an auxiliary file for later processing. Because this kind of use is
+closely linked to page numbering, \cw{write} commands on the current
+page are normally saved up to be executed when the page is actually
+shipped out, after the page break has been determined.  If such
+postponement is not wanted, \cw{write} must be used with the
+\cw{immediate} prefix.
+
+In order to allow intersequential writing to different output files,
+the \cw{write} command takes an extra first argument, a number
+between $-1$ and $16$ inclusive, to indicate the output file to which
+the text should be sent. Output files 0--15 can be associated with a
+particular file on your system by the \cw{openout} command; output
+file $-1$ is the \tex/ log file, and output file $16$ is the user's
+terminal screen (echoed in the log file as well).
+
+Line breaks in the argument of a \cw{write} command can be obtained by
+inserting \cw{newlinechar} characters; unlike \cw{message}
+(\secref{ss:message}) and \cw{errmessage} (\secref{ss:errmessage}),
+\cw{write} will always start a new line for each newline character,
+even when it is a control character such as \verb|^^J|. Also, the text
+of a \cw{write} command always starts on a new line and finishes on a
+new line. The existence of the final newline may be observed in the
+on-screen result of a \cw{message} following a \cw{write}: the message
+text will always start on the next line regardless of the total length
+of the \cw{message} and \cw{write} texts, whereas a \cw{message}
+following another \cw{message} or one of \tex/'s internally generated
+messages (such as input file names) will not start on a new line
+unless there isn't enough room remaining on the current line.
+
+Corollary: If you prompt the user for some input and you want the
+user's input to appear on the same line as the prompt text, use
+\cw{message} instead of \cw{write} to send the prompt text---or at
+least the last line of the prompt text.
+
+\subsubsection{Nonimmediate \cw{write} messages}
+Sometimes it's useful to leave off
+the \cw{immediate} prefix of a \cw{write} command
+even when not writing information to an index file or
+table of contents file:  For instance, if you are working on page breaks in
+a long document and want to find out, without previewing or printing,
+if a nonforcing pagebreak command had the effect that you wanted, you
+could insert a nonimmediate \cw{write16} just before and just after the
+intended page break:
+ \begin{verbatim}
+\write16{Before the attempted pagebreak.}
+\penalty-9999
+\write16{After the attempted pagebreak.}
+\end{verbatim}
+ The message from a nonimmediate \cw{write16} will appear before the
+closing \verb|]| of the \verb|[|\thinspace\nobreak\verb|]| pair that enclose the relevant
+page number.  So if all went well, one of the above messages will
+appear with one page number and the next message with the
+next page number, like this:
+ \begin{verbatim}
+[4] [5
+Before the attempted pagebreak.
+] [6
+After the attempted pagebreak.
+] [7] [8] [9] ...
+\end{verbatim}
+
+In producing this article (using \latex/) I had some trouble getting
+good placement for the floating tables and examples; to help me
+experiment, I added some code that would print on screen the page
+numbers. At the beginning of Example~2 (for example) there is
+a line that says
+\begin{verbatim}
+\write16{Example 2: Page \thepage}%
+\end{verbatim}
+The \cw{immediate} prefix must be omitted in order to
+get the page number correct.
+
+\subsection{The \cw{errmessage} primitive}
+\label{ss:errmessage}
+The \cw{errmessage} command prints its argument on screen, starting on a
+new line, with an exclamation point and a space added at the beginning,
+and a period added at the end.  For example,
+\cw{errmessage}\verb|{Surprise}| produces
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{verbatim}
+! Surprise.
+\end{verbatim}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ on screen.  \cw{errmessage} also shows the {\em current context},
+which means the current line from the current input file, along with
+the line number, and additional information  if there is any (such as
+the surrounding parts of current macro expansions).%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{If the parameter \cw{errorcontextlines} is set high enough.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+So the {\tt Surprise} error message would show additional information
+on screen. Suppose we define
+\begin{verbatim}
+\def\test{\errmessage{Surprise}\relax}
+\end{verbatim}
+Then the additional information will look something like:
+\begin{verbatim}
+! Surprise.
+\test ->\errmessage {Surprise}
+                              \relax
+l.454 \test
+            and some more text.
+?
+\end{verbatim}
+This example may be interpreted as follows: Line 454 of the current
+file consists of
+\begin{verbatim}
+\test and some more text.
+\end{verbatim}
+The line break in the context listing
+means that \tex/ is processing \cw{test} and has not yet
+started to typeset the word `\verb"and"'.
+Above the \verb"l.454", the expansion
+of \cw{test} is shown. The line break after \verb"{Surprise}"
+indicates that \tex/ has not yet executed the \cw{relax} command.
+
+ The behavior of \cw{errmessage} with respect to newline characters
+and control characters is the same as for \cw{message}---i.e.,
+\cw{errmessage} will start a new line for each \cw{newlinechar} in
+its argument [unless the current value of
+\cw{newlinechar} is outside the visible {\sc ascii} range
+32--126 and the version of \tex/ is less than 3.141].
+
+At the end of an error message, the  user is presented with
+a question-mark prompt, and a choice of several possible responses. These
+will be discussed later in the section on \tex/'s capabilities
+for receiving user input (\S\ref{s:error-recov}).
+
+\subsection{The \cw{show} and \cw{showthe} primitives}
+
+The \cw{show} command,  used for showing the current meaning of a
+control sequence (or indeed of any token), is rather similar to
+the \cw{errmessage} command in what it produces on screen.  The
+prefix is a greater-than character instead of an exclamation
+point.  Here's the result of \verb|\newcount\C| \verb|\show\C|:
+ \begin{verbatim}
+> \C=\count78.
+l.1 \newcount\C \show\C
+
+?
+\end{verbatim}
+ As with \cw{errmessage}, \tex/ displays the surrounding context of a
+\cw{show} command; it also offers the same question-mark
+prompt with the same range of possible responses (well, almost---the
+\verb|H| option only gives a generic help message about \cw{show}, not
+specific help about the item being shown.).
+
+The \cw{showthe} command is like \cw{show}, but is applied
+to certain kinds of things such as count registers and
+token registers, that have not only a meaning but also a current value.
+For instance, here's the result of \verb|\C=5|  \verb|\showthe\C|, using the
+counter defined above:
+ \begin{verbatim}
+> 5.
+l.3 \C=5 \showthe\C
+
+?
+\end{verbatim}
+
+\subsection{The \cw{showbox} and \cw{showlists} primitives} The
+commands \cw{showbox} and \cw{showlists} are similar to \cw{show} in
+what they produce on screen (see Table~\ref{t:sending}).  Because of
+their specialized nature they don't ordinarily have much application
+in dialog between \tex/ and the user.
+
+\subsection{Piggybacking}
+Many messages printed on screen by \tex/ do not
+involve any of the commands listed in Table~\ref{t:sending}.
+These other messages
+are emitted directly by \tex/, outside the control of
+the macro writer. However, with a little imagination,
+you can often find ways to attach useful information
+to those ``inaccessible'' messages. This is what I mean
+by \term{piggybacking}.
+
+For example, whenever \tex/ inputs a file, a message is printed on
+screen containing the name of the file, enclosed in parentheses. So
+one way to send a short message would be to create an empty file
+whose name was equal to the desired message, and then input the file.
+
+File name messages, apart from the parentheses, behave the same as
+messages produced by the \cw{message} command: in particular, a file name
+message will be appended to the current line, with
+a preceding space, unless the length of the
+message (including the two parentheses) will cause it
+to cross the {\it max\underscore print\underscore line} boundary.
+
+If your computer system allows longer file names
+you could actually get pretty fancy with a filename message.
+For example, on a Unix system suppose you have a file named
+\fn{test.tex} whose contents are
+\begin{verbatim}
+\newwrite\msgfile
+\immediate\openout\msgfile=Fred.your.fly.is.open
+\immediate\write\msgfile{\relax}
+\immediate\closeout\msgfile
+\input Fred.your.fly.is.open
+\end
+\end{verbatim}
+When \fn{test.tex} is processed by \tex/ the screen output will be
+something like:
+\begin{verbatim}
+This is TeX, C Version 3.1 (format=plain 91.1.4) ...
+(test.tex (Fred.your.fly.is.open) )
+No pages of output.
+\end{verbatim}
+However, getting spaces in the message would be problematic since
+\tex/ treats a space as a file name terminator. And if your message
+doesn't include a period, \tex/ is likely to add \fn{.tex} at the end
+of the file name when \cw{openout} is invoked. Not to mention that
+this method would quickly lead to inconvenient file clutter since
+\tex/ can't delete files, only create new files or change the contents
+of pre-existing ones.
+
+Or consider the count registers 1--9; if any of
+these is nonzero, its value is reported on screen whenever \tex/
+ships out a page. One way of using this feature might be to report
+the accumulation of index terms for a document, by having each index command
+increment count register number~1:
+\begin{verbatim}
+\countdef\indexcount=1
+\def\index{...
+  \global\advance\indexcount 1 ...}
+\end{verbatim}
+Incrementing count~1 like that would result in \tex/ displaying on
+screen something like
+\begin{verbatim}
+[1.2] [2.7] [3.14] [4.15] [5.27] [6.38] ...
+\end{verbatim}
+instead of the more usual
+\begin{verbatim}
+[1] [2] [3] [4] [5] [6] ...
+\end{verbatim}
+as each page is shipped out.
+
+These two examples don't seem extremely practical---the total number of
+index terms reported in the latter example won't necessarily be correct
+page for page, until the end of the document, because ordinary means
+for incrementing the counter are immediate in their effect rather than
+synchronized with the \cw{write} commands used for creating the index
+file---but the point is to realize that the messages coming out of
+\tex/'s innards aren't totally beyond reach, and they can sometimes
+provide a better way of achieving a given result than ordinary methods.
+A couple of better-known examples, from the hands of Donald E. Knuth, can
+be found in the \cw{showhyphens} command and in {\tt hyphen.tex} at the
+point where \cw{patterns} is called.
+
+\subsubsection{The \cw{showhyphens} command}
+The \cw{showhyphens} command (defined in {\tt plain.tex})
+works by exploiting \tex/'s messages about underfull boxes.
+When an underfull line
+of a paragraph is reported, \tex/ prints on screen the elements of that
+line, including any discretionary hyphens inserted by  \tex/
+while attempting to find good line breaks.
+The key insight for thinking up the \cw{showhyphens}
+command is to realize that if you can typeset a one-line
+paragraph, and make sure that the line is underfull, then
+any word in that line will have its hyphenation points
+displayed on screen. That's exactly what Knuth
+defined \cw{showhyphens} to do:
+\begin{verbatim}
+\def\showhyphens#1{\setbox0\vbox{\parfillskip\z@skip
+  \hsize\maxdimen \tenrm \pretolerance\m@ne \tolerance\m@ne
+  \hbadness0\showboxdepth0\ #1}}
+\end{verbatim}
+The settings of \cw{parfillskip} and \cw{hsize} ensure that the paragraph will
+be all on one line, and underfull. (For extra bullet-proofing,
+\begin{verbatim}
+  \leftskip\z@skip \rightskip\z@skip
+\end{verbatim}
+should probably be included too.)
+
+The switch to font \cw{tenrm} makes sure---or at least reasonably
+sure---that the current font is not one for which hyphenation has been
+inhibited by setting \cw{hyphenchar} to an out-of-range value.  The
+settings of \cw{pretolerance} and \cw{tolerance} ensure that
+hyphenation points will be added (in making up a paragraph, \tex/
+normally tries first to get by without adding hyphenation points, if
+it can find good line breaks using only the stretchability and
+shrinkability of interword glue). The setting of \cw{hbadness} ensures
+that an {\tt Underfull \string\hbox} message will be sent (otherwise,
+if the surrounding environment had $\hbox{\cw{hbadness}}=10000$ when
+\cw{showhyphens} was called, the message would be suppressed).
+The setting of \cw{showboxdepth} limits the information in the
+message to top level; otherwise compound structures like accented
+letters or special composites (\eg. \cw{AA}) would be shown in
+full detail---more detail than the user normally wants to see.
+And finally the \verb*+\ + command forces entry into horizontal mode
+and, more importantly, provides a glue item before the first word,
+without which it would not be hyphenated (see the rules by which
+\tex/ looks for hyphenatable words, \texbook/, Appendix~H).
+
+Note that the values of \cw{language}, \cw{lefthyphenmin}, and
+\cw{righthyphenmin} are inherited from context; and this is probably
+what you want for the \cw{showhyphens} command (perhaps indeed the
+current font should also be inherited from context instead of being set
+always to \cw{tenrm}).
+
+\subsubsection{Using error context to send messages}
+\label{ss:errcontextcomments}
+The standard \fn{hyphen.tex} containing U.S. English hyphenation
+patterns has a comment after the \cw{patterns} command:%
+ \begin{verbatim}
+\patterns{ % just type <return> if you're not using INITEX
+\end{verbatim}
+  Ordinarily the macro writer can't use comments to communicate
+with the user, because comments within the text of a macro
+are discarded by \tex/
+as the macro is defined.  The beauty of the comment in \fn{hyphen.tex}
+is that it appears precisely when needed, because of the
+way \tex/ displays context with error messages: if you \cw{input}
+\fn{hyphen.tex} when not using {\sc initex}, \tex/ will give an
+error message when it encounters the \cw{patterns} command,
+and as usual, will show the context around the point of the
+error, like this:
+\par\reqspace{3\baselineskip}
+ \begin{verbatim}
+! Patterns can be loaded only by INITEX.
+l.2 \patterns
+             { % just type <return> if you're not using INITEX
+?
+\end{verbatim}
+Since learning this technique, I've had occasion more than once to
+apply it in similar situations. One such application had to do with
+the \latex/ circle fonts. I had an assignment to create a
+\latex/ documentstyle whose installation procedures involved
+rebuilding the \latex/ format file, which meant calling
+for the \fn{.tfm} files of the circle fonts.
+However, there was at that time (1990--1991) a bit of
+confusion surrounding the names; the trend among distributors of \tex/
+appears to be away from the original names \fn{circle10}
+and \fn{circlew10} and toward the names
+\fn{lcircle10} and \fn{lcirclew10}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\footnote{Starting with the standard Unix distribution of \tex/,
+%from the University of Washington.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The \fn{.tfm} files are the same under either names, but
+I had to deal with the possibility that some users of the
+documentstyle I was working on would have the fonts under the older
+names, while others would have them under the new names.
+
+My solution was to use the newer names \fn{lcircle10} and \fn{lcirclew10}
+and put comments on the same lines as the font assignments, so that
+the comments would appear to the user if \tex/ were unable
+to find the \fn{.tfm} files and emitted an error message.
+ \begin{verbatim}
+\font\tencirc=
+lcircle10\relax% Type x to exit; see sei.prl for further info.
+\end{verbatim}
+Additional comments in  the file \fn{sei.prl} explained
+how to change the font names to their older variants.
+The \cw{relax} is necessary so that \tex/ won't proceed to
+the next line, bypassing the comment, in the process of looking
+for a modifier such as \verb|scaled| or \verb|at|.
+And the reason for the line break after the equals sign is to fit a
+few more characters in the comment, which would be elided by \tex/
+if too long.
+\section{Ways for \tex/ to receive messages from the user}
+\label{s:receiving}
+
+Table~\ref{t:receiving} lists the various means in \tex/ for reading
+input from the user. The primary input facility is the \cw{read}
+command; the others are special cases applicable only under limited
+circumstances.
+
+\begin{table}
+\vspace{-\medskipamount} % needed because \caption has wrong spacing
+                         % when used at the top rather than the bottom
+                         % of a float environment.
+\caption[]{\label{t:receiving}Receiving}
+\writepage{Table}
+\vspace{-\medskipamount}
+\begin{center}
+\begin{tabular}[t]{p{.35\columnwidth}|p{.55\columnwidth}}
+\hline
+Method &   Prompt displayed by \tex/\\
+\hline
+\cw{read}& \cw{controlseq=}\\[3pt]
+\rp error message interaction& \verb|?|\\[3pt]
+\rp `show' message interaction& \verb|?|\\[3pt]
+\rp input file not found&
+\tt\rp Please type another input file name:\\[3pt]
+\rp output file not writable&
+\tt\rp Please type another output file name:\\[3pt]
+interrupt key& none
+\end{tabular}
+\end{center}
+\end{table}
+
+The purpose of getting input from the user is essentially always the
+same: to give the user an opportunity to change the outcome of the \tex/
+run, which would otherwise be totally predetermined by the contents of
+the files read by \tex/. (Well, and perhaps by a few system variables
+such as \cw{time}, \cw{day}, etc.)
+
+\subsection{The \cw{read} primitive}\label{ss:readprim}
+The form of the \cw{read} command is
+ \begin{verbatim}
+\read 16 to \controlseq
+\end{verbatim}
+where the number 16 is the input stream number,
+which might be any value from $-1$ to 16;
+a number between 0 and 15 would indicate reading from a file
+stored on disk, while 16 and $-1$ indicate reading from the user's
+keyboard. \cw{controlseq} can be any control sequence
+chosen by the macro writer. If the input stream number is
+16, \tex/ will display a prompt of
+ \begin{verbatim}
+\controlseq=
+\end{verbatim}
+If the input stream is $-1$, this prompt will be omitted.  In either
+case, a \cw{read 16} or \cw{read -1} command should normally be
+preceded by a message that lets the user know what kind of input to
+provide.
+
+The action of the \cw{read} command is similar to that
+of the \cw{def} primitive. Both of them create a new
+macro containing an unexpanded token list, which
+must contain balanced braces. The balancing required
+in the response to a \cw{read} command, however,
+is slightly different than for a \cw{def}; as long
+as there an equal number of opening and closing
+braces, it doesn't matter how they're distributed---\tex/
+will be perfectly happy with the response
+ \begin{verbatim}
+a}}}b{{c}{{
+\end{verbatim}
+ as can be verified using \cw{show}\cw{answer} after reading the
+above string into \cw{answer}.%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{See also \secref{ss:readouter}.
+I questioned the behavior of \cw{read} with respect to extra closing
+braces and outer control sequences in a letter to
+Donald Knuth (December 1991);
+his response was to make a change in \tex/ (version 3.141?)
+that causes a \cw{read} operation to terminate decisively if an extra
+{\tt\char`\}} or outer control sequence is encountered. So backwards
+balancing of braces will no longer be permitted.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tex/ will read more than one line, if
+necessary, if the first line contains an unmatched brace. This is a
+useful property if you {\em want\/} to read more than one line at a
+time, as is sometimes the case: write the information in the form
+\verb|{| \ldots \verb|}|, and you can have as many lines
+between the curly braces as you want.
+
+\tex/ always reads line by line, rather than character by character;
+unlike some other programming languages, \tex/ provides no way to read a
+single character and act on it immediately; the user must always press
+the \return/ key before anything will happen.
+
+\subsection{Error recovery}\label{s:error-recov}
+ As mentioned earlier, after an error message \tex/ presents the user
+with a question-mark prompt.  Typing a second question mark in reply
+to the prompt will cause \tex/ to list the options that are
+available:
+ \begin{verbatim}
+! Error message.
+    ...
+? ?
+Type <return> to proceed, S to scroll future error messages,
+R to run without stopping, Q to run quietly,
+I to insert something, E to edit your file,
+1 or ... or 9 to ignore the next 1 to 9 tokens of input,
+H for help, X to quit.
+?
+\end{verbatim}
+ Choosing the {\tt H} option causes \tex/ to print a help message
+containing additional information related to the error message.
+If the error message was generated using \cw{errmessage}, then
+the help message will consist of the current contents of the
+token register \cw{errhelp} (which should be filled with something
+useful by the macro writer, immediately before the call
+to \cw{errmessage}). Otherwise, for a built-in error message,
+the corresponding built-in help message (from \fn{tex.pool}) is
+displayed.
+
+The intended use of the insertion ({\tt I}) and token deletion ({\tt
+1...9})  options is for error recovery; after you look at the context
+of an error, you may be able to temporarily repair the damage and
+continue processing the remainder of the document, by removing some
+tokens and/or inserting others. Then if any other errors are uncovered
+later, they can be fixed at the same time as the first error, instead
+of requiring a second \tex/ run to find them. Example~\ref{e:recovery}
+illustrates this. You can actually delete up to 99 tokens at a time in
+all implementations of \tex/ that I know of, even though the help
+message suggests that 9 is the maximum.
+
+\begin{example}
+\begin{examplebox}%
+%
+\caption[]{Using error interaction possibilities to
+get past a potentially bad error: a missing {\tt\string\\} before an
+\cw{hline} in a \latex/ {\tt tabular} environment.}\label{e:recovery}%
+\writepage{Example}
+
+\begin{verbatim}
+! Misplaced \noalign.
+\hline ->\noalign
+                  {\ifnum 0=`}\fi \hrule...
+l.120 \hline
+
+?
+\end{verbatim}
+Let's see what the help information is:
+\begin{verbatim}
+? h
+I expect to see \noalign only after the \cr of an alignment.
+Proceed, and I'll ignore this case.
+
+?
+\end{verbatim}
+Let's try skipping one token to verify what \latex/ is going
+to process next:
+\begin{verbatim}
+? 1
+
+\hline ->\noalign {
+                   \ifnum 0=`}\fi \hrule...
+l.120 \hline
+
+?
+\end{verbatim}
+All right, the opening curly brace has just gone by. We need
+to insert the \verb|\\| that was forgotten, and also replace the two tokens
+\cw{noalign} and \verb|{| that have slipped by.
+\begin{verbatim}
+? i\\ \noalign{
+\end{verbatim}
+And now \latex/ will be able to continue with the rest of the table.
+\end{examplebox}
+\end{example}
+
+The token deletion option can also serve as the basis of a crude menu
+facility. The idea is to use \cw{errmessage} to present a menu with
+choices labeled by numbers. If the user responds by entering, say,
+\verb;3; to choose item~3, then we must arrange things so that after
+\cw{errmessage} does its normal thing of deleting three tokens, the
+following token that was not deleted should do something to ensure
+that item~3 will be selected. This isn't too hard if we use something
+like the following sequence:
+\begin{verbatim}
+\errmessage{...}\0\1\2\3\4\5\6\7 ...\stop
+\end{verbatim}
+Clearly the deletion of three tokens after the error message will leave
+\verb;\3; as the next command to be executed, and so if we define
+\verb;\3; to do the right thing and then skip over the following
+\verb;\4\5...; corresponding to unselected menu choices, we get what we
+want.
+
+If the user just presses \return/ without entering a number, it will
+be \verb;\0; that is executed---therefore \verb|\0| should be defined
+to produce the default selection.
+
+One thing that makes me call this crude is the fact that \tex/ pauses
+after any token deletion operation instead of barging ahead. This means
+that if the user chooses anything other than the default selection,
+they will have to press \return/ twice after typing the number, instead
+of just once.
+
+Some other crudities are introduced by the bits and pieces of an
+\cw{errmessage} that cannot be suppressed. These include:
+\begin{itemize}
+\item Exclamation point and space at the beginning of the error message.
+\item Period at the end of the error message.
+
+\item The expansion of the current macro (if the error message is
+  contained in a macro), on two lines with the line break immediately
+  after the token that was last processed by \tex/. This includes, at
+  the beginning, the macro name followed either by \verb"->", if the
+  first part of the expansion text is relatively short, or by ellipsis
+  dots \verb"..." plus the tail end of the first part of the expansion
+  text.
+
+\item The current line of the current file, on two lines with the break
+  immediately after the token that was last processed by \tex/.
+\item The question mark and space prompting the user for a response.
+\end{itemize}
+
+I would have hoped that setting \cw{errorcontextlines} to $0$ or $-1$
+would  cause the `innermost' two lines of the error context to be
+suppressed but apparently there is no value for \cw{errorcontextlines}
+that will suppress them. The following example illustrates all of the
+nonsuppressable parts.
+\begin{verbatim}
+! Error.
+\CM ->\errmessage {Error}
+                         \CM
+l.38 \CM
+        % A comment in the file, line 38
+? x
+\end{verbatim}
+Except for the ellipsis dots alternative, that is. Here's how that
+looks:
+\begin{verbatim}
+! Longer message text, forcing elision.
+\CM ...sage {Longer message text, forcing elision}
+                                                  \CM
+l.38 \CM
+        % A comment in the file, line 38
+?
+\end{verbatim}
+Although the exact number can vary (depending on how your particular
+version of \tex/ is configured at compile time), the maximum
+length of the first line of context is normally between 40 and 50
+characters, and if the expansion text would make the line longer
+than this, it is truncated at the beginning and the ellipsis
+dots are inserted.
+
+Very well then. Since we have \verb"!", \verb".", and \verb"->" or
+\verb"..." in the first two lines (the lines that will be nearest our
+menu text), and we cannot get rid of them, the next best thing is to
+camouflage them. One possibility is setting
+\cw{newlinechar}\verb"=`\!" just before sending the \cw{errmessage},
+so that the \verb"!" character will cause a blank line rather than
+printing on screen, and then putting a bunch of periods in the menu
+text to camouflage the other periods.
+
+\ref{a:menu} exhibits \fn{fontmenu.tex}, a more extensive
+working-out of this idea in which I tried to pound the recalcitrant
+\cw{errmessage} into the most presentable shape possible, using every
+macro hack I could think of.
+
+\subsection{Show message `recovery'}
+
+After a \cw{show}, \cw{showthe}, \cw{showbox}, or \cw{showlists}
+command, \tex/ offers a question-mark prompt, and the same menu of
+options as after an error message. There is only one slight
+difference: The {\tt H} option provides no access to the \cw{errhelp}
+token register; only a generic help message about the \cw{show...}
+commands is available.
+
+\subsection{``Please type another input file name:''}
+
+When you see this prompt, displayed by \tex/ when it's unable to find
+an input file, you have strayed into one of the less friendly byways
+of \tex/. If you can't think up a good file name to give as an answer,
+you could get stuck in an endless loop. Even simply pressing the {\sc
+return} key causes \tex/, on most computer systems, to look for a file
+called `\fn{.tex}' which will most likely be nonexistent.  Power users
+know that on many systems you can enter a file name of `\fn{nul}' to
+cause \tex/ to read in an empty file named \fn{nul.tex}. But it is
+precisely power users who are likely to know other ways of getting
+past this prompt (for example, on some systems typing a \ctrl{Z} or
+\ctrl{D} character also does something useful), and it is precisely
+the users with no other clue what to try next who won't know about
+\fn{nul.tex}.
+
+It seems that it would be useful for all standard distributions of
+\tex/ to provide files named \fn{.tex}, \fn{h.tex}, \fn{help.tex}, and
+\fn{?.tex} in the standard \tex/ inputs path, so that when users type
+\verb'h' or \verb'help' or \verb'?' or just press \return/, they will
+get the corresponding file. (Unfortunately, most operating systems
+don't permit the question mark in file names, which means that only
+the other three files will normally be viable.) \fn{Help.tex} and its
+clones could contain something as simple as:
+ \begin{verbatim}
+\errmessage{Type ? to see your options; X to exit}
+\end{verbatim}
+ which would give the user access to the full menu of normal error
+recovery options.%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{This idea is discussed at greater length in a recent \tugboat/
+article of mine (to appear, late 1994).}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{A menu trick}
+ The {\tt Please type another input file name} prompt is used to
+implement a sort of menu in the file \fn{lfonts.new} of the
+Mittelbach/Sch\"opf font selection scheme (\latex/ version), which
+has a statement \cw{input} \fn{fontdef.tex}, where the file
+\fn{fontdef.tex} is normally missing, intentionally, and the user is
+supposed to substitute another file name such as \fn{fontdef.ori} or
+\fn{fontdef.max}. The idea of comments designed to appear through
+\tex/'s display of error context (\secref{ss:errcontextcomments})
+could be used to good advantage here, to
+tell the user what other file names are likely
+candidates:
+ \begin{verbatim}
+\input fontdef.tex % Try fontdef.ori or fontdef.max
+\end{verbatim}
+In this kind of application, additional help information in a message
+preceding the \cw{input} statement could also be useful.
+
+\subsection{Interrupt key}
+ The interrupt key is a key (system-dependent, but \ctrl{C} on many
+systems) that allows you to interrupt
+\tex/ when it is in the middle of doing something else.  The normal
+reaction of \tex/ when the interrupt key is pressed is to print a
+message
+ \begin{verbatim}
+! Interruption.
+... % current context
+?
+\end{verbatim}
+ in the same form as an error message, complete with a question-mark
+prompt, with the usual options available to the user.
+
+It's stretching the concept a bit to claim that the interrupt key is
+a way for users to send information to \tex/; it  has the flavor of the
+story about the farmer who had to whack his mule over the head with
+an axe handle ``just to get his attention''.  When you interrupt
+\tex/ you could easily find yourself in the middle of some
+complex macro where it would be inadvisable to do anything except use
+the \verb|X| option to exit. However, this in itself is frequently
+useful.
+
+\section{Stumbling blocks in the use of \cw{write} and \cw{message}}
+\label{s:stumblewrite}
+
+\subsection{Line breaking}
+
+As explained elsewhere (\secref{ss:message}) it is impossible to use a
+control character as a newline character in the argument of a
+\cw{message} or \cw{errmessage} command.
+{\em[Note (30-Oct-1993): that's no longer true, as of \tex/ version 3.141.]}
+\latex/ and \amstex/
+use \cw{immediate}\cw{write} instead of \cw{message} in their
+all-purpose message macros (\cw{typeout} and \cw{W@}), which allows
+them to have \verb"^^J" as the default newline character,
+thus leaving all of the printable characters usable in message texts.
+(If a given character is the current \cw{newlinechar}, there really
+is no way for \tex/ to  print it on screen. Try setting
+\cw{newlinechar}\verb|=`\(| and see what happens to the file name
+messages for input files.)
+
+There is a minor inconvenience with the use of \ctrl{J} as the newline
+character. Under current conditions (as of 1993), it is usually wise to
+limit the length of all lines in a macro file to 72 characters, in
+order to avoid truncation problems that occasionally occur in, \eg.,
+electronic mail transmission. When constructing a long message, if you
+leave \cw{endlinechar} at its normal value of \verb;^^M; and put
+\verb;^^J;'s at the end of each message line, you get four extra
+characters at the end of each line, three for the \verb;^^J;%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{Although the {\tt\string ^\string ^J} combination will be
+resolved to a single character by \tex/, it is three characters when
+writing it and when sending it through mail.  Assuming, that is, that
+you use \tex/'s double caret notation and don't try to insert a
+\ctrl{J} byte directly (not a good idea, because of system-dependent
+interpretation of \ctrl{J}).}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and one for a percent sign to eliminate the space that would otherwise
+be produced on screen at the beginning of the next message line, by the
+\verb;^^M;. This means that the effective limit on the length of each
+message line is 68 characters rather than 72.
+
+But the clutter of four extra characters at the end of a line can be
+avoided by temporarily assigning \cw{endlinechar} \verb;=;
+\cw{newlinechar} while a message is being constructed. This is
+assuming, however, that a useful value of \cw{newlinechar} has been
+established and that the same value will be in effect when the
+message is sent. If the construction and sending are simultaneous,
+the code can be as simple as this:
+ \begin{verbatim}
+\begingroup \endlinechar=\newlinechar
+\immediate\write16{Line 1
+Line 2
+Line 3
+}%
+\endgroup% this percent sign is necessary
+\end{verbatim}
+ And then the actual message text in each line
+can run to the full 72-character length if necessary.
+If a useful value of \cw{newlinechar} has not been established
+(\eg., when using \plaintex/ without modifications), then
+rewrite the first line above as:
+\begin{verbatim}
+\begingroup \newlinechar=\endlinechar
+\catcode\endlinechar=12 % Make it 'other'
+\end{verbatim}
+Here we make the reasonable
+assumption that \cw{endlinechar} has its normal value
+of 13 (\verb;^^M;); even this assumption could
+be done without by adding the statement \cw{endlinechar} \verb;=;
+\verb;13; before the other assignments.
+
+The percent sign is necessary after the \cw{endgroup} in the first
+variant, because the endline character for a given line is added when
+the line is initially read, before \tex/ begins to execute the line.
+Therefore by the time \tex/ processes the \cw{endgroup} and reverts
+to the previous value of \cw{endlinechar}, it is too late to prevent
+getting a newline character at the end of the current line.
+
+For the same reason, a percent sign is not needed
+after the line that contains
+\begin{verbatim}
+\endlinechar=\newlinechar
+\end{verbatim}
+The endline character for that line has already been tacked on
+by \tex/ and cannot be changed by any statements within that line.
+(The \cw{catcode}, however,
+of the \cw{endlinechar} can be changed by statements within the line.)
+
+\subsection{Expanding control sequences}\label{s:excs}
+
+In messages to a \tex/ user it's frequently necessary to refer
+to control sequences or characters that have special category codes.
+This can sometimes be problematic because of the expansion that is
+done in the argument of a \cw{message} or \cw{write} command. For
+example, the line
+ \begin{verbatim}
+\message{Beware of \footnote in a \message!}
+\end{verbatim}
+will typically generate a hundred or so error messages when
+\tex/ reaches \cw{footnote}. (Although \plaintex/, \amstex/, \latex/,
+and other macro packages define \cw{footnote} differently,
+all the definitions are equally explosive inside a \cw{message}.)
+And the line
+\begin{verbatim}
+\message{Beware of \endinput in a \message!}
+\end{verbatim}
+ will cause the current input file to terminate immediately!
+(\cw{endinput} is an {\em expandable} control sequence, for
+reasons that are too technical
+to be worth discussing here.)
+
+Thus to talk about an expandable control sequence in a message, you
+must do something to inhibit the expansion.  Ordinarily
+you apply \cw{string} or \cw{noexpand} to the control sequence;
+or you could put it into a token register and use
+\cw{the}\m{token register} in the message.
+Nonexpandable
+control sequences can be printed in a message without special
+protection, except that, if you do nothing to avoid it, you will
+always get an extra space after a control word, even in
+some cases where it is undesirable, as when the next
+thing is punctuation. For example, the message
+\begin{verbatim}
+\message{Enter desired value for \hangindent: }
+\end{verbatim}
+will print on screen with a space before the colon:
+\begin{verbatim}
+Enter desired value for \hangindent :
+\end{verbatim}
+
+Table~\ref{t:expansion} shows what happens to various sorts of things
+in a \cw{message} or \cw{write} argument, as well as various methods
+for suppressing expansion.
+
+\begin{table*}
+\caption[]{Expansion of \cw{message} and \cw{write} arguments%
+\label{t:expansion}}
+\writepage{Table}
+\smallskip
+\noindent
+\[\begin{tabular}{|r|l|}
+\hline
+This input\ \ \  & Produces this on screen\\
+\hline
+\verb|\message{E}|& \verb|E|\\
+\verb|\message{&}|& \verb|&|\\
+\verb|\message{#}|& \verb|##|\\
+\verb|\message{[\relax]}|& \verb|[\relax ]|\\
+\verb|\message{[\string\relax]}|& \verb|[\relax]|\\
+\verb|\message{[\empty]}|& \verb|[]|\\
+\verb|\message{[\noexpand\empty]}|& \verb|[\empty ]|\\
+\verb|\message{[\string\empty]}|& \verb|[\empty]|\\
+\verb|\message{[\space]}|& \verb|[ ]|\\
+\verb|\message{[      ]}|& \verb|[ ]|\\
+\verb|\def\spaces{\space\space\space\space|&\\
+\verb|\space\space\space\space}|&\\
+\verb|\message{[\spaces ]}|& \verb|[        ]|\\
+\verb|\message{[\romannumeral 37]}|& \verb|[xxxvii]|\\
+\verb|\message{[\uppercase{a}]}|& \verb|[\uppercase {a}]|\\
+\verb|\message{[~]}|& \verb|[\penalty \@M \ ]|\\
+\verb|\message{[\ifnum\time<600 Too early for me|&\\
+  \verb|\else Let's go\fi]}|& \verb|[Too early for me]|\\
+\hline
+\end{tabular}\]
+\end{table*}
+
+\subsection{Collapsing spaces}
+
+If you want to print on screen a menu or similar message consisting
+of multiple columns nicely arranged, you have to deal with the fact
+that \tex/ normally condenses multiple spaces and tab characters
+to a single
+space. The easiest way to handle this difficulty is to change the
+catcode of the space character to, say, 12
+before reading the argument of a
+\cw{message} or \cw{write} command.
+
+\subsection{Special characters}
+
+The space character is but one example of a larger class:
+`special' characters, that is, ones that don't have category 11 or 12.
+An obvious
+question to ask is, ``What other special characters are difficult to
+use in a message?'' Table~\ref{t:expansion} shows how a few special
+characters are affected by the expansion process in a message: an
+\verb;&; (category 4) passes through unharmed, a \verb;#; (category
+6) gets doubled, and a \verb;~; (category 13) gets expanded.%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{To be more precise, an active character like {\tt\string ~}
+will be treated like a control sequence; it will be expanded if
+expandable, otherwise it will be printed as is. After an
+assignment such as
+\cw{newcount}{ \tt\string ~}, or \cw{let}{ \tt\string ~ =} \cw{relax},
+the {\tt\string ~} is not expandable.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Table~\ref{t:specchars} is a complete list
+of the various categories of characters,
+along with  ways to produce those characters that cannot simply be
+used as is. A few categories deserve more extensive comment.
+  \begin{description}
+  \item[Category 0---Escape Character] It's normally not a problem to
+print an escape character because it usually occurs as part of a
+control sequence, which can be printed using \cw{string} (and even
+that may not be necessary if the control sequence is nonexpandable).
+Even when the escape character is not, logically speaking, part of a
+control sequence, it can be sent in a message by letting it combine
+from \tex/'s point of view with the following character(s). For
+example, to send the message {\tt Commands in TeX normally begin with
+a `\string\' character}, the backslash doesn't need to be treated as
+an isolated character; combined with the following apostrophe, it
+forms a control symbol to which \cw{string} can be applied.
+
+ The only time this fails is when the backslash must be sent as the
+very last character of a message. Although this case is
+extremely unlikely, the solution involves a rather useful
+little macro:
+\begin{verbatim}
+\def\xstring{\expandafter\gobble\string}
+\def\gobble#1{}% if this is not already defined
+\end{verbatim}
+With this definition,%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{Cf.\ the answer to Exercise 7.10 in \texbook/. The implicit
+assumption that \cw{escapechar} is in the range 0--255 may not be
+completely reliable.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cw{xstring} not only turns a control sequence into a string of
+characters, it also removes the leading backslash, so that
+\cw{xstring}{\tt\string\\} will produce a single backslash
+character, as desired.
+Another solution that involves setting \cw{escapechar}
+temporarily to $-1$ would also be possible, provided that the remainder
+of the message doesn't need to use \cw{string} in a normal way,
+with a printable escape character.
+\begin{verbatim}
+\begingroup \escapechar=-1
+\message{ ...\string\\}%
+\endgroup
+\end{verbatim}
+On the other hand,
+it might be useful to have a category-12
+backslash character always available through a macro,
+not only for messages but for other purposes as well:
+\begin{verbatim}
+\edef\backslashchar{\xstring\\}
+\end{verbatim}
+Then \cw{backslashchar} could be used in a message instead of
+\cw{xstring}{\tt\string\\}. If you needed to use it frequently you
+would presumably give it a shorter name.
+
+\item[Categories 1 and 2] Characters of category 1 and 2 can be
+printed without any problem in a message {\em if they occur
+in matching pairs}. For these purposes, character codes are irrelevant;
+\verb;];$_1$ and \verb;*;$_2$ match up as well
+as \verb;{;$_1$ and \verb;};$_2$.
+If a single, unmatched character of one of these categories
+must be printed on screen, \cw{xstring} can be used with the
+corresponding
+control symbol, \eg., \cw{xstring}{\tt\string\{} or
+\cw{xstring}{\tt\string\}}.
+
+\item[Categories 5, 9, 14, 15] These categories are similar to category
+0. Characters of category 0 (escape), category 5 (end-of-line), 9
+(ignored), 14 (comment), and 15 (invalid character) cannot enter a
+token list [\texbook/, Exercise 7.3], so that, actually, it doesn't make much
+sense to ask what happens to them in the argument of a \cw{message}  or
+\cw{write} command, which do not deal with raw characters from an input
+stream but with token lists. The  question is not how to print a
+character token of category 14 in a message (since that is impossible)
+but, how to produce a category-12 \verb;%; when the normal catcode of
+\verb;%; is 14. The answer is to
+use \cw{xstring} with the corresponding control symbol, \eg.,
+\cw{xstring}{\tt\string\%}.
+
+\end{description}
+
+Then again, a better idea might be to pick one character, make it
+active (probably {\tt\string ~} since it's already active in most
+macro packages), and define it to produce category-12
+characters by their hexadecimal value. With preliminary
+definitions such as:
+\begin{verbatim}
+\escapechar=-1
+\def\twelvechar#1#2{\csname hex#1#2\endcsname}
+\expandafter\edef\csname hex5c\endcsname{\string\\}
+\expandafter\edef\csname hex25\endcsname{\string\%}
+\expandafter\edef\csname hex7e\endcsname{\string\~}
+...
+\escapechar=`\\
+\end{verbatim}
+it would become possible to write, for example,
+\begin{verbatim}
+\begingroup
+\let~=\twelvechar
+\message{Printing backslash ~5e, percent ~25, and tilde ~7e.}
+\endgroup
+\end{verbatim}
+and thus send all manner of special characters by substituting a
+three-character sequence starting with {\tt\string~}.
+
+\begin{table}
+\caption[]{Methods for incorporating various
+categories of characters in a \cw{message}
+or \cw{write} argument\label{t:specchars}}
+\writepage{Table}
+\smallskip
+%
+\begin{tabular}{|rrp{.57\columnwidth}|}
+\hline
+Catcode& Example& Method\\
+\hline
+0& \verb;\;& Normally handled as part of a control
+sequence, except at the very end of a message, in which case use
+\cw{xstring}{\tt\string\\}\\
+%    Using \mbox here to suppress a line-breaking problem
+%    until/unless I can get around to fixing it.{28-Nov-1992 mjd}
+1& \verb;{;& \mbox{\cw{xstring}{\tt\string\{}} if unmatched\\
+2& \verb;};& \mbox{\cw{xstring}{\tt\string\}}} if unmatched\\
+3& \verb;$;& as is\\
+4& \verb;&;& as is\\
+5& \verb;^^M;& \mbox{\cw{xstring}}\verb;\^^M; (see the note below)\\
+6& \verb;#;& \mbox{\cw{string}}\verb;#; to avoid doubling, or
+  \cw{xstring}{\tt\string\#}\\
+7& \verb;^;& as is (except in rare combinations
+  like \verb;^^>;)\\
+8& \verb;_;& as is\\
+9& \verb;^^@;& \mbox{\cw{xstring}}\verb;\^^@; (see the note below)\\
+10& space& as is, except use \cw{space}'s to
+  produce multiple spaces\\
+11& a& as is\\
+12& /& as is\\
+13& \verb;~;& \mbox{\cw{string}{\tt\string ~}}, \cw{noexpand}\verb;~;\\
+14& \verb;%;& \mbox{\cw{xstring}{\tt\string\%}}\\
+15& \verb;^^?;& \mbox{\cw{xstring}}\verb;\^^?; (see the note below)\\
+\hline
+\end{tabular}
+\par
+\smallskip
+\small
+Note: Because of the way \cw{string} operates, something like
+\cw{xstring}{\tt\string\^^@} will not produce a single
+character but three category-12 characters,
+{\tt \string^ \string^ @}. This may normally be what you want, but it
+won't be satisfactory if
+the character in question has a special purpose---perhaps to cause a
+newline, or to print on-screen as an accented letter.
+
+\end{table}
+
+\subsection{Space after a control word}
+
+In \secref{s:excs}  it was pointed out that an unwanted space may be
+printed at the end of a control word under some circumstances. It's
+equally possible that a wanted space at the end of a control word may
+disappear under other circumstances. For example, it is not uncommon
+to see macro writers use
+the combination \cw{string}\cw{controlseq}\cw{space} when a
+control word occurs as an isolated word in the middle of a message;
+the final \cw{space} is necessary because a plain space after
+\cw{controlseq} would simply disappear according to \tex/'s normal
+rules for finding the end of a control sequence name.
+
+The solution to both of these difficulties is easy: use \cw{string}
+if you don't want a space after the control word, and use
+\cw{noexpand} if you do want a space.%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{I hadn't noticed the usefulness of \cw{noexpand} for this
+purpose until Michael Spivak drew it to my attention, in a
+conversation at the 1991 TUG meeting in Boston.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Note: The character tokens produced by \verb|\string| can be passed
+without harm through any number of subsequent steps, including
+expansion via \cw{edef} or similar operators, while \cw{noexpand}
+only protects an expandable macro through the first expansion step.
+
+\subsection{Outer Control Sequences}
+\label{ss:outer}
+You can't send an \cw{outer} control sequence in a \cw{message}
+unless you do something to get around the outerness.
+To illustrate, I present
+a transcript of \tex/'s reaction to the following line:
+\begin{verbatim}
+\message{Control-L: ^^L}
+\end{verbatim}
+along with various attempts to recover from the resulting error
+message. (\ctrl{L} is defined as an active character with the `outer'
+attribute in both \plaintex/ and \latex/.)
+\begin{verbatim}
+Runaway text?
+Control-L:
+! Forbidden control sequence found while scanning text of \message.
+<inserted text>
+                }
+<to be read again>
+                   ^^L
+l.149 \message{Control-L: ^^L
+                                        }
+? 1
+Type <return> to proceed, S to scroll future error messages,
+R to run without stopping, Q to run quietly,
+I to insert something, E to edit your file,
+H for help, X to quit.
+? h
+I suspect you have forgotten a `}', causing me
+to read past where you wanted me to stop.
+I'll try to recover; but if the error is serious,
+you'd better type `E' or `X' now and fix your file.
+?
+\end{verbatim}
+
+Notice that when I tried to type a \verb;1; to delete the offending
+\cw{outer} token, I got instead a help message indicating that token
+deletion is not an option at this point. (The reason behind this lack
+of token deletion is fairly technical: \tex/ was in the middle of a
+procedure called {\it get\_token} when it stumbled over the \ctrl{L}
+character; but since token deletion itself involves calling {\it
+get\_token}, allowing token deletion here would mean calling
+{\it get\_token}
+from inside itself---something it was not designed for.)
+
+\subsection{Semi-verbatim alternative}
+An alternative way of handling message texts, that eliminates the
+need to remember special methods for various kinds of
+message elements, is to temporarily change the
+catcodes of all special
+characters while reading the argument of
+a message. With the following definitions:
+\begin{verbatim}
+\def\verbwrite{\begingroup
+  \def\do##1{\catcode`##1=12}%
+  \do\ \dospecials
+  \catcode\endlinechar=12
+  \newlinechar=\endlinechar
+  \verbcontinue}
+\begingroup \lccode`\/=`\\
+\lowercase{\endgroup
+\def\verbcontinue##1/}endverbwrite{%
+  \immediate\write16{#1}\endgroup}
+\end{verbatim}
+you could send messages like
+\begin{verbatim}
+\verbwrite !#$%$%#^%&*~@^^"<?:}{>|+
+_^+\footnote_|)\\90\
+\bye ^^L \endinput
+\endverbwrite
+\end{verbatim}
+without regard to the contents. The main limitation of this approach
+is that in order for the handling of the special characters to work,
+\cw{verbwrite} has to be executed directly in a file; it cannot be
+embedded in a macro. Furthermore, the message text is unalterable: it
+cannot contain a context-dependent part, as in a message to display
+the current font name on screen:
+\begin{verbatim}
+\message{Current font is \fontname\font.}
+\end{verbatim}
+This message could not be generated with \cw{verbwrite} because
+\cw{verbwrite} would not expand \cw{fontname}.
+
+\subsection{Presenting information in the best possible form}
+
+Example: In reporting a dimension to the user, it is usually
+desirable to report the value rounded to tenths or hundredths, in
+units that are convenient for the user: points for a font size or
+line spacing value; centimeters, picas, or inches for the height or
+width of a page or of an included figure.
+
+The file \fn{cnvunits.tex} gives some examples of what is possible in
+this vein, including conversions from points to picas, inches, and
+centimeters. The conversions from points to other units are the most
+important ones because when \cw{the} is applied to a dimension or
+skip register \tex/ always reports the value in \verb;pt; units. (Not
+counting \cw{muskip} registers, where the reported unit is \verb;mu;.)
+
+\reqspace{1.5in}
+\verbatiminput{cnvunits.tex}
+
+Another example: if you want to report the \cw{mathcode} of a
+particular character to the user, \cw{number}\cw{mathcode`}\cw{x} or
+\cw{the}\cw{mathcode`}\cw{x} aren't too great, because they produce a
+decimal number, when it would be more
+convenient to get a hexadecimal number filled out to four digits, so
+that the class, math family, and font position information can be
+read off directly.
+Extending some ideas from \fn{testfont.tex} \cite{testfont}, we can
+write a quite friendly \cw{reportmathcode} function:
+\begin{verbatim}
+%    When \meaning is applied to a \mathchar, it produces
+%    \mathchar"<digits> where <digits> are 1 to 4 hexadecimal digits.
+%    The function \gethex strips off the prefix and leaves only the
+%    digits.
+\def\gethex#1"{}
+%    The function \reportmathcode takes a character or control symbol
+%    argument and reports the associated mathcode in hexadecimal
+%    form, filling out to four digits with leading zeros, if
+%    necessary.
+\def\reportmathcode#1{%
+  \begingroup
+    \mathchardef\temp=\mathcode`#1 \relax
+    \edef\temp{\expandafter\gethex\meaning\temp}%
+    \count@="\temp\relax
+    \edef\temp{%
+%    Fill in leading zeros
+      \ifnum\count@<"1000 0%
+      \ifnum\count@<"100 0%
+      \ifnum\count@<"10 0\fi\fi\fi
+      \temp}%
+    \message{The mathcode of \string#1 is: "\temp}%
+  \endgroup}
+\end{verbatim}
+
+\begin{example}
+\begin{examplebox}%
+\caption[]{The \cw{printoptions} command of \amstex/ version 1.1.
+\cw{W@} is the \amstex/ abbreviation for
+\cw{immediate}\cw{write}{\tt 16}}\label{amstex/syntax}%
+\writepage{Example}
+\hfuzz=2em
+\begin{verbatim}
+\def\S@{S } \def\G@{G } \def\P@{P }
+\newif\ifbadans@
+\def\printoptions{\W@{Do you want S(yntax check),
+  G(alleys) or P(ages)?^^JType S, G or P, follow by <return>: }%
+ \loop \read\m@ne to\ans@
+   \xdef\next@{\def\noexpand\Ans@{\ans@}}%
+   \uppercase\expandafter{\next@}%
+   \ifx\Ans@\S@\badans@false\syntax\else
+   \ifx\Ans@\G@\badans@false\galleys\else
+   \ifx\Ans@\P@\badans@false\else
+   \badans@true\fi\fi\fi
+   \ifbadans@\W@{Type S, G or P, follow by <return>: }%
+ \repeat}
+\end{verbatim}
+
+\end{examplebox}%
+\end{example}
+
+\section{Stumbling blocks in the use of \cw{read}}
+\label{s:stumbleread}
+
+\subsection{An example: \amstex/'s \cw{printoptions} command}
+
+Consider the \cw{printoptions} command of \amstex/ 1.1
+(Example~\ref{amstex/syntax}):
+The definition of this command shows one way of dealing
+with the extra space at the end of a macro created using \cw{read}:
+Define some macros consisting of the expected answers, with the extra
+space included, and then use \verb|\ifx| to compare them to the
+user's response. It also shows how to uppercase the user's response
+so that lower- and uppercase responses will be treated identically.
+This is the second method given in the answer to \texbook/'s Exercise
+20.19. One more noteworthy feature of \cw{printoptions} is that it
+runs a loop that doesn't quit until the user gives an acceptable
+answer.
+
+In \cw{printoptions} since \verb|\W@| is defined to be
+\verb|\immediate|\5\verb|\write16|, and the \cw{write} command always
+starts a new line after its message text, we can see that the reply
+typed by the user will appear on the next line instead of immediately
+after the colon. This brings up the question: what if we want the
+user's reply to appear on the same line?
+
+One way to do this is to use \cw{message} to send the last line of
+the prompt message, and use \cw{write} to send the previous line(s).
+For example:
+ \begin{verbatim}
+\W@{Do you want S(yntax check), G(alleys) or P(ages)?}%
+\message{Type S, G or P, follow by <return>: }%
+\end{verbatim}
+ This idea is used in the \latex/ option \fn{checknum.sty}
+\cite{checknum}. An alternative would be to put the whole prompt in a
+single \cw{message} with embedded newline characters (as long as you
+are careful to select a character for \cw{newlinechar} that is not
+needed in the text of the message).
+
+\subsection{{\ntt{\char94}{\char94}M} at the end of a line}
+In \label{s:endlinechar}
+\cw{printoptions} separate macros \cw{S@}, \cw{G@}, and
+\cw{P@} are defined for each legitimate response. If the menu
+becomes more extensive, this technique is rather wasteful
+of hash size, main memory, and other useful commodities.
+The problem here is that the
+\verb|^^M| character at the end of the user's response
+is included by \cw{read} in the macro being read.
+Under normal conditions
+\verb|^^M| is converted to a space; however, another
+possibility\Dash if the user just enters \return/ without
+typing any response\Dash is that the \verb|^^M| will produce a \cw{par}
+token (following the general rule that an empty line is
+equivalent to \cw{par}). The best approach is
+to prevent the \verb|^^M| character from getting into the
+read macro in the first place.  This can be done in two ways:
+setting the catcode of \verb|^^M| to 9 (``ignore''), or
+setting \cw{endlinechar} to $-1$.
+
+Unfortunately, this immediately raises another difficulty: we want to keep
+the catcode change or \cw{endlinechar} change local so that it will
+affect only the \cw{read}. This could be accomplished by
+saving the current catcode or \cw{endlinechar} (just in case)
+and restoring it after the \cw{read} is done, but it's
+simpler to enclose the \cw{read} in a group:
+\begin{verbatim}
+\begingroup
+\endlinechar=-1
+\global\read16 to\answer
+\endgroup
+\end{verbatim}
+Here the \cw{global} prefix makes \cw{answer}
+retain its definition beyond the \cw{endgroup}.
+
+With this modification the tests done by \cw{printoptions} could be
+simplified to
+\begin{verbatim}
+\if\Ans@ S ...\else
+\if\Ans@ G ...\else
+\if\Ans@ P ...\else
+...
+\end{verbatim}
+which renders the macros \verb|\S@|, \verb|\G@|, \verb|\P@| unnecessary.
+
+On the other hand, we have advanced to some splendid new
+complications: \verb|\Ans@| might now be completely empty, if the
+user just pressed the \return/ key, and an empty \verb|\Ans@| would
+bollix up the \verb|\if| tests. This case is easy to handle, though:
+add an extra branch \verb|\ifx\Ans@\empty...| at the beginning.
+We have the opposite problem if the user types more than one
+letter: on the true branch (the `none-of-the-above' branch, unless
+the user's first two letters happen to be identical), the extra
+characters could potentially cause spurious typesetting activity. As
+it happens, we can kill two birds with one stone, as we'll see
+in \secref{s:defaults}.
+
+\subsection{Uppercasing input}
+
+Next let's look at the procedure used by \cw{printoptions} for
+uppercasing the user's reply: after reading \verb|\ans@|, \cw{xdef}
+and \cw{uppercase} are applied to it as follows:
+ \begin{verbatim}
+\xdef\next@{\def\noexpand\Ans@{\ans@}}%
+\uppercase\expandafter{\next@}%
+\end{verbatim}
+ A more economical version of the same technique would be:
+ \begin{verbatim}
+\xdef\ans@{\uppercase{%
+  \gdef\noexpand\ans@{\ans@}}}%
+\ans@
+\end{verbatim}
+ If \verb|\ans@| contains \verb|s|
+to begin with, then after the \cw{xdef} has been completed, the
+definition of \verb|\ans@| is \verb|\uppercase{\def\ans@{s}}|.  Then calling
+\verb|\ans@| causes it to redefine itself, but not before the tokens in the
+argument of \cw{uppercase} are suitably uppercased.%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{Only the \verb|s| is
+affected because \cw{uppercase} operates only on letters, not
+on control sequences or nonletters. Well, to be more precise: only on
+characters that have a nonzero \cw{uccode}; they don't have to have
+catcode 11.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+With this change, the auxiliary macro \verb|\Ans@| is no longer needed.
+
+To simplify the structure of macros using this uppercasing process,
+it could be embodied in a dedicated function of its own:
+\begin{verbatim}
+\def\uppermac#1{\xdef#1{\uppercase{\gdef\noexpand#1{#1}}}%
+  #1}
+\end{verbatim}
+
+A nonglobal alternative may sometimes be desirable, however.
+Also the full expansion may not be wanted in some cases when
+the contents of the macro being uppercased are `fragile'.
+An alternative that is safer with respect to expansion:
+\begin{verbatim}
+\def\uppermac#1{%
+  \uppercase\expandafter\expandafter\expandafter{%
+    \expandafter\toks@\expandafter{#1}}%
+  \edef#1{\the\toks@}}
+\end{verbatim}
+
+\subsection{Default responses}
+One \label{s:defaults}
+last refinement in \cw{printoptions} would be to provide
+a default response if the user's response is empty (that is,
+the user only hit
+the \return/ key). One method involves an auxiliary
+macro like the \latex/ macro \verb|\@car|:
+ \begin{verbatim}
+\def\@car#1#2\@nil{#1}
+\end{verbatim}
+
+A more descriptive name (for those whose knowledge of Lisp is nil)
+would be \cw{firsttoken}:%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\footnote{Using {\tt\string @} as the ending
+delimiter is pretty safe if we make sure that it has catcode 11 at the
+time \cw{firsttoken} is defined and some other catcode at the time of
+reading user input.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{verbatim}
+\def\firsttoken#1#2@{#1}
+\end{verbatim}
+Then, if we want \verb|\ans@| to be
+given a default value of P when it comes back empty from the user, we
+do this:
+ \begin{verbatim}
+\xdef\ans@{\expandafter\firsttoken\ans@ P@}
+\end{verbatim}
+At the critical intermediate step, the following cases will arise:
+ \begin{quote}
+ \begin{tabular}{l|l}
+\hline
+User input& Critical step\\\hline
+s& \verb|\firsttoken|\,\,\verb|s|\,\verb|P|\,\verb|@|\\
+P& \verb|\firsttoken|\,\,\verb|P|\,\verb|P|\,\verb|@|\hphantom{\tt syn}\\
+\m{return}& \verb|\firsttoken|\,\,\verb|P|\,\verb|@|\\
+\hline
+\end{tabular}
+\end{quote}
+ This gives exactly what we want.
+
+The application of \cw{firsttoken} also gives us a nice way around the
+difficulty mentioned earlier if the user types more than one character.
+The case
+\begin{quote}
+\begin{tabular}{l|l}
+\hline
+synt& \verb|\firsttoken|\,\,\verb|s|\,\verb|y|\,\verb|n|\,\verb|t|\,%
+\verb|P|\,\verb|@|\\
+\hline
+\omit\hphantom{User input}\kern2\tabcolsep\cr
+\end{tabular}
+\end{quote}
+ will produce the same result as the first case above, because
+everything after the first \verb|s|, up to the category-11 \verb|@| character,
+will be discarded.
+
+\subsection{A new \cw{printoptions}}
+
+By noticing that the \cw{xdef}'s used in
+the \cw{firsttoken} step and the \cw{uppercase}
+step can be combined, and putting together everything
+discussed so far, we come up with a new, improved version
+of \cw{printoptions}:
+ \begin{verbatim}
+\def\printoptions{%
+  \W@{Do you want S(yntax check), G(alleys) or P(ages)?}%
+  \message{Type S, G or P, follow by <return>: }%
+  \begingroup \endlinechar\m@ne
+  \global\read\m@ne to\ans@
+  \endgroup
+  \xdef\ans@{\uppercase{%
+    \def\noexpand\ans@{%
+% Default to `P':
+      \expandafter\firsttoken\ans@ P@}%
+    }}%
+% Execute \ans@ to uppercase itself:
+  \ans@
+  \if S\ans@ \syntax\else
+  \if G\ans@ \galleys\else
+  \if P\ans@ % fine, no action needed
+  \else \message{Unknown option: \ans@;
+     `pages' option will be used}\fi
+  \fi\fi
+}
+\end{verbatim}
+ The loop has been discarded in favor of simply taking the normal
+default action if the user's reply is unintelligible.
+
+\subsection{Matching braces}
+\label{ss:readbrace}
+The \cw{read} command normally reads only one line, but if the first
+line does not contain an equal number of left and right braces, \tex/
+will continue to read additional lines until equality is achieved
+(cf.~\secref{ss:readprim}).
+This could be trouble in interactive use of \cw{read}, if the user
+doesn't understand what has happened---it's difficult to extricate
+yourself except by getting the braces right.
+
+
+On the other hand, if you {\em want} to enter more than one line
+at a time, you can do it by entering an opening brace on the first
+line and the matching closing brace on the last line; this
+is illustrated in Example~\ref{ex:readbrace}.
+In the example there are two things worthy of note:
+(1)~The braces appear in the replacement text of the macro \cw{name};
+this may be undesirable, depending on the intended use of the
+information. (2)~There's no space between
+Frank and Henry in \cw{name}.
+
+The loss of the space has two causes. First, \cw{endlinechar} was set to
+$-1$ (so that an empty line will not produce a \cw{par}---see
+\secref{s:endlinechar}), and
+second, the space that was typed at the beginning of the second
+line of the response didn't register either, following \tex/'s
+usual rule of ignoring spaces at the beginning of a line
+(\texbook/, Chapter~8, double dangerous bends).
+
+\begin{example*}
+\begin{examplebox}
+\caption[]{Reading multiple lines with a single \cw{read} command}%
+\label{ex:readbrace}%
+\writepage{Example}
+First, the input file:
+\begin{verbatim}
+\begingroup \newlinechar=`\& \endlinechar=-1
+\message{&Please enter your name: }\global\read-1 to\name
+\message{&And your Social Security number: }\global\read-1 to\ssno
+\endgroup
+\show\name \show\ssno
+...
+\end{verbatim}
+Now the log file, including the responses (a \return/ was typed after
+{\tt Frank}):
+\begin{verbatim}
+Please enter your name: {Joe Bob Willie Clark Mark Raphael Ferguson Frank
+ Henry James Percival Emerson Elmo Davenport, Jr.}
+
+And your Social Security number: 360-60-6000
+> \name=macro:
+->{Joe Bob Willie Clark Mark Raphael Ferguson FrankHenry James Percival Emerson
+ Elmo Davenport, Jr.}.
+l.7 \show\name
+               \show\ssno
+?
+> \ssno=macro:
+->360-60-6000.
+l.7 \show\name \show\ssno
+
+?
+\end{verbatim}
+\end{examplebox}
+\end{example*}
+
+\subsection{Outer macros}\label{ss:readouter}
+
+{\em[This section is partly obsolete as of \tex/ version 3.141; see
+\secref{ss:readprim}.]}
+
+If you enter an \cw{outer} macro in response to a \cw{read} prompt,
+\tex/ will inform you in an error message
+that it has inserted a closing brace.
+Unfortunately, this is rather unhelpful, since you will then have the
+matching brace problem described in the previous section; your answer
+now contains an unmatched right brace, and if you don't type `x' at the
+question-mark prompt to exit, you could get stuck.
+Fortunately, it is unlikely for anyone to ever enter an outer macro in
+response to a prompt, since in \plaintex/ the set of such macros is
+small and used relatively infrequently, and in \latex/ there are almost
+no \cw{outer} macros at all; accidental typing of a \verb;^^L;
+character (which is active and outer, in \plaintex/ and \latex/) is
+perhaps the least unlikely possibility.
+
+
+\begin{example}
+\begin{examplebox}
+\caption[]{Outer control sequence choking a \cw{read} operation. Compare
+this to the behavior of \ctrl{L} inside \cw{message} as discussed in \secref{ss:outer}.}
+\label{ex:outerread}%
+\writepage{Example}
+Input file:
+\begin{verbatim}
+\read16 to\x  \show\x
+\end
+\end{verbatim}
+
+Log file:
+\def\next{\begin{verbatim}\rightskip0pt plus100pt minus 100pt
+\linepenalty 500 }
+\next
+\x=^^L
+Runaway definition?
+->
+! Forbidden control sequence found while scanning definition of \x.
+<inserted text>
+                }
+<read *> ^^L
+
+l.1 \read16 to\x
+
+? h
+I suspect you have forgotten a `}', causing me
+to read past where you wanted me to stop.
+I'll try to recover; but if the error is serious,
+you'd better type `E' or `X' now and fix your file.
+
+? 1
+Type <return> to proceed, S to scroll future error messages,
+R to run without stopping, Q to run quietly,
+I to insert something, E to edit your file,
+H for help, X to quit.
+?
+a
+\
+#
+{
+> \x=macro:
+-> } \par a \^^M## { .
+l.2 \show\x
+
+?
+\end{verbatim}
+
+\end{examplebox}
+\end{example}
+
+Some observations:
+
+---If the user checks the help message and stops to ponder the
+situation, they have the opportunity, at least, to realize that E or
+X to exit is indeed the wise choice. They're not {\em really\/}
+stuck unless they carelessly try to continue.
+
+---If the user doesn't avail him/herself of the E or X option, just
+about anything else that they try will be ineffective. On some
+systems even the interrupt key won't help here; that leaves
+essentially two ways out: match up the closing brace, or type another
+outer thing to get back to the \verb;?; prompt and the associated
+error recovery opportunity.
+
+
+\subsection{Catcodes}
+
+The treatment of a user's response depends on the use to which it
+will be put. \latex/'s \cw{typein} command is designed to take the
+response and execute it, and therefore reads the user's response
+using normal category codes. On the other hand, \fn{testfont.tex}
+\cite{testfont}
+changes the category codes of the special characters to 12 when
+reading a user response, because the response will not be executed
+but will be processed as simple character data. This approach is
+probably the better one for most applications, since it avoids the
+possibility of problems with things like mismatched braces or outer
+control sequences, and since the \cw{read} command is used more often
+to read strings of ordinary characters than to read executable control
+sequences.
+
+
+\subsection{\fn{Latex.tex}: \cw{typeout} and \cw{typein}}
+
+An interesting aspect of the \cw{typeout} and \cw{typein} commands in
+\latex/ is that they aren't private control sequences (with \verb|@|
+characters in their names); they are available for use in ordinary
+document files. One of the uses suggested in the \latex/ manual is for
+entering an \cw{includeonly} command interactively each time a
+multipart document is processed.  More commonly, however, \cw{typeout}
+and \cw{typein} are used internally in documentstyle files, or in
+special applications such as \fn{docstrip.tex} [Mittelbach, 1991]
+where the distinction between private and public control sequences is
+irrelevant.
+
+The purpose of \cw{typein} is (a)~to print a message on screen, and
+(b)~to
+read a response (one line) from the user, either into the internal
+macro \cw{@typein}, or into a macro chosen by the macro writer. If
+\cw{@typein} is used to receive the response, it will be executed as
+\cw{typein}'s final action. Otherwise the response will be stored in
+the designated alternate macro, without execution. (Cf.\ the \latex/
+manual, \S4.6.)
+
+I found the definition of \cw{typein} in \fn{latex.tex} more difficult
+to understand than almost anything else of comparable length that I
+have looked at. All the complications in the definition serve two
+goals: (1)~If the user simply presses the {\sc return} key, the
+resulting \cw{par} token needs to be discarded, leaving the macro that
+holds the user reply empty; and (2)~if the user reply is not empty, it
+will usually, but not always, contain a final space which needs to be
+trimmed off. The fact that the final space might be missing is the
+crucial problem.
+
+A simpler version of \cw{@xtypein} could be written using
+a temporary deassignment of \cw{endlinechar}:
+\begin{verbatim}
+\def\@xtypein[#1]#2{\typeout{#2}\let\@typein\relax
+  \begingroup \endlinechar\m@ne \global\read\z@ to#1\endgroup
+  \@typein}
+\end{verbatim}
+This solves both the \cw{par} problem and the trailing space problem.
+
+However, much of the initial development of \latex/ took place in 1982
+and 1983, before the ultimate release of \tex/82, version~1.0
+(officially: December 3, 1983), and in old \TeX{} there was no access
+to \cw{endlinechar}. (In fact many features of \tex/82 were added by
+Knuth in response to reports from Lamport about various limitations of
+the language that he ran into in the course of \latex/'s development.)
+If Lamport noticed later that \cw{endlinechar} could be applied in
+\cw{@xtypein}, he probably invoked the principle `If it ain't broke,
+don't fix it' and left it alone.
+
+\subsection{\fn{Docstrip.tex}: \cw{typeout}, \cw{typein}, progress reports}
+
+As an example of the use of \cw{typeout} and \cw{typein},
+consider \fn{docstrip.tex}
+\cite{docstrip}. This is a \latex/
+utility used for processing a documented macro file to remove
+comments (the stripped-down version of a large macro file
+will load significantly faster at run-time, at least on
+less powerful computers). The use of
+\cw{typeout} in \fn{docstrip.tex} is mainly a convenience,
+to avoid the more cumbersome phrase
+\cw{immediate}\cw{write16}, but \cw{typein} has a more
+significant advantage---it takes care of removing a space
+at the end of the user response, if present.
+
+In the following fragment from \fn{docstrip.tex}, the user is
+informed that an auxiliary file named \fn{docstrip.cmd} has been
+detected, and is asked whether it should be used. The response is
+read into the macro \cw{answer}.
+  \begin{verbatim}
+\typeout{*************************************************}
+\typeout{* Batch file docstrip.cmd found. Use it ? (y/n) *}
+\typein[\answer]
+    {*************************************************}
+\def\@tempa{y}%
+\ifx\@tempa\answer \process@batchfile \fi
+  \end{verbatim}
+An analysis of  the technique in this fragment brings
+out a few noteworthy observations.
+ \begin{itemize}
+  \item In the prompt (line 2) the acceptable responses are
+listed: \verb;y; or \verb;n;.
+  \item Since \cw{typein} doesn't change the case
+of the user's response, and there's no code here in
+\fn{docstrip.tex} to change case, we can deduce that a
+response of \verb;Y; will be treated as a No.
+  \item If the user response is \verb;yes;, then \cw{answer}
+and \cw{@tempa} will have different definitions, and the
+\cw{ifx} test will be false.
+  \item If the user is expected to enter only a single letter,
+we might ask, why is an \cw{ifx} test necessary? Why not
+just use \cw{if} \verb|y|\cw{answer}\cw{process@batchfile}
+and omit the extra step \cw{def}\cw{@tempa}\verb|{y}|?
+However, this would invite trouble if the user pressed
+{\sc return} without typing anything.  Then \cw{answer} would
+be empty (because of the special handling with \cw{@defpar}
+in \cw{typein}) and before completing the evaluation of
+the \cw{if}, \tex/ would continue beyond \cw{answer}
+to expand \cw{process@batchfile} in search of a character
+to compare with the \verb;y;. Although this would give a correct
+result for the \cw{if} test, because the
+first nonexpandable
+token in the definition of \cw{process@batchfile}
+is not a \verb;y;, the trouble is that the token will be
+absorbed by the \cw{if} operation, which will throw a wrench
+into subsequent processing.
+
+\end{itemize}
+
+{\it Note.} The version of \fn{docstrip.tex} from which I took these
+examples was an early, unperfected version  with an explicit
+disclaimer from the author that it was a quick hack, and should not be
+considered an example of his best macro writing. I discuss the early
+version here, however, precisely because it illustrates so well some
+of the typical difficulties in writing \tex/ dialog.
+
+An interesting feature of \fn{docstrip} is the ability to see on
+screen the progress being made in processing the current file. If
+this feature is turned on (with a \cw{showprogress} command), then
+\fn{docstrip} prints on screen a percent sign for each comment
+removed and a period for each line of code that is kept. This kind of
+visual feedback is not just frippery and ornamentation, bells and
+whistles. A typical user begins to get nervous if a running program
+allows several seconds to pass by without any observable change on
+screen. On a fast system, it's straightforward to deduce that such a
+pause means something has gone wrong, whereupon the user can press an
+interrupt key to investigate the problem without wasting time. But on
+a slow system the poor user faces the dilemma: Abort unnecessarily,
+and a restart will be required, with all the time consumed so far
+wasted; or continue waiting when the program might simply be spinning
+its wheels and accomplishing nothing. So when a task might take
+more than, say, five seconds, it's good programming practice to give
+some sort of progress reports.
+
+The progress reports of \fn{docstrip} use \cw{message} which,
+as discussed earlier, adds a space between consecutive messages if
+the second message is not too long to fit on the current line. So
+what you see on screen is something like
+\begin{verbatim}
+% % % % % % % % % % . . . % % . . . . . % % % . . % . % % . % . %
+. . . % % . % . % % % % % % % % % . . % . % % . % % % % . . . % .
+. . .
+\end{verbatim}
+produced by repeated \cw{message}\verb"{%}" or \cw{message}\verb"{.}".
+Recalling the newline behavior of \cw{immediate}\cw{write}, picture
+what would happen if it were used instead of \cw{message} to see
+why \cw{message} is necessary for this application.
+
+\section{Miscellaneous}
+
+\subsection{Checking a response for validity}
+Here is the (slightly condensed) text of Brian Hamilton Kelly's UK\tex/
+post that contained \fn{checknum.sty} \cite{checknum}, which asks the
+user for a number and checks to make sure that a valid number was
+entered.
+
+\verbatiminput{uktex91.1x}
+
+\subsection{em\tex/ 8-bit output}\label{ss:8bit}
+One interesting feature of em\tex/ \cite{emtex} is the 8-bit output
+option. On PCs, the characters between 176 and 223 are box-drawing
+characters; with the 8-bit output option of em\tex/, putting these
+characters into a \cw{message} or \cw{write} command allows you to
+draw some fairly elaborate boxes on screen, for embellishing menus and
+other bits of dialog. I have only experimented with this a very little.
+
+\subsection{User Help}
+There is a good deal of room for improvement in the amount and
+kind of help information available to the user from within \tex/.
+Help information provided externally through general help facilities
+such as Unix man pages is well and good, but any help system
+that's not \tex/-based has one disadvantage: lack of
+portability across the whole spectrum of computer systems that
+can run \tex/.
+
+\begin{itemize} \item Any program should have an announcement near
+the beginning of how to quit without destructive side effects; for
+\tex/ this means, among other things, that each version of the \tex/
+program should have in its opening message instructions on how to
+break out of an infinite loop or in general how to interrupt \tex/
+before it has finished its current run. In {\it Textures\/} this
+requirement is satisfied by the `Pause' button, always visible. In
+DOS versions of \tex/ the interrupt key is normally the
+Control-Break or Control-C key  (depending partly on the particular implementation
+of \tex/); in VAX/VMS it is Control-C or Control-Y, with the latter
+reserved for emergency use only, since it will leave you without a
+log file for reference.
+
+\item Response to the prompt
+\[\parbox{.9\columnwidth}{\tt\raggedright
+I can't find file xxx. Please type another input file name:\endgraf}\]
+The novice user should be able to type the
+reasonable guesses \fn{help} and \fn{h} and \fn{?}; the easiest way
+to do this would be to put files \fn{help.tex}, \fn{h.tex} or
+\fn{?.tex} in the \tex/ inputs directory/folder/area. (Except that
+many OS's don't allow \fn{?.tex} as a file name). Already many
+systems have a file \fn{null.tex} or \fn{nul.tex} to allow you to
+abort reasonably gracefully if you know enough to enter {\tt null} or
+{\tt nul} in response to the prompt.  Very
+few \tex/ users, however, will ever think of entering \fn{nul} without reading
+about it in the documentation or hearing about it from a more
+experienced user.
+
+\item Some of \tex/'s {\em built-in\/} error/help messages are
+specific to \fn{plain.tex}. Some big macro packages such as \latex/
+might prefer to change some of the wording at least. For example,
+there are references in some of \tex/'s compiled-in help messages to
+things like \cw{def} and \cw{eqalign} that are documented nowhere in
+the \latex/ book. And if you press \return/ at a \verb'*' prompt after
+getting into \tex/'s interactive mode (intentionally or accidentally),
+\tex/ urges you to enter a command or type \cw{end}---the latter being
+worse than useless in \latex/ (where \cw{stop} or
+\verb|\end{document}| are what is required): after typing \cw{end} and
+\return/, nothing happens because \latex/ is waiting for the argument
+of the \cw{end} command.
+
+\item Long help and error messages use string pool and main memory.
+Storing them in external files would provide more space (at the cost
+of slower access; but of course, once you get an error message,
+processing speed is scarcely relevant any longer).
+
+\end{itemize}
+
+\section{Summary}
+
+\subsection{Sending messages}
+
+Recommendations: Until versions of \tex/ earlier than 3.141 are
+sufficiently phased out, you had better use \cw{immediate}\cw{write}
+rather than \cw{message} for generic message-sending macros, so that
+all ``printable'' characters remain available for use in the message
+text.  Use \cw{message} instead of \cw{immediate}\cw{write} for
+producing a prompt if you want the user's response to appear on the
+same line. Uncatcode all special characters while constructing the
+text of a message, if the message text is completely invariant between
+one use and the next. Use \cw{string} if you don't want a space after
+a control word, and use \cw{noexpand} if you do want a space.
+
+\subsection{Reading user input}
+
+Recommendations: Set the catcode of \cw{endlinechar} temporarily to
+$9$ while reading a response, to avoid getting an extra space at the
+end from the \ctrl{M}. Uncatcode all special characters, especially
+opening and closing braces. If it is not uncatcoded, remove the
+outerness from \verb;^^L;, at least while reading a user response, and
+similarly, if the backslash is not uncatcoded and you want to be
+supremely cautious, remove the outerness from any other outer control
+sequences (\eg., \cw{newif}) if they might reasonably, or even
+unreasonably, turn up in a user's response.
+
+\begin{thebibliography}{x}
+
+\bibitem[Cowan, 1987]{tables} Cowan, Ray. \fn{tables.sty}. 1987. This is
+derived from \fn{tables.tex}; I found it at
+\fn{sun\-.soe\-.clarkson\-.edu}, directory: \fn{pub\slash tex\slash
+latex-style}.
+
+\bibitem[Greene, 1989]{animals} Greene, Andrew Marc.
+``\tex/reation\Dash Playing games with \tex/'s mind.''
+\tugboat/ 10(4), pages 691\dash 705, 1989. Includes a listing
+of \fn{animals.tex}.
+
+\bibitem[Greene, 1990]{basix} Greene, Andrew Marc.
+``BaSiX: An interpreter written in \tex/.'' \tugboat/ 11(3),
+pages 381\dash 392, 1990.
+
+\bibitem[Hamilton Kelly, 1991]{checknum}
+{Hamilton Kelly}, Brian. \fn{checknum.sty}. {\it UK\tex/}
+91(1), 4 January 1991.
+
+\bibitem[Knuth, 1986b]{TeX} Knuth, Donald E. {\sl \tex/: The program}.
+Reading, Mass.: Addison-Wesley, 1986.
+
+\bibitem[Knuth, 1986c]{testfont} Knuth, Donald E. \fn{testfont.tex}.
+{\sl The META\-FONT\-book}, Appendix H, section 4. Reading, Mass.:
+Addison-Wesley,  1986. This file is included in all standard
+distributions of \mf/.
+
+\bibitem[Lamport, 1985]{latex} Lamport, Leslie. \fn{latex.tex}.
+Version 2.09 (1985--1992). Main source file for \latex/, included with
+any standard distribution.
+
+\bibitem[Mattes, 1992]{emtex} Mattes, Eberhard.
+em\tex/. Version 3.1415.
+A comprehensive suite of programs including \tex/,
+\mf/, printer drivers, previewers, Bib\tex/, \dots.
+Available by anonymous ftp from \fn{niord.shsu.edu} (USA) or
+\fn{ftp.uni-stuttgart.de} (Europe) and other fine archives.
+
+\bibitem[Mittelbach, 1991]{docstrip} Mittelbach, Frank.
+\fn{docstrip.tex}. Version 1.1l, 1991. This file is part of the
+\fn{multicol} package available by anonymous FTP from many archives,
+including \fn{ftp.uni-stuttgart.de} and
+\fn{ymir.claremont.edu}.
+
+\end{thebibliography}
+
+\appendix
+\renewcommand{\thesection}{Appendix \Alph{section}}
+\renewcommand{\thesubsection}{\Alph{section}.\arabic{subsection}}
+
+\section{Animals.tex}
+This I have cleaned up a bit by making uppercase and lowercase
+responses equally acceptable, and by making a loop so that
+you can repeat the game without restarting \tex/ each time.
+Source credit is in the bibliography \cite{animals}.
+
+\subsection{animals.tex}
+\verbatiminput{animals.tex}
+
+\subsection{animals2.tex}
+
+\verbatiminput{animals2.tex}
+
+\subsection{animal.dat}
+A typical file \fn{animal.dat} is shown here, in part. But the nature
+of the game is for you to create your own version of this file based
+on the answers that you give while playing.
+\begin{verbatim}
+1
+Does it have four legs?
+2
+3
+2
+Is it an amphibian?
+4
+5
+3
+Does it have six legs?
+6
+7
+4
+Does it have a tail?
+36
+37
+5
+Is it a big kind of cat?
+10
+11
+6
+Does it have big hind legs used for jumping?
+40
+41
+7
+Is it a fish?
+8
+9
+8
+...
+\end{verbatim}
+
+\section{Basix.tex}
+
+Another effort by Andrew Marc Greene, with clear relevance to the
+subject of dialog in \tex/, is his prototype Basic interpreter
+described in \cite{basix}. I had planned to give here a closer study
+of the dialog concepts used by \fn{basix.tex} but it seems I will not
+have enough time.
+
+\section{Tables.tex}
+
+The file \fn{tables.tex} \cite{tables}
+provides table macros with the unique property that a preamble
+line specifying the format of each row is not required; the
+format is determined automatically by an analysis of the table
+contents. The dialog part consists of a message such as
+\begin{verbatim}
+[Nrows=9, Ncols=2]
+\end{verbatim}
+that is printed on screen for each table. This provides confirmation
+at run-time for the user of the general structure of each table.
+In the worst case, if the number of rows or columns is
+wildly wrong, the user can press the interrupt
+key and go fix up the table before trying again.
+
+\section{Fontmenu.tex}\label{a:menu}
+
+The file \fn{fontmenu.tex} demonstrates a crude menu system based on
+the token deletion option after an error message. There are five
+tokens \cw{ComputerModern}, \cw{Garamond}, etc., corresponding to the
+five font choices. They are so defined and arranged that if the user
+enters, say, 2 to select Garamond fonts, then the deletion of two
+tokens will leave the \cw{Garamond} token showing on screen (as the
+last token deleted by the user), and then the next token
+(\cw{Helvetica}) will define the font base to be `Garamond' and gobble
+the remainder of the list. The effect of this arrangement is that the
+user sees the '\cw{Garamond}' on screen as a confirmation of their
+selection after they enter the number and before they press the
+\return/ key a second time.
+
+\verbatiminput{fontmenu.tex}
+
+And here is screen output of a typical run through \fn{fontmenu.tex}:
+
+\verbatiminput{fontmenu.log}
+
+\ifdim\textwidth>\textheight
+\typeout{^^J%
+*******************************************************************^^J%
+[*[*[*[*[ DON'T FORGET: print using LANDSCAPE orientation ]*]*]*]*]^^J%
+*******************************************************************^^J%
+}
+\fi
+
+\end{document}

@@ -1,0 +1,17 @@
+\documentclass[11pt]{article}
+\usepackage{german}
+\newlength{\fdxvi}
+\newlength{\fdxvii}
+\newlength{\fdxiv}
+\newfont{\elvsy}{cmsy10 scaled 1095}
+\newcommand{\chemical}[1]{%
+   \fdxiv=\fontdimen14\elvsy%
+   \fdxvi=\fontdimen16\elvsy \fdxvii=\fontdimen17\elvsy%
+   $\fontdimen14\elvsy=5pt \fontdimen16\elvsy=3.3pt \fontdimen17\elvsy=3.3pt
+    \mathrm{#1}$
+    \fontdimen14\elvsy=\fdxiv 
+    \fontdimen16\elvsy=\fdxvi \fontdimen17\elvsy=\fdxvii}
+\begin{document}
+\chemical{Fe_2^{+2}Cr_2O_4}
+\end{document}
+   

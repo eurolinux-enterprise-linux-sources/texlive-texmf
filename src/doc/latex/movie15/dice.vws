@@ -1,0 +1,7 @@
+[Front]{}{}{27}{}{}% using defaults: coo=0 0 0 (arg #2), c2c=0 -1 0 (arg #3), roll=0 (arg #5) and aac=30 (arg #6)
+[Back]{}{0 1 0}{27}{}{}
+[Left]{}{-1 0 0}{27}{}{}
+[Right]{}{1 0 0}{27}{}{}
+[Top]{}{0 0 1}{27}{}{}
+[Bottom]{}{0 0 -1}{27}{}{}
+[Fish Eye at Centre]{}{}{}{}{130}% using defaults: coo=0 0 0 (arg #2), c2c=0 -1 0 (arg #3), roo=0 (arg #4), roll=0 (arg #5)

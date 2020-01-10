@@ -1,0 +1,47 @@
+
+\documentclass{article}
+
+
+\usepackage{l3expan,l3io}
+
+\begin{document}
+
+\CodeStart
+
+
+\def_new:Npn\test_cmd:nn#1#2{
+  \iow_unexpanded_term:n{}
+  \iow_unexpanded_term:n{Argument~1:~#1}
+  \iow_unexpanded_term:n{Argument~2:~#2}}
+
+    
+
+\def:Npn\a{A}
+\def:Npn\b{B}
+
+\def:Npn\aa{\a}
+\def:Npn\bb{\b}
+
+\exp_def_form:nnn {test_cmd}{nn}{oo}
+\exp_def_form:nnn {test_cmd}{nn}{xx}
+\exp_def_form:nnn {test_cmd}{nn}{cc}
+\exp_def_form:nnn {test_cmd}{nn}{nx}
+
+\test_cmd:nn{a}{b}
+
+\test_cmd:nn{\a}{\b}
+
+\test_cmd:oo\aa\bb
+
+\test_cmd:xx\aa\bb
+
+\test_cmd:cc{a}{b}
+
+\test_cmd:nx{a}{\b}
+
+\CodeStop
+
+\LaTeX\ still works!
+
+\end{document}
+

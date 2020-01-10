@@ -1,0 +1,53 @@
+\documentclass{article}% Herbert Voss bsp350.tex
+\usepackage{pstricks}%  >= version 1.04
+\usepackage{pst-grad,pst-3dplot}%
+\pagestyle{empty}%
+
+\begin{document}
+
+\bgroup
+\psset{unit=0.7,Alpha=75}
+\begin{pspicture}(-2.25,-3.5)(7.25,6.5)
+  \pstThreeDCoor[linecolor=red,xMax=7,yMax=7,zMax=7]
+  \pstThreeDLine[SphericalCoor,linecolor=blue]{->}(0,0,0)(10,45,60)
+  \pstThreeDDot[SphericalCoor,drawCoor](10,45,60)
+  \pstThreeDPut[SphericalCoor](10.5,45,65){$(x,y,z)$}
+  \pstThreeDNode[SphericalCoor](5,45,60){A}\pstThreeDNode(0,0,4){B}
+  \ncarc[arcangle=20]{->}{B}{A}
+  \pstThreeDPut[SphericalCoor](4,45,70){$\phi$}
+  \pstThreeDNode[SphericalCoor](2,45,0){B}\pstThreeDNode(2,0,0){A}
+  \ncarc[angleA=180]{<-}{B}{A}
+  \pstThreeDLine[SphericalCoor,linestyle=dashed](0,0,0)(5,45,0)
+  \pstThreeDPut[SphericalCoor](2.5,25,0){$\theta$}
+  \pstThreeDPut[SphericalCoor](6,45,50){$r$}
+\end{pspicture}
+\egroup
+
+
+\bgroup
+\begin{pspicture}(-2,-5)(5,5)
+\pstThreeDCoor
+\pstThreeDPut(1,0,0){
+  \parametricplotThreeD[xPlotpoints=20,yPlotpoints=50](0,360)(0,360){%
+    /a 1.5 def /b 2 def /c 3 def
+    a t cos u sin mul mul
+    b t sin u sin mul mul
+    c u cos mul
+  }
+}
+\pstThreeDPut(-1,2,3){
+  \parametricplotThreeD[hiddenLine=true,plotstyle=curve,fillstyle=gradient,
+    gradbegin=red,gradend=white,xPlotpoints=20,yPlotpoints=50](0,360)(0,360){%
+    /a 3.5 def /b 2 def /c 2 def
+    a t cos u sin mul mul
+    b t sin u sin mul mul
+    c u cos mul
+  }
+}
+\end{pspicture}
+\egroup
+
+
+
+\end{document}
+

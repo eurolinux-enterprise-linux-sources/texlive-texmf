@@ -1,0 +1,11 @@
+Name: textfit
+Author: Sebastian Rahtz  and Philip Taylor
+Address: 12 Cygnet Street, York Y02 1AG, UK
+Problems-To: spqr@ftp.tex.ac.uk
+Version: 5
+Description:  Package for scaling up text to a desired size. Works by
+ deriving a new scale factor for the current font, and getting \TeX\ to
+ reset the text.
+
+
+

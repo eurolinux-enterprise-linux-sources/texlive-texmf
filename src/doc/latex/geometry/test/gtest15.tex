@@ -1,0 +1,40 @@
+\documentclass[]{article}
+
+\usepackage{gcheck}
+\usepackage{calc}
+\usepackage{geometry}
+
+% \geometry{compat2,a4paper,mag=1200,truedimen,margin=2cm,
+%   twosideshift=10pt,headsep=7pt,headheight=14.5pt}
+% The case above can be rewritten without 'compat2' as follows:
+ \geometry{a4paper,mag=1200,truedimen,margin=2cm,
+   twoside, left=2cm+10pt, right=2cm-10pt,
+   includeheadfoot, headsep=7pt,headheight=14.5pt}
+
+\geometry{dvips,showframe}
+
+\begin{document}
+\manyfoxes\manyfoxes\manyfoxes\manyfoxes
+\manyfoxes\manyfoxes\manyfoxes\manyfoxes
+
+\typeout{}
+\dcheck\paperwidth{597.49146pt}
+\dcheck\paperheight{845.03174pt}
+\dcheck\textwidth{384.11221pt}
+\dcheck\textheight{538.8947pt}
+\dcheck\oddsidemargin{6.68088pt}
+\dcheck\evensidemargin{-13.31912pt}
+\dcheck\topmargin{-3.31912pt}
+\dcheck\headheight{14.5pt}
+\dcheck\headsep{7.0pt}
+\dcheck\footskip{30pt}
+\dcheck\marginparwidth{65.0pt}
+\dcheck\marginparsep{11pt}
+\dcheck\columnsep{10pt}
+\dcheck\hoffset{0.01344pt}
+\dcheck\voffset{0.01344pt}
+\ccheck\mag{1200}
+\checkresults
+\typeout{}
+
+\end{document}

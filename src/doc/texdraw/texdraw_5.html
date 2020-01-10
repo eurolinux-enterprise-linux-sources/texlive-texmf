@@ -1,0 +1,314 @@
+<HTML>
+<HEAD>
+<!-- Created by texi2html 1.56k from texdraw.texi on 10 March 2004 -->
+
+<TITLE>TeXdraw - 5. More Details</TITLE>
+</HEAD>
+<BODY>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_4.html">previous</A>, <A HREF="texdraw_6.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+<P><HR><P>
+
+
+<H1><A NAME="SEC22" HREF="texdraw_toc.html#TOC22">5. More Details</A></H1>
+
+<P>
+The first part of this chapter offers some suggestions for strategies to
+isolate errors in TeX and TeXdraw input.  The second part of this
+chapter discusses implementational issues.  An awareness of these issues
+is useful if TeXdraw is to be extended.
+
+
+
+<UL>
+<LI><A HREF="texdraw_5.html#SEC23">Errors while using TeXdraw</A>
+<LI><A HREF="texdraw_5.html#SEC24">Extending TeXdraw</A>
+<LI><A HREF="texdraw_5.html#SEC29">How TeXdraw merges graphics and text</A>
+</UL>
+
+
+
+<H2><A NAME="SEC23" HREF="texdraw_toc.html#TOC23">5.1 Errors while using TeXdraw</A></H2>
+<P>
+<A NAME="IDX119"></A>
+<A NAME="IDX120"></A>
+
+
+<P>
+TeX input is notoriously difficult to debug.  If TeX reports
+errors, so much the better.  If the cause is not immediately obvious,
+consider using a binary search strategy, removing sections of code with
+the premature insertion of the <CODE>\bye</CODE> (or <CODE>\end{document}</CODE>
+for LaTeX) command (with the appropriate closing of any open groups
+and the like).  Other strategies include the insertion of
+<CODE>\message{I am here}</CODE> at appropriate places.  Try using
+<CODE>\tracingmacros=1</CODE>.  Many problems turn out to be due to an
+incorrect number of macro arguments or incorrectly delimited macro
+arguments.  The <CODE>\tracingmacros=1</CODE> option writes the macro
+arguments and macro expansions to the TeX log file.
+
+
+<P>
+Certain errors may not manifest themselves until well after the
+offending command.  For instance, if a closing parenthesis is missing
+from a TeXdraw coordinate, TeX continues searching for the
+parenthesis.  If one is found, perhaps many lines later, the TeXdraw
+error message <CODE>invalid coordinate</CODE> will be printed at this later
+point.
+
+
+<P>
+All input in the TeXdraw environment should be intended for
+interpretation by TeXdraw commands.  TeXdraw places text inside a
+zero size box (the text itself extends outside the box).  Extraneous
+input manifests itself as a non-zero size TeXdraw text box. This
+causes the TeXdraw text and the PostScript graphics to be displaced
+from one another.  An error message is issued if a non-zero width
+TeXdraw text box is detected.  If this error message appears, look
+for unintended character sequences amongst the commands to TeXdraw.
+
+
+<P>
+Several TeXdraw commands pass their arguments "raw" to the
+PostScript file.  That means that invalid arguments can generate
+PostScript errors when the document is printed.  For instance the
+argument of the <CODE>\setgray</CODE> command is passed straight through to
+the PostScript file.  If this argument is non-numeric, a PostScript
+error results.  Not all PostScript printers report errors back to the
+user.  The print may just stop prematurely.  One approach to debugging
+is to use a PostScript previewer on a workstation. That way, one can
+determine at which point in the drawing the PostScript error occurs.
+
+
+
+
+<H2><A NAME="SEC24" HREF="texdraw_toc.html#TOC24">5.2 Extending TeXdraw</A></H2>
+<P>
+<A NAME="IDX121"></A>
+
+
+<P>
+TeXdraw is implemented using a combination of TeX commands and
+PostScript code.  This section discusses some of the implementational
+issues as they relate to extending TeXdraw.
+
+
+<P>
+TeXdraw as implemented, offers a basic set of drawing features.
+These are adequate for certain tasks such as producing block diagrams.
+There are different approaches to extending TeXdraw to include other
+functions.  In some cases, the desired functionality can be achieved by
+writing a TeX macro which builds on top of the existing TeXdraw
+commands.  As these extensions become more complex, the limitations of
+TeX for computations become increasingly evident.  In other cases,
+access to different features of PostScript is desired.  The appropriate
+approach would be to write new PostScript procedures which can be
+accessed by TeX macros.
+
+
+<P>
+Included with TeXdraw is a set of macros for directly accessing
+PostScript functions.  These are described in an appendix
+(see section <A HREF="texdraw_6.html#SEC30">A. PostScript Commands</A>).
+
+
+<P>
+TeXdraw also comes with a toolbox of routines for handling much of
+the user interface, converting between different coordinate
+representations and the like.  The macros for coordinate decoding and
+for computations involving coordinates are described in an appendix
+(see section <A HREF="texdraw_7.html#SEC31">B. TeXdraw Toolbox</A>).
+
+
+
+<UL>
+<LI><A HREF="texdraw_5.html#SEC25">Scaling</A>
+<LI><A HREF="texdraw_5.html#SEC26">Resolution</A>
+<LI><A HREF="texdraw_5.html#SEC27">Text placement</A>
+<LI><A HREF="texdraw_5.html#SEC28">Intermediate PostScript file</A>
+</UL>
+
+
+
+<H3><A NAME="SEC25" HREF="texdraw_toc.html#TOC25">5.2.1 Scaling</A></H3>
+<P>
+<A NAME="IDX122"></A>
+
+
+<P>
+The scaling commands provided in TeXdraw are designed to affect only
+the coordinate values specified in commands.  For instance, changing the
+<CODE>\setunitscale</CODE> value changes the interpretation of the coordinate
+in an <CODE>\avec (<VAR>x</VAR> <VAR>y</VAR>)</CODE> command, but does not change the
+line width or arrowhead sizes in effect.  None of the TeXdraw scaling
+commands affect the size of TeX text produced by, for instance, the
+<CODE>\htext</CODE> command.  Scale changes will however affect the
+positioning of text for subsequent commands.
+
+
+<P>
+The line parameters are changed only if the corresponding commands to
+change them are issued.  If the <CODE>\linewd</CODE> command is given, the
+current coordinate scaling is used to determine the line width.  To
+achieve a behaviour more like a global scaling, whenever the scale
+factor is changed, the line parameters should be set again.
+
+
+
+
+<H3><A NAME="SEC26" HREF="texdraw_toc.html#TOC26">5.2.2 Resolution</A></H3>
+<P>
+<A NAME="IDX123"></A>
+
+
+<P>
+TeXdraw scales coordinates before passing them to PostScript.
+Keeping track of the coordinate scaling is necessary, in any event, to
+allow TeXdraw to compute the maximum excursions of the coordinates.
+TeXdraw uses pixel units in its PostScript code.  One pixel unit is
+equal to 1/300 of an inch.  TeXdraw issues PostScript commands with
+integer valued pixel coordinates.  This sets the positioning resolution
+for TeXdraw.  The passing of integer valued coordinates which
+correspond to the device resolution keeps lines aligned with the device
+grid; parallel lines of the same width will be rendered with the same
+width.
+
+
+<P>
+The position saving mechanism in TeXdraw (see section <A HREF="texdraw_3.html#SEC16">3.3 Saving positions</A>)
+associates the pixel coordinates of a position with the specified name.
+
+
+<P>
+TeXdraw uses the limited real number representation provided by
+TeX.  These operations are based on the representation of dimensions
+as real-valued numbers of points.  Internally in TeX, dimensions are
+stored 32-bit values, normalized so that 1 pt corresponds to the scaled
+point (sp) value of 65536.  Dimensions with magnitudes between 0.000015
+pt and 32767 pt can be represented.  This is also the dynamic range of
+the TeXdraw pixel coordinates passed to PostScript.  TeXdraw must
+convert from user supplied coordinates using the scaling factor (which
+itself consists of two components, the unit scale and the segment scale)
+and a pixel conversion factor.  The use of limited precision real
+numbers in these computations can cause accumulation of error when
+relative scaling is used repeatedly.
+
+
+
+
+<H3><A NAME="SEC27" HREF="texdraw_toc.html#TOC27">5.2.3 Text placement</A></H3>
+
+<P>
+While in the TeXdraw environment, TeX text is placed in a TeX
+box while PostScript code is written to the intermediate file.  At the
+end of the TeXdraw environment, the size of the drawing is
+determined.  A TeX box of this size is created.  The TeX
+<CODE>\special</CODE> mechanism is used to instruct the PostScript driver
+program to position the PostScript drawing from the intermediate file in
+this area.  Next, the text generated by TeXdraw is positioned and
+placed in the box.  Note that when the document is printed, the
+PostScript drawing is placed on the page before the TeX text; TeX
+text will appear on top of graphics.
+
+
+<P>
+<A NAME="IDX124"></A>
+<A NAME="IDX125"></A>
+The rotation of text is carried out with in-line PostScript code which
+does not appear in the intermediate PostScript file.  This code is sent
+to the PostScript driver with a <CODE>\special</CODE> command.  This
+PostScript code is embedded in the dvi (device independent) file that
+TeX produces.
+
+
+
+
+<H3><A NAME="SEC28" HREF="texdraw_toc.html#TOC28">5.2.4 The intermediate PostScript file</A></H3>
+<P>
+<A NAME="IDX126"></A>
+
+
+<P>
+The intermediate PostScript file consists of a header, a body and a
+trailer following Encapsulated PostScript File (EPSF) standards.  The
+header sets up PostScript definitions and default parameter values.  The
+trailer includes the <CODE>BoundingBox</CODE> information which gives the
+coordinates in default PostScript units (72 per inch) for the lower
+lefthand corner and the upper righthand corner of the drawing.  The body
+of the intermediate PostScript file contains the PostScript commands
+generated by TeXdraw.
+
+
+<P>
+Many moves in TeXdraw serve only to position text or to reset saved
+positions.  TeXdraw buffers move commands in order to be able to
+collapse runs of moves.  Only the last move of a run of moves is
+actually written to the PostScript file.  However the intermediate moves
+still affect the size of the drawing.  The expunging of moves means that
+the PostScript file <CODE>BoundingBox</CODE> information may indicate a drawing size
+larger than the PostScript commands themselves would warrant.
+
+
+<P>
+Drawing segments in TeXdraw show up in the PostScript file as saves
+and restores of the PostScript graphics state.  Segment starts are
+buffered and only written out if necessary.  This way "empty" segments
+do not generate output to the PostScript file.  These empty segments
+arise if a segment contains only moves and text commands.  The moves
+inside the segment are not needed since they are local to the segment,
+and the text commands do not generate output to the PostScript file.
+
+
+<P>
+If TeXdraw is used only for moves and text, no intermediate
+PostScript file will be created.
+
+
+
+
+<H2><A NAME="SEC29" HREF="texdraw_toc.html#TOC29">5.3 How TeXdraw merges graphics and text</A></H2>
+<P>
+<A NAME="IDX127"></A>
+<A NAME="IDX128"></A>
+<A NAME="IDX129"></A>
+
+
+<P>
+TeXdraw creates a box which is the same size as the graphic.  The
+printer driver will place the PostScript graphic into this space.  Any
+TeX text generated by the TeXdraw commands will be superimposed on
+this graphic.
+
+
+<P>
+<A NAME="IDX130"></A>
+<A NAME="IDX131"></A>
+The LaTeX2e front-end for TeXdraw is enabled by including the
+<CODE>texdraw</CODE> package.  The <CODE>texdraw</CODE> package automatically
+invokes the standard <CODE>graphics</CODE> package distributed with
+LaTeX2e.  The <CODE>graphics</CODE> package has support for a number of
+different printer drivers, including a number for PostScript printers.
+Any options to the <CODE>texdraw</CODE> package are passed on to the
+<CODE>graphics</CODE> package.  Such an option can be used to select a driver
+other than the default one.
+
+
+<P>
+<A NAME="IDX132"></A>
+<A NAME="IDX133"></A>
+<A NAME="IDX134"></A>
+<A NAME="IDX135"></A>
+<A NAME="IDX136"></A>
+Within the <CODE>graphics</CODE> package, the driver option is used to select
+definitions for the low-level macros which generate the <CODE>\special</CODE>
+commands needed to request insertion of a graphics file and to rotate
+text.<A NAME="DOCF2" HREF="texdraw_foot.html#FOOT2">(2)</A>
+TeXdraw uses the user-level macros defined by the <CODE>graphics</CODE>
+package (see section <A HREF="texdraw_4.html#SEC21">4.1 PostScript printer drivers</A>).  When not used with the
+LaTeX2e front-end, TeXdraw defines versions of these macros that
+are suitable for use with the <CODE>dvips</CODE> printer driver.
+
+
+<P><HR><P>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_4.html">previous</A>, <A HREF="texdraw_6.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+</BODY>
+</HTML>

@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1.5cm]{geometry}
+\usepackage[baw,pstricks]{fvrb-ex}
+\usepackage{pst-circ}
+\usepackage{pstcol}
+\usepackage{url}
+\makeatletter
+\def\@UrlFont{\small\ttfamily}
+\renewenvironment{description}
+  {\list{}{\labelwidth\z@ \itemindent-\leftmargin 
+    \itemsep0pt \parsep0pt
+    \let\makelabel\descriptionlabel}}
+  {\endlist}
+\renewcommand{\Begin@Example}{%
+\parindent=0pt
+\multiply\topsep by 2 \VerbatimEnvironment
+\begin{VerbatimOut}[codes={\catcode`\£=12\catcode`\/=12\catcode`\&=12%
+                           \catcode`\"=12}]{\jobname.tmp}}
+\renewcommand{\Below@Example}[1]{%
+\VerbatimInput[gobble=0,commentchar=£,commandchars=/&",numbersep=3pt]%
+              {\jobname.tmp}
+\catcode`\£=9\relax%
+\NoHighlight@Attributes % To suppress possible highlighting
+\ifFvrbEx@Grid\vspace{5pt}\fi
+#1%
+\ifFvrbEx@Grid\vspace{5pt}\fi
+\par}
+\renewcommand{\SideBySide@Example}[1]{%
+\@tempdimb=\FV@XRightMargin \advance\@tempdimb -5mm
+\begin{minipage}[c]{\@tempdimb}
+  \fvset{xrightmargin=0pt}
+  \catcode`\£=9\relax%
+  \NoHighlight@Attributes % To suppress possible highlighting
+  #1
+\end{minipage}%
+\@tempdimb=\textwidth \advance\@tempdimb -\FV@XRightMargin \advance\@tempdimb 5mm
+\begin{minipage}[c]{\@tempdimb}
+  \VerbatimInput[gobble=0,commentchar=£,commandchars=/&",numbersep=3pt,
+                 xleftmargin=5mm,xrightmargin=0pt]{\jobname.tmp}
+\end{minipage}}
+% The \NoHighlight@Attributes from `hbaw' and `hcolors' packages
+% must be modified too
+\def\NoHighlight@Attributes{%
+\catcode`\/=0\relax%
+\catcode`\&=1\relax%
+\catcode`\"=2\relax%
+\def\HLa##1{##1}%
+\def\HLb##1{##1}%
+\def\HLc##1{##1}%
+\def\HLd##1{##1}%
+\def\HLe##1{##1}%
+\def\HLf##1{##1}%
+\def\HLBFa##1{##1}%
+\def\HLBFb##1{##1}%
+\def\HLBFc##1{##1}%
+\def\HLBFd##1{##1}%
+\def\HLBFe##1{##1}%
+\def\HLBFf##1{##1}%
+\def\HLITa##1{##1}%
+\def\HLITb##1{##1}%
+\def\HLITc##1{##1}%
+\def\HLITd##1{##1}%
+\def\HLITe##1{##1}%
+\def\HLITf##1{##1}%
+\def\HLCBBa##1{##1}%
+\def\HLCBBb##1{##1}%
+\def\HLCBBc##1{##1}%
+\def\HLCBBd##1{##1}%
+\def\HLCBBe##1{##1}%
+\def\HLCBBf##1{##1}%
+\def\HLCBBz##1{##1}%
+\def\HLCBWa##1{##1}%
+\def\HLCBWb##1{##1}%
+\def\HLCBWc##1{##1}%
+\def\HLCBWd##1{##1}%
+\def\HLCBWe##1{##1}%
+\def\HLCBWf##1{##1}%
+\def\HLCBWz##1{##1}%
+}
+\makeatother
+\fvset{numbers=none,frame=single,labelposition=topline}
+\DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
+\newcommand{\CircPackage}{\textbf{`pst-circ'}}
+\usepackage{fancyhdr}
+\lhead{\CircPackage}\rhead{A PSTricks package for drawing electric circuits}
+\pagestyle{fancy}
+%
+\begin{document}
+\input logic
+\end{document}
+

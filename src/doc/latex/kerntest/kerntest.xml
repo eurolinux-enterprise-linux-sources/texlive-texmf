@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE entry SYSTEM "../catalogue.dtd">
+<entry id="kerntest" 
+       datestamp="2004/04/14"
+       modifier="h.harders@tu-bs.de">
+  <about>
+    <name>kerntest</name>
+    <caption>Print tables and generate mtx files that help to adjust kernings.</caption>
+    <author>
+      <name>Harald Harders</name>
+      <email>h.harders@tu-bs.de</email>
+    </author>
+    <license type="lppl"/>
+    <version>
+      <number>1.32</number>
+    </version>
+  </about>
+  <description>
+    <abstract>
+This class makes it easy to generate tables that show many different
+kerning pairs of an arbitrary font, usable by LaTeX.
+It shows the kerning values that are used by the the font by default.
+
+In addition, this class enables the user to alternate the kernings
+and to observe the results.
+Kerning pairs can be defined for groups of similar glyphs at once.
+Automatically, an mtx file is generated that can be loaded by
+fontinst to introduce the user-made kernings into the virtual font
+for LaTeX.
+    </abstract>
+  </description>
+  <distribution>
+    <texlive>latex3</texlive>
+    <ctan>macros/latex/contrib/kerntest</ctan>
+  </distribution>
+</entry>

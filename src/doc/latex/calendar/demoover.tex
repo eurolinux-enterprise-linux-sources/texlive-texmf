@@ -1,0 +1,73 @@
+%%
+%% This is file `demoover.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% overword.dtx  (with options: `demo')
+%% 
+\documentclass{minimal}
+\usepackage{overword}
+
+\begin{document}
+
+\makeatletter
+
+\newtoks\registerone
+\newtoks\registertwo
+\def\list{}
+
+\def\stashonright{%
+  \registerone=\expandafter{\@overword}
+  \registertwo=\expandafter{\list}
+  \edef\list{%
+    \noexpand\\{\the\registerone}\the\registertwo}}
+
+\def\showlist{%
+  \def\\##1{\message{##1}}
+  \message{\space\space -> }
+  \list
+  \message{^^J}}
+
+\def\readlistagain{%
+  \def\\##1{ ##1 }
+  \edef\listtext{\list}
+\message{\listtext}
+  \expandafter\store\listtext\enditall}
+
+\def\storeandshow{%
+  \@ifoverword\enditall
+   {\message{Ran into \string\enditall!^^J}
+    \stashonright
+    \expandafter\showlist\@gobble}
+   {\stashonright
+    \storeandshow}
+   {\message{Ran into \string\end!^^J}
+    \stashonright
+    \showlist}}
+
+\message{^^J----------------------------------------------------------------------}
+\message{This file demonstrates the operation of the Overword package for LaTeX}
+\message{Ordinarily, TeX reads and inteprets printable characters one by one.}
+\message{With this package, it is possible to read input word by word.  This}
+\message{capability makes it possible to design user interfaces which are more}
+\message{intuitive to users.  The Calendar bundle is one example of such an}
+\message{interface.  Below, a phrase is printed to the terminal twice, once in}
+\message{reverse word order, and once in re-reversed (normal) word order.  Each}
+\message{message is triggered by a control sequence found just beyond the last}
+\message{word read --- \string\enditall in the first instance, \string\end\space in the second.}
+\message{This file produces no printed output.}
+\message{^^J----------------------------------------------------------------------}
+
+\storeandshow This is a demonstration of the overword package \enditall
+
+\let\listclone\list
+\def\list{}
+\def\\#1{ #1 }
+\edef\listtext{\listclone}
+\expandafter\storeandshow\listtext
+
+\end{document}
+%% 
+%%
+%% End of file `demoover.tex'.

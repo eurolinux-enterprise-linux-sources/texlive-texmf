@@ -1,0 +1,3823 @@
+% \iffalse
+%    floatrow-rus.tex - The float row package
+%                       (extension of float package)
+%    Russian documentation.
+%    (c) 2004-2005 Olga Lapko (Lapko.O@g23.relcom.ru)
+%
+%    This documentation is provided under the terms of the
+%    LaTeX Project Public License distributed from CTAN
+%    archives in directory macros/latex/base/lppl.txt.
+%
+%<*dtx>
+          \ProvidesFile{floatrow-rus.tex}
+%</dtx>
+%
+%<*driver>
+\input pictures
+\documentclass[twoside]{ltxdoc}
+
+\usepackage{mathtext}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,russian]{babel}
+
+\usepackage{calc}
+\usepackage{tabularx,array}
+
+\IfFileExists{titlesec.sty}{\usepackage[raggedright]{titlesec}}{}
+
+\IfFileExists{footmisc.sty}{\usepackage[perpage]{footmisc}}{}
+
+\usepackage{floatpagestyle}
+
+\usepackage[font=small,labelfont=bf,labelsep=period,justification=centerlast]%
+            {caption}[2004/11/28]
+\usepackage[format=default,justification=centerlast,labelfont=up]{subfig}[2005/06/28]
+
+\IfFileExists{rotating.sty}{\usepackage[figuresright]{rotating}}{}
+
+\usepackage{wrapfig}
+\usepackage[vflt]{floatflt}
+\usepackage{picins}
+%^^A\RequirePackage[writefile]{listings}[2004/09/07]
+
+\usepackage[style=plain,font=small,footskip=.5\skip\footins,
+   footnoterule=fullsize,margins=centering,objectset=centering,floatrowsep=qquad,
+   captionskip=5pt,capbesidesep=quad,facing=yes,capbesideposition=inside]{floatrow}
+
+\usepackage{fr-fancy}
+
+\IfFileExists{hyperref.sty}{\usepackage[unicode]{hyperref}
+  \IfFileExists{hypcap.sty}{\usepackage{hypcap}}{}
+}{}
+\ifx\pdftexversion\undefined
+  \IfFileExists{pstricks.sty}{\usepackage{pstricks}}{}
+\fi
+\IfFileExists{makecell.sty}{\usepackage{makecell}}{}
+\makeatletter
+\@ifundefined{thead}%
+  {\newcommand\thead[1]{\footnotesize
+    \raisebox{0pt}[\height+\jot][\depth+\jot]{\begin{tabular}{@{}c@{}} #1
+    \end{tabular}}}
+%^^A For this documentation only
+  \def\multirowthead#1[#2]#3{\raisebox{-1.5ex}{\thead{#3}}}}{}
+\makeatother
+
+\IfFileExists{multirow.sty}{\usepackage{multirow}}{}
+\IfFileExists{lscape.sty}{\usepackage{lscape}}{}
+
+\floatsetup[table]{style=Plaintop,footnoterule=none}
+
+\floatstyle{ruled}
+\newfloat{Program}{tbp}{lop}[section]
+\floatname{Program}{\CYRP\cyrr\cyro\cyrg\cyrr\cyra\cyrm\cyrm\cyra}
+
+\DeclareFloatStyle{MyBoxed}{style=Boxed,captionskip=5pt,
+  frameset={\fboxrule1pt\fboxsep12pt}}
+\DeclareFloatVCode{lowthickrule}{\kern2pt\hrule height.8ptdepth0pt}
+
+\DeclareNewFloatType{Example}%
+    {placement=tb,within=section,fileext=lox,name=\CYRP\cyrr\cyri\cyrm\cyre\cyrr}
+
+%^^A for Appendix-----------
+\DeclareFloatSeparators{none}{}
+\DeclareFloatSeparators{cicero}{\hskip1cc}
+\DeclareFloatSeparators{enskip}{\hskip.5em}
+\DeclareFloatSeparators{mcapwidth}{\hskip-\FCwidth}
+
+\newfloatcommand{fcapsideleft}{figure}[{\capbeside
+  \captionsetup[capbesidefigure]{format=break,labelsep=none,
+   justification=raggedleft}\thisfloatsetup{capbesideposition=left}}][\FBwidth]
+\newfloatcommand{fcapsideright}{figure}[{\capbeside
+  \captionsetup[capbesidefigure]{format=break,labelsep=none,
+   justification=raggedright}\thisfloatsetup{capbesideposition=right}}][\FBwidth]
+%^^A -----------------------
+
+\def\rightlast{\leftskip0ptplus1fil
+  \rightskip0ptplus-1fil\parfillskip0ptplus1fil}
+\def\leftlast{\leftskip0pt\rightskip0pt\parfillskip0ptplus1fil}
+%^^A for all versions of caption 3.x?
+\DeclareCaptionFormat{flushrightlabel}{\leavevmode\rightline{#1}#2\par#3\par}
+\DeclareCaptionJustification{togglelast}
+  {\floatfacing*\rightlast\leftlast}
+\DeclareCaptionStyle{capbesidefigure}{justification=togglelast}
+\captionsetup[table]%
+   {format=flushrightlabel,textfont=bf,labelsep=none,labelfont=sl,captionskip=5pt}
+\captionsetup[capbesidefigure]{justification=togglelast}
+\captionsetup[floatfoot]{format=default}
+
+%^^A for Appendix-----------
+\DeclareCaptionFormat{break}{#1#2\par#3\par}
+%^^A -----------------------
+
+\makeatletter
+\evensidemargin\oddsidemargin
+\@mparswitchfalse
+\widowpenalty10000
+\clubpenalty10000
+\@beginparpenalty10000
+\@itempenalty1000
+\@endparpenalty0
+\tolerance2000
+\hbadness8000
+\vbadness5000
+\def\l@subsection{\@dottedtocline {2}{1.5em}{2.7em}}
+\def\l@subsubsection{\@dottedtocline {3}{4.2em}{3.6em}}
+
+\newcommand\Resizebox[5]{\setbox0\hbox{\setlength\unitlength{#1/#3}%^^A
+ \ifx\pspicture\undefined\else\psset{unit=\unitlength}\fi{#5}}%^^A
+ \@tempdima\ht0\advance\@tempdima\dp0%^^A
+ \ifdim\@tempdima>#2\setlength\unitlength{#2/#4}\ifx\pspicture\undefined
+ \else\psset{unit=\unitlength}\fi
+ {#5}\else\box0\fi}
+
+\providecommand*{\file}[1]{\texttt{#1}}
+\providecommand*{\pkg}[1]{\textsf{#1}}
+\providecommand*{\cls}[1]{\textsf{#1}}
+\providecommand*{\env}[1]{\texttt{#1}}
+\providecommand*{\meta}[1]{$\langle$\textit{#1}$\rangle$}
+
+\newenvironment{Options}[1]%
+  {\list{}{\renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
+   \settowidth{\labelwidth}{\texttt{#1\space}}%
+   \setlength{\leftmargin}{\labelwidth}%
+   \addtolength{\leftmargin}{\labelsep}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\parsep}{0pt}%
+   }}%
+  {\endlist}
+\def\OptionLabel{RaggedRight}
+
+\DeclareRobustCommand\La{L\kern-.36em%
+        {\sbox\z@ T%
+         \vbox to\ht\z@{\hbox{\check@mathfonts
+                              \fontsize\sf@size\z@
+                              \math@fontsfalse\selectfont
+                              A}%
+                        \vss}%
+        }%
+        }
+\makeatother
+
+%\OnlyDescription
+\EnableCrossrefs
+\RecordChanges
+\begin{document}
+ \DocInput{floatrow-rus.tex}
+ \PrintChanges
+\end{document}
+%</driver>
+% \fi
+%
+% \GetFileInfo{floatrow-rus.tex}
+%
+%   \ifx\pspicture\undefined\else\psset{unit=1pt}\fi
+%
+%   \def\fileversion{v0.1g}
+%   \def\filedate{2005/07/15}
+%   \title{Документация к пакету \pkg{floatrow}\thanks{Версия
+%          документации \fileversion, датирована
+%          \filedate.}}
+%
+%   \author{%
+%   Ольга Лапко\\
+%   {\tt Lapko.O@g23.relcom.ru} }
+%   \date{\filedate}
+%   \maketitle
+%
+%   \begin{abstract}\openup-.5pt
+%   Данный пакет создан как расширение или дополнение пакета \pkg{float}.
+%   \pkg{floatrow} использует коды из пакетов \pkg{float}\footnote{Пакет \pkg{float},
+%   версия v1.3d датирована 2001/11/08, \copyright{} 1991-2000
+%   Anselm Lingnau.} и \pkg{rotfloat}\footnote{Пакет \pkg{rotfloat},
+%   версия v1.2 датирована 2004/01/04, \copyright{} 1995--2004 Axel
+%   Sommerfeldt.}, поэтому эти пакеты не должны загружаться.
+%
+%   Пакет \pkg{float} обладает хорошим механизмом для создания (и простой модификации)
+%   единообразного оформления для всех плавающих объектов (флотов)
+%   без добавления повторяющихся команд в документации; к сожалению он работает
+%   только с простыми комбинациями <<объект---подпись>>.
+%
+%   Пакет \pkg{floatrow} расширяет этот механизм и позволяет:
+%   \begin{itemize}\itemsep0pt\parskip0pt
+%   \item%
+%   изменять ширину флота;
+%   \item%
+%   задать всему флоту ширину, равную ширине объекта;
+%   \item%
+%   поместить подпись сбоку объекта;
+%   \item%
+%   поместить несколько флотов рядом;
+%   \item%
+%   поместить сноски внутри плавающего объекта (используя режим,
+%   аналогичный \env{minipage}); поместить текст экспликации;
+%   \item%
+%   создавать и изменять специальное оформление для каждого типа флотов
+%   и различных размещений флота и его компонентов (расположенных на две
+%   колонки или развёрнутых вертикально).
+%   \end{itemize}
+%
+%   Пакет \pkg{floatrow} объединён с пакетом \pkg{caption}
+%   (версии 3.0 и выше). Также пакет \pkg{floatrow} (как
+%   и пакет \pkg{caption}) использует механизм пакета \pkg{keyval}
+%   ключ---опция для задания оформления.
+%   \medskip
+%
+%   \emph{Терминология документации}:
+%   \begin{description}\vskip-\lastskip\itemsep0pt\parskip0pt
+%   \item[флот] или \textbf{плавающий объект} (float [box]) "---
+%   может включать \emph{объект},
+%   \emph{подпись} и \emph{дополнительный материал};
+%   создаётся внутри окружений \env{figure} или \env{table} (\emph{простой флот}),
+%   или командой |\floatbox|;
+%
+%   \item[объект] (object) "--- таблица (\env{tabular}) или любая графика, являющаяся
+%   содержимым таблицы (\env{figure}), рисунка (\env{table}) или другого типа
+%   плавающего объекта;
+%
+%   \item[подпись] (caption) "--- подпись или табличный заголовок, заданный командой
+%   |\caption|;
+%
+%   \item[дополнительный материал] (foot material) "--- экспликации и/или сноски внутри
+%   \emph{флота} (|\footnote|/|\mpfootnotemark|/|\footnotetext| или |\floatfoot|).
+%   \end{description}
+%
+%   \end{abstract}
+%
+%   \clearpage
+%   \begingroup
+%   \small
+%   \tableofcontents
+%   \listoffigures
+%   \listoftables
+%   \endgroup
+%   \clearpage
+%   \suppressfloats[t]
+%
+%   \section{Введение}
+%
+%   Одной из первых макрокоманд пакета, созданных для плавающего объекта (флота),
+%   является команда, которая помещает содержимое таблицы с табличным заголовком
+%   вверху. Ширина заголовка равна ширине содержимого, здесь "--- таблицы
+%   (см. табл.~\ref{intro:table}).
+%\begin{verbatim}
+%\begin{table}
+%\ttabbox
+%  {\caption{Таблица ...}\label{...}}
+%  {\begin{tabular}...\end{tabular}}
+%\end{table}
+%\end{verbatim}
+%   \begin{table}[h]
+%   \ttabbox
+%     {\caption{Таблица с заголовком сверху}\label{intro:table}}
+%     {\begin{tabular}{|c|c|c|}
+%      \hline
+%       \thead{First data} & \thead{Second data} & \thead{Third data} \\
+%      \hline
+%       A & B & C \\
+%       D & E & F \\
+%      \hline
+%      \end{tabular}}
+%   \end{table}%^^A
+%
+%   Пара этой команде, создающая рисунки "---|\ffigbox| "---помещает
+%   подрисуночную подпись снизу и ширина по умолчанию равна ширине основного
+%   текста. Оформление, создаваемое по умолчанию командой |\ffigbox| такое же,
+%   как в обычном окружении \env{figure}; эта макрокоманда будет
+%   полезнее для помещения плавающих объектов рядом (см. например,
+%   рис.~\ref{intro:leftfig} и~\ref{intro:rightfig})
+%
+%   Третья макрокоманда "---|\fcapside| (рис.~\ref{intro:beside}) "---помещает
+%   подрисуночную подпись рядом:
+%
+%\begin{verbatim}
+%\begin{figure}
+%\fcapside
+% {\caption[Подпись рядом]{Подпись рядом ...}\label{...}}
+% {...}
+%\end{figure}
+%\end{verbatim}
+%   \begin{figure}[h]
+%   \fcapside
+%   {\caption[Подпись рядом (ширина равна одной <<колонке>>)]{Подпись рядом,
+%   (ширина подписи равна ширине объекта) and more text
+%   and some more text and a bit more text and
+%   a little more text and a little peace of text to fill
+%   space}\label{intro:beside}}
+%   {{\setlength\unitlength{4cm/58}\ifx\pspicture\undefined
+%     \else\psset{unit=\unitlength}\fi
+%   \input{Mouse.picture}}}
+%   \end{figure}
+%
+%   Все три команды являются сокращениями команды |\floatbox|, которая
+%   создаёт комбинации объект---подпись (см.
+%   разд.~\ref{sec:floatbox}).
+%
+%   Окружение \env{floatrow} позволяет поместить плавающие объекты рядом, как
+%   рис.~\ref{intro:leftfig} и~\ref{intro:rightfig}. По умолчанию \env{floatrow}
+%   создаёт необходимое число <<колонок>> (обычно две) где и помещает объекты:
+%\begin{verbatim}
+%\begin{figure}
+% \begin{floatrow}
+%  \ffigbox
+%    {...}{\caption{...}\label{...}}
+%
+%  \ffigbox
+%    {...}{\caption{...}\label{...}}
+% \end{floatrow}
+%\end{figure}
+%\end{verbatim}
+%   \begin{figure}[h]
+%    \begin{floatrow}
+%   \ffigbox
+%   {\input{BlackDog.picture}}
+%   {\caption{Рисунок слева в ряду}%
+%   \label{intro:leftfig}}%
+%
+%   \ffigbox
+%   {\caption{Рисунок расположенный справа, в простом ряду рисунков}%^^A
+%    \label{fig:rotrow:FcatI}}
+%   {\input{TheCat.picture}\label{intro:rightfig}}
+%    \end{floatrow}
+%   \end{figure}%^^A
+%   Обратите внимание, что внутри окружения \env{floatrow} вы должны использовать
+%   макрокоманды |\ffigbox| или |\ttabbox| для каждого флота. (См. подробнее
+%   о командах, используемых в примерах введения и о команде |\floatbox|
+%   в разд.~\ref{sec:floatbox};
+%   об окружении \env{floatrow} "--- в разд.~\ref{sec:floatrow}.)
+%
+%   \subsection{Это не допускается пакетом \pkg{floatrow}}
+%
+%   Пакет \pkg{floatrow} создаёт некоторые особенности и ограничения
+%   в построении плавающих объектов. Если вы запишете:
+%\begin{verbatim}
+%\begin{figure}
+%\caption{A figure caption}
+%\centering \input{Mouse.picture}
+%\end{figure}
+%\end{verbatim}
+%   не ожидайте что получите подрисуночную подпись сверху рисунка. Если
+%   вы хотите, например, поместить подрисуночные подписи сверху, вы должны
+%   задать в преамбуле |\floatsetup[figure]{style=plaintop}| (см. также
+%   разд.~\ref{sec:floatsetup} о механизме команды |\floatsetup|).
+%
+%^^A   \begin{figure}
+%^^A   \caption{A figure caption}\label{Wrong:expect}
+%^^A   \centering \input{Mouse.picture}
+%^^A   \end{figure}
+%
+%   Другой пример. Если вы поместите плавающие объекты следующим образом:
+%\begin{verbatim}
+%\begin{figure}
+%\begin{minipage}{0.5\textwidth}
+%\centering \input{Mouse.picture}
+%\caption{A figure caption}
+%\end{minipage}
+%\begin{minipage}{0.5\textwidth}
+%\captionof{table}{A table caption}
+%\centering \begin{tabular}{cc} A & B  \\ C & D \end{tabular}
+%\end{minipage}
+%\end{figure}
+%\end{verbatim}
+%    вы также не получите ожидаемого результата. Чтобы получить верный результат,
+%    используйте окружение \env{floatrow}, как в примере
+%    с рис.~\ref{intro:leftfig} и~\ref{intro:rightfig}\footnote{См. также
+%    с.~\pageref{mixrow} о размещении рядом флотов разных типов }.
+%
+%   \section{Настройка оформления плавающих объектов}\label{sec:floatsetup}
+%
+%   Идея пакета \pkg{floatrow} заключается в том, чтобы избежать множества
+%   повторяющихся команд внутри документа для создания желаемого оформления
+%   плавающих объектов (которые к тому же снижают читаемость документа),
+%   и упростить изменения, если вам нужно изменить оформление книги.
+%   В этом случае вы уделяете внимание только \emph{разметке}
+%   флотов и их содержанию.
+%
+%   Простота изменения общего оформления флотов одного типа возможна
+%   благодаря коду, взятому из пакета \pkg{float}, который позволяет
+%   изменять целиком оформление плавающего объекта.
+%
+%   Единое оформление и изменение подписей флотов и настройки для каждого
+%   типа флотов, поддерживается пакетом
+%   \pkg{caption}, версии~3.x.
+%
+%   Настройки оформления пакета \pkg{floatrow} построены аналогично пакету
+%   \pkg{caption} и используют механизм |\floatsetup|\footnote{Некоторые имена
+%   ключей и опций изменены после версии 0.1d, для упорядочения и создания более
+%   запоминаемых названий, и, иногда, сокращения их имён
+%   (см. разд.~\ref{sec:changed}).}, который аналогичен механизму
+%   |\captionsetup|\footnote{См. также документацию пакета \pkg{caption}
+%   (версии 3.0 и выше)}.
+%
+%   \DescribeMacro{\floatsetup}
+%   Вы можете использовать настройки оформления флотов как опции пакета
+%   \pkg{floatrow} в строке |\usepackage|.
+%   \begin{quote}
+%      |\usepackage[|\meta{options}|]{floatrow}|
+%   \end{quote}
+%   Вы можете записать
+%   \begin{quote}
+%      |\usepackage[style=boxed,font=small]{floatrow}|
+%   \end{quote}
+%   Тот же результат вы получите при
+%   \begin{quote}
+%      |\floatsetup{style=boxed,font=small}|
+%   \end{quote}
+%   Строки выше определяют стиль \texttt{boxed} (рамка |\fbox| вокруг объекта)
+%   и шрифт |\small| для содержимого
+%   объектов. Эти установки заданы для \emph{всех} типов плавающих объектов.
+%
+%   Команда |\floatsetup| имеет следующую форму задания:
+%   \begin{quote}
+%      |\floatsetup|\oarg{float type}\marg{options}
+%   \end{quote}
+%
+%   Для задания специальных настроек для плавающих объектов одного типа используется
+%   дополнительный аргумент в котором указывается тип флота. Следующая команда
+%   \begin{quote}
+%      |\floatsetup[table]{style=Plaintop}|
+%   \end{quote}
+%   задаёт специальный стиль для таблиц (табличный заголовки помещаются над
+%   объектами; если таблицы стоят рядом внутри окружения \env{floatrow},
+%   табличные заголовки выравниваются по верхней строке)\footnote{Ключи,
+%   используемые в специальной настройке для плавающих объектов одного
+%   типа, всегда <<сильнее>> их синонимов, заданных в общей настройке. Другими
+%   словами, если вы захотите, после приведённого примера переопределить стиль
+%   для всех флотов,
+%   с помощью \cmd{\floatsetup\{style={\normalfont \meta{option}}\}}
+%   вы не измените оформления таблицы "--- используйте опять
+%   \cmd{\floatsetup[table]}\allowbreak\texttt{\{style={\normalfont
+%   \meta{option}}\}}.}.
+%
+%   Созданы также специальные опции команды |\floatsetup| для настройки флотов
+%   с разными вариантами размещения:
+%   для набора в две колонки (в одноколонной книге |*|-окружение, типа
+%   \env{figure*}, можно использовать
+%   для вёрстки, например, широких рисунков) для флотов, развёрнутых
+%   вертикально и других.
+%   <<Сила>> приведённых ниже в перечнях опций убывает от предыдущего
+%   к следующему пункту
+%   (в качестве примера использовано окружение \env{figure}):
+%   \begin{itemize}\label{stsetorder}\itemsep0pt\parskip0pt
+%       \item Широкие флоты или флоты вразрез двух колонок
+%       (например, \env{figure*}, вы можете определить специальные настройки для
+%       |*|-окружений и в одноколонном документе):
+%   \begin{itemize}
+%       \item |\floatsetup[widefigure]|---самые <<сильные>> настройки;
+%       если они отсутствуют,
+%       пакет использует настройки из следующего пункта;
+%       \item |\floatsetup[widefloat]|---эти настройки <<сильнее>> чем настройки
+%       из следующего пункта (|\floatsetup[figure]|); если они отсутствуют, пакет
+%       использует настройки из следующего пункта;
+%       \item |\floatsetup[figure]|; если эти настройки отсутствуют, пакет
+%       использует настройки,
+%       заданные в опции в строке |\usepackage| или как |\floatsetup{...}|;
+%       если и эти установки отсутствуют "--- установки пакета
+%       по умолчанию (см.~с.~\pageref{sec:default});
+%   \end{itemize}
+%       \item Плавающие объекты в оборку (использующие окружение типа
+%       \env{wrapfigure}):
+%   \begin{itemize}\itemsep0pt\parskip.5\parskip
+%       \item |\floatsetup[wrapfigure]|;
+%       \item |\floatsetup[wrapfloat]|;
+%       \item |\floatsetup[figure]|;
+%   \end{itemize}
+%       \item Плавающие объекты развёрнутые вертикально (\env{sidewaysfigure}):
+%   \begin{itemize}\itemsep0pt\parskip.5\parskip
+%       \item |\floatsetup[rotfigure]|;
+%       \item |\floatsetup[rotfloat]|;
+%       \item |\floatsetup[figure]|;
+%   \end{itemize}
+%       \item  Развёрнутые плавающие объекты вразрез двух колонок
+%        (\env{sidewaysfigure*})\footnote{Настройки
+%       для флотов на две колонки (или широких в одноколонной вёрстке)
+%       (\texttt{widefloat}, \texttt{widefigure}) удалены "--- используйте
+%       настройки для \texttt{widerotfloat} и "--- здесь
+%       "---\texttt{widerotfigure}}:
+%   \begin{itemize}\itemsep0pt\parskip.5\parskip
+%       \item |\floatsetup[widerotfigure]|;
+%       \item |\floatsetup[widerotfloat]|;
+%       \item |\floatsetup[rotfigure]|;
+%       \item |\floatsetup[rotfloat]|;
+%       \item |\floatsetup[figure]|;
+%   \end{itemize}
+%       \item Плавающие объекты с подписями рядом:
+%   \begin{itemize}\itemsep0pt
+%       \item |\floatsetup[capbesidefigure]|;
+%       \item |\floatsetup[capbesidefloat]|;
+%       \item настройки окружений перечисленных выше, где помещён флот:
+%       \env{sidewaysfigure*}, \env{sidewaysfigure}, и \env{figure*}.
+%   \end{itemize}
+%   Обратите внимание, что ключ \texttt{style=} (см. начало следующего раздела)
+%   отменяет настройку для размещения подписи сбоку.
+%   \end{itemize}
+%   Вы можете создать специальные настройки для подрисуночных подписей, используя
+%   те же названия опций \meta{float~type} в команде |\captionsetup|.
+%
+%   Следующие несколько разделов описывают ключи, используемые командой |\floatsetup|.
+%
+%   \subsection{Ключи Floatsetup}\label{sec:floatsetup}
+%
+%   \subsubsection{Стиль плавающего объекта}
+%
+%   \DescribeMacro{style=}
+%   Ключ \emph{float style} задаётся следующим образом:
+%   \begin{quote}
+%     |style=|\meta{float style name}\quad ,
+%   \end{quote}
+%   где \meta{float style name} вы можете взять из табл.~\ref{tab:floatlayouts}.
+%
+%
+%   Стиль для подписи, \texttt{ruled}, единственный из пакета \pkg{float},
+%   который также предопределён в пакете \pkg{caption}. Для его использования,
+%   запишите, например
+%   \begin{quote}
+%   |\captionsetup[figure]{style=ruled}|\quad .
+%   \end{quote}
+%
+%   \begin{sidewaystable}%[p]%
+%   \extrarowheight1pt\tabcolsep.5\tabcolsep
+%   \newcommand\leftcell[2][16.5mm]{\extrarowheight0pt\def\arraystretch{.75}
+%     \hspace*{-\tabcolsep}\begin{tabular}[t]{>{\footnotesize
+%     \ttfamily\noindent\vphantom{\small()\mpfootnotemark[1]}}p{#1}}#2\end{tabular}%
+%     \hspace*{-\tabcolsep}\ignorespaces}
+%   \emptyfloatpage
+%   \begin{tabularx}\hsize{|@{}l@{}|@{}l@{}|X|}
+%   \hline
+%   \hfil\thead{Стиль} &
+%   \hfil\thead{Ключи \cmd{\floatsetup}} &
+%   \hfil\thead{Описание} \\
+%   \hline
+%   \multicolumn{3}{|c|}{Определено в пакете \pkg{floatrow}}\\
+%   \hline \leftcell{\texttt{plain}{\mpfootnotemark[1]}}
+%   & \leftcell{\meta{none}}
+%   &Стандартное оформление \LaTeX'а
+%   \\\hline
+%   \leftcell{\texttt{plaintop}{\mpfootnotemark[1]}
+%   \\\hline\texttt{Plaintop}{\mpfootnotemark[2]}}
+%   & \leftcell[50mm]{capposition=top\\\hline
+%     capposition=TOP}
+%   &То же что и стиль \texttt{plain} но помещает подпись сверху "---
+%   аналог стиля из пакета
+%   \pkg{float}. Стиль, записанный с прописной выравнивает подписи
+%   у флотов, помещённых в окружение \env{floatrow}, по верхней строке
+%   \\\hline
+%   \leftcell{\texttt{ruled}{\mpfootnotemark[1]}
+%   \\ \\ \\\hline\texttt{Ruled}}
+%   & \leftcell[50mm]{capposition=top,precode=thickrule,\\
+%     midcode=rule,postcode=lowrule,\\
+%     heightadjust=all\\\hline
+%     style=ruled,capposition=TOP}
+%   &Первый повторяет оформление одноимённого стиля из пакета \pkg{float}.
+%   Стиль, записанный с прописной выравнивает подписи в окружении
+%   \env{floatrow} по верхней строке
+%   \\\hline
+%   \leftcell{\texttt{boxed}\smash{\mpfootnotemark[1]\mpfootnotemark[2]}
+%   \\ \\ \\\hline\texttt{Boxed}
+%   \\\hline\texttt{BOXED}}
+%   & \leftcell[50mm]{captionskip=2pt,framestyle=fbox,\\
+%     heightadjust=object,\\framearound=object\\\hline
+%     style=boxed,framefit=yes\\\hline
+%     framestyle=fbox,framefit=yes,\\
+%     heightadjust=all,framearound=all}
+%   &Первый повторяет стиль пакета \pkg{float}:
+%   ширина объекта равна \cmd{\hsize} или
+%   предопределённой ширине бокса; рамка выступает по сторонам.
+%   В форме с прописной буквы ширина рамки совпадает с
+%   \cmd{\hsize} или заданной шириной; ширина объекта при этом уменьшается,
+%   чтобы поместиться внутри рамки. Прописная форма создаёт рамку
+%   которая равна \cmd{\hsize} или заданной ширине,
+%   уже вокруг всего флота: подписи, объекта и возможных экспликаций.
+%   \\\hline
+%   \multicolumn{3}{|c|}{Определено в пакете \pkg{fr-fancy}.
+%   Эти стили также требуют пакет \pkg{fancybox}.}\\
+%   \hline \leftcell{\texttt{shadowbox}\smash{\mpfootnotemark[2]}
+%   \\\hline\texttt{Shadowbox}
+%   \\\hline\texttt{SHADOWBOX}}
+%   & \leftcell[50mm]{style=boxed,framestyle=shadowbox\\ \hline
+%     style=Boxed,framestyle=shadowbox\\ \hline
+%     style=BOXED,framestyle=shadowbox}
+%   &То же, что и \texttt{boxed}, \texttt{Boxed} и \texttt{BOXED}
+%   соответственно. Рамка \cmd{\fbox} заменена на \cmd{\shadowbox}
+%   из пакета \pkg{fancybox}.
+%   \\\hline
+%   \leftcell{\texttt{doublebox}\smash{\mpfootnotemark[2]}
+%   \\\hline\texttt{Doublebox}\\\hline\texttt{DOUBLEBOX}}
+%   & \leftcell[50mm]{style=boxed,framestyle=doublebox\\\hline
+%     style=Boxed,framestyle=doublebox\\\hline
+%     style=BOXED,framestyle=doublebox}
+%   &То же, что и \texttt{boxed}, \texttt{Boxed} и \texttt{BOXED}
+%   соответственно. Рамка \cmd{\fbox} заменена на \cmd{\doublebox}
+%   из пакета \pkg{fancybox}.
+%   \\\hline
+%   \multicolumn{3}{|c|}{Дополнительный стиль. Он также требует пакет
+%   \pkg{fancybox}.}\\\hline
+%   \leftcell{\texttt{wshadowbox}\smash{\mpfootnotemark[2]}
+%   \\\hline\texttt{Wshadowbox}
+%   \\\hline\texttt{WSHADOWBOX}}
+%   & \leftcell[50mm]{style=boxed,framestyle=wshadowbox\\\hline
+%     style=Boxed,framestyle=wshadowbox\\\hline
+%     style=BOXED,framestyle=wshadowbox}
+%   &То же, что и \texttt{boxed}, \texttt{Boxed} и \texttt{BOXED}
+%   соответственно. Рамка \cmd{\fbox} заменена на \cmd{\wshadowbox},
+%   похожую на \cmd{\shadowbox} (но создаёт белую тень, или
+%   края <<второй копии>>) из пакета \pkg{fancybox}.
+%   \\\hline
+%   \end{tabularx}
+%
+%   \caption{Стили плавающих объектов}\label{tab:floatlayouts}%
+%
+%   \floatfoot{Если задан стиль флота с рамкой вокруг объекта, равной ширине
+%   основного текста или предопределённой ширине (как \texttt{Boxed}, etc.),
+%   и в опции \meta{width} макрокоманды \cmd{\floatbox} определена команда
+%   \cmd{\FBwidth}, устанавливающая ширину всех элементов флота равной
+%   ширине объекта (см.~с.~\pageref{sec:floatbox}), ширина остальных элементов
+%   флота в этом случае увеличивается, до ширины равной обрамлённому объекту.}
+%
+%   \footnotetext[1]{Стили аналогичны предложенным пакетом \pkg{float}.}
+%   \footnotetext[2]{При использовании этих стилей в окружении \env{floatrow}
+%   вам необходимо увеличить расстояние между флотами (переопределив
+%   ключ \texttt{floatrowsep}).}
+%   \end{sidewaystable}
+%   \label{setup:start}
+%
+%^^A\pagebreak[4]
+%
+%   \subsubsection{Настройки шрифта}
+%
+%   \DescribeMacro{font=}
+%   Определяет шрифт для содержимого плавающего объекта. Опции аналогичны
+%   ключу \texttt{font=}
+%   в команде |\captionsetup|.\nopagebreak
+%
+%   Существующие уже опции настройки шрифта:
+%
+%   \begin{Options}{\OptionLabel}
+%     \item[scriptsize]   {\scriptsize очень маленький размер}
+%     \item[footnotesize] {\footnotesize размер, используемый сносками}
+%     \item[small]        {\small маленький размер, в русских изданиях
+%                           рекомендуется для плавающих объектов}
+%     \item[normalsize]   {\normalsize нормальный размер}
+%     \item[large]        {\large большой размер}
+%     \item[Large]        {\Large б\'ольший размер}
+%
+%     \item[up]           {\upshape прямое начертание}
+%     \item[it]           {\itshape курсивное начертание}
+%     \item[sl]           {\slshape наклонное начертание}
+%     \item[sc]           {\scshape капитель}
+%
+%     \item[md]           {\mdseries нормальная насыщенность}
+%     \item[bf]           {\bfseries полужирный шрифт}
+%
+%     \item[rm]           {\rmfamily романский шрифт или шрифт с засечками}
+%     \item[sf]           {\sffamily рубленый шрифт}
+%     \item[tt]           {\ttfamily шрифт пишущей машинки}
+%   \end{Options}
+%
+%   Вы можете определить шрифт для объекта как
+%   \begin{quote}
+%      |font=small|
+%   \end{quote}
+%   или
+%   \begin{quote}
+%      |font={small,sf}|\quad .
+%   \end{quote}
+%
+%   \DescribeMacro{footfont=}\label{sec:setfloatfoot}%^^A
+%   Определяет шрифт для экспликаций.
+%   Эта макрокоманда использует механизм команды |\captionsetup| (поскольку
+%   |\floatfoot| использует механизм пакета \pkg{caption}).
+%   По умолчанию размер шрифта для экспликации эквивалентен
+%   размеру сносок: |footfont=footnotesize|.
+%
+%   \subsubsection{Размещение подписей и других элементов}
+%
+%   \DescribeMacro{capposition=}
+%   Определяет расположение подписей. Ключ похож
+%   на ключ \texttt{position=} пакета \pkg{caption}, но он имеет
+%   две дополнительные опции\footnote{Опция \texttt{auto} не используется ключом
+%   \texttt{capposition=}.}: \texttt{TOP}, если вы предпочитаете выровнять подписи,
+%   расположенные сверху объектов, при расположении флотов рядом
+%   (в окружении \env{floatrow}),
+%   по верхней строке; и \texttt{beside} для размещения подписи
+%   сбоку от объекта (эта опция
+%   может быть более предпочтительна для настроек отдельного окружения, см. о команде
+%   |\thisfloatsetup| на с.~\pageref{thisfloatsetup}):
+%   \begin{Options}{\OptionLabel}
+%     \item[top]  подпись сверху объекта (соответствует команде |\captop|);
+%     \item[TOP]  подпись сверху объекта и при размещении флотов рядом
+%       (в окружении \env{floatrow}) подписи выравниваются
+%       по верхней строке  (соответствует команде |\CAPTOP|).
+%       Например, стиль \texttt{Plaintop} является вариантом стиля \texttt{plaintop}
+%       где определена |capposition=TOP|,
+%       см. табл.~\ref{tab:row:tabIII}--\ref{tab:row:tabIV};
+%     \item[bottom]  подпись снизу объекта (соответствует команде |\capbot|);
+%     \item[beside]  подпись сбоку объекта (соответствует команде |\capbeside|).
+%   \end{Options}
+%
+%   \DeleteShortVerb{\|}%
+%   \begin{table}[h]
+%   \begin{floatrow}
+%   \extrarowheight1pt
+%   \ttabbox
+%    {\caption[Длинный заголовок таблицы~I]%^^A
+%     {Таблица~I в ряду с длинным, длинным, длинным заголовком,
+%      выровненным по верхней строке}\label{tab:row:tabIII}}%^^A
+%    {\begin{tabular}{|l|>{\phantom0}c|>{\phantom0}c|}
+%     \hline
+%     \multirowthead{2}[-1ex]{Left Column Head}
+%                  & \multicolumn{2}{c|}{\thead{Data}} \\
+%                  \cline{2-3}
+%                  & \multicolumn{1}{c|}{\thead{I}}
+%                              & \multicolumn{1}{c|}{\thead{II}}
+%     \\\hline
+%     First row    &         1 &         2 \\
+%     Second row   &         3 &         4 \\
+%     Third row    &         6 &         8 \\
+%     Fourth row   & \llap{1}0 & \llap{1}6 \\
+%     \hline
+%   \end{tabular}}
+%
+%   \ttabbox
+%    {\caption{Таблица~II в ряду с заголовком, выровненным по верхней
+%      строке}\label{tab:row:tabIV}}%^^A
+%    {\begin{tabular}{|l|c|c|c|}
+%     \hline
+%     \multirowthead{2}[-1ex]{Column Head}
+%                  & \multicolumn{3}{c|}{Data} \\
+%                  \cline{2-4}
+%                  & \thead{I}      & \thead{II}      & \thead{III}        \\
+%     \hline
+%     First row    & 1      & 2       & \phantom01 \\
+%     Second row   & 3      & 4       & \phantom06 \\
+%     Third row    & 6      & 8       &         28 \\
+%     \hline
+%   \end{tabular}}
+%   \end{floatrow}
+%   \end{table}
+%   \MakeShortVerb{\|}%
+%
+%   \emph{Замечание}. Опция \texttt{TOP} использует механизм |\label|---|\ref|,
+%   поэтому, чтобы получить нужный результат, нужно дважды обработать текст \LaTeX'ом
+%   (если вы внесли изменения, которые изменили количество строк вы также
+%   получите результат после второй обработки).
+%
+%   \DescribeMacro{capbesideposition=}
+%   Определяет вертикальное и горизонтальное расположение подписи рядом с объектом.
+%   Для горизонтального расположения определены четыре опции:
+%   \begin{Options}{\OptionLabel}
+%     \item[left]
+%     подпись помещается с левой стороны от объекта;
+%     \item[right]
+%     подпись помещается с правой стороны от объекта;
+%     \item[inside]
+%     подпись помещается со стороны корешкового поля, если включена опция |twoside|
+%     в классе документа;
+%     \item[outside]
+%     менее популярная опция: подпись помещается со стороны внешнего поля,
+%     если опция |twoside| включена.
+%   \end{Options}
+%
+%   Для вертикального расположения определены три опции
+%   \begin{Options}{\OptionLabel}\samepage
+%     \item[top]
+%     подпись выравнивается по верху объекта;
+%     \item[bottom]
+%     подпись выравнивается по низу объекта;
+%     \item[center]
+%     подпись и объекта выравниваются по средней линии.
+%   \end{Options}
+%   Вы можете определить расположение подписи рядом следующим образом:
+%   \begin{quote}
+%     |capbesideposition={top,outside}|\quad.
+%   \end{quote}
+%
+%   \noindent
+%   \DescribeMacro{capbesidewidth=}
+%   Определяет ширину подписи рядом (эта опция может быть более предпочтительна для
+%   настройки отдельного окружения, см. о команде |\thisfloatsetup| на
+%   с.~\pageref{thisfloatsetup}). Вы можете задать:
+%   \begin{quote}
+%      |capbesidewidth=4cm|\quad.
+%   \end{quote}
+%   Если вы напишете \texttt{capbesidewidth=none} или
+%   \texttt{capbesidewidth=sidefill}
+%   (это настройка по умолчанию), ширина подписи будет рассчитана
+%   относительно ширины объекта (то есть займет остальное пространство
+%   в боксе, см. рис.~\ref{fig:beside:mouse} на с.~\pageref{fig:beside:mouse}).
+%
+%   \noindent
+%   \DescribeMacro{capbesideframe=}
+%   Этот ключ (работает как булев параметр) декларирует, размещена ли подпись рядом
+%   с объектом, заключённым в рамку (\texttt{capbesideframe=yes}): в этом случае
+%   строки подписи будут выравнивается по верху или низу рамки;
+%   в противном случае верх или низ
+%   \emph{содержимого} объекта в рамке будет выровнено со строками
+%   подписи (\texttt{capbesideframe=no}).
+%
+%   \penalty-5000
+%   \subsubsection{Определение расположения экспликаций (и сносок)}
+%   \label{sec:footposition}
+%
+%   \DescribeMacro{footposition=}\label{foot:pos}%^^A
+%   Определяет расположение содержимого команд |\footnote| и |\floatfoot| внутри
+%   бокса плавающего объекта с подписями сверху/снизу.
+%   \begin{Options}{\OptionLabel}
+%     \item[default]
+%     если подпись сверху, экспликации и сноски помещаются под объектом;
+%     в противном случае
+%     "--- под подписью;
+%     \item[caption]
+%     всегда помещаются под подписью;
+%     \item[bottom]
+%     всегда помещаются внизу бокса.
+%   \end{Options}
+%   См. примеры в файле \file{frsample01.tex}. В случае подписи стоящей сбоку,
+%   сноски и экспликации всегда помещаются под подписью.
+%
+%   \subsubsection{Определение вертикального выравнивания}\label{sec:heightadjust}
+%
+%   \DescribeMacro{heightadjust=}
+%   Определяет будет ли использоваться в ряду (\env{floatrow}) максимальная
+%   высота объекта
+%   и/или подписи в качестве общей. ключ имеет следующие опции
+%   \begin{Options}{\OptionLabel}\samepage
+%     \item[all]
+%     выровнять высоты объектов и подписей по максимальной
+%     высоте (например, используется стилями \texttt{Ruled} и \texttt{BOXED});
+%     \item[caption]
+%     выровнять высоты подписей по максимальной высоте
+%     (используется стилем \texttt{Plaintop});
+%     \item[object]
+%     выровнять высоты объектов по максимальной высоте
+%     (используется стилем \texttt{Boxed});
+%     \item[none]
+%     никакие высоты не изменяются (используется стилем \texttt{plain});
+%     \item[nocaption]
+%     высоты подписей не изменяются;
+%     \item[noobject]
+%     высоты объектов не изменяются;
+%   \end{Options}
+%   Вы можете определить, как делать общие высоты, даже так:
+%   \begin{quote}
+%     |heightadjust={caption,noobject}|\quad.
+%   \end{quote}
+%
+%   \noindent
+%   \DescribeMacro{valign=}
+%   Определяет вертикальное выравнивание объектов в ряду
+%   (\env{floatrow}) если задан ключ |heightadjust=all| или
+%   |heightadjust=object| или в командах |\floatbox| используется
+%   аргумент \meta{height}
+%   с величиной б\'ольшей высоты объекта. Опции этого ключа аналогичны
+%   опции вертикального
+%   выравнивания в окружении \env{minipage} и команде |\parbox|.
+%   Опция по умолчанию: |c|
+%   (центрированное вертикальное выравнивание).
+%   \begin{Options}{\OptionLabel}\samepage
+%     \item[t]
+%     выравнивает объекты по верхней линии;
+%     \item[c]
+%     выравнивает объекты по средней линии;
+%     \item[b]
+%     выравнивает объекты по нижней линии;
+%     \item[s]
+%     растягивает объекты на всю высоту (если возможно).
+%   \end{Options}
+%
+%   \subsubsection{Оформление для разворотов}
+%
+%   \DescribeMacro{facing=}
+%   Этот ключ определяет будет ли использоваться оформление флотов
+%   для разворотов (зеркальное
+%   отображение чётных и нечётных полос).
+%   Этот ключ работает, если включена опция |twoside| в классе документа.
+%
+%   \subsubsection{Определение полей вокруг флотов и настройка
+%    для содержимого объекта}\label{sec:set:box}
+%
+%   \DescribeMacro{margins=}
+%   Определяет поля для отдельных флотов с подписями сверху/снизу,
+%   для отдельных флотов с подписями сбоку, и для окружения
+%   \env{floatrow}. Ключ уже имеет три предопределённые опции:
+%   \begin{Options}{\OptionLabel}
+%     \item[centering]
+%     плавающий объект центрируется;
+%     \item[raggedright]
+%     плавающий объект выключается влево;
+%     \item[raggedleft]
+%     плавающий объект выключается вправо.
+%   \end{Options}
+%   Вы можете задать специальное выравнивание, см.~с.~\pageref{ssec:decl:marg}.
+%
+%   \noindent
+%   \DescribeMacro{objectset=}\DescribeMacro{justification=}
+%   Определяет выключку содержимого объекта.
+%   Предопределённые опции те же, что и для ключа
+%   \texttt{justification=} команды |\captionsetup|.
+%   \begin{Options}{\OptionLabel}
+%     \item[justified]
+%     Печатает текст объекта как обычный абзац. (Задано по умолчанию.)
+%
+%     \item[centering]
+%     Строки объекта центрируются.
+%
+%     \item[raggedright]
+%     Строки объекта выключаются влево.
+%
+%     \item[RaggedRight]
+%     Строки объекта также выключаются влево.
+%     Но в этом случае используется команда |\RaggedRight| пакета \pkg{ragged2e}.
+%     Разница заключается в том, что задействован алгоритм переносов внутри текста.
+%
+%     \item[raggedleft]
+%     Строки выключаются вправо.
+%
+%     \item[RaggedLeft]
+%     Аналогична |RaggedRight|.
+%
+%   \end{Options}
+%   Вы можете задать свои собственные настройки (см.~с.~\pageref{ssec:decl:rule})
+%
+%   \noindent
+%   \DescribeMacro{floatwidth=}
+%   Вы можете использовать этот ключ для переопределения ширины флотов. Можно задать
+%   \begin{quote}
+%      |floatwidth=.6\hsize|
+%   \end{quote}
+%   или
+%   \begin{quote}
+%      |floatwidth=7cm|
+%   \end{quote}
+%   Этот ключ удобно использовать в настройке для отдельного окружения
+%   (см. о команде |\thisfloatsetup| на с.~\pageref{thisfloatsetup}).
+%
+%   Если вы используете опцию \texttt{floatwidth=sidefill} для флотов с подписью
+%   сбоку (в случае если в \texttt{capbesidewidth=} задано абсолютное значение
+%   ширины, как \texttt{4cm}) объект (вместо подписи) займет остальное
+%   пространство в боксе (см. приложение, рис.~\ref{fig:capbeside:trick} на
+%   с.~\pageref{fig:capbeside:trick})
+%
+%   \subsubsection{Определение разделителей в боксах флотов}\label{sec:set:sep}
+%
+%   \noindent
+%   \DescribeMacro{floatrowsep=}
+%   Задаёт разделительный материал между флотами рядом
+%   (заданных командой |\floatbox| и её
+%   производными, см.~с.~\pageref{sec:floatbox}) внутри окружения \env{floatrow}
+%   (см.~с.~\pageref{sec:floatrow}).
+%
+%   \noindent
+%   \DescribeMacro{capbesidesep=}
+%   Задаёт разделительный материал между объектом и подписью сбоку.
+%
+%   Настройки обоих ключей работают аналогично настройкам ключа |labelsep=|
+%   в команде |\captionsetup|.
+%
+%   Они используют следующие предопределённые опции:
+%   \begin{Options}{\OptionLabel}
+%     \item[columnsep]
+%     горизонтальная отбивка${}={}$|\columnsep| (межколонник при двух-
+%     и многоколонном наборе);
+%     \item[quad]
+%     горизонтальная отбивка${}={}1$\,em (одна кегельная);
+%     \item[qquad]
+%     горизонтальная отбивка${}={}2$\,em (две кегельные);
+%     \item[hfil]
+%     горизонтальная отбивка${}={}1$\,fil (растяжимая длина |\hfil|);
+%     \item[hfill]
+%     горизонтальная отбивка${}={}1$\,fill (ещё более растяжимая длина |\hfill|);
+%     \item[none]
+%     пустой разделитель.
+%   \end{Options}
+%
+%   \subsubsection{Определение вертикальных отбивок или линеек}\label{sec:set:rule}
+%
+%   \DescribeMacro{precode=}
+%   Определяет отбивку, линейку или другой подобный материал сверху флота.
+%
+%   \noindent
+%   \DescribeMacro{rowprecode=}
+%   Определяет отбивку, линейку или другой подобный материал
+%   сверху отдельного флота и, при
+%   размещении флотов рядом в окружении \env{floatrow}, сверху ряда флотов.
+%   (см.~с.~\pageref{fig:rotrow:WcatI}).
+%
+%   \noindent
+%   \DescribeMacro{midcode=}
+%   Определяет отбивку, линейку или другой подобный материал
+%   между подписью сверху/снизу и объектом.
+%
+%   \noindent
+%   \DescribeMacro{postcode=}
+%   Определяет отбивку, линейку или другой подобный материал снизу флота.
+%
+%   \noindent
+%   \DescribeMacro{rowpostcode=}
+%   Определяет отбивку, линейку или другой подобный материал снизу
+%   отдельного флота и, при
+%   размещении флотов рядом в окружении \env{floatrow},
+%   снизу ряда флотов (см.~с.~\pageref{fig:rotrow:WcatI}).
+%
+%   Для всех этих ключей предопределены следующие опции (настройки
+%   взяты из стилей, созданных пакетом \pkg{float}):
+%   \begin{Options}{\OptionLabel}\makeatletter\@itempenalty10000\makeatother
+%     \item[none]
+%     отбивка отсутствует;
+%     \item[thickrule]
+%     толстая линия (.8pt) с отбивкой снизу в 2pt "--- верхняя линейка
+%     над флотов в стиле \texttt{ruled};
+%     \item[rule]
+%     линейка обычной толщины (.4pt), с отбивками сверху и снизу
+%     в 2pt "---средняя линейка в стиле \texttt{ruled};
+%     \item[lowrule]
+%     линейка обычной толщины (.4pt), с отбивкой сверху в
+%     2pt "--- нижняя линейка в стиле \texttt{ruled};
+%     \item[captionskip]
+%     вертикальная отбивка равная величине, заданной в ключе |captionskip=|.
+%   \end{Options}
+%   Вы можете задать свои опции, см.~с.~\pageref{ssec:decl:rule}.
+%
+%   \subsubsection{Задание рамок для флотов}
+%
+%   \DescribeMacro{framestyle=}
+%   Определяет тип рамки; пакет
+%   \pkg{floatrow} предлагает только один вид рамки:
+%   \begin{Options}{\OptionLabel}
+%     \item[fbox]
+%     стандартная рамка.
+%   \end{Options}
+%   Далее идут опции для задания дополнительных вариантов рамок,
+%   предлагаемых пакетом \pkg{fr-fancy},
+%   который инсталлируется вместе с \pkg{floatrow}:
+%   \begin{Options}{\OptionLabel}
+%     \item[colorbox]
+%     цветная рамка, для неё нужен пакет \pkg{color};
+%     если эта рамка не определена, используется обычная |\fbox|;
+%     \item[doublebox]
+%     двойная рамка, для неё нужен пакет \pkg{fancybox};
+%     \item[shadowbox]
+%     рамка с тенью, для неё нужен пакет \pkg{fancybox};
+%     \item[wshadowbox]
+%     изменённая рамка \texttt{shadowbox} (с <<белой тенью>>),
+%     для неё нужен пакет \pkg{fancybox};
+%   \end{Options}
+%
+%   \noindent
+%   \DescribeMacro{framearound=}
+%   Задаёт элемент флота, вокруг которого нужно создать рамку:
+%   \begin{Options}{\OptionLabel}
+%     \item[object]
+%     только содержимое объекта;
+%     \item[all]
+%     флот полностью, включая объект, подпись и дополнительный материал.
+%   \end{Options}
+%
+%   \noindent
+%   \DescribeMacro{framefit=}
+%   Переключатель (работает как булев параметр) который определяет
+%    нужно ли ширину рамки делать равной ширине
+%   текста |\hsize| или предопределённой ширине (\texttt{framefit=yes}),
+%   объект в этом случае
+%   сужается; или рамка выступает в обе стороны и,
+%   в этом случае ширина объекта равна |\hsize|
+%   или предопределённой ширине (\texttt{framefit=no})
+%
+%   \noindent
+%   \DescribeMacro{frameset=}
+%   Параметры выбранной рамки; для этого ключа нет предопределённых опций,
+%   он определяется следующим образом:
+%   \begin{quote}
+%     |frameset={\fboxrule1pt\fboxsep12pt}|\quad.
+%   \end{quote}
+%
+%   \noindent
+%   \DescribeMacro{colorframeset=}
+%   Ключ предлагается пакетом \pkg{fr-fancy}: определяет
+%   цветную рамку (по умолчанию это обычная |\fbox|).
+%   В текущей версии вы можете использовать только команду |\fcolorbox|
+%   для цветной рамки. Вы
+%   можете определить цветную рамку следующим образом:
+%   \begin{quote}
+%     |colorframeset={\fcolorbox{white}{yellow}}|\quad.
+%   \end{quote}
+%
+%   \subsubsection{Определение отбивок}
+%
+%   \DescribeMacro{captionskip=}
+%   Определяет размер вертикальной отбивки между подписью и объектом
+%   если ключ |midcode| определён как
+%   |midcode=captionskip|; или в случае использования стилей (ключ \texttt{style=})
+%   \texttt{plain}, \texttt{plaintop} или \texttt{Plaintop}, пример:
+%   \begin{quote}
+%      |captionskip=10pt|\quad.
+%   \end{quote}
+%
+%   \noindent
+%   \DescribeMacro{footskip=}
+%   Определяет вертикальную отбивку до сносок и экспликаций.
+%   \begin{quote}
+%      |footskip=4pt|\quad,
+%   \end{quote}
+%   or
+%   \begin{quote}
+%      |footskip=\skip\footins|\quad.
+%   \end{quote}
+%
+%   \subsubsection{Задание стиля для линейки над сноской}\label{sec:footnotestyle}
+%
+%   \DescribeMacro{footnoterule=}
+%   Определяет тип линейки над сноской внутри бокса плавающего элемента.
+%   \begin{Options}{\OptionLabel}
+%     \item[normal]
+%     стандартное определение \LaTeX'а, используемое в окружении
+%     \env{minipage}, ширина её равна
+%     0.4 текущей ширины текста (|\columnwidth|);
+%     \item[limited]
+%     аналогична предыдущей, но максимальная ширина сноски равна
+%     величине определённой в
+%     команде |\frulemax|, следующим образом:
+%     \begin{quote}
+%     |\renewcommand\frulemax{1in}|
+%     \end{quote}
+%     \item[fullsize]
+%     линейка на всю ширину текста.
+%     \item[none]
+%     нет линейки.
+%   \end{Options}
+%
+%   \label{setup:end}
+%
+%   %^^A ???needed?
+%   \subsubsection{Загрузка пакета для необычных рамок}
+%
+%   \DescribeMacro{fancyboxes=}
+%   Переключатель (работает как булев параметр) загружает пакет
+%    \pkg{fr-fancy}. Этот ключ можно использовать
+%   только в дополнительном аргументе строки |\usepackage|.
+%
+%   \subsection{Настройки для одного флота}
+%
+%   \DescribeMacro{\thisfloatsetup}\label{thisfloatsetup}%^^A
+%   Вы можете задать некоторые настройки только для одного флота
+%   перед необходимым окружением. Команда |\thisfloatsetup| может
+%   включать в себя те же ключи и опции как и |\floatsetup|. Она содержит
+%   только обязательный аргумент\footnote{Команда \cmd{\thisfloatsetup} определена
+%   как аббревиатура \cmd{\floatsetup[tmpset]}.}.\par\strut\par\kern-\baselineskip
+%
+%^^A   Please note that |\thisfloatsetup| doesn't overwrite co-named key
+%^^A   declarations from settings like |\floatsetup[|\meta{options}|]|---this
+%^^A   command created e.g for temporary change of float or caption widths:
+%^^A   keys \texttt{captionwidth=}
+%^^A   \texttt{floatwidth} do not used usually in |\floatsetup| stuff.
+%
+%   \subsection{<<Очистка>> предыдущих настроек для определённого
+%     типа плавающих объектов}
+%
+%   \DescribeMacro{\clearfloatsetup}
+%   Если вы хотите отменить параметры, определённые для
+%   использования в определённом окружении
+%   вы можете использовать команду\footnote{См. также в документации пакета
+%   \pkg{caption} о команду \cmd{\clearcaptionsetup}}:
+%   \begin{quote}
+%      |\clearfloatsetup|\marg{Typ}\quad.
+%   \end{quote}
+%
+%   %^^A !!!for footnotes!
+%   %^^A \newpage
+%
+%   \subsection{Установки для флотов заданные по умолчанию}\label{sec:default}
+%
+%   Следующие ключи и опции включаются, при загрузке пакета \pkg{floatrow}.
+%   Они эквивалентны стилю \texttt{plain}:
+%   \begin{Options}{\OptionLabel}
+%     \item[font=normalsize]
+%     \item[footfont=footnotesize]
+%     \item[capposition=bottom]
+%     \item[capbesideposition=inside]
+%     \item[capbesideframe=no]
+%     \item[footposition=default]
+%     \item[heightadjust=none]
+%     \item[facing=no]
+%     \item[margins=centering]
+%     \item[objectset=centering] ($\equiv$\texttt{justification=centering})
+%     \item[floatrowsep=columnsep]
+%     \item[capbesidesep=columnsep]
+%     \item[precode=none]
+%     \item[rawprecode=none]
+%     \item[postcode=none]
+%     \item[rawpostcode=none]
+%     \item[midcode=captionskip]
+%     \item[captionskip=10pt]
+%   \end{Options}
+%
+%
+%   \subsection{Определение новых опций}
+%
+%   В следующих разделах перечисляются команды, которые определяют опции
+%   ключей команды |\floatsetup|. Примеры опций взяты, как правило,
+%   из определений опций пакета \pkg{floatrow}.
+%
+%   \subsubsection{Стиль флота}
+%
+%   \DescribeMacro{\DeclareFloatStyle}
+%   Определяет новый стиль. Пример демонстрирует задание нового стиля
+%   \texttt{MyBoxed}. Рисунок~\ref{fig:plain:MyBoxed}, и
+%   некоторые другие в данной документации показывают результат.
+%\begin{verbatim}
+%\DeclareFloatStyle{MyBoxed}{style=Boxed,captionskip=5pt,
+%   frameset={\fboxrule1pt\fboxsep12pt}}
+%\floatsetup[figure]{style=MyBoxed}
+%\end{verbatim}
+%
+%   \begingroup
+%
+%   \floatsetup[figure]{style=MyBoxed}
+%   \begin{figure}[!t]
+%     {\input{BlackCat.picture}}%
+%     \caption{%^^A
+%   Простой рисунок в стиле \texttt{MyBoxed}}%
+%   \label{fig:plain:MyBoxed}%
+%   \floatfoot{Much more, more and more and more and more and more and more and
+%     more and more text inside macro \cmd{\floatfoot}}%
+%   \end{figure}
+%
+%   Тот же результат вы можете получить:
+%\begin{verbatim}
+%\floatsetup[figure]{style=Boxed,captionskip=5pt,
+%  frameset={\fboxsep12pt\fboxrule1pt}}
+%\end{verbatim}
+%   \endgroup
+%
+%   \subsubsection{Определение новых линеек или отбивок}\label{ssec:decl:rule}
+%
+%   \DescribeMacro{\DeclareFloatVCode}
+%   Эта команда создаёт определение отбивки, линейки или другого подобного материала
+%   сверху и снизу всего бокса объект---подпись и между
+%   подписью сверху/снизу и объектом.
+%   Созданную опцию вы можете использовать в ключах \texttt{rowprecode},
+%   \texttt{precode}, \texttt{midcode}, \texttt{postcode} и
+%   \texttt{rowpostcode}.
+%   \begin{quote}
+%   |\DeclareFloatVCode{thickrule}{\hrule height.8ptdepth0pt%|\\
+%   \strut\qquad|\kern2pt}|
+%   \end{quote}
+%
+%   \subsubsection{Определение выключки содержимого объекта}\label{ssec:decl:marg}
+%
+%   \DescribeMacro{\DeclareObjectSet}
+%   Вы можете определить свою опцию выключки для ключа \texttt{objectset=}
+%   следующим образом:
+%   \begin{quote}
+%     |\DeclareObjectSet{centering}{\centering}|
+%   \end{quote}
+%   В определении опции вы можете попробовать задать и другие повторяющие команды,
+%   которые вам нужны при оформлении содержимого
+%   объекта\footnote{Вы можете использовать
+%   опции ключей, заданные \cmd{\DeclareCaptionJustification} "---
+%   командой из пакета \pkg{caption},
+%   как опции ключа \texttt{objectset=}.}.\par\strut\par\kern-\baselineskip
+%
+%   \subsubsection{Определение выключки (и другого материала)
+%     для всего бокса флота}\label{ssec:decl:marg}
+%
+%   \DescribeMacro{\DeclareMarginSet}\label{fsetup:besmarg}%^^A
+%   Вы можете определить выключку всего бокса (ключ \texttt{margins=})
+%   следующим образом:
+%   \begin{quote}
+%   |\DeclareMarginSet{center}{%|\\
+%   |  \setfloatmargins{\hfil}{\hfil}}|
+%   \end{quote}
+%   или (см. также файлы примеров);
+%   \begin{quote}
+%   |\DeclareMarginSet{outside}{%|\\
+%   |  \setfloatmargins*{\hfil}{}}|
+%   \end{quote}
+%
+%   Команда |\setfloatmargins| определяет левое и правое поля.
+%   \begin{quote}
+%     |\setfloatmargins{|\meta{left margin}|}{|\meta{right margin}|}|
+%   \end{quote}
+%
+%   |*|-форма команды, |\setfloatmargins*|, определяет оформление
+%   для разворота: внутреннее и внешнее поля.
+%   \begin{quote}
+%     |\setfloatmargins*{|\meta{inside margin}|}{|\meta{outside margin}|}|
+%   \end{quote}
+%
+%   Вы можете сделать ещё более сложное определение:
+%   \begin{quote}\leftmargin0pt
+%   |\DeclareObjectSet{facingrule}{%|
+%   |\setfloatmargins*{%|\\
+%   |   \floatfacing{\hskip-12pt\vrule width4pt\hskip8pt\hfill}%|\\
+%   |               {\hfill\hskip8pt\vrule width4pt\hskip-12pt}}{}}|
+%   \end{quote}
+%   Команда |\floatfacing| определяет следующее
+%   \begin{quote}
+%     |\floatfacing{|\meta{odd page definition}|}{|\meta{even page definition}|}|
+%   \end{quote}
+%   Эта макрокоманда также имеет |*|-форму |\floatfacing*|,
+%   которой вы можете воспользоваться в опциях ключей для команды |\captionsetup|.
+%
+%   Команда |\setfloatmargins| состоит из трёх макрокоманд, которые определяют
+%   поля (выключку и другой материал) для трёх вариантов расположения флота:
+%   \begin{Options}{\OptionLabel}
+%   \item[\cmd{\floatboxmargins}]задаёт левое/правое поля для отдельного флота;
+%   \item[\cmd{\floatrowmargins}]задаёт левое/правое поля для
+%    флотов рядом в окружении \env{floatrow};
+%   \item[\cmd{\floatcapbesidemargins}]задаёт левое/правое
+%    поля для отдельного флота с подписью сбоку.
+%   \end{Options}
+%   Грамматика использования этих трёх команд такая же как и у
+%   |\setfloatmargins|. Настройки, использующие команду |\floatfacing|
+%   будут работать если включён ключ \texttt{facing=yes}.
+%
+%   \emph{Замечание}. Пакет \pkg{floatrow} задаёт некоторые настройки
+%   оформления таблиц для окружения \env{longtable},
+%   поэтому вы можете задать параметры |\LTleft| и |\LTright|
+%   в команде |\DeclareMarginSet|.
+%   Например, опция \texttt{centering} была определена следующим образом:
+%   \begin{quote}
+%   |\DeclareMarginSet{centering}{\setfloatmargins{\hfill}{\hfill}%|\\
+%   |  \LTleft=\fill \LTright=\fill}|
+%   \end{quote}
+%
+%   \subsubsection{Определение разделителей флотов}
+%
+%   \DescribeMacro{\DeclareFloatSeparators}\label{decl:sep}%^^A
+%   Вы можете определить разделитель между флотами рядом (в окружении \env{floatrow})
+%   или между флотом и подписью сбоку, пример разделителя:
+%   \begin{quote}
+%   |\DeclareFloatSeparators{columnsep}{\hskip\columnsep}|
+%   \end{quote}
+%   или более сложный, с использованием пакета \pkg{color} и
+%   макрокоманды |\floatfacing|
+%   (не забудьте также ключ \texttt{facing=yes}):
+%   \begin{quote}
+%   |\DeclareFloatSeparators{colorsep}%|\\
+%   |  {\begingroup\color{blue}%|\\
+%   |    \floatfacing{\hskip14pt\vrule width1.8pt\hskip2pt}%|\\
+%   |                {\hskip2pt\vrule width1.8pt\hskip14pt}%|\\
+%   |   \endgroup}|
+%   \end{quote}
+%
+%   Вы можете использовать заданные опции в ключах \texttt{floatrowsep=} и
+%   \texttt{capbesidesep=}\footnote{Вы можете воспользоваться опциями, заданными
+%   \cmd{\DeclareCaptionLabelSeparator} "--- командой из \pkg{caption}.}.\par
+%   \strut\par\kern-\baselineskip
+%
+%   \subsubsection{Шрифт содержимого объекта}
+%
+%   \DescribeMacro{\DeclareFloatFont}
+%   Этой макрокомандой вы можете определить новую опцию
+%   для шрифта (ключ \texttt{font=}) содержимого объекта. Эта макрокоманда работает
+%   также как |\DeclareCaptionFont| из пакета \pkg{caption}. (Вы можете также
+%   воспользоваться опциями, заданными в команде |\DeclareCaptionFont|.)
+%
+%   \subsubsection{Определение линейки для сносок}
+%
+%   \DescribeMacro{\DeclareFloatFootnoterule}
+%   Вы можете определить новую линейку для сноски (ключ \texttt{footnoterule=})
+%   следующим образом:
+%   \begin{quote}
+%   |\DeclareFloatFootnoterule{fullsize}{%|\\
+%   |  \kern-3\p@|\\
+%   |  \hrule \@width\hsize\kern 2.6\p@}|
+%   \end{quote}
+%   Помните, что суммарный вертикальный пробел для линейки должен составлять~0pt.
+%\newpage
+%   \section{Создание нового типа плавающих объектов (флотов)}
+%
+%   \DescribeMacro{\DeclareNewFloatType}
+%   Для создания нового типа флотов создана команда
+%   |\DeclareNewFloatType|, которая также использует механизм
+%   \meta{key}${}=\nobreak {}$\meta{value}:
+%   \begin{quote}
+%   |\DeclareNewFloatType{|\meta{type}|}{|\meta{options}|}|
+%   \end{quote}
+%   Аргумент \meta{type} включает имя нового окружения флота.\\
+%   Аргумент \meta{options} может включать следующие ключи:
+%
+%   \noindent
+%   \DescribeMacro{placement=}
+%   (размещение)  опцией этого ключа может быть любая комбинация букв
+%   \texttt{t}, \texttt{b}, \texttt{h}, и \texttt{p}, которые
+%   определяют  размещение данного типа флотов на странице
+%   в случае, если не используется дополнительный аргумент в окружении.
+%   (По умолчанию определено \texttt{placement=tbp}.)
+%
+%   \noindent
+%   \DescribeMacro{name=}
+%   Определяет имя флота в нумерационном заголовке подписи.
+%   (По умолчанию  для нумерационного заголовка используется имя окружения.)
+%
+%   \noindent
+%   \DescribeMacro{fileext=}
+%   Определяет расширение файла, где будет собираться список флотов.
+%   (По умолчанию, подписи собираются в файле с расширением \texttt{lox}).
+%
+%   \noindent
+%   \DescribeMacro{within=}
+%   Определяет раздел, внутри которого будет производиться перенумерация.
+%   Если ключ отсутствует, задаётся сквозная нумерация по всему документу.
+%
+%   \noindent
+%   \DescribeMacro{relatedcapstyle=}
+%   В пакете \pkg{float} команды \cmd{\newfloat}/\cmd{\restylefloat}
+%   присоединяют специальный стиль подписи, связанный с данным стилем флота  (см.
+%   разд.~\ref{sec:floatst}). Если вы используете механизм |\DeclareNewFloatType|,
+%   и имеется (вы создали с помощью |\captionsetup|) одноимённый, связанный,
+%   стиль подписи, вы можете присоединить этот стиль с помощью ключа
+%   \texttt{relatedcapstyle=yes}.
+%   %^^A \begin{quote}
+%   %^^A    |\captionsetup[figure]{style=ruled}|
+%   %^^A \end{quote}
+%
+%   Команда |\DeclareNewFloatType| была использована для определения окружения
+%   \env{Example} (см. с.~\pageref{exa1.1}). Она была задана следующим образом:
+%   \begin{quote}
+%      |\DeclareNewFloatType{Example}%|\\
+%      |    {placement=t,within=section,fileext=lox,|\\
+%      |     name=\CYRP\cyrr\cyri\cyrm\cyre\cyrr}}|
+%   \end{quote}
+%   Для русской документации пришлось в примере добавить ключ \texttt{name=}.
+%
+%   \section{Заимствованный код}
+%
+%   \subsection{Пакет \pkg{float}: совместимость}\label{sec:floatst}
+%
+%   Пакет \pkg{floatrow} включает некоторые макрокоманды пакета \pkg{float} (версии
+%   v1.3d, датированной 2001/11/08)
+%   с необходимыми изменениями. Если вы загрузили пакет \pkg{float}
+%   до \pkg{floatrow} выдаётся сообщение об ошибке.
+%
+%   \emph{Замечание}.
+%   Поскольку некоторые пакеты могут вызывать
+%   пакет \pkg{float}\footnote{Мне известен пакет \pkg{algorithm}.}
+%   пакет \pkg{floatrow} вводит некоторый код, который эмулирует
+%   уже загруженный пакет \pkg{float} v1.3 и последующие запросы пакета игнорируются.
+%   Это поможет избежать сообщений об ошибках,
+%   если эти пакеты загружены \emph{после} \pkg{floatrow}.
+%   Обратите внимание, что пакеты, загружающие пакет \pkg{float}, должны быть
+%   загружены \emph{после} \pkg{floatrow}.
+%
+%   Я надеюсь что старые документы будут работать с  \pkg{floatrow}. Первое
+%   ограничение или особенность "--- если вы не использовали команд |\restylefloat|
+%   "--- все рисунки и таблицы будут выводиться в стиле  \texttt{plain}
+%   с подписями снизу. Другое ограничение "--- вы должны перенести все команды
+%   |\newfloat|, |\floatstyle| и |\restylefloat| в преамбулу,
+%   до команды |\begin{document}|. Команды |\newfloat|, |\floatstyle| и
+%   |\restylefloat| устаревшие, хотя и поддерживаются\footnote{Всё же лучше заменить
+%   их на команды \cmd{\floatsetup},
+%   Пакет \pkg{floatrow} поддерживает старые команды, но не даёт гарантии.}.
+%   См. также разд.~\ref{float-obs} о том как переводятся эти команды в команду
+%   |\floatsetup|.
+%
+%   Разделы, помеченные текстом <<[\pkg{float}]>>, были заимствованы из
+%   документации пакета
+%   \pkg{float}\footnote{Настоятельно рекомендуется читать эти разделы в оригинале.
+%   За корректность перевода не ручаюсь.}.
+%
+%   \subsubsection{Интерфейс пользователя "--- новые плавающие объекты
+%     (флоты) [\pkg{float}]}\label{sec:floatborrowI}
+%
+%   \DescribeMacro{\newfloat}
+%   Самой важной командой в пакете \pkg{float}
+%   является команда |\newfloat|\footnote{Она дублируется командой
+%   \cmd{\DeclareNewFloatType}.}.
+%   Она сделана по образцу
+%   |\newtheorem|. Команда |\newfloat| имеет три основных и один дополнительный
+%   аргумент; форма задания:
+%   \begin{quote}
+%   \hspace*{\MacroIndent}|\newfloat{|\meta{type}|}{|^^A
+%     \meta{placement}|}{|\meta{ext}|}[|\meta{within}{\tt]}
+%   \end{quote}
+%   \begin{itemize}
+%   \item \marg{type} задаёт тип нового класса флотов, таких как
+%   \texttt{program} (программа) или \texttt{algorithm} (алгоритм).
+%   Определив эти слова в аргументе
+%   |\newfloat|, вы можете задать команды, как |\begin{program}|
+%   или |\end{algorithm*}|.
+%   \item \marg{placement} задаёт размещение по умолчанию
+%   для данного класса флотов. Параметры те же самые,
+%   что и в стандартном \LaTeX'е, например, \texttt{t}, \texttt{b},
+%   \texttt{p} и \texttt{h} для `top' (вверху), `bottom' (внизу),
+%   `page' (отдельная страницы) и `here' (здесь),
+%   соответственно.
+%   \item \marg{ext}. Когда \LaTeX\ записывает подписи во вспомогательный файл
+%   для списка рисунков (или любого другого флота), он использует
+%   имя рабочего файла (документа)
+%   с расширением \marg{ext} как имя файла.
+%   \item \oarg{within}. Наконец, дополнительный
+%   аргумент \meta{within} определяет будут ли плавающие объекты
+%   данного класса нумероваться
+%   внутри указанного раздела документа. Например,
+%   если \oarg{within}${}={}$\texttt{chapter}, флоты будут перенумеровываться
+%   по главам. (В стандартном \LaTeX'е, это задано для рисунков и таблиц
+%   в классах документов \cls{report} и \cls{book}.) Как
+%   пример, программа~\ref{prog1.1} была создана командной последовательностью
+%   похожей на продемонстрированную в следующем
+%   примере\footnote{Настройки для этого окружения примера
+%   были созданы командой \cmd{\DeclareNewFloatType}.}.
+%   \end{itemize}
+%   \emph{Floatrow замечание.}
+%   Также создана команда-пара |\newfloat*|, которая работает аналогично команде
+%   |\restylefloat*| (см. ниже).
+%   \begin{Program}
+%\begin{verbatim}
+%#include <stdio.h>
+%
+%int main(int argc, char **argv) {
+%       int i;
+%       for (i = 0; i < argc; ++i)
+%               printf("argv[%d] = %s\n", i, argv[i]);
+%       return 0;
+%}
+%\end{verbatim}
+%   \caption{Первая программа. Она ничего не делает в пакете,
+%   просто включена в него как пример.
+%   Обратите внимание на стиль \texttt{ruled}%
+%      \label{prog1.1}}
+%   \end{Program}
+%   \begin{Example}[H]
+%   \begin{verse}
+%   |\floatstyle{ruled}|\\
+%   |\newfloat{Program}{tbp}{lop}[section]|\\
+%   |\floatname{Program}{\CYRP\cyrr\cyro\cyrg\cyrr\cyra\cyrm\cyrm\cyra}|\\
+%   \dots\ loads o' stuff \dots\\
+%   |\begin{Program}|\\
+%   |\begin{verbatim}|\\
+%   \dots\ program text \dots\\
+%   |\end{verbatim}|\\
+%   |\caption{|\dots\ caption \dots|}|\\
+%   |\end{Program}|
+%   \end{verse}
+%   \caption{Это ещё один простенький плавающий пример. Исключая
+%     то, что он плавает, так как использует параметр {\tt[H]}, чтобы
+%     появиться \textbf{Здесь}. (Обратите внимание, что в примере
+%     настроек программы определено
+%     имя флота для нумерационного заголовка подписи.)}\label{exa1.1}
+%   \end{Example}
+%
+%   \DescribeMacro{\floatstyle}
+%   Команда |\floatstyle| определяет стиль флота по
+%   умолчанию. Этот стиль будет использоваться для всех типов флотов
+%   которые впоследствии будут определены в команде |\newfloat|, до появления другой
+%   команды |\floatstyle|. Команда |\floatstyle| имеет один аргумент,
+%   имя стиля флота. Например,
+%   |\floatstyle{ruled}|. Указание названия несуществующего стиля приведёт к ошибке.
+%
+%   \DescribeMacro{\floatname}
+%   Команда |\floatname| позволяет вам определить
+%   \emph{имя флота}, которое \LaTeX\ использует в подписи флота,
+%   например, `Figure' для окружения рисунков и тому подобное. Например,
+%   |\floatname{program}{Program}| (или |\floatname|\nobreak
+%   \hfil|{Program}|\allowbreak\hfil
+%   |{\CYRP\cyrr\cyro\cyrg\cyrr\cyra\cyrm\cyrm\cyra}|).\allowbreak{}
+%   Команда |\newfloat| определяет
+%   имя флота по аргументу определяющему имя окружения (\meta{type}) если не было
+%   определено другого имени до этого.
+%
+%   \DescribeMacro{\floatplacement}
+%   Команда |\floatplacement| переопределяет
+%   размещения флота по умолчанию для данного класса флотов. Например,
+%   |\floatplacement{figure}{tp}|.
+%
+%   \DescribeMacro{\restylefloat}\nopagebreak
+%   Команда |\restylefloat| необходима для
+%   изменения стиля для стандартных типов флотов
+%   \texttt{figure} и \texttt{table}. Так как они не определяются
+%   через команду |\newfloat|, они не имеют стиля, связанного с ними.
+%   Поэтому вы должны задать, например,
+%   \begin{quote}
+%   \hspace*{\MacroIndent}|\floatstyle{ruled}|\\
+%   \hspace*{\MacroIndent}|\restylefloat{table}|
+%   \end{quote}
+%   чтобы получить таблицы в стиле \texttt{ruled}. Команда также позволяет
+%   изменить стиль флота, определённого командой |\newfloat|, хотя
+%   это, по типографским правилам, не лучшая идея. См.
+%   табл.~\ref{table1} для примера\footnote{В пакете \pkg{float}
+%   создан специальный стиль подписи с полужирным нумерационным заголовком
+%   для стиля \texttt{boxed}.
+%   Обратите внимание, что стили флота \texttt{plain} и \texttt{boxed}
+%   не имеют специальных настроек в пакете \pkg{caption} 3.x.
+%   Для эмуляции стиля \texttt{boxed} из документации пакета \pkg{float} были:
+%   отменены все специальные установки для таблиц, и восстановлено двоеточие
+%   как разделитель после нумерационного заголовка.}. Существует
+%   команда |\restylefloat*|,
+%   которая переопределяет стиль флота, но не затрагивает стиля подписи.
+%   В этом случае пользователь сам отвечает за создание оформления подписей.
+%   \DeleteShortVerb{\|}
+%   %^^AEmulation of float's documentation settings
+%   %^^A\floatstyle{boxed}
+%   %^^A\restylefloat{table}
+%   \begingroup
+%   \clearcaptionsetup{table}
+%   \captionsetup{labelsep=default,labelfont=bf}
+%   \floatsetup[table]{style=boxed}
+%   \begin{table} \def\B#1{$\displaystyle{n\choose#1}$}
+%   \begin{center} \begin{tabular}{c|cccccccc}
+%   $n$&\B0&\B1&\B2&\B3&\B4&\B5&\B6&\B7\\ \hline
+%    0 & 1\\
+%    1 & 1&1\\
+%    2 & 1&2&1\\
+%    3 & 1&3&3&1\\
+%    4 & 1&4&6&4&1\\
+%    5 & 1&5&10&10&5&1\\
+%    6 & 1&6&15&20&15&6&1\\
+%    7 & 1&7&21&35&35&21&7&1
+%   \end{tabular} \end{center}
+%   \caption{Треугольник Паскаля. Это переоформленное окружение
+%    \LaTeX'а \texttt{table}.%^^A
+%     \label{table1}}
+%   \end{table}
+%   \endgroup
+%   \MakeShortVerb{\|}
+%
+%   \subsubsection{Как макрокоманды из пакета \pkg{float}
+%     работают в \pkg{floatrow}}\label{float-obs}
+%
+%   Комбинация команды |\floatstyle|\marg{style} и любой из
+%   \cmd{\newfloat}\marg{float} или
+%   \cmd{\restylefloat}\marg{float} означает в пакете \pkg{floatrow}
+%   определение стиля флота следующим образом:
+%   \begin{quote}
+%   |\floatsetup|\oarg{float}|{style=|\meta{style}|}|
+%   \end{quote}
+%   Обратите внимание, что одноимённые ключи из |\floatsetup|\oarg{float}|{...}|
+%   перепишут настройки из общей команды |\floatsetup{...}|. Это означает,
+%   если вы задали оформление, используя эти устаревшие команды, дальнейшую
+%   настройку оформления вы должны делать с помощью |\floatsetup|\oarg{float}|{...}|.
+%
+%   \subsubsection{Печать списка плавающих объектов (флотов)
+%    [\pkg{float}]}\label{sec:floatborrowIa}
+%
+%   \nobreak\DescribeMacro{\listof}
+%   \nopagebreak
+%   Команда |\listof| создаёт список всех флотов данного
+%   класса. Её синтаксис\\[2pt]
+%   \hspace*{\MacroIndent}|\listof{|\meta{type}|}{|\meta{title}^^A
+%     |}|\\[2pt]
+%   \meta{type} это тип флота, заданный командой |\newfloat|.
+%   \meta{title} задаёт заголовок списка флотов и колонтитулы
+%   если стиль страницы задаёт их. В противном случае, команда
+%   |\listof| работает аналогично встроенным командам \LaTeX'а
+%   |\listoffigures| и |\listoftables|.
+%
+%   \subsubsection{Пользовательский интерфейс "--- указатель
+%   размещения флота \texttt{[H]} [\pkg{float}]}\label{sec:floatborrowII}
+%
+%   Многие находят набор указателей размещения флотов в \LaTeX'е
+%   ограниченным. Commonly Uttered Complaint (CUC) призвала найти путь
+%   поместить флот точно в то место, где он появляется в исходном файле,
+%   иными словами не делать плавающим его вообще. С первого взгляда указатель
+%   \texttt{[h]} должен делать это, но фактически он только предлагает
+%   \LaTeX'у  <<поместить здесь если получится>>.
+%   На самом деле \LaTeX\ едва склонен в действительности
+%   делать это. (Эта ситуация может быть исправлена только хитроумными
+%   манипуляциями параметров флота.)
+%
+%   Тот же эффект может быть достигнут изменением метода
+%   размещения флотов. Опция \pkg{here} (David Carlisle) предлагает
+%   новый указатель размещения флота, названный \texttt{[H]},
+%   который, при добавлении в опции флота,
+%   говорит \LaTeX'у <<поставить ЗДЕСЬ, точка>>. Если места на
+%   странице недостаточно, флот переносится на другую страницу
+%   вместе с последующим текстом, даже в случае, если этот текст
+%   мог бы там разместиться. Пакет поддерживает эту опцию, указатель
+%   \texttt{[H]}, как для новых классов флотов так и для
+%   предопределённых \texttt{figure} и \texttt{table}, вместо
+%   \pkg{here}. David предполагает, что пакет \pkg{here}
+%   может быть со временем удалён из архивов.
+%
+%   Указатель {\tt[H]} может быть просто добавлен к флоту
+%   как опция, как другие указатели. Он \emph{не}
+%   может быть использован совместно с другими указателями, поэтому
+%   {\tt[Hhtbp]} неверно. Также он не может быть использован как
+%   параметр по умолчанию для класса флотов. Следующая таблица
+%   определена следующим образом:
+%   \begin{verse}
+%   |\begin{table}[H]| \\*
+%   |\begin{tabular}{cl}|\\
+%   |\tt t & Top of the page\\|\\*
+%   \dots\ more stuff \dots\\
+%   |\end{tabular}|
+%   \end{verse}
+%   (Кажется мне пришлось добавить здесь немного ненужной болтовни
+%   чтобы флот был помещён точно посередине страницы.
+%   Когда документация обрабатывалась
+%   \LaTeX'ом\footnote{Пакета \pkg{float}.}
+%   обнаружилось что разрыв страницы приходится между строкой
+%   <<Итак теперь>> и флотом. Это ничего не доказывает.
+%   Bother.) Итак теперь мы имеем следующие указатели размещения
+%   флота:
+%   \begin{table}[H]
+%   \begin{tabular}{cl}
+%   \tt t & вверх полосы\\
+%   \tt b & вниз полосы\\
+%   \tt p & на отдельную страницу\\
+%   \tt h & здесь, если возможно\\
+%   \tt H & только здесь, (после этого текста)
+%   \end{tabular}
+%   ^^A\caption{Could it be that this just needs a caption?}
+%   \end{table}
+%
+%   \subsubsection{Опция {[H]}
+%   "--- настройка разрывов на страницы}\label{sec:listpen}
+%
+%   При использовании опции |[H]| мне понадобилось задать
+%   общие запреты на разрывы до и после <<привязанных>> флотов.
+%
+%   В одной книге запреты на разрывы на страницы вокруг таких
+%   флотов и вокруг перечней должны быть одинаковыми.
+%
+%   Используя идею команды |\allowdisplaybreaks| из пакета
+%   \pkg{amsmath} создан небольшой (beta-temp) пакет
+%   \pkg{listpen}, который предлагает следующие команды:
+%   \begin{Options}{\OptionLabel}
+%   \item[\cmd{\allowprelistbreaks}]устанавливает разрывы до перечней
+%     (а также привязанных флотов);
+%   \item[\cmd{\allowpostlistbreaks}]устанавливает разрывы
+%     после перечней (привязанных флотов);
+%   \item[\cmd{\allowitembreaks}]устанавливает разрывы между
+%     пунктами перечня.
+%   \end{Options}
+%   Все эти команды задают глобально, внутри группы или
+%   окружения разрывы, задаваемые цифрами
+%   от |[-4]| (нет разрыва) до |[4]| (всегда разрыв). Положительные
+%   значения опций команд аналогичны значениям опций
+%   команды |\pagebreak|. Отрицательные соответствуют
+%   опциям |[1]|--|[4]| в команде |\nopagebreak|.
+%   Значение по умолчанию для всех трёх команд |[-1]|, что
+%   равно установкам стандартных классов \LaTeX'а: \cls{book}, \cls{article}
+%   и других (|[-1]| соответствует значению |-\@lowpenalty|).
+%
+%   \subsection{Пакет \pkg{rotfloat}}
+%
+%   Код пакета \pkg{rotfloat} был также позаимствован
+%   пакетом \pkg{floatrow}.
+%   Если пакет \pkg{rotfloat} был загружен до \pkg{floatrow},
+%   вы получите сообщение об ошибке.
+%
+%   Пакет \pkg{floatrow} вводит код, который эмулирует уже загруженный
+%   пакет \pkg{rotfloat} и последующая его загрузка игнорируется.
+%   Пакет \pkg{rotfloat} построен таким образом, что может быть
+%   загружен в одной строке \verb|\usepackage| вместе с
+%   пакетом \pkg{rotating}, который может иметь опции. Необходимо
+%   также удалить пакет \pkg{rotfloat} из строки \verb|\usepackage|,
+%   где задан пакет \pkg{rotating} с опциями: в противном случае
+%   вы получите сообщение об ошибке со словами `option clash'.
+%
+%   \section{Макрокоманды для построения флотов}
+%
+%   \subsection{Макрокоманда Floatbox}\label{sec:floatbox}
+%
+%   Данный пакет предлагает макрокоманду, которая создаёт
+%   необходимое размещение компонентов
+%   содержимого и подписи плавающего объекта (см. также введение).
+%   Эта макрокоманда выглядит следующим образом:
+%   \begin{quote}
+%   |\floatbox[|\meta{preamble}|]{|\meta{captype}|}[|^^A
+%       \meta{width}|][|\meta{height}|][|\meta{vert pos}|]|\\
+%   |         {|\meta{caption}|}{|\meta{object}|}|\footnote{Порядок
+%     обязательных аргументов и их содержимое не имеет значения
+%     для построения флота. Эта макрокоманда исторически требует
+%     два обязательных аргумента, но они могут быть заполнены как
+%     угодно.}
+%   \end{quote}
+%   где\label{floatboxsets}:
+%   \begin{description}\itemsep0pt
+%   \item[\meta{preamble}]здесь могут быть такие команды, как
+%     |\capbeside|, которая размещает подписи сбоку объекта;
+%     |\nocapbeside| (размещает подписи сверху/снизу, в зависимости
+%     от настроек стиля); или другая повторяющаяся команда
+%     (даже возможно использование |\captionsetup| и
+%     |\thisfloatsetup| "--- см. примеры в документации и приложении).
+%   \item[\meta{captype}]тип флота, для которого строится оформление;
+%   \item[\meta{width}]ширина флота
+%     (если подпись сверху или снизу объекта),
+%     или ширина объекта (если подпись сбоку).
+%     Команда |\FBwidth| в аргументе \meta{width}
+%     позволяет использовать натуральную ширину объекта.\par
+%     \emph{Замечание}. Если вы используете \verb|\FBwidth| в
+%     аргументе \meta{width}, вы должны быть уверены, что
+%     содержимое объекта может быть помещено внутри |\hbox|
+%     (вы можете воспользоваться командой |\vspace| в начале
+%     и/или в конце содержимого объекта для корректировки
+%     вертикальных отбивок);
+%   \item[\meta{height}]высота флота
+%     (если подпись сверху или снизу),
+%     или высота объекта (если подпись сбоку);
+%   \item[\meta{vert pos}]вертикальное выравнивание содержимого
+%     объекта в боксе в случае, если аргумент \meta{height} имеет
+%     б\'ольшую величину чем заданная высота объекта,
+%     или флот помещён в ряд в окружении \env{floatrow}.
+%   \item[\meta{caption}]подпись и экспликации (вы можете использовать
+%     команду |\floatfoot| (см.~с.~\pageref{subsec:floatfoot});
+%     вы можете использовать команды
+%     |\footnote|/\allowbreak|\mpfootnotemark|/%^^A
+%     \allowbreak|\footnotetext|
+%     для сносок внутри флота, или команду |\floatfoot|;
+%   \item[\meta{object}]содержимое флота; вы также можете
+%     использовать команды
+%     |\footnote|/\allowbreak|\mpfootnotemark|/%^^A
+%     \allowbreak|\footnotetext|
+%     или |\floatfoot|.
+%   \end{description}
+%
+%   \begingroup
+%   Первый простейший пример:
+%\begin{verbatim}
+%\begin{figure}
+%\floatbox{figure}[4cm]
+%{\caption{Простой пример ...}}%
+%\label{fig:WcatI}}
+%{\input{TheCat.picture}}
+%\end{figure}
+%\end{verbatim}
+%   создал картинку на рис.~\ref{fig:WcatI}.\pagebreak[3]
+%   \begin{figure}
+%   \floatbox{figure}[4cm]
+%   {\caption{Простой пример использования команды \cmd{\floatbox}}%
+%   \label{fig:WcatI}}
+%   {\unitlength1.28\unitlength\input{TheCat.picture}}
+%   \end{figure}%
+%   \endgroup
+%
+%   Но более актуальный вариант использования команды |\floatbox|
+%   "--- поместить табличный заголовок \emph{над} таблицей и задать
+%   ширину заголовка равной ширине
+%   таблицы. Расположение заголовка определяется в преамбуле документа
+%   командой |\floatsetup[table]{style=Plaintop}|
+%\begin{verbatim}
+%\begin{table}
+%\floatbox{table}[\FBwidth] {\caption{Simple tabular in
+%\cmd{\floatbox}
+% with caption above}\label{tab:tabII}}
+%{\begin{tabular}{|l|c|c|}
+%  \hline
+%  Column head  & Data I    & Data II   \\
+%  \hline
+%  First row    &         1 &         2 \\
+%...
+%  \hline
+%\end{tabular}}
+%\end{table}
+%\end{verbatim}
+%   \DeleteShortVerb{\|}%
+%   \begin{table}
+%   \floatbox{table}[\FBwidth]
+%   {\caption{Простая таблица с заголовком
+%    сверху}\label{tab:tabII}}
+%   {\begin{tabular}{|l|c|c|}
+%     \hline
+%     \thead{Column head}  & \thead{Data I}    & \thead{Data II}   \\
+%     \hline
+%     First row    &         1 &         2 \\
+%     Second row   &         3 &         4 \\
+%     Third row    &         6 &         8 \\
+%     Fourth row   & \llap{1}0 & \llap{1}6 \\
+%     \hline
+%   \end{tabular}}
+%   \end{table}%
+%   \MakeShortVerb{\|}%
+%   как показано в табл.~\ref{tab:tabII}. Для задания ширины
+%   заголовка (или всего бокса
+%   плавающего объекта) равной ширине окружения \env{tabular}
+%   была использована команда |\FBwidth|
+%   в аргументе \meta{width}.
+%
+%   Следующий пример показывает окружение \env{figure} где подпись
+%   задана сбоку. В этом примере используются команды |\capbeside|,
+%   в аргументе \meta{preamble}, и |\FBwidth|, в аргументе
+%   \meta{width}. Подпись занимает оставшееся место в боксе
+%   шириной |\hsize| (в данном примере ширина бокса равна
+%   ширине основного текста "---|\textwidth|).
+%
+%\begin{verbatim}
+%\begin{figure}
+%\floatbox[\capbeside]{figure}[\FBwidth]
+% {\caption[Beside caption]{Beside caption ...}\label{...}}
+% {...}
+%\end{figure}
+%\end{verbatim}
+%   \begin{figure}[h]
+%   \floatbox[\capbeside]{figure}[\FBwidth]
+%   {\caption[Подпись сбоку]{Подпись сбоку and more text
+%   and some more text and a bit more text and
+%   a little more text and a little peace of text to fill
+%   space}\label{fig:beside:mouse}}
+%   {{\setlength\unitlength{4cm/58}\ifx\pspicture\undefined
+%     \else\psset{unit=\unitlength}\fi
+%   \input{Mouse.picture}}}
+%   \end{figure}
+%
+%   Ширина подписи сбоку и объекта по умолчанию равна одной
+%   <<колонке>>, иными словами половине ширины текущего значения
+%   |\hsize| (рис.~\ref{intro:beside}) исключая
+%   поля вокруг бокса и разделитель между объектом и подписью.
+%   (См. также другие примеры с подписью сбоку в приложении,
+%   с.~\pageref{fig:Idog:w}.)
+%
+%   \subsubsection{Пользовательские команды для флотов}
+%
+%   Использование команды |\floatbox| иногда получается очень
+%   сложным. Вы можете определить пользовательские команды для
+%   ваших целей и определить там необходимые настройки.
+%
+%   Определение пользовательской команды выглядит следующим образом:
+%   \begin{quote}
+%   |\newfloatcommand|\marg{command}%^^A\\\strut\qquad
+%   \marg{captype}\oarg{preamble}\oarg{default width}
+%   \end{quote}
+%   где:
+%   \begin{description}
+%   \item[\meta{command}]команда пользователя (без обратного слэша);
+%   \item[\meta{captype}]тип флота, для которого создаётся команда;
+%   \item[\meta{preamble}]
+%     вы можете использовать команды, перечисленные на
+%     с.~\pageref{floatboxsets}
+%     и другие команды оформления, как показано в примерах;
+%     вы можете попробовать использовать некоторые другие
+%     повторяющиеся команды (например,
+%     |\captionsetup| или |\thisfloatsetup|);
+%   \item[\meta{default width}]здесь вы можете определить любую
+%     величину, типа |6cm|
+%     или |.75\textwidth|\footnote{Есть также возможность установить
+%     постоянную ширину
+%     для данного типа флота, используя ключ \texttt{floatwidth=}
+%     в команде \cmd{\floatsetup}.}; если вы зададите команду
+%     |\FBwidth| ширина флота (если подпись сверху или снизу
+%     "--- должна быть определена |\nocapbeside|
+%     в \meta{preamble}) или ширина объекта (если подпись
+%     стоит сбоку "--- команда |\capbeside| в \meta{preamble}) будет
+%     равна ширине содержимого плавающего объекта.
+%   \end{description}
+%
+%   Уже определены следующие пользовательские команды:\label{abbrcom}
+%   \begin{quote}
+%   |\newfloatcommand{ffigbox}{figure}[\nocapbeside]|\\*
+%   |\newfloatcommand{fcapside}{figure}[\capbeside]|\\*
+%   |\newfloatcommand{ttabbox}{table}[\captop][\FBwidth]|
+%   \end{quote}
+%   Первые две определены для рисунков, а последняя "--- для таблицы.
+%   Вы можете переопределить эти команды, используя команду
+%   |\renewfloatcommand| (она использует те же
+%   аргументы, как и |\newfloatcommand|).
+%
+%
+%   \subsection{Помещение флотов рядом}\label{sec:floatrow}
+%
+%   Если вам нужно поместить два или более флотов рядом, вы
+%   можете воспользоваться окружением \env{floatrow}.
+%
+%   Это окружение выглядит следующим образом:
+%   \begin{quote}
+%   |\begin{floatrow}[|\meta{number of beside floats}|]|\\
+%   |\floatbox...|\\
+%   |...|\\
+%   |\floatbox...|\\
+%   |...|\\
+%   |\end{floatrow}|
+%   \end{quote}
+%
+%   И теперь пример. Первый флот (в |\ffigbox|) имеет ширину
+%   по умолчанию, равную <<колонке>>
+%   ряда, следующий использует ширину включённой графики (использована
+%   команда |\FBwidth| в дополнительном аргументе \meta{width}),
+%   третий занимает оставшееся место в ряду
+%   которое подсчитывается командой |\Xhsize|.
+%
+%   \emph{Замечание}. Обычно команда |\Xhsize| используется для
+%   последнего флота в ряду. Но
+%   если вы используете пакет \pkg{calc} вы можете попытаться
+%   использовать |\Xhsize| раньше, если известна
+%   \emph{абсолютная} величина ширины флотов по правую сторону,
+%   или использовать в аргументе \meta{width} нечто вроде |\Xhsize/2|
+%   а затем |\Xhsize| для последних двух боксов в |\floatbox|,
+%   см. также примеры \file{frsample10}--\file{frsample12},
+%   и файл \file{fr-sample.tex}.
+%\begin{verbatim}
+%\begin{floatrow}[3]
+%\ffigbox
+%{\caption{Рисунок рядом~I...}...}
+%{...}
+%
+%\ffigbox[\FBwidth]
+%{\caption{Рисунок рядом~II...}...}
+%{...}
+%
+%\ffigbox[\Xhsize]
+%{\caption{Рисунок рядом~III...}...}
+%{...}
+%\end{floatrow}
+%\end{figure}
+%\end{verbatim}
+%   \begin{figure}
+%   \begin{floatrow}[3]
+%   \ffigbox
+%   {\caption{Рисунок рядом~I, ширина <<колонки>>}%
+%   \label{fig:row:WcatI}}
+%   {\unitlength1.25\unitlength\ifx\pspicture\undefined
+%    \else\psset{unit=\unitlength}\fi
+%   \input{TheCat.picture}}
+%
+%   \ffigbox[\FBwidth]
+%   {\caption{Рисунок рядом~II в окружении \env{floatrow},
+%     ширина бокса равна ширине графики}\label{fig:row:BcatI}}
+%   {\unitlength1.25\unitlength\ifx\pspicture\undefined
+%    \else\psset{unit=\unitlength}\fi
+%   \input{TheBlackCat.picture}}
+%
+%   \ffigbox[\Xhsize]
+%   {\caption{Рисунок рядом~III в \env{floatrow},
+%   занимает остальное место в ряду}%
+%   \label{fig:row:mouseI}}
+%   {{\setlength\unitlength{\hsize/58}\ifx\pspicture\undefined
+%     \else\psset{unit=\unitlength}\fi
+%   \input{Mouse.picture}}}
+%   \end{floatrow}
+%   \end{figure}%
+%   Результат вы видите в ряду
+%   рисунков~\ref{fig:row:WcatI}--\ref{fig:row:mouseI}. Вертикальное
+%   выравнивание флотов лежит по нижней линии верхней части
+%   (здесь: графики) и верху нижней части (подписи).
+%
+%   \subsection{Сноски внутри окружения
+%          флота}\label{sec:floatfootnote}
+%
+%   Иногда таблица или рисунок может содержать материал, который
+%  помечается а снизу даётся объяснение в виде сноски. Пакет имеет
+%   механизм, позволяющий размещение сносок внутри окружения флота,
+%   как это сделано в окружении \env{minipage}.
+%
+%   В тех случаях, когда несколько элементов
+%   имеют одинаковую сноску, мы не можем воспользоваться стандартной
+%   комбинацией |\footnotemark|---|\footnotetext|, потому что команда
+%   |\footnotemark| создаёт знак для сноски основного текста.
+%   Для этих случаев данный пакет предлагает макрокоманду
+%   |\mpfootnotemark| вместо |\footnotemark|%
+%   \footnote{Та же макрокоманда также определена в пакете
+%   \pkg{footmisc}, версия 4.10, датированная 2003/01/20.}.
+%
+%   Макрокоманда |\floatbox| использует определение линейки для
+%  сноски (команда |\FBfootnoterule|) и отбивку до сносок и
+%   экспликаций (ключ |footskip=|). (См. также
+%   с.~\pageref{sec:footnotestyle} о вариантах линейки для сносок.)
+%
+%   \subsection{Макрокоманда для экспликаций}\label{subsec:floatfoot}
+%
+%   Если таблица или рисунок имеют дополнительные объяснения
+%   которые не должны быть в подписи и они не являются сноской
+%   вы можете использовать команду |\floatfoot|. Команда |\floatfoot|
+%   использует механизм оформления команд |\caption| и использует
+%   выключку, заданную для подписей;
+%   |*|-форма (|\floatfoot*|) печатает содержимое в виде обычного
+%   абзаца без отступа (см. табл.~\ref{tab:floatfoot}).
+%
+%   Для определения шрифта для экспликаций используйте ключ
+%   \texttt{footfont=} (с.~\pageref{sec:setfloatfoot}) в команде
+%   |\floatsetup|. Вы можете задать
+%   дополнительные настройки оформления задав командную
+%   последовательность \cmd{\captionsetup[floatfoot]}.
+%\begin{verbatim}
+%\begin{table}
+%\ttabbox
+%{\caption{Таблица с экспликацией}%
+%\label{tab:floatfoot}}
+%{\extrarowheight1pt
+% \tabcolsep2\tabcolsep
+% \begin{tabular}{|l|c|c|}
+%  \hline
+%  ...
+% \end{tabular}%
+% \floatfoot*{`Data I' column ...}}
+%\end{table}
+%\end{verbatim}
+%   \DeleteShortVerb{\|}%
+%   \begin{table}
+%   \ttabbox
+%   {\caption{Таблица с экспликацией}%^^A
+%   \label{tab:floatfoot}}%^^A
+%    {\extrarowheight1pt\tabcolsep2\tabcolsep
+%   \begin{tabular}{|l|c|c|}
+%     \hline
+%     \thead{Column head}  & \thead{Data I}     & \thead{Data II} \\
+%     \hline
+%     First row    & \phantom01 & 2       \\
+%     Second row   & \phantom06 & 4       \\
+%     Third row    &         28 & 8       \\
+%     \hline
+%   \end{tabular}%^^A
+%   \floatfoot*{`Data I' column---numbers which equal to sum of all
+%   their divisors; `Data II' column---$2^n$ values}}
+%   \end{table}%
+%   \MakeShortVerb{\|}%
+%
+%   \emph{Замечания.} 1)\enskip Пакет \pkg{float} определяет
+%   дополнительный аргумент после текста подписи. Поскольку эта
+%   возможность не была документирована в части документации для
+%   пользователей текущая версия пакета \pkg{caption} (3.0 и выше),
+%   а также пакет \pkg{floatrow}, не поддерживают эту возможность.
+%   Используйте команду |\floatfoot| и команды
+%   |\footnote|/|\footnotemark|/|\footnotetext|.
+%
+%   2)\enskip Если вы используете одновременно команды |\floatfoot|
+%   и |\footnote| внутри одного флота, содержимое команды |\floatfoot|
+%   появится над |\footnote|.
+%
+%   3)\enskip Сноски и экспликации могут быть размещены несколькими
+%   способами: в самом низу флота, под подписью
+%   (даже в случае подписи сверху). См. с.~\pageref{foot:pos}
+%   и файл примера \file{frsample01.tex}. В случае подписи сбоку,
+%   сноски и экспликации всегда помещаются под подписью.
+%
+%
+%   \subsection{Корректировка вертикальных отбивок
+%        в флоте}\label{sec:FBabskips}
+%
+%   В заключительном варианте документа вам возможно понадобится
+%   откорректировать вертикальные отбивки между флотом и основным
+%   текстом, между содержимым объекта и подписью.
+%
+%   Для изменения отбивок между флотом и основным текстом вы можете
+%   использовать две простые команды |\FBaskip| и |\FBbskip|.
+%   Например, определите
+%   \begin{verse}
+%    |\renewcommand\FBaskip{-4pt}|
+%   \end{verse}
+%   чтобы передвинуть флот вверх (или уменьшить отбивку сверху)
+%   на 4pt. В данном документе
+%   команда |\FBaskip| понадобилась для корректировки положения
+%   некоторых рисунков в оборку.
+%
+%   Используйте команду |\vspace| для корректировки отбивок вокруг
+%   содержимого объекта\footnote{В простом окружении флота можно
+%   пользоваться и командой \cmd{\vskip}. Но команды \cmd{\floatbox}
+%   (сама \cmd{\floatbox}, \cmd{\ffigbox}\dots) в случае использования
+%   в аргументе \meta{width} опции \cmd{\FBwidth}, выдадут сообщение
+%   об ошибке если встретят команду \cmd{\vskip}.}.
+%
+%   \subsection{Плавающие объекты как в обычном \LaTeX'е}
+%
+%    Пакет \pkg{floatrow} переопределяет окружение флотов так, чтобы
+%    на выходе получалось единообразное
+%    оформление всех флотов. Это накладывает некоторые ограничения
+%    на запись флота в исходном файле, о которых, в частности,
+%    говорилось во введении. Если вам всё
+%    же нужно окружение, работающее как в обычном \LaTeX'е
+%    поместите команду |\RawFloats| \emph{внутри} окружения:
+%\begin{verbatim}
+%\begingroup
+%\captionsetup[table]{position=top}
+%\begin{figure}\RawFloats
+%\begin{minipage}{0.45\textwidth}
+%\centering ...
+%\caption{...}\label{...}
+%\end{minipage}
+%\begin{minipage}{0.45\textwidth}
+%\captionof{table}{...}\label{...}
+%\centering ...
+%\end{minipage}
+%\end{figure}
+%\endgroup
+%\end{verbatim}
+%    и вы получите рис.~\ref{Right:expect:fig}
+%    и табл.~\ref{Right:expect:tab}\footnote{Это будет работать,
+%    если вы не используете необычного оформления.}.
+%    \begingroup
+%    \captionsetup[table]{position=top}
+%    \begin{figure}\RawFloats
+%    \begin{minipage}{0.45\textwidth}
+%    \centering \input{Mouse.picture}
+%    \caption{Подрисуночная подпись в обычном \LaTeX'е}%
+%    \label{Right:expect:fig}
+%    \end{minipage}
+%    \begin{minipage}{0.45\textwidth}
+%    \captionof{table}{Табличный заголовок в обычном
+%     \LaTeX'е}\label{Right:expect:tab}
+%    \centering\tabcolsep3\tabcolsep
+%    \begin{tabular}{|c|c|} A & B  \\ C & D \end{tabular}
+%    \end{minipage}
+%    \end{figure}
+%    \endgroup
+%
+%    Из приведённого ниже примера видно, что окружение \env{floatrow}
+%    и команды |\floatbox| всё  равно
+%    работают после |\RawFloats| (рис.~\ref{intro:leftfig:raw}
+%    и табл.~\ref{intro:righttab:raw})
+%\begin{verbatim}
+%\begin{figure}\RawFloats\CenterFloatBoxes
+% \begin{floatrow}
+%   \floatbox{figure}
+%    {...}{\caption{...}\label{...}}
+%
+%   \floatbox{table}[\FBwidth]
+%    {...}{\caption{...}\label{...}}
+% \end{floatrow}
+%\end{figure}
+%\end{verbatim}
+%   \begin{figure}\RawFloats\CenterFloatBoxes
+%    \begin{floatrow}
+%   \floatbox{figure}
+%   {\input{Mouse.picture}}
+%   {\caption{Подрисуночная подпись внутри \cmd{\floatbox} в обычном
+%    \LaTeX'е}\label{intro:leftfig:raw}}%
+%
+%   \floatbox{table}[\FBwidth]
+%   {\caption{Табличный заголовок внутри \cmd{\floatbox}
+%    в обычном \LaTeX'е}\label{intro:righttab:raw}}
+%   {\tabcolsep3\tabcolsep\begin{tabular}{|c|c|} A & B  \\ C & D
+%    \end{tabular}}
+%    \end{floatrow}
+%   \end{figure}%^^A
+%   См. также с.~\pageref{mixrow} о том как задать и выровнять
+%   различные типы флотов как рис.~\ref{intro:leftfig:raw} и
+%   табл.~\ref{intro:righttab:raw} в одном ряду
+%   (окружении \env{floatrow}).
+%
+%
+%   \section{Тандемы стилей}
+%
+%   Несколько следующих разделов показывают примеры и объясняют
+%   некоторые замеченные особенности с использованием пакета
+%   \pkg{floatrow} вместе с другими пакетами. Это не полный
+%   список таких пакетов. Возможно совмещение и с другими версиями
+%   указанных пакетов, и с неуказанными пакетами тоже.
+%
+%   \subsection{Пакет \pkg{caption}}
+%
+%   Тестировалось с версиями v3.0a--v3.0i.
+%
+%   Пакет \pkg{caption} обладает сильным механизмом создания
+%   оформления подписей, поэтому \pkg{floatrow} адресует создание
+%   новых стилей для подписей этому пакету (см. документацию для
+%   пакета \pkg{caption}).
+%
+%   Пакет \pkg{floatrow} добавляет возможность создать варианты
+%   оформления подписей для флотов с различным размещением (например
+%   для флотов вразрез двух колонок или широких флотов,
+%   или развёрнутых вертикально флотов) за счёт использования
+%   дополнительного аргумента в команде
+%   |\captionsetup|.
+%
+%   Например вы желаете создать специальное оформление для подписи
+%   под широким флотом или
+%   флотом вразрез двух колонок. В этом случае вы можете использовать
+%   \begin{quote}
+%   |\captionsetup[widefloat]|\marg{options}
+%   \end{quote}
+%   или, для широких или рисунков вразрез двух колонок:
+%   \begin{quote}
+%   |\captionsetup[widefigure]|\marg{options}
+%   \end{quote}
+%   Приоритет опций в команде |\captionsetup| такой же, как в опциях
+%   команды |\floatsetup|. В приведённых примерах настройки
+%   |\captionsetup[widefigure]| будут <<сильнее>>, чем
+%   |\captionsetup[widefloat]|. Приоритет и использование
+%   <<\meta{float subtype}>> в дополнительных аргументах
+%   см. на с.~\pageref{stsetorder}\label{cap:beside:order}.
+%
+%
+%   \subsection{Пакет \pkg{subfig}}
+%
+%   Тестировалось с версиями 1.2, датированной 2003/12/20 и 1.3
+%   датированной 2005/06/28.\nopagebreak
+%
+%   Пример с \cmd{\subfloat}'ами (табл.~\ref{tab:tabIII}).
+%   Команда настройки оформления в преамбуле,
+%   |\floatsetup[table]{style=Plaintop}|, включает
+%   также настройки для положения подподписей, задаваемых пакетом
+%   \pkg{subfloat} (аналогично |\captionsetup[table]{position=top}| в
+%   пакете \pkg{caption}):
+%\begin{verbatim}
+%\begin{table}\extrarowheight1pt
+%  \floatbox{table}[\FBwidth]
+%   {\caption{Two ...}\label{...}}
+%   {\begin{subfloatrow}
+%     \subfloat[First table]
+%      {\begin{tabular}{|l|c|c|}
+%        ...
+%       \end{tabular}}
+%     \subfloat[Second table]
+%      {\begin{tabular}{|l|c|c|}
+%        ...
+%       \end{tabular}%
+%    \end{subfloatrow}}}
+%\end{table}
+%\end{verbatim}
+%   \DeleteShortVerb{\|}%
+%   \captionsetup[subtable]{textfont=md}
+%   \begin{table}[h]\extrarowheight1pt
+%   \floatbox{table}[\FBwidth]
+%   {\caption{Две подтаблицы (\cmd{\subtable})
+%    (созданные с пакетом \pkg{subfig})}\label{tab:tabIII}}
+%   {\begin{subfloatrow}
+%     \subfloat[Первая подтаблица]
+%      {\begin{tabular}{|l|>{\phantom0}c|>{\phantom0}c|}
+%       \hline
+%       \multirowthead{2}[-1ex]{Left Column Head}
+%                  & \multicolumn{2}{c|}{\thead{Data}} \\
+%                  \cline{2-3}
+%                  & \multicolumn{1}{c|}{\thead{I}}
+%                              & \multicolumn{1}{c|}{\thead{II}}
+%       \\\hline
+%       First row    &         1 &         2 \\
+%       Second row   &         3 &         4 \\
+%       Third row    &         6 &         8 \\
+%       Fourth row   & \llap{1}0 & \llap{1}6 \\
+%       \hline
+%       \end{tabular}}
+%
+%   \subfloat[Вторая подтаблица with long long long subcaption]
+%   {\begin{tabular}{|l|c|c|}
+%     \hline
+%       \multirowthead{2}[-1ex]{Column Head}
+%                  & \multicolumn{2}{c|}{\thead{Data}} \\
+%                  \cline{2-3}
+%                  & \multicolumn{1}{c|}{\thead{I}}
+%                              & \multicolumn{1}{c|}{\thead{II}}
+%     \\\hline
+%     First row    & \phantom01 & \phantom02 \\
+%     Second row   & \phantom03 & \phantom04 \\
+%     Third row    & \phantom06 & \phantom08 \\
+%   %^^A   Fourth row   &         10 &         16 \\
+%     \hline
+%   \end{tabular}}%
+%   \end{subfloatrow}}
+%   \end{table}%
+%   \MakeShortVerb{\|}%
+%
+%   \emph{Замечание.} В данном примере было использовано окружение
+%   \env{subfloatrow}. Это упрощённый вариант окружения
+%   \env{floatrow}, который распространяет вертикальное выравнивание
+%   содержимого объектов и подписей, а между подфлотами
+%   создаёт разделитель, заданный ключом \texttt{subfloatrowsep=}.
+%   Этот ключ использует те же опции, что и ключи
+%   \texttt{floatrowsep=} и \texttt{capbesidesep=} (опции этих ключей
+%   задаются командой |\DeclareFloatSeparators|,
+%   с.~\pageref{decl:sep}).
+%
+%^^A   To use \env{subfloatrow} environment load
+%^^A   \pkg{fr-subfig}\footnote{This package could have only beta-status,
+%^^A   because of it redefines two macros of \pkg{subfig} package for
+%^^A   creation of subcaption and subfloat boxes.} package installed
+%^^A   together with \pkg{floatrow}.\pagebreak[3]
+%
+%   См. примеры с окружениями \env{subfloatrow} в файлах примеров
+%   \file{frsample03.tex}, \file{frsample05.tex}; а также
+%   \file{frsample10.tex}--\file{frsample12.tex} где подфлоты
+%   даны в различных оформлениях и размещениях.)
+%
+%   Следующий пример с подписью сбоку
+%   (рис.~\ref{fig:subfig:catsI}).%^^A
+%   \footnote{В версии 1.2 подобъекты рядом, один из которых помещён в
+%   \cmd{\fbox}, а другой "--- нет (как
+%   рис.~\ref{fig:subfig:catsI}), и в других подобных ситуациях
+%   могут дать невыровненные по низу (верху)
+%   подподписи. В данном примере (когда загружен пакет
+%   \pkg{pstricks}) при использовании версии
+%   1.2 пришлось задать следующие строки для
+%   подрисунка~\ref{subfig:b}:\\[2ex]\ttfamily
+% \cmd{\raisebox}\{\cmd{\depth}\}\{\cmd{\input}\{\texttt{TheBlackCat.picture}\}\}}
+%\begin{verbatim}
+%\floatsetup{style=Shadowbox,capbesidesep=columnsep,
+%  capbesideframe=yes,capbesideposition={top,inside}}
+%\fcapside[\FBwidth]
+%{\begin{subfloatrow}
+% \subfloat[White ...]{...}
+% \subfloat[Black ...]{...}
+%\end{subfloatrow}}
+%{\caption{...}}
+%\end{verbatim}
+%   \floatsetup[figure]{style=Shadowbox,capbesidesep=columnsep,capbesideframe=yes,
+%     capbesideposition={top,inside}}
+%   \begin{figure}[h]
+%   \fcapside[\FBwidth]
+%   {\begin{subfloatrow}
+%   \subfloat[Белая кошка\label{subfig:w}]{\input{TheCat.picture}}
+%
+%   \subfloat[Чёрный кот\label{subfig:b}]%^^A
+%     {\input{TheBlackCat.picture}}%
+%   \end{subfloatrow}}
+%   {\caption{Подпись сбоку выровненная по верху, оформление флота в
+%   стиле \texttt{Shadowbox}}\label{fig:subfig:catsI}}
+%   \end{figure}
+%
+%
+% \vfil\pagebreak[4]
+%   \subsection{Пакет \pkg{wrapfig}}
+%
+%   \begingroup
+%   \def\FBaskip{-14pt}
+%   \floatsetup[figure]{style=ruled,relatedcapstyle=yes,footposition=caption}
+%   \begin{wrapfigure}[13]{O}{48mm}
+%^^A   \ffigbox[40mm]
+%   {\caption{Простой рисунок в оборку (пакет \pkg{wrapfig})}%
+%   \floatfoot{Обычный рисунок может не получиться в версии
+%   3.3}\label{fig:wrapfig:WcatI}}
+%   {\unitlength1.728\unitlength\ifx\pspicture\undefined
+%    \else\psset{unit=\unitlength}\fi
+%   \input{TheCat.picture}}
+%   \end{wrapfigure}
+%
+%   Тестировано с версией 3.3 датированной 1999/10/12
+%   (стиль из группы пакетов \pkg{ltxmisc})
+%   и версией 3.6 датированной 2003/01/31 (отдельный пакет).
+%
+%   Аргументы при задании окружения (текст взят из комментариев
+%   к пакету):
+%   \begin{quote}
+%   |\begin{wrapfigure}%|\\*
+%   \strut\quad\oarg{number}\marg{placement}|%|\\*
+%   \strut\quad\oarg{overhang}\marg{width of figure}\\
+%   |...|\\*
+%   |\end{wrapfigure}|
+%   \end{quote}
+%   \meta{Placement} это может быть \texttt{r}, \texttt{l},
+%   \texttt{i}, \texttt{o}, \texttt{R}, \texttt{L}, \texttt{I},
+%   \texttt{O}, для расположения справа, слева, к внутреннему полю, к
+%   внешнему полю. Строчные буквы задают неплавающее размещение,
+%   прописные "--- плавающий вариант. Рисунок может выступать
+%   в поле на величину \meta{overhang}, если она задана,
+%   или на величину заданную в параметре |\wrapoverhang|,
+%   который обычно равен нулю. Параметр \meta{number} задаёт число
+%   строк в оборку, которое обычно рассчитывается автоматически из
+%   высоты рисунка, но может быть задан и вручную, например
+%   \begin{quote}
+%   |\begin{wrapfigure}[10]{r}[34pt]{5cm}|\\* \meta{figure}\\*
+%   |\end{wrapfigure}|
+%   \end{quote}
+%   \endgroup
+%
+%   \begingroup
+%   \def\FBaskip{-14pt}
+%   \floatsetup[figure]{style=BOXED,frameset={\fboxsep9pt}}
+%   \begin{wrapfigure}{O}{0mm}
+%   \ffigbox[48mm]
+%   {\par{\setlength\unitlength{\hsize/64}\ifx\pspicture\undefined
+%    \else\psset{unit=\unitlength}\fi
+%   \input{TheCat.picture}}}
+%   {\caption{Рисунок в оборку с командой \cmd{\ffigbox}
+%    (пакет \pkg{wrapfig})}%
+%   \label{fig:wrapfig:WcatII}}
+%   \end{wrapfigure}
+%
+%   \emph{Замечание Floatrow.}
+%   Для рисунка, помещённого в окружение \env{wrap...} вы должны
+%   задать ширину в обязательном аргументе. Если вы зададите
+%   |0mm| как аргумент \marg{width of figure}, пакет \pkg{wrapfig}
+%   рассчитает ширину по натуральной ширине содержимого объекта.
+%
+%   Иногда над (под) флотом в окружении \env{wrap...} может появиться
+%  нежелательный пробел. Для корректировки вертикальной отбивки
+%   используйте определение команд |\FBaskip| и
+%   |\FBbskip| (см. разд.~\ref{sec:FBabskips}).
+%
+%   \emph{Специальные настройки}.
+%
+%   Вы можете создать настройки для окружения \env{wrap...}, здесь
+%   существуют следующие приоритеты
+%   (обратите внимание, что вы можете задать и специальные настройки
+%   оформления подписей в команде |\captionsetup|.):
+%   \begin{itemize}\itemsep0pt
+%   \item %
+%    если существуют настройки
+%    |\floatsetup[wrap|\meta{captype}|]{...}|
+%    \pkg{floatrow} использует эти настройки "--- они <<сильнейшие>>
+%   настройки; если они отсутствуют "--- использует настройки из
+%    следующего пункта;
+%^^A   \end{itemize}
+%
+%^^A   \begin{itemize}
+%   \item
+%    если существуют настройки |\floatsetup[wrapfloat]{...}|
+%    \pkg{floatrow} использует эти настройки "--- эти настройки
+%    <<сильнее>> чем следующие; если они
+%    отсутствуют "--- настройки данного типа флотов\\[\medskipamount]
+%    |\floatsetup[|\meta{captype}|]{...}|\,;\\[\medskipamount]
+%    если и они отсутствуют "--- настройки по умолчанию
+%     (|\floatsetup{...}| или настройки пакета).
+%   \end{itemize}
+%
+%
+%   \emph{Обнаруженные ограничения}.
+%
+%   Использование простого окружения в версии  3.3 не
+%   даст правильного результата с текущей версией \pkg{floatrow}
+%   "---используйте |\floatbox|.
+%   Версия 3.6 позволяет использование простых окружений
+%   \env{wrap...} со стилями \texttt{plain} (или
+%   \texttt{ruled}), но
+%   стили с рамками, как \texttt{Boxed} (где текст внутри рамки
+%   изменяет свою ширину под рамку, ширина которой равна
+%   текущему значению |\hsize|)
+%   может работать только с командой |\floatbox|, в противном
+%   случае вы получите некорректное
+%   оформление и ширину флота.
+%   \endgroup
+%
+%   \begingroup
+%   \floatsetup[figure]{style=WSHADOWBOX,captionskip=8pt}
+%   \subsection{Пакет \pkg{floatflt}}
+%
+%   \begin{floatingfigure}[v]{54mm}\def\FBaskip{-2.5pt}
+%   \ffigbox[54mm]
+%   {\setlength\unitlength{.85\hsize/60}\ifx\pspicture\undefined
+%    \else\psset{unit=\unitlength}\fi
+%   \input{BlackDog.picture}}
+%   {\caption{\hyphenpenalty-100\pretolerance-1%
+%   Рисунок в оборку внутри окружения \env{floating\-figure}
+%   (\pkg{floatflt})}\label{fig:floatflt:WcatI}}
+%   \end{floatingfigure}%\FBbuildtrue
+%
+%   \noindent Тестировалось с версией v.1.3,
+%   1996/02/27.
+%
+%   \emph{Обнаруженные ограничения} 1)\enskip У данного пакета нет
+%   поддержки для создания нового окружения \env{floating...}.
+%   Но поскольку окружение \env{floatflt}
+%   требует использование команд |\floatbox| в любом случае, вы
+%   можете использовать как \env{floatingfigure} так и
+%   \env{floatingtable} и задавать необходимый
+%   тип флота в аргументе команды |\floatbox| (или использовать
+%   соответствующую пользовательскую команду, типа |\ffigbox|).
+%
+%
+%   Следующие ограничения могут быть не связаны с пакетом
+%   \pkg{floatrow}.
+%
+%   2)\enskip Если вы поместите окружение \env{floatingfigure} сразу
+%   после команд |\...section| вы должны (если вы не задаёте абзацного
+%   отступа после заголовков) поставить |\noindent| в первом абзаце.
+%
+%   3)\enskip Окружения \env{floatflt} могут дать неверный результат
+%   с окружениями перечней (\env{list}).
+%
+%   4)\enskip Чтобы получить корректную отбивку перед заголовком
+%   следующего раздела |\...section| вам
+%   может быть придётся задать следующие команды;
+%   |\makeatletter\@nobreakfalse\makeatother| (как было сделано
+%   в английской документации перед следующим разделом).
+%
+%   \makeatletter\@nobreakfalse\makeatother
+%
+%   \penalty-10000
+%
+%   \subsection{Пакет \pkg{picins}}
+%
+%   \floatsetup[figure]{style=ruled}
+%
+%   \parpic[l]{{%\def\floatrowsep{}\let\FBiffloatrow\iftrue
+%   \def\FBbskip{12pt}
+%   \ffigbox[42mm]
+%   {{\setlength\unitlength{18mm/61}\ifx\pspicture\undefined
+%     \else\psset{unit=\unitlength}\fi
+%   \input{BlackCat.picture}}}
+%   {\caption{Рисунок в оборку (\cmd{\parpic});
+%   \cmd{\floatbox}
+%    с опцией \cmd{\FBwidth}}\label{fig:parpic:BcatI}}%
+%   }}
+%
+%   \noindent Тестировано с версией v\,3.0, 1999/10/12.
+%
+%   Этот пакет создаёт рисунки внутри абзаца. Он предлагает
+%   использование подписей с помощью команд |\piccaption|.
+%   Также он поддерживает настройки
+%   пакета \pkg{caption}.
+%
+%   В макрокоманде \cmd{\parpic} можно использовать макрокоманду
+%   |\floatbox| внутри обязательного
+%   аргумента.
+%
+%^^A   \emph{Founded limitations}.\nopagebreak
+%
+%^^A   1)\enskip In |\parpic| argument you ought to put before |\floatbox|
+%^^A   following commands:\\[\medskipamount]
+%^^A   |\def\floatrowsep{}|\allowbreak|\let\FBiffloatrow\iftrue|\\[\medskipamount]
+%^^A   to get correct layout.
+%
+%   Следующие ограничения могут быть не связаны с пакетом \pkg{floatrow}.
+%
+%^^A   \floatsetup[figure]{style=DOUBLEBOX}
+%
+%^^A   \parpic[r]{{%\def\floatrowsep{}\let\FBiffloatrow\iftrue
+%^^A   \hsize36mm
+%^^A   \ffigbox[\hsize]
+%^^A   {{\setlength\unitlength{16mm/61}\ifx\pspicture\undefined
+%^^A     \else\psset{unit=\unitlength}\fi
+%^^A   \input{BlackCat.picture}}}
+%^^A   {\caption{Wrapped figure (\cmd{\parpic})}\label{fig:parpic:BcatII}}%
+%^^A   }}
+%
+%   1)\enskip Если вы задаёте \cmd{\parpic} сразу после команды |\...section|
+%   вам придётся (если вы отменяете абзацный отступ после заголовков)
+%   задать команду |\noindent|
+%   для первого абзаца.
+%
+%   2)\enskip Вы можете попытаться использовать \cmd{\parpic} внутри
+%   окружения перечня,
+%   но в некоторых случаях использование \cmd{\parpic} в окружении
+%   перечня может дать неверный результат.
+%
+%   3)\enskip Этот пакет не имеет опции \meta{outside} или
+%   \meta{inside}, как предыдущие два пакета (опция |[o]| означает
+%   овальную рамку вокруг картинки), поэтому вы должны задавать
+%   горизонтальное расположение
+%   вручную.
+%
+%   \endgroup
+%
+%   \subsection{Пакет \pkg{rotating} и окружение
+%   \env{sideways\ldots}}
+%
+%   Тестировано с версией v2.13 датированной Sep. 1992.
+%
+%   Далее идёт пример (рис.~\ref{fig:rot}) с развёрнутым вертикально
+%   флотом, использующим окружение
+%   \env{sidewaysfigure}.
+%\begin{verbatim}
+%\floatsetup[figure]{style=WSHADOWBOX}
+%\begin{sidewaysfigure}\emptyfloatpage
+%\ffigbox[\FBwidth]
+%{\includegraphics[width=4in]{pslearn.eps}}
+%{\caption{Figure inside \env{sidewaysfigure} environment}%
+%\label{fig:rot}}
+%\end{sidewaysfigure}%
+%\end{verbatim}
+%   \floatsetup[figure]{style=WSHADOWBOX}
+%   \begin{sidewaysfigure}\emptyfloatpage
+%   \ffigbox[\FBwidth] {\includegraphics[width=4in]{pslearn}}
+%   {\caption{Рисунок развёрнутый вертикально внутри окружения
+%     \env{sidewaysfigure}}%
+%   \label{fig:rot}}
+%   \end{sidewaysfigure}%
+%   %^^A For rotating floats on right side (like in
+%   %^^A current documentation) put in preamble
+%   %^^A \begin{quote}
+%   %^^A |\usepackage[figuresright]{rotating}|
+%   %^^A \end{quote}
+%
+%
+%   \emph{Специальные настройки}.\nopagebreak
+%
+%   Вы можете создать специальные настройки для всех флотов,
+%   развёрнутых вертикально, которые используют
+%   окружение \env{sideways...} (см.~с.~\pageref{stsetorder}).
+%
+%   Для одноколонного флота
+%   \begin{itemize}
+%   \item %
+%    если существуют настройки
+%    |\floatsetup[rot|\meta{captype}|]{...}|
+%    пакет использует эти настройки "--- <<сильнейшие>>  настройки;
+%    если они отсутствуют "---
+%    используются настройки из следующего пункта;
+%   \item
+%    если существуют настройки |\floatsetup[rotfloat]{...}|
+%    пакет использует эти настройки "--- эти настройки <<сильнее>> чем
+%    следующие; если они отсутствуют "---  настройки для данного типа
+%    флота (|\floatsetup[|\meta{captype}|]{...}|);
+%    если и они отсутствуют "---  используются настройки по умолчанию
+%    в команде (|\floatsetup{...}| или настройки пакета).
+%   \end{itemize}
+%
+%   Для флота вразрез двух колонок или широкого флота (|*|-окружение)
+%   \begin{itemize}
+%   \item %
+%    если существуют настройки
+%    |\floatsetup[widerot|\meta{captype}|]{...}|
+%    пакет использует эти настройки "--- <<сильнейшие>>  настройкиt;
+%    если они отсутствуют "---используются настройки из следующего
+%    пункта;
+%   \item %
+%    если существуют настройки |\floatsetup[widerotfloat]{...}|
+%    пакет использует эти настройки "--- эти настройки <<сильнее>>
+%    чем следующие; если они отсутствуют
+%    "--- используются настройки из следующего пункта;
+%   \item %
+%    если существуют настройки
+%    |\floatsetup[rot|\meta{captype}|]{...}|
+%    пакет использует эти настройки "---эти настройки <<сильнее>>
+%    чем следующие; если они отсутствуют
+%    "---используются настройки из следующего пункта;
+%   \item %
+%    если существуют настройки |\floatsetup[rotfloat]{...}|
+%    пакет использует эти настройки "---эти настройки <<сильнее>>
+%    чем следующие;
+%   %^^A if they absent---settings of next item;
+%   %^^A \item %
+%   %^^A  if exists |\floatsetup[wide|\meta{captype}|]{...}|
+%   %^^A  package uses these settings; if they absent---settings
+%   %^^A  of next item;
+%   %^^A \item %
+%   %^^A  if exists |\floatsetup[widefloat]{...}|
+%   %^^A  package uses these settings;
+%    если они отсутствуют "--- настройки для данного типа флота
+%    (|\floatsetup|\marg{captype}|{...}|);
+%    если и они отсутствуют "--- используются настройки по умолчанию
+%    в команде (|\floatsetup{...}| или настройки пакета).
+%   \end{itemize}
+%
+%   \emph{Замечания}.\nopagebreak
+%
+%   1)\enskip Если вы помещаете два продолжающихся флота, развёрнутых
+%   вертикально, на развороте, лучше будет их собрать у корешкового
+%   поля. Для этого вы можете определить\footnote{Если пакет
+%   \pkg{rotating} использует опцию |[figuresright]|, см. также
+%   файлы примеров \file{frsample10.tex}--\file{frsample12.tex}
+%   и код файла \file{fr-sample.tex}.} до первого флота
+%   \begin{quote}
+%     |\buildFBBOX{\vbox to\rottextwidth\bgroup\vss}{\egroup}|
+%   \end{quote}
+%   а перед вторым
+%   \begin{quote}
+%     |\buildFBBOX{\vbox to\rottextwidth\bgroup}{\vss\egroup}|
+%   \end{quote}
+%   \medskip
+%   Величина |\rottextwidth| "---здесь сохранённое значение
+%   |\textwidth| документа "--- параметры |\columnwidth|
+%   и |\textwidth| внутри окружения \texttt{sideways...} равны
+%   |\textheight|.
+%
+%   2)\enskip В данном примере вы можете видеть команду
+%   |\emptyfloatpage|. Эта команда предлагается
+%   пакетом \pkg{floatpagestyle}, (инсталлируемым
+%   вместе с пакетом \pkg{floatrow}). Макрокоманда
+%   |\emptyfloatpage| является сокращением команды
+%   |\floatpagestyle{empty}|. Последняя макрокоманда переопределяет
+%   стиль страницы когда появляется на ней данное окружение флота.
+%
+%   Версия 0.1h добавляет дополнительный код к макрокоманде
+%   |\@outputpage| из ядра \LaTeX'а и я надеюсь что это будет
+%   работать.\footnote{Если вам известен более честный путь
+%   получить тот же результат "--- переопределение
+%   стиля отдельной страницы с плавающим флотом (учитывая, что и она
+%   сама может плавать по документу) "--- дайте, пожалуйста, знать.}
+%   Поскольку пакет \pkg{floatpagestyle} использует
+%   механизм |\label|---|\ref|, команда |\floatpagestyle| даёт
+%   результат после \emph{второй} (и более) обработок \LaTeX'ом.
+%
+%   \subsection{Пакет \pkg{lscape} и окружение \env{landscape}}
+%
+%   Тестировалось с версией v3.0a датированной
+%   1999/02/16.\nopagebreak
+%
+%\ifx\landscape\undefined\else
+%   \ifx\landscape\relax\else
+%   Пример с использованием окружения \env{landscape} из пакета
+%   \pkg{lscape} на с.~\pageref{fig:rotrow:WcatI},
+%   рис.\ref{fig:rotrow:WcatI}--\ref{fig:rotrow:FcatI}):
+%\begin{verbatim}
+%\DeclareFloatVCode{lowthickrule}{\kern2pt\hrule height.8ptdepth0pt}
+%\floatsetup[figure]{style=ruled,rowprecode=thickrule,
+%  rowpostcode=lowthickrule,capposition=TOP}
+%\begin{landscape}
+%\begin{figure}\emptyfloatpage
+%...
+%\end{verbatim}
+%   Команда |\floatsetup| определяет стиль флота \texttt{ruled},
+%   затем настройки для материала сверху и снизу переопределены:
+%   ключи \texttt{rowprecode=} и \texttt{rowpostcode=} определяют
+%   толстые линейки для всего ряда рисунков (<<индивидуальные>>
+%   линейки сверху/снизу в ряду отменены).
+%\fi\fi
+%
+%
+%   Окружение \env{landscape} создаёт новую страницу. Оно полезно для
+%   задания нового раздела документа, например, приложения. (В данном
+%   документе окружение было помещено перед приложением)
+%
+%^^A   \emph{Founded limitations}.\nopagebreak
+%^^A   The tested version works incorrect (does not rotates contents)
+%^^A   with \pkg{hypcap} package.
+%
+%   \subsection{Пакет \pkg{listings}}
+%
+%   Тестировалось с версией v1.3 датированной 2004/09/07.\nopagebreak
+%
+%   Этот пакет имеет свой сильный механизм создания плавающих
+%   алгоритмов. Использование команды |\lstset| и настроек пакета
+%   \pkg{caption} даст нужный результат оформления\footnote{Обратите
+%   внимание и прочтите документацию
+%   \pkg{caption}: кооперация пакета \pkg{caption}3.x
+%   и \pkg{listings} будет успешной только с версией
+%   последнего не ниже 1.2.} для флотов типа алгоритмов.
+%
+%\iffalse
+%   В случаях появления листингов внутри других окружений,
+%   например, внутри окружения \env{figure} со стилями использующими
+%   рамки, типа \texttt{Boxed} и \texttt{BOXED}
+%   и при предопределённой шириной флота, вы должны задать:
+%   \begin{quote}
+%   |\lstset{linewidth=\hsize}|
+%   \end{quote}
+%   в преамбуле, или прямо перед окружением \env{lstlisting}.
+%   Или в дополнительном аргументе
+%   окружения \env{lstlisting} "---здесь вы должны определить
+%   ширину следующим образом:
+%   \begin{quote}
+%      |\begin{lstlisting}[linewidth=\hsize]|
+%   \end{quote}
+%\fi
+%
+%   В случаях появления листингов внутри других окружений, которые
+%  оформляются пакетом \pkg{floatrow}, ограничение заключается
+%   в том, что вы не можете поместить окружение \env{lstlisting}
+%   внутрь команды |\floatbox|.
+%
+%   \subsection{Пакет \pkg{longtable}}
+%
+%   Был добавлен код в макрокоманду |\LT@array| из пакета
+%   \pkg{longtable}\footnote{Спасибо
+%   A. Sommerfeldt за помощь в создании компактного кода.}:
+%   этот код задаёт настройки того
+%   же шрифта, что и в таблицах в окружении \env{table},
+%   а также  при возможность задать ширину
+%   табличного заголовка в окружении \env{longtable} равной ширине
+%   таблицы. Для задания ширины
+%   табличного заголовка задан ключ.
+%
+%   \DescribeMacro{LTcapwidth=}
+%   Этот ключ может иметь любое значение типа |5cm| или |\textwidth|.
+%   Если же вы зададите \texttt{LTcapwidth=table} или
+%   \texttt{LTcapwidth=contents},
+%   ширина табличного заголовка будет равна ширине таблицы. Настройка
+%   ширины табличного заголовка в этом случае производится
+%   по информации из \texttt{aux}-файла,
+%   поэтому вы получите правильный результат только тогда,
+%   когда ширина всей таблицы будет
+%   стабильной.
+%
+%   Окружение \env{longtable} использует настройки,
+%   заданные в командах |\floatsetup[table]|
+%   и |\floatsetup[longtable]|. Настройки из |\floatsetup[longtable]|
+%   будет <<сильнейшими>>
+%   в этой паре.
+%
+%   \subsection{Пакеты \pkg{hyperref} и \pkg{hypcap}}
+%
+%   Тестированы версии v6.74i (\pkg{hyperref}) и v1.3 (\pkg{hypcap}).
+%
+%   Пакет \pkg{floatrow} пытается не распространять свой
+%   код на команды |\caption|. Я надеюсь что окружения, поддерживаемые
+%   пакетом \pkg{floatrow} не навредят тандему пакетов
+%   \pkg{caption}---\pkg{hyperref}/\pkg{hypcap}.
+%
+%   \subsection{Несовместимости}
+%
+%   Несовместимости в первую очередь совпадают с несовместимостями
+%   пакета \pkg{caption} 3.x:
+%   \begin{quote}
+%   \pkg{ccaption}, \pkg{hvfloat}, \pkg{nonfloat}
+%   \end{quote}
+%
+%   Известная несовместимость пакета \pkg{floatrow} "--- это пакет
+%   \pkg{sidecap}\footnote{Несмотря на это я пыталась получить
+%   все предложенные этим пакетом оформления размещения подписей
+%   сбоку. Большое спасибо Rolf Niepraschk и Hubert G\"{a}\ss{}lein
+%   за пакет в котором дана полная гамма таких оформлений.}:
+%   пакет \pkg{floatrow} не распространяет
+%   своё оформление на окружения \env{SCfigure} и \env{SCtable}.
+%
+%   \addtocontents{toc}{\string\pagebreak[3]}
+%   \section{Ограничения}
+%
+%   Здесь даны ограничения, которые были обнаружены при пользовании
+%   пакетом \pkg{floatrow}:
+%   \begin{itemize}
+%   %^^A \item %
+%   %^^A Limitations for boxed and ruled styles in beside floats:
+%   %^^A be careful with usage of \emph{alone} minipage environment in
+%   %^^A object or caption in |\floatbox| macro. Since the object and
+%   %^^A caption are created in minipage environment already, the
+%   %^^A added \texttt{minipage} could get wrong layout (vertical
+%   %^^A alignment). But, as I found, you may use a few
+%   %^^A \texttt{minipage}s in object without harm.
+%   \item %
+%   Вы не можете использовать команды типа |\floatbox| для флотов
+%   с окружением \texttt{verbatim} или командой |\verb|.
+%   \item %
+%   Это ограничение упоминалось выше: пакет использует механизм
+%   |\label|---|\ref|, поэтому, если вы используете оформление,
+%   которое требует задания общей высоты для объектов и/или подписей
+%   в ряду флотов, вы получите верный результат только после второй
+%   (и более) обработки. Если вы измените содержимое так,
+%   что изменяется высота объекта/подписи вы также должны
+%   обработать \LaTeX'ом дважды и более раз.
+%
+%   Подписи сбоку и другое оформление для разворотов также даст верный
+%   результат только после второй (и более) обработки \LaTeX'ом.
+%   \item %
+%   Версия 3.0a (и выше) пакета \pkg{caption} и пакет
+%   \pkg{floatrow} не поддерживают дополнительный аргумент
+%   \emph{после} текста подписи. Вы можете использовать команду
+%   |\floatfoot| вместо этого.
+%   \item %
+%   Не используйте команду |\FBwidth| для сложного содержимого флота
+%   (которое вы не можете поместить внутри |\hbox|). (Но вы можете
+%   использовать команды |\vspace| в самом начале или в
+%   самом конце содержимого объекта для корректировки отбивок.)
+%   \item %
+%   Внутри окружения \env{floatrow} возможны пробелы (и даже
+%   пустые строки, что даёт иногда более корректный результат!) между
+%   командами |\floatbox|, но если вы добавите код между флотами, вы
+%   должны поставить знак процента |%| после такой команды.
+%   \item %
+%   Это общее правило "--- будьте внимательны с пробелами в конце
+%   строк внутри окружения флота (см. документ
+%   \texttt{CTAN:/info/epslatex.ps} для
+%   дополнительной информации).
+%
+%   Когда вы строите простое окружение (без |\floatbox|) лучше всего
+%   разделить |\caption| и содержимое объекта (а заодно и содержимое
+%   |\floatfoot|/|\footnotetext|) каждое пустой строкой или (если не
+%   пустые строки) завершить каждую часть (и аргументы указанных
+%   команд) знаком процента. В этом случае вы избежите ненужных
+%   пробелов и пустых строк в конце каждой из частей, или неверную
+%   выключку содержимого объекта.
+%   %^^A \item %
+%   %^^A Usage of fancy boxes \texttt{shadowbox} and
+%   %^^A \texttt{wshadowbox} could get wrong layout with
+%   %^^A beside captions.
+%   \item Если вы используете внутри команды |\floatbox| окружения
+%   \env{tabularx} или \env{tabular*} (или им подобные) с командой
+%   |\hsize| внутри аргумента \meta{width}, вы должны повторить
+%   аргумент |\hsize| в аргументе \meta{width} команды |\floatbox|.
+%
+%   Если вы хотите задать ширину окружения \env{tabularx} или
+%   \env{tabular*} (или другого) как |.8\hsize| (или |1.2\hsize|) и
+%   эти окружения помещены внутри команды |\floatbox|, поместите
+%   |.8\hsize| в аргумент \meta{width} макрокоманды |\floatbox| (или
+%   другой), а в аргументе \meta{width} команды \env{tabularx} или
+%   \env{tabular*} поставьте только
+%   |\hsize| (см. также код файла \file{frsample03.tex}).
+%
+%   В иных случаях (особенно при использовании необычных оформлений)
+%   будьте внимательны при использовании
+%   |\hsize| как опции \meta{width} команды |\floatbox|.
+%   \end{itemize}
+%
+%   \addtocontents{toc}{\string\nopagebreak}
+%
+%   \section{Благодарности}
+%
+%   Спасибо Steven Cochran и Axel Sommerfeldt за советы и поддержку.
+%   Особая благодарность Axel Sommerfeldt за терпеливые ответы, код,
+%   и помощь во \emph{всех} вопросах и проблемах в пакете
+%   \pkg{floatrow}.
+%
+%   \medskip\noindent
+%   Спасибо \emph{всем} невольным учителям по (\La)\TeX'у, кто обучал
+%   меня программному коду всё время.
+%
+%   \medskip\noindent
+%   Спасибо Keith Reckdahl, автору документации \file{epslatex},
+%   которая, в конце концов, дала отвагу поместить создать версию
+%   пакета для CTAN.
+%
+%   \medskip\noindent
+%   \emph{Спасибо \emph{всем} авторам второго издания \LaTeX{}
+%   Companion за эту книгу.}
+%
+%\ifx\landscape\undefined\else
+%   \ifx\landscape\relax\else
+%   \clearfloatsetup{figure}
+%   \floatsetup[figure]{style=ruled,rowprecode=thickrule,
+%     rowpostcode=lowthickrule,capposition=TOP,
+%     footposition=caption}
+%   \newlength\Mylen\Mylen\textwidth
+%
+%   \begin{landscape}
+%
+%   \begin{figure}\emptyfloatpage
+%
+%   \begin{floatrow}[4]
+%   \ffigbox[][][t]
+%   {{\input{TheCat.picture}}%^^A
+%    \footnotetext[1]{Картинка
+%    нарисована макрокомандой
+%    \cmd{\qbezier}}}%
+%   {\caption[Рисунок рядом~I, внизу бокса объекта]%
+%    {Рисунок рядом~I, внизу бокса объекта\protect\mpfootnotemark}%
+%   \label{fig:rotrow:WcatI}}%
+%
+%   \floatbox{figure}[2\FBwidth][][b]
+%   {\caption{Рисунок рядом~II, вверху бокса объекта}%
+%   \label{fig:rotrow:BcatI}%
+%   \floatfoot{Всё нарисовано макрокомандами \cmd{\qbezier} и двумя
+%     вертикальными линиями}}%
+%   {\input{BlackCat.picture}}%
+%
+%   \ffigbox[\FBwidth]
+%   {{\unitlength2.5\unitlength\ifx\pspicture\undefined
+%     \else\psset{unit=\unitlength}\fi
+%   \input{Mouse.picture}}\footnote[2]
+%    {Гляньте на чудную сноску!}}
+%   {\caption{Рисунок рядом~III, в центре бокса объекта}%
+%   \label{fig:rotrow:mouseI}\floatfoot{Изображение мыши}}%
+%
+%   \floatbox{figure}[\Xhsize][\Mylen]
+%   {\caption{Рисунок рядом~IV}\label{fig:rotrow:FcatI}}
+%   {\Resizebox\hsize\vsize{35}{136}{\input{BlackCat2.picture}}}
+%   \end{floatrow}
+%
+%   \end{figure}
+%
+%   \end{landscape}
+%\fi\fi
+%
+%   \clearpage
+%   \suppressfloats[t]
+%   \section{Приложение}
+%
+%   \subsection{Miscellaneous}
+%
+%   \subsubsection{Смешанные ряды}
+%
+%   \floatsetup[figure]{style=Boxed,midcode=captionskip,
+%     frameset={\fboxsep12pt\fboxrule1pt}}
+%   Иногда автор (или дизайнер) желает поместить разные типы флотов,
+%   например, таблицу и рисунок рядом в одном ряду. Такая ситуация
+%   создаёт некоторые проблемы.
+%
+%   Первая проблема заключается в том, что вы должны поместить разные
+%   типы флотов в одно окружение флота, которое задаёт своё оформление
+%   для содержимого. Для создания верного оформления задайте команду
+%   |\killfloatstyle| в начале окружения \env{floatrow}
+%   или до первой <<чужой>> макрокоманды |\floatbox| (в данном
+%   примере "--- до |\ttabbox|; команда |\ffigbox| является
+%   <<родной>> для окружения \env{figure}).
+%
+%   Следующая проблема состоит в том, что подпись к рисункам обычно
+%   помещают снизу, а табличный заголовок помещается сверху таблиц.
+%   Выравнивание всех флотов одинаково: по нижней линии верхней части и
+%   по верхней "--- у нижней. В таком случае, если вы захотите
+%   поместить такие рисунок и таблицу,
+%   вы получите не лучший вариант вёрстки. В таких ситуациях
+%   вы можете использовать одну из приведённых команд:
+%\begin{verbatim}
+%\CenterFloatBoxes
+%\TopFloatBoxes
+%\BottomFloatBoxes
+%\end{verbatim}
+%   Которые выравнивают флоты \emph{целиком} по центральной линии,
+%   по верху или по низу. Эти команды
+%   были созданы командой |\buildFBBOX|. Существует
+%   также команда |\PlainFloatBoxes|, которая восстанавливает
+%   <<поведение>> флотов внутри команд |\floatbox|.
+%
+%   Использование |\CenterFloatBoxes| и |\killfloatstyle| вы видите
+%   в смешанном ряду, состоящем из рис.~\ref{fig:rowmixspec:WcatI} и
+%   табл.~\ref{tab:rowmixspec:tabI}\label{mixrow}:
+%   \DeleteShortVerb{\|}%
+%   \begin{figure}
+%   \begin{floatrow}
+%   \CenterFloatBoxes \killfloatstyle
+%   \ffigbox[\FBwidth]
+%   {{\unitlength1.15\unitlength\ifx\pspicture\undefined
+%     \else\psset{unit=\unitlength}\fi
+%   \input{TheCat.picture}}}
+%   {\caption{Рисунок (\texttt{Boxed} style) рядом с таблицей
+%   (центрирован вертикально)}\label{fig:rowmixspec:WcatI}}%
+%   \extrarowheight1pt
+%   \ttabbox
+%   {\caption{Таблица рядом с рисунком в стиле \texttt{Boxed}
+%   (центрирована вертикально)}\label{tab:rowmixspec:tabI}}
+%   {\begin{tabular}{|l|c|c|c|}
+%     \hline
+%     \multirowthead{2}[-1ex]{Column Head}
+%                  & \multicolumn{3}{c|}{\thead{Data}} \\
+%                  \cline{2-4}
+%                  & \thead{I}
+%                           & \thead{II}
+%                                     & \thead{III} \\
+%     \hline
+%     First row    & 1      & 2       & \phantom01  \\
+%     Second row   & 3      & 4       & \phantom06  \\
+%     Third row    & 6      & 8       &         28  \\
+%     \hline
+%   \end{tabular}}
+%   \end{floatrow}
+%   \end{figure}
+%   \MakeShortVerb{\|}%
+%\begin{verbatim}
+%\begin{figure}
+%\begin{floatrow}
+%\CenterFloatBoxes\killfloatstyle
+%\ffigbox[\FBwidth]
+% ...
+%\ttabbox
+% ...
+%\end{verbatim}
+%
+%   \emph{Замечание.} Как рисунок, так и таблица имеют ширину, равную
+%   содержимому объектов. Команда |\ffigbox| имеет дополнительный
+%   аргумент |[\FBwidth]|, но у команды |\ttabbox| нет никакой опции
+%   "--- опция |[\FBwidth]| используется по умолчанию (см. определения
+%    на с.~\pageref{abbrcom}).
+%
+%
+%   \subsubsection{Использование команд Captionsetup и Thisfloatsetup
+%     внутри дополнительного аргумента команды Floatbox}
+%
+%   Пример рисунков рядом (рис.~\ref{floatbox:FR:lfig} и
+%   \ref{floatbox:FR:fig}). В примере были использованы
+%   предопределённые команды
+%   постройки флотов |\fcapsideleft| и  |\fcapsideright|, в которых
+%   добавлены команды |\captionsetup| и |\thisfloatsetup|:
+%\begin{verbatim}
+%\newfloatcommand{fcapsideleft}{figure}[{\capbeside
+%  \captionsetup[capbesidefigure]{format=break,labelsep=none,
+%   justification=raggedleft}%
+%   \thisfloatsetup{capbesideposition=left}}]%
+%  [\FBwidth]
+%\newfloatcommand{fcapsideright}{figure}[{\capbeside
+%  \captionsetup[capbesidefigure]{format=break,labelsep=none,
+%   justification=raggedright}%
+%   \thisfloatsetup{capbesideposition=right}}]%
+%  [\FBwidth]
+%\end{verbatim}
+%
+%   \clearfloatsetup{figure} \floatsetup[figure]
+%    {style=Boxed,capposition=beside,objectset=centering,
+%     floatwidth=\columnwidth,capbesidewidth=5.75cc,
+%     capbesidesep=cicero,margins=centering,
+%     capbesideframe=yes,floatwidth=sidefil}
+%
+%   \begin{figure}[b!]
+%   \begin{floatrow}
+%   \fcapsideleft
+%     {\unitlength1.44\unitlength\ifx\pspicture\undefined
+%      \else\psset{unit=\unitlength}\fi
+%     \input{TheCat.picture}}
+%     {\caption{%^^A
+%   Флот (\cmd{\fcapsideleft}) бокс для объекта
+%   имеет ширину включённой графики}\label{floatbox:FR:lfig}}%
+%   \hsize\Xhsize \fcapsideright[\hsize]
+%     {\setlength\unitlength{\hsize/61}\ifx\pspicture\undefined
+%      \else\psset{unit=\unitlength}\fi
+%     \input{BlackCat.picture}}%
+%     {\caption{%^^A
+%   Флот (\cmd{\fcapsideright})
+%   ширина всего флота занимает оставшееся пространство в ряду}%^^A
+%     \label{floatbox:FR:fig}}%
+%   \end{floatrow}%
+%   \end{figure}%
+%   Формат подписи \texttt{break} был определён следующим образом:
+%\begin{verbatim}
+%\DeclareCaptionFormat{break}{#1#2\par#3\par}
+%\end{verbatim}
+%
+%   Для этих рисунков были заданы следующие настройки в команде \verb|\floatsetup|:
+%\begin{verbatim}
+%\floatsetup[figure]
+% {style=Boxed,capposition=beside,
+%  objectset=centering,floatwidth=\columnwidth,
+%  capbesidewidth=5.75cc,capbesidesep=cicero,margins=centering,
+%  capbesideframe=yes,floatwidth=sidefil}
+%\end{verbatim}
+%   Ключ \texttt{floatwidth=sidefill} означает, что в случае заданной
+%   ширины для подписи сбоку, объект занимает остальное место
+%   \verb|\hsize| (если не задана опция \meta{width}, или используется
+%   опция \verb|\hsize|).
+%
+%   Правый рисунок использует ширину графики, левый занимает
+%   остальное место в ряду "--- для этого перед командой
+%   \verb|\fcapsideright| была задана команда:
+%\begin{verbatim}
+%\hsize\Xhsize
+%\end{verbatim}
+%   которая, в случае подписи сбоку определяет ширину всего флота.
+%
+%   В качестве опции ширины по умолчанию, \meta{width}, в командах
+%   \verb|\fcapsideleft| и \verb|\fcapsideright| задана команда
+%   \verb|\FBwidth|, поэтому для рисунка~\ref{floatbox:FR:fig}
+%   справа (созданном командой \verb|\fcapsideright|) в опции
+%   \meta{width} задана команда
+%   \verb|\hsize|, чтобы заполнить остальное пространство в ряду.
+%
+%   Поскольку в стиле флота ключ \texttt{heightadjust=object}
+%   (заданный в определения стиля \texttt{Boxed}), оба объекта
+%   имеют одинаковую высоту.
+%
+%   \subsubsection{Предопределённая ширина подписи сбоку}
+%
+%   Этот пример включает команду |\useFCwidth|, которая включает
+%   предварительно определённую ширину подписи с заданным значением
+%   ключа \texttt{capbesidewidth=}
+%   в команде |\thisfloatsetup| до команды |\floatbox|) или, если
+%   вы не определили ширину подписи
+%   (как в данном примере), рассчитывается натуральная ширина подписи
+%   (см. рис.~\ref{fig:Idog:w}\footnote{Внутри команды \cmd{\floatbox}
+%   не обязательно определять ширину подписи заранее, но помните, что
+%   ширину подписи \emph{нужно} определить, если это простое окружение
+%   флота.}). Флот в этом случае выровнен горизонтально с
+%   использованием настроек выравнивания, взятых из ключа
+%   \texttt{margins=} (опции определяются командами
+%   |\setfloatmargins| или |\floatcapbesidemargins|). В этой
+%   документации задано центрирование (см.
+%   с.~\pageref{fsetup:besmarg}).
+%\begin{verbatim}
+%\begin{figure}
+%\floatbox[\capbeside\useFCwidth]{figure}[\FBwidth]
+% ...
+%\end{figure}
+%\end{verbatim}
+%   \clearfloatsetup{figure} \floatsetup[figure]{style=plain}
+%
+%   \begin{figure}[h]
+%   \floatbox[\capbeside\useFCwidth]{figure}[\FBwidth]
+%   {\caption[Подпись сбоку
+%   бокс которой равен тексту подписи]{Подпись
+%   сбоку}\label{fig:Idog:w}}
+%   {{\setlength\unitlength{{4cm}/60}\ifx\pspicture\undefined
+%     \else\psset{unit=\unitlength}\fi
+%   \input{BlackDog.picture}}}
+%   \end{figure}%
+%
+%   Настройки данного флота:
+%\begin{verbatim}
+%\floatsetup[figure]{style=plain}
+%\end{verbatim}
+%
+%   \subsubsection{Предопределённая ширина подписи и остальное
+%     "--- для объекта}
+%
+%   Рисунок \ref{fig:capbeside:trick} использует следующий стиль
+%   флота:%^^A
+%^^A   \footnote{There are also addition settings for captions:
+%^^A       \cmd{\captionsetup[capbesidefigure]}\allowbreak
+%^^A       \texttt{\{format=default,}\allowbreak
+%^^A       \texttt{labelsep=none\}}
+%^^A       which is necessary for current documentation: the
+%^^A       \pkg{hyperref} creates unwanted result with empty argument
+%^^A       of caption title. The same settings used for
+%^^A       figures~\ref{floatrow:pre:figI} and
+%^^A       \ref{floatrow:pre:figII}}
+%\begin{verbatim}
+%\floatsetup[figure]
+% {style=Boxed,capposition=beside,objectset=centering,
+%  floatwidth=\columnwidth,capbesidewidth=\Mylen,
+%  capbesideposition=left,capbesidesep=cicero,
+%  margins=centering,capbesideframe=yes,
+%  floatwidth=sidefil}
+%\end{verbatim}
+%   Величина \verb|\Mylen| была определена как ширина нумерационного
+%   заголовка подписи:
+%\begin{verbatim}
+%\newdimen\Mylen
+%\settowidth\Mylen{\captionfont\captionlabelfont
+%   \figurename\ \thefigure}
+%\end{verbatim}
+%
+%   \clearfloatsetup{figure}
+%   \floatsetup[figure]
+%    {style=Boxed,capposition=beside,objectset=centering,
+%     floatwidth=\columnwidth,capbesidewidth=\Mylen,
+%     capbesideposition=left,capbesidesep=cicero,
+%     margins=centering,capbesideframe=yes,floatwidth=sidefil}
+%   \newdimen\Mylen\settowidth\Mylen{\captionfont\captionlabelfont\figurename\
+%     \thefigure}
+%
+%   \begin{figure}
+%^^A   \captionsetup[capbesidefigure]{format=default,labelsep=none}
+%   \fcapside
+%     {\unitlength1.1\unitlength\ifx\pspicture\undefined
+%      \else\psset{unit=\unitlength}\fi
+%     \input{TheCat.picture}}
+%     {\caption{}\label{fig:capbeside:trick}}
+%   \end{figure}%
+%
+%
+%   \subsubsection{Подпись рядом с отцентрированным объектом}
+%
+%   Рисунок \ref{fig:plain:trick} использует хитроумный вариант
+%   оформления:
+%\begin{verbatim}
+%\floatsetup[figure]
+% {style=plain,capposition=beside,objectset=centering,
+%  floatwidth=\columnwidth,capbesidewidth=6cc,
+%  capbesideposition=left,capbesidesep=mcapwidth,
+%  margins=centering,capbesideframe=yes,
+%  floatwidth=sidefil}
+%\end{verbatim}
+%   опция \texttt{mcapwidth} задаёт отрицательную отбивку, равную
+%   ширине подписи:
+%\begin{verbatim}
+%\DeclareFloatSeparators{mcapwidth}{\hskip-\FCwidth}
+%\end{verbatim}
+%   В этом случае все рисунки с подписями сбоку будут центрированы
+%   относительно текущей величине \verb|\hsize|. Использование такого
+%   оформления флота предполагает что все объекты флота \'уже чем
+%   |\textwidth|, как минимум на 2~ширины подписи.
+%
+%   \clearfloatsetup{figure} \floatsetup[figure]
+%    {style=plain,capposition=beside,objectset=centering,
+%     floatwidth=\columnwidth,capbesidewidth=6cc,
+%     capbesideposition=left,capbesidesep=mcapwidth,
+%     margins=centering,capbesideframe=yes,floatwidth=sidefil}
+%   \begingroup
+%   \captionsetup[capbesidefigure]{format=break,labelsep=none,
+%     justification=raggedright}
+%   \begin{figure}
+%     \unitlength1.1\unitlength\ifx\pspicture\undefined
+%     \else\psset{unit=\unitlength}\fi
+%     \input{TheCat.picture}
+%     \caption{%^^A
+%     Обычный рисунок}\label{fig:plain:trick}
+%   \end{figure}%
+%   \endgroup
+%
+%   Здесь также временно, в группе, заменены настройки для
+%   подрисуночной подписи~\ref{fig:plain:trick}:
+%\begin{verbatim}
+%\captionsetup[capbesidefigure]{format=break,labelsep=none,
+%  justification=raggedright}
+%\end{verbatim}
+%
+%   \subsubsection{Определение ширины для блока подпись сбоку---объект
+%    в окружении \env{floatrow}}
+%
+%   Ряд с предопределёнными ширинами для боксов подпись
+%   сбоку---объект (рис.~\ref{floatrow:pre:figI} и
+%   \ref{floatrow:pre:figII}): просто определите перед командами
+%   \verb|\fcapside| что-то типа
+%\begin{verbatim}
+%\setlength\hsize{1.098\hsize}%
+%\end{verbatim}
+%   как было определено для первого рисунка, или
+%\begin{verbatim}
+%\setlength\hsize\Xhsize
+%\end{verbatim}
+%   перед вторым (здесь видно, что можно задать и
+%   |\setlength\hsize{.902\hsize}|).
+%
+%   В начале окружения \env{floatrow} была задана команда
+%   \verb|\useFCwidth| которая включает механизм использования и
+%   расчёта ширины подписи сбоку и, поскольку используются
+%   команды \verb|\fcapside|, ширину подписей можно не определять
+%   (ключ \texttt{capbesidewidth=} не задан), поэтому ширина боксов
+%   подписей будет равна их содержимому.
+%
+%   \clearfloatsetup{figure}
+%   \floatsetup[figure]
+%    {style=plain,capposition=beside,objectset=centering,
+%     capbesideposition=left,capbesidesep=enskip,
+%     margins=centering,capbesideframe=yes,floatwidth=sidefil}
+%   \begin{figure}[h]\useFCwidth
+%^^A   \captionsetup[capbesidefigure]{format=default,labelsep=none}
+%   \begin{floatrow}
+%   \setlength\hsize{1.098\hsize}%
+%   \fcapside
+%     {\setlength\unitlength{\hsize/64}\ifx\pspicture\undefined
+%      \else\psset{unit=\unitlength}\fi
+%     \input{TheCat.picture}}
+%     {\caption{%^^A
+%     }\label{floatrow:pre:figI}}
+%   \setlength\hsize\Xhsize
+%   \fcapside
+%     {\setlength\unitlength{\hsize/58}\ifx\pspicture\undefined
+%      \else\psset{unit=\unitlength}\fi
+%     \input{Mouse.picture}}
+%     {\caption{%^^A
+%   }\label{floatrow:pre:figII}}
+%   \end{floatrow}%
+%   \end{figure}%
+%   Были использованы следующие настройки для рисунков:
+%\begin{verbatim}
+%\floatsetup[figure]
+% {style=plain,capposition=beside,objectset=centering,
+%  capbesideposition=left,capbesidesep=enskip,
+%  margins=centering,capbesideframe=yes,floatwidth=sidefil}
+%\end{verbatim}
+%
+%   \subsubsection{Флот с подписью сверху/снизу и флот
+%    с подписью сбоку в одном ряду}
+%
+%   В ряду совмещены бокс объект---подпись сбоку и бокс с
+%   объект---подпись снизу (рис.~\ref{flrow:mix:figI} и
+%   \ref{flrow:mix:figII}). Здесь приходится опять использовать
+%   команды \verb|\TopFloatBoxes|, \verb|\CenterFloatBoxes|, или
+%   |\BottomFloatBoxes|, чтобы получить нужную вёрстку "--- поскольку
+%   аргумент \meta{height} в обоих флотах определён как \texttt{4cm}
+%   вы можете использовать любую из этих трёх команд. К сожалению вам
+%   приходится задать высоту таких флотов рядом вручную. Строки,
+%   которые создают описанный выше ряд флотов:
+%\begin{verbatim}
+%\begin{figure}\CenterFloatBoxes
+%\begin{floatrow}
+%\hsize1.098\hsize
+%    \fcapside[\FBwidth][4cm]
+%      ...
+%
+%    \ffigbox[\Xhsize][4cm]
+%      ...
+%\end{floatrow}%
+%\end{figure}
+%\end{verbatim}
+%
+%   \clearfloatsetup{figure}
+%   \floatsetup[figure]
+%    {style=Boxed,frameset={\fboxsep6pt},
+%     captionskip=5pt,capposition=bottom,
+%     objectset=centering,capbesidewidth=none,
+%     capbesideposition=inside,
+%     capbesidesep=enskip,margins=centering,capbesideframe=yes}
+%
+%   \begin{figure}\CenterFloatBoxes
+%   \begin{floatrow}
+%   \hsize1.098\hsize \fcapside[\FBwidth][4cm]
+%     {\unitlength1.44\unitlength\ifx\pspicture\undefined
+%      \else\psset{unit=\unitlength}\fi
+%     \input{TheCat.picture}}
+%     {\caption{%^^A
+%   Флот (\cmd{\fcapside}) с подписью сбоку в ряду с
+%   флотом с подписью снизу}\label{flrow:mix:figI}}%
+%
+%   \ffigbox[\Xhsize][4cm]
+%     {\unitlength1.44\unitlength\ifx\pspicture\undefined
+%      \else\psset{unit=\unitlength}\fi
+%     \input{BlackDog.picture}}
+%     {\caption{%^^A
+%   Флот (\cmd{\ffigbox}), занимает оставшееся в ряду
+%   место} \label{flrow:mix:figII}}
+%   \end{floatrow}%
+%   \end{figure}
+%
+%   <<Зеркальная вёрстка>> (но не идентичная) выглядит так:
+%\begin{verbatim}
+%\begin{figure}\CenterFloatBoxes
+%\begin{floatrow}
+%   \ffigbox[1.2\FBwidth][4cm]
+%      ...
+%
+%   \hsize\Xhsize
+%   \fcapside[\FBwidth][4cm]
+%      ...
+%\end{floatrow}%
+%\end{figure}
+%\end{verbatim}
+%
+%   \begin{figure}\CenterFloatBoxes
+%   \begin{floatrow}
+%   \ffigbox[1.2\FBwidth][4cm]
+%     {\unitlength1.44\unitlength\ifx\pspicture\undefined
+%      \else\psset{unit=\unitlength}\fi
+%     \input{BlackDog.picture}}
+%     {\caption{%^^A
+%   Флот (\cmd{\ffigbox})}\label{floatrow:mirrmix:figII}}%
+%   \hsize\Xhsize
+%
+%   \fcapside[\FBwidth][4cm]
+%     {\unitlength1.44\unitlength\ifx\pspicture\undefined
+%      \else\psset{unit=\unitlength}\fi
+%     \input{TheCat.picture}}
+%     {\caption{%^^A
+%   Флот с подписью сбоку (\cmd{\fcapside}) в зеркальном ряду
+%   с флотом с подписью снизу}\label{floatrow:mirrmix:figI}}
+%   \end{floatrow}%
+%   \end{figure}
+%
+%   Рисунки~\ref{floatrow:mirrmix:figII}--\ref{floatrow:mirrmix:figI}
+%   использовали следующие настройки:
+%\begin{verbatim}
+%\floatsetup[figure]
+% {style=Boxed,frameset={\fboxsep4pt},captionskip=5pt,
+%  capposition=bottom,objectset=centering,capbesidewidth=none,
+%  capbesideposition=inside,capbesidesep=enskip,margins=centering,
+%  capbesideframe=yes}
+%\end{verbatim}
+%
+%   \subsubsection{Вёрстка под фотоальбом}
+%
+%   Другой пример необычного ряда флотов
+%   (рис.~\ref{flrow:three:figIII}--\ref{floatrow:threemirr:figII},
+%   и, <<зеркальная вёрстка>>, "---
+%   \ref{floatrow:threemirr:figI}--\ref{floatrow:threemirr:figIII})
+%   были созданы следующим кодом:
+%\begin{verbatim}
+%\begin{figure}[t]\BottomFloatBoxes
+%\begin{floatrow}
+%\hsize1.2\hsize \ffigbox[][6.7cm]
+%  ...
+%
+%\vbox to6.7cm
+% {\floatsetup[figure]{floatrowsep=none}\killfloatstyle
+%    \ffigbox[.8\hsize]
+%      ...
+%    \vss
+%    \ffigbox[.8\hsize]
+%      ...%
+% }%
+%\end{floatrow}%
+%\end{figure}
+%\end{verbatim}
+%
+%   \floatsetup[figure]{heightadjust=none}
+%   \begin{figure}\BottomFloatBoxes
+%   \begin{floatrow}
+%   \hsize1.2\hsize
+%   \ffigbox[][6.7cm]
+%     {\setlength\unitlength{\hsize/58}\ifx\pspicture\undefined
+%      \else\psset{unit=\unitlength}\fi
+%     \input{Mouse.picture}}%
+%     {\caption{Бокс флота в вёрстке под фотоальбом:
+%       один в левой колонке}\label{flrow:three:figIII}}%
+%
+%   \vbox to6.7cm
+%   {\floatsetup[figure]{floatrowsep=none}\killfloatstyle
+%    \ffigbox[.8\hsize]
+%     {\input{TheCat.picture}}
+%     {\caption{%^^A
+%   Бокс флота в вёрстке под фотоальбом: верхний флот в правой
+%   колонке}\label{floatrow:three:figI}} \vss \ffigbox[.8\hsize]
+%     {\input{BlackDog.picture}}%
+%     {\caption{%^^A
+%   Нижний флот в правой колонке}%
+%   \label{floatrow:threemirr:figII}}}%
+%   \end{floatrow}%
+%   \end{figure}
+%
+%   <<Зеркальная вёрстка>> создана следующими командами:
+%\begin{verbatim}
+%\begin{figure}[t]\TopFloatBoxes
+%\begin{floatrow}
+%\vtop to7cm
+% {\floatsetup[figure]{floatrowsep=none}\killfloatstyle
+%    \ffigbox[.8\hsize]
+%      ...
+%    \vss
+%    \ffigbox[.8\hsize]
+%      ...%
+% \vskip0pt}\floatrowsep
+%
+%\ffigbox[\Xhsize][7cm-11pt]
+%  ...
+%\end{floatrow}%
+%\end{figure}
+%\end{verbatim}
+%   Обратите внимание, что во втором примере с <<зеркальной вёрсткой>>
+%   был использован трюк с определением высоты в аргументе
+%   \meta{height} "--- подпись в левой колонке длиннее на одну строку,
+%   поэтому для правой колонки высота флота была уменьшена на 22pt
+%   "---2|\baselineskip| для шрифта размером
+%   |\small|\footnote{Вы получите корректную высоту с такими расчётами
+%   для флотов рядом при использовании версией пакета \pkg{caption}
+%   не ниже 3.0d.} (здесь были использованы возможности пакета
+%   \pkg{calc}). Бокс |\vtop| в левой колонке завершён командой
+%   |\vskip0pt|, иначе вы получите неожиданный результат.
+%
+%
+%   \begin{figure}\TopFloatBoxes
+%   \begin{floatrow}
+%   \vtop to8cm {\floatsetup[figure]{floatrowsep=none}\killfloatstyle
+%    \ffigbox[.8\hsize]
+%     {\input{TheCat.picture}}
+%     {\caption{%^^A
+%   Бокс флота в зеркальной вёрстке под фотоальбом:
+%   верхний флота в левой
+%   колонке}\label{floatrow:threemirr:figI}}
+%   \vss
+%   \ffigbox[.8\hsize]
+%     {\input{BlackDog.picture}}%
+%     {\caption{%^^A
+%   Бокс флота в зеркальной вёрстке под фотоальбом:
+%   нижний флот в левой колонке}%
+%   \label{floatrow:three:figII}}\vskip0pt}\floatrowsep
+%
+%   \ffigbox[\Xhsize][8cm-22pt]
+%     {\setlength\unitlength{\hsize/58}\ifx\pspicture\undefined
+%      \else\psset{unit=\unitlength}\fi
+%     \input{Mouse.picture}}%
+%     {\caption{%^^A
+%   Бокс флота в зеркальной вёрстке под фотоальбом:
+%   отдельный в правой колонке}\label{floatrow:threemirr:figIII}}
+%   \end{floatrow}%
+%   \end{figure}
+%
+%   В обоих примерах для двух флотов друг под другом была отменена
+%   команда |\floatrowsep| внутри |\vbox|/|\vtop|.
+%
+%   Обратите внимание, что эти примеры довольно специфичны "--- можно
+%   попробовать создать другие комбинации (например,
+%   <<многоколонные>>), но возможно такая вёрстка потребует большей
+%   внимательности по отношению к использованию |\Xhsize| и/или
+%   |\floatrowsep|.
+%
+%   Я предполагаю, что два последних примера конфликтуют с <<девизом>>
+%   данного пакета "--- уменьшить и переместить код оформления из
+%   текста документа; но вёрстка под фотоальбом довольно редка в
+%   технической литературе (или это не так?).
+%
+%   \subsection{Файлы примеров}
+%
+%   Дистрибутив пакета \env{floatrow} предлагает несколько файлов с
+%   примерами, которые демонстрируют настройки, не описанные в данном
+%   документе (некоторые из них несколько экзотичны и ненатуральны).
+%   Примеры не имеют цели создать совершенную вёрстку, только показать
+%   быстроту и простоту модификации оформления для флотов всех
+%   типов, и показывает достоинства и недостатки в комбинациях
+%   выбранного оформления при разных размещениях флотов.
+%
+%   \emph{Замечание}. Все нестандартные стили флотов (фактически все
+%   файлы примеров) требуют как минимум две обработки \LaTeX'ом.
+%
+%   Перечень файлов примеров:
+%
+%   \begin{Options}{\OptionLabel}
+%     \item[frsample01.tex]   все возможные комбинации
+%       предопределённых стилей пакета \pkg{floatrow}
+%       для подписей сверху/снизу с экспликациями; были созданы
+%       простые флоты, окружения с рядом флотов (окружение
+%       \env{floatrow}), а также варианты объекта без подписи
+%       и подписи без объекта;
+%     \item[frsample02.tex] все возможные комбинации с
+%       предопределёнными стилями пакета \pkg{floatrow} для подписей
+%       сбоку и все возможные расположения подписей;
+%     \item[frsample03.tex]   различные тесты с таблицами;
+%     \item[frsample04.tex]   пример с необычным оформлением и
+%       размещением подписей сбоку;
+%     \item[frsample05.tex]   одноколонная вёрстка, зеркальный макет
+%       на развороте; необычные настройки для подписей.
+%   \end{Options}
+%
+%   Следующий связанный ряд файлов-примеров имеют несколько
+%   файлов"=заголовков с различной преамбулой, которые
+%   обрабатывают файл с различным размещением флотов.
+%   В этих примерах был создан новый тип флота
+%   \texttt{textbox} "--- который включает в себя текст.
+%   \begin{Options}{\OptionLabel}
+%     \item[frsample10.tex]   одноколонная вёрстка; рисунки оформлены
+%       в стиле \texttt{plain}; боксы текста
+%       (\texttt{textbox}) используют необычный стиль с линейками;
+%     \item[frsample11.tex]   одноколонная вёрстка с элементами
+%       выхода на левое поле (например, широкие
+%       флоты в |*|-окружениях, как \env{figure*});
+%     \item[frsample12.tex]   двухколонная вёрстка с попытками
+%       использования расцвеченных стилей флотов.
+%   \end{Options}
+%
+%   \section{Устаревшие команды}\label{sec:changed}
+%
+%   Здесь приведены устаревшие макрокоманды, которые были заменены
+%   ключами из команды |\floatsetup|,
+%   переименованы или удалены после версии 0.1b.
+%
+%   \begingroup\extrarowheight1.75pt\small\tabcolsep.5\tabcolsep
+%   \medskip\parindent0pt
+%   \begin{tabular*}\hsize{@{\extracolsep{-.3ptplus1fill}}|
+%     >{\rightskip0ptplus1fil}p{.35\hsize}|
+%     >{\rightskip0ptplus1fil}p{.6\hsize}|}
+%   \multicolumn{2}{c}{Удалённые или заменённые команды}
+%   \\\hline
+%    \thead{Команда}
+%   &
+%   \thead{Заменена на}
+%   \\\hline
+%   \extrarowheight0pt\begin{tabular}[t]{@{}l}
+%   \cmd{\renewfloatstyle},\\
+%   \cmd{\newfloatstyle},\\
+%   \cmd{\definefloatstyle}
+%   \end{tabular}&
+%   \cmd{\DeclareFloatStyle} "---эта команда использует
+%      механизм \cmd{\floatsetup}
+%   \\\hline
+%    \cmd{\restorerestylefloat} & удалена
+%   \\\hline
+%    \cmd{\captionskip} & команда, а не величина
+%   \\\hline
+%    \cmd{\floatfootskip} & команда, а не величина
+%   \\\hline
+%   \end{tabular*}
+%
+%   \vskip1pt
+%   \begin{tabular*}\hsize{@{\extracolsep{-.3ptplus1fill}}|
+%     >{\rightskip0ptplus1fil}p{.35\hsize}|
+%     >{\rightskip0ptplus1fil}p{.6\hsize}|}
+%   \multicolumn{2}{c}{Команды, заменённые на ключи}
+%   \\\hline
+%   \thead{Удалённая команда}
+%   &
+%   \thead{Ключ-аналог}
+%   \\\hline
+%    \cmd{\floatobjectset} &
+%   в текущей версии \emph{не используется для определения
+%   настроек оформления объекта}, используйте ключ
+%    \texttt{objectset=}
+%   \\\hline
+%    \cmd{\alignsidecaption}&
+%     \texttt{capbesideframe=yes}
+%   \\\hline
+%   \extrarowheight0pt\begin{tabular}[t]{@{}l}
+%    \smash{\cmd{\capbesidecenter}},\\ \smash{\cmd{\capbesidetop}},\\
+%         \smash{\cmd{\capbesidebottom}},\\
+%         \smash{\cmd{\capbesideinside}},\\
+%         \smash{\cmd{\capbesideoutside}},\\
+%         \smash{\cmd{\capbesideleft}},\\
+%         \smash{\cmd{\capbesideright}}
+%   \end{tabular}&
+%   \extrarowheight0pt\begin{tabular}[t]{@{}l}
+%         \texttt{capbesideposition=center}\\
+%         \texttt{capbesideposition=top}\\
+%         \texttt{capbesideposition=bottom}\\
+%         \texttt{capbesideposition=inside}\\
+%         \texttt{capbesideposition=outside}\\
+%         \texttt{capbesideposition=left}\\
+%         \texttt{capbesideposition=right}
+%   \end{tabular}
+%   \\\hline
+%   \extrarowheight0pt\begin{tabular}[t]{@{}l}
+%    \cmd{\floatrowsep},\\ \cmd{\floatcapbesidesep}
+%   \end{tabular}&
+%   в текущей версии \emph{не используется для задания
+%   разделительного материала}, используйте ключи\par
+%  \extrarowheight0pt
+%   \begin{tabular}[t]{@{}l}
+%    \texttt{floatrowsep=}\\
+%    \texttt{capbesidesep=}
+%   \end{tabular}
+%   \\\hline
+%   \extrarowheight0pt\begin{tabular}[t]{@{}l}
+%    \cmd{\FBcenter}\vphantom{g},\\ \cmd{\FBleft}\vphantom{g},\\
+%    \cmd{\FBright},\\
+%    \cmd{\FBnormal}
+%   \end{tabular}&
+%   \extrarowheight0pt\begin{tabular}[t]{@{}l}
+%         \texttt{margins=center},\\
+%         \texttt{margins=raggedright},\\
+%         \texttt{margins=raggedleft}, \\
+%         \texttt{margins=center},\\
+%   \end{tabular}
+%   \\\hline
+%    \cmd{\setfloatstyle} & \texttt{style=}
+%   \\\hline
+%   \begin{tabular}[t]{@{}l}
+%    \cmd{\Setframe}\\
+%    \cmd{\setframe}
+%   \end{tabular}
+%   & используйте ключи \texttt{framestyle=} и \texttt{frameset=}
+%   \\\hline
+%    \cmd{\setrules}
+%   & используйте \texttt{precode=}, \texttt{postcode=},
+%    \texttt{midcode=} (а также
+%   \texttt{rowpercode} и \texttt{rowpostcode}) ключи
+%   \\\hline
+%   \end{tabular*}
+%
+%   \vskip1pt
+%
+%   \begin{tabular*}\hsize{@{\extracolsep{-.3ptplus1fill}}|
+%     >{\rightskip0ptplus1fil}p{.35\hsize}|
+%     >{\rightskip0ptplus1fil}p{.6\hsize}|}
+%   \multicolumn{2}{c}{Переименованные ключи}
+%   \\\hline
+%   \thead{Ключ}
+%   &
+%   \thead{Заменён на}
+%   \\\hline
+%    \texttt{attachedcapstyle=} & \texttt{relatedcapstyle=}
+%   \\\hline
+%    \texttt{floatstyle=} & \texttt{style=}
+%   \\\hline
+%    \texttt{floatfont=} & \texttt{font=}
+%   \\\hline
+%    \texttt{putcaptionbeside=} & {capposition=beside}
+%   \\\hline
+%    \texttt{besidecapposition=} & \texttt{capbesideposition=}
+%   \\\hline
+%    \texttt{besidecapwidth=} & \texttt{capbesidewidth=}
+%   \\\hline
+%    \texttt{besidecapframe=} & \texttt{capbesideframe=}
+%   \\\hline
+%    \texttt{floatmarginsset=} & \texttt{margins=}
+%   \\\hline
+%    \texttt{besidecapsep=} & \texttt{capbesidesep=}
+%   \\\hline
+%    \texttt{Precode=} & \texttt{rowprecode=}
+%   \\\hline
+%    \texttt{Postcode=} & \texttt{rowpostcode=}
+%   \\\hline
+%    \texttt{framereduce=} & \texttt{framefit=}
+%   \\\hline
+%   \extrarowheight0pt\begin{tabular}[t]{@{}l@{}}
+%    \vphantom{(}опции ключей \texttt{objectset=}\\
+%    \quad и \texttt{margins=}\\
+%    \texttt{flushleft},\\ \texttt{flushright},\\\texttt{center}
+%   \end{tabular} &
+%   \extrarowheight0pt\begin{tabular}[t]{@{}l@{}}
+%    \vphantom{(}опции ключей \texttt{objectset=}
+%      и \texttt{margins=}\\\quad
+%      (для унификации
+%      с аналогичными опциями\\\quad  ключей в пакете
+%      \pkg{caption})\\
+%    \texttt{raggedright},\\ \texttt{raggedleft},\\
+%    \texttt{centering}
+%   \end{tabular}
+%   \\\hline
+%   \end{tabular*}
+%   \endgroup
+%   \MakeShortVerb{\|}%
+%
+% \Finale
+%\endinput

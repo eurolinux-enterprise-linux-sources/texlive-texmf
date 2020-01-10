@@ -1,0 +1,91 @@
+\documentclass[12pt]{article}%  Herbert Voss 2004-06-26
+\usepackage{calc}
+\usepackage{multido}
+\usepackage{pstricks}
+\makeatletter
+\newdimen\xMax
+\newdimen\yMax
+\newcount\xLines
+\newcount\yLines
+\newdimen\dx
+\newdimen\dy
+\xdefinecolor{lightred}{rgb}{1.0, 0.8, 0.8}
+\newcommand{\grid}[3][black]{{%
+  \psset{linewidth=0.1pt}
+  \xMax=#3%
+  \yMax=#2%
+    \dx=5mm  \xLines=\xMax \divide\xLines by \dx%
+    \dy=5mm  \yLines=\yMax \divide\yLines by \dy%
+    \advance\xLines by 1%
+%    \advance\yLines by 1%
+    \yMax=\dy \multiply\yMax by \yLines%
+    \xMax=\dx \multiply\xMax by \xLines%
+    \advance\xLines by 1%
+    \advance\yLines by 1%
+    \psset{unit=1pt, linecolor=#1}%
+    \multido{\rA=0+\strip@pt\dx}{\xLines}{\psline(\rA,0)(\rA,\yMax)}%
+    \multido{\rA=0+\strip@pt\dy}{\yLines}{\psline(0,\rA)(\xMax,\rA)}%
+}}
+\makeatother
+\newsavebox{\gridbox}
+\newenvironment{dogrid}[1][\linewidth]{%
+  \begin{lrbox}{\gridbox}%
+      \begin{minipage}{#1}%
+}{%
+      \end{minipage}%
+  \end{lrbox}%
+  \yMax=\dp\gridbox \advance\yMax by \ht\gridbox
+  \noindent%
+  \raisebox{-1.05\dp\gridbox}{\grid[lightred]{\yMax}{\wd\gridbox}}%
+  \usebox{\gridbox}
+  \vspace{0.5cm}
+}
+
+\begin{document}
+
+\begin{dogrid}
+\[
+\begin{array}{rcll}
+y & = & x^{2}+bx+c\\
+  & = & x^{2}+2\cdot{\displaystyle\frac{b}{2}x+c}\\
+  & = & \underbrace{x^{2}+2\cdot\frac{b}{2}x+\left(\frac{b}{2}\right)^{2}}-{\displaystyle \left(\frac{b}{2}\right)^{2}+c}\\
+ &  & \qquad\left(x+{\displaystyle \frac{b}{2}}\right)^{2}\\
+ & = & \left(x+{\displaystyle \frac{b}{2}}\right)^{2}-\left({\displaystyle \frac{b}{2}}\right)^{2}+c & \left|+\left({\displaystyle \frac{b}{2}}\right)^{2}-c\right.\\
+y+\left({\displaystyle \frac{b}{2}}\right)^{2}-c & = & \left(x+{\displaystyle \frac{b}{2}}\right)^{2} & \left|(\textrm{Scheitelpunktform})\right.\\
+y-y_{S} & = & (x-x_{S})^{2}\\
+S(x_{S};y_{S}) & \,\textrm{bzw.}\, & S\left(-{\displaystyle \frac{b}{2};\,\left({\displaystyle \frac{b}{2}}\right)^{2}-c}\right)
+\end{array}
+\]
+\end{dogrid}
+
+\begin{center}
+\begin{dogrid}[.5\linewidth]
+\[
+\left(
+\begin{array}{c@{}c@{}c}
+\begin{array}{|cc|}
+\hline
+a_{11} & a_{12} \\
+a_{21} & a_{22} \\
+\hline
+\end{array} & 0 & 0 \\
+0 & \begin{array}{|ccc|}
+    \hline
+    b_{11} & b_{12} & b_{13}\\
+    b_{21} & b_{22} & b_{23}\\
+    b_{31} & b_{32} & b_{33}\\
+    \hline
+    \end{array} & 0 \\
+0 & 0 & \begin{array}{|cc|}
+        \hline
+        c_{11} & c_{12} \\
+        c_{21} & c_{22} \\
+        \hline
+        \end{array} \\
+\end{array}
+\right)
+\]
+\end{dogrid}
+\end{center}
+
+\end{document}

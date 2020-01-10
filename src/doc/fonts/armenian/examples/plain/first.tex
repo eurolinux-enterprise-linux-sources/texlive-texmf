@@ -1,0 +1,53 @@
+%% This file is a part of the ArmTeX 2.0
+%% [1999/06/01 v2.0 first.tex (plain TeX example)]
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\magnification=\magstep1
+\input arm
+
+\font\armtwenty=artmr10 at 20pt
+\hyphenchar\armtwenty=-1
+\def\mets{\armtwenty}
+
+\font\twentyrm=cmr10 at 20pt
+\nopagenumbers
+\artm
+\vglue100pt
+
+
+\centerline{\artm Mer ar'ajin {\artmit hayeren} e'ju'
+{\ArmTeX(\rm\latArmTeX)}-ov:}
+
+\vfill
+\vfill
+\centerline{\twentyrm\TeX}
+\vfill
+\vfill
+\vfill
+\centerline{\mets Barev! ashxarh:}
+\vfill
+\vfill
+\vfill
+\centerline{\let\arofffont\twentyrm\armtwenty\ArmTeX}
+\vfill
+\vfill
+$$
+{\cal I}_\varphi^{(2)}=\pmatrix{
+\hfill a b&\hfill a b^2&\cdots&\hfill a b^K\cr
+\hfill a^2 b&\hfill a^2 b^2&\cdots&\hfill a^2 b^K\cr
+\vdots&\vdots&\ddots&\vdots\cr
+\hfill a^K b&\hfill a^K b^2&\cdots&\hfill a^K b^K\cr}\times 
+\pmatrix{
+2\hfill& 2^{1\over 2} \hfill&\cdots& 2^{1\over K}\hfill\cr
+2^2\hfill& 2 \hfill&\cdots& 2^{2\over K}\hfill\cr
+\vdots&\vdots&\ddots&\vdots\cr
+2^{K}\hfill& 2^{K\over 2} \hfill&\cdots& 2\hfill\cr}
+$$
+\vfill
+
+
+%% That's all, Folks!
+%%
+\bye

@@ -1,0 +1,6 @@
+We have removed the large data files and pdf documentation from pst-geo
+in TeX Live in order to save space for the CD-sized TL "inst"
+distribution.  The files can be found at
+CTAN:graphics/pstricks/contrib/pst-geo.
+
+--karl@tug.org, January 2007.  (This README.TEXLIVE file is public domain.)

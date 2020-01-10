@@ -1,0 +1,49 @@
+%
+% A~driver file to typeset \pk{dostrip.dtx} with the \pk{gmdoc}
+% package.
+%
+% GM 2006/12/1
+%
+
+\PassOptionsToPackage{indexallmacros}{gmdoc}
+
+\if1 1
+  \documentclass[debug]{gmdocc}% 
+  \mcdiagOn
+\else
+  \documentclass{gmdocc}%
+\fi
+
+\ltxLookSetup
+\gmdoccMargins
+\twocoltoc% For towocolumn table of contents.
+
+\DeleteShortVerb\|
+\OldMakeShortVerb*\|% To define shortverb \verb+|+ such that it
+% remains shortverb in math mode (by default I~define it to be $\vert$ in
+% math mode.
+
+\relaxen\ds
+\emptify\EOFMark
+
+\begin{document}
+  \def\BasePath{C:/TeXLive2005/texmf-dist/source/latex/base/}
+%^^A  \tableofcontents
+  \addtomacro\endabstract{\aftergroup\tableofcontents}
+  \AtBegInputOnce{\date{Printed \today\\ with \pk{gmdoc} package by
+      Natror}\let\date\gobble
+    \let\renewenvironment\gobbletwo}% the only renewed env.\ in
+  % \file{docstrip.dtx} is \env{theglossary}. I~prefer it to be twocolumn.
+
+  \OldDocInput{\BasePath docstrip.dtx}
+
+  \typeout{%
+    ^^JProduce change log with^^J%
+    makeindex -r -s gmglo.ist -o \jobnamewoe.gls \jobnamewoe.glo^^J}
+
+  \typeout{%
+    ^^JProduce index with^^J%
+    makeindex -r \jobnamewoe.idx^^J}
+ 
+\end{document}
+%\NoEOF

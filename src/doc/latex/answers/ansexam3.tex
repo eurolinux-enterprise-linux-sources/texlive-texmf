@@ -1,0 +1,40 @@
+%%
+%% This is file `ansexam3.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% answers.dtx  (with options: `ex3')
+%% 
+\documentclass[12pt,a4paper]{article}
+\usepackage{answers}
+\newenvironment{Ex}[1]{\begin{trivlist}\item \emph{#1} %
+   \renewcommand{\Currentlabel}{#1}}{\end{trivlist}}
+\Newassociation{solution}{Soln}{solutions}
+
+\renewenvironment{Soln}[1]{\begin{trivlist}\item
+   Solution to \emph{#1} }{\end{trivlist}}
+
+\begin{document}
+\section*{Problems}
+   \Opensolutionfile{solutions}[ans3]
+   \begin{Ex}{First exercise}
+      An exercise with a solution.
+      \begin{solution}
+         This is a solution.
+         \relax{}
+      \end{solution}
+   \end{Ex}
+   \begin{Ex}{Second exercise}
+      A second exercise with a solution.
+      \begin{solution}
+         This is another solution.
+      \end{solution}
+   \end{Ex}
+   \Closesolutionfile{solutions}
+\section*{Solutions}
+   \Readsolutionfile{solutions}
+\end{document}
+\endinput
+%%
+%% End of file `ansexam3.tex'.

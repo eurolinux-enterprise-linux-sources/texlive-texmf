@@ -1,0 +1,25 @@
+\documentclass{article}
+
+\usepackage{pstricks} % To use the "xcolor" package with PSTricks
+\usepackage{pst-plot}
+\usepackage{amsmath}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\psset{xunit=8,yunit=3}
+\begin{pspicture}(-0.4,-1.2)(1.05,1.2)
+  \psaxes[Dx=0.2,Oy=-1,Dy=0.25,tickstyle=top,
+          axesstyle=frame](0,-1)(1,1)
+  \rput(-0.3,0){\shortstack{\textcolor{blue}{$\dfrac{x}{(x + 0.3)}$}\\
+                            \textcolor{red}{$\sin (10 \times x) / 2$}}}
+  \uput[0](1,0){$x$}
+  \uput[90](0,1){$y$}
+  \psplot[linecolor=red,linewidth=1.5pt]% 1 radian = 57.296 degrees
+         {0}{1}{x 10 mul 57.296 mul sin 0.5 mul}  % sin(10 x) / 2
+  \psplot[linecolor=blue,linewidth=1.5pt]{0}{1}{x 0.3 x add div} % x / (x + 0.3)
+  \psline[linewidth=0.2pt,linestyle=dashed](0,0)(1,0)
+\end{pspicture}
+
+\end{document}

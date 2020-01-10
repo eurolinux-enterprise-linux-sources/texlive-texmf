@@ -1,0 +1,68 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{boites,boites_exemples}
+\usepackage{graphicx,pstricks}
+\usepackage{multicol}
+
+\def\a{Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla. }
+\edef\a{\a\a\a\a\a\par}
+\def\b{\a\a\a\a}
+\def\test{\begin{breakbox} \b \end{breakbox}}
+
+\begin{document}
+
+\bkcounttrue
+\begin{breakbox}
+  \begin{itemize} \item aaa \item bbb \end{itemize}
+\end{breakbox}
+
+\begin{boiteepaisseavecuntitre}{ Coucou ! } \b
+\end{boiteepaisseavecuntitre}
+
+\begin{boitenumeroteeavecunedoublebarre}{3.5} \b  
+\end{boitenumeroteeavecunedoublebarre}
+
+\begin{boitenumeroteeavecunedoublebarre}{3.5}
+  \begin{itemize} \item aaa \item bbb \end{itemize}
+\end{boitenumeroteeavecunedoublebarre}
+
+\begin{boiteavecunelignequiondulesurlecote} \b  
+\end{boiteavecunelignequiondulesurlecote}
+
+\bkcounttrue
+\begin{boitecoloriee} \b  
+\end{boitecoloriee}
+
+\bkcountfalse
+\begin{boiteavecunelignequiondulesurlecote} 
+  \a\bigskip
+  \begin{boiteavecunelignequiondulesurlecote} 
+    \a\bigskip
+    \begin{boiteavecunelignequiondulesurlecote} 
+      \a\bigskip
+    \end{boiteavecunelignequiondulesurlecote}
+    \a
+  \end{boiteavecunelignequiondulesurlecote}
+  \a
+\end{boiteavecunelignequiondulesurlecote}
+
+\bkcountfalse
+\begin{multicols}{3}
+  \a
+  \begin{boiteavecunelignequiondulesurlecote} 
+    \a\a\a
+  \end{boiteavecunelignequiondulesurlecote}
+  \a
+  \begin{boiteavecunelignequiondulesurlecote} 
+    \a\a\a
+  \end{boiteavecunelignequiondulesurlecote}
+  \a\a\a\a\a
+\end{multicols}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

@@ -1,0 +1,184 @@
+%
+% \GetFileInfo{gmeometric.sty}
+% \title{The \pk{gmeometric} Package\thfileinfo}
+% \author{Grzegorz `Natror' Murzynowski}
+% \maketitle
+%
+%
+% \begin{copyrnote}
+%
+%%Written by Grzegorz `Natror' Murzynowski,
+%% natror at o2 dot pl
+%%
+%% \copyright\,2006 by Grzegorz `Natror' Murzynowski.
+%%
+%% This program is subject to the \LaTeX\ Project Public License.
+%% See \url{http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html}^^A
+%% for the details of that license.
+%%
+%% LPPL status: "author-maintained".\par
+%
+%\end{copyrnote}
+%
+% \CheckSum{61}
+%% 
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{gmeometric}
+     [2006/10/11 v0.67 to allow geometry macro in the document (GM)]
+
+%%
+%% \division{Introduction, usage}
+%%
+%% This package allows you to use the |\geometry| macro provided by
+%% the \pk{geometry} v3.2 by Hideo Umeki anywhere in a~document:
+%% originally it's claused |\@onlypreamble| and the main work of
+%% \pk{gmeometric} is to change that.
+%%
+%% Note it's rather queer to change the page layout \emph{inside}
+%% a~document and it should be considered as drugs or alcohol: it's
+%% O.K.\ only if you \emph{really} know what you're doing.
+%%
+%% In order to work properly, the macro should launch the |\clearpage|
+%% or the |\cleardoublepage| to `commit' the changes. So, the
+%% unstarred version trigges the first while the starred the
+%% latter. If that doesn't work quite as expected, try to precede or
+%% succede it with |\onecolumn| or |\twocolumn|.
+%%
+%% It's important that |\clear(double)page| launched by |\geometry|
+%% not to be a~no-op, i.e., |\clear(double)page| immediately
+%% preceding |\geometry| (nothing is printed in between) discards the
+%% `commitment'.
+%%
+%% \stanza
+%% You may use \pk{gmeometric} just like \pk{geometry} i.e., to specify
+%% the layout as the package options: they shall be passed to
+%% \pk{geometry}.
+%
+%
+% \begin{gmlonely}
+%   \subdivision{Installation}
+%
+%   Just put the \pk{gmeometric.sty} somewhere in the \file{texmf/\:tex/\:latex}
+%   branch. Creating a~\file{texmf/\:tex/\:latex/\:gm} directory may be advisable
+%   if you consider using other packages written by me.
+%
+%   Then you should refresh your \TeX\ distribution's files' database
+%   most probably. 
+% \end{gmlonely}
+%
+%
+% \subdivision{Contents of the \pk{gmeometric.zip} archive}
+%
+% The distribution of the \pk{gmeometric} package consists of the
+% following four files.
+% \begin{verse}
+%   \pk{gmeometric.sty}\\
+%   \pk{README}\\
+%   \pk{gmeometricDoc.tex}\\
+%   \pk{gmeometricDoc.pdf}
+% \end{verse}
+%
+%
+% \begin{gmlonely}
+%   \subdivision{Compiling of the Documentation}
+%
+%   The last of the above files (the \pk{.pdf}, i.e., \emph{this
+%     file}) is a~documentation compiled from the \pk{.sty} file by
+%   running \LaTeX\ (twice) on the \pk{gmeometricDoc.tex} file.
+%   Compiling of the documentation requires the packages: \pk{gmdoc}
+%   (\pk{gmdoc.sty} and \pk{gmdocc.cls}), \pk{gmverb.sty},
+%   \pk{gmutils.sty}, \pk{gmiflink.sty} and also some standard
+%   packages: \pk{hyperref.sty}, \pk{color.sty}, \pk{geometry.sty},
+%   \pk{multicol.sty}, \pk{lmodern.sty}, \pk{fontenc.sty} that should
+%   be installed on your computer by default.
+%
+%   If you have not installed the \pk{mwart.cls} class (available on
+%   CTAN in \pk{mwcls} package), the result of your compilation may
+%   differ a bit from the \pk{.pdf} provided in this \pk{.zip} archive
+%   in formattings: If you have not installed \pk{mwart.cls}, the
+%   standard \pk{article.cls} class will be used.
+% \end{gmlonely}
+%
+%
+% \division{Usage}
+% The only use of this package is to allow the |\geometry| command
+% also inside the \env{document} (originally it's
+% |\@onlypreamble|). To make |\geometry| work properly it may be
+% advisable to `commit' the layout changes with (|\clearpage|,
+% |\cleardoublepage| or |\newpage|) and maybe |\one/twocolumn|.
+%
+% Some layout commands should be put before |\one/twocolumn| and other
+% after it. An example:
+%
+%\begin{verbatim}
+% \thispagestyle{empty}
+%
+% \advance\textheight 3.4cm\relax
+% \onecolumn
+% \newpage
+%
+% \advance\footskip-1.7cm
+% \geometry{hmargin=1.2cm,vmargin=1cm}
+%\end{verbatim}
+%
+% And another:
+%\begin{verbatim}
+% \geometry{bottom=3.6cm}
+% \clearpage
+%\end{verbatim}
+%
+% 
+% \division{The Code}
+
+\RequirePackage{gmutils}% this package defines the storing and
+% restoring commands.
+
+%^^A\let\gm@compactBDhook\@begindocumenthook
+%^^A\def\@begindocumenthook{\gm@compactBDhook}
+
+
+% redefine |\@onlypreamble|, add storing to BeginDocument.
+\newcommand*\gme@tobestored{{%
+    \Gm@cnth \Gm@cntv \c@Gm@tempcnt \Gm@bindingoffset \Gm@wd@mp
+    \Gm@odd@mp \Gm@even@mp \Gm@orgw \Gm@orgh \Gm@dimlist}}
+
+
+\AtBeginDocument{\expandafter\StoreMacros\gme@tobestored}
+
+\StoreMacro\@onlypreamble
+\let\@onlypreamble\@gobble
+
+
+\RequirePackageWithOptions{geometry}
+
+
+% Restore |\@onlypreamble|:
+\RestoreMacro\@onlypreamble
+
+% Add restore to BeginDocument:
+
+\AtBeginDocument{\expandafter\RestoreMacros\gme@tobestored}
+
+
+% Redefine |\geometry|
+% \CodeDefine\geometry
+\def\geometry{%
+  \@ifstar{\gm@geometry{double}}{\gm@geometry{}}}
+
+% \CodeDefine\gm@geometry
+\def\gm@geometry#1#2{%
+  \Gm@clean
+  \setkeys{Gm}{#2}%
+  \Gm@process
+  \csname clear#1page\endcsname}%
+
+
+\endinput
+% \NoEOF
+
+% (For my GNU Emacs:)
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "e:/LaTeX/TeXGuru/gmeometric/gmeometricDoc"
+%%% End: 

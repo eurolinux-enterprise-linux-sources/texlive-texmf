@@ -1,0 +1,69 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+\parindent=0pt
+\usepackage{pstricks,pst-grad,multido,pst-plot,pst-vue3d}
+%
+\input realcalc
+%
+\psset{dimen=middle}
+\newcommand{\cables}{%
+	\multido{\iY=-2+4}{2}{%
+		\parametricplot[linewidth=3\pslinewidth]{-5}{5}{%
+    		\variablesTroisD
+			/Xabscisse t def
+			/Yordonnee \iY\space def
+			/Zcote 0.1 Xabscisse dup mul mul def
+			tx@3DDict begin
+				formulesTroisD
+				Xi Yi
+ 			end
+ 		}
+		\multido{\nCable=-4.5+0.5}{20}{%
+			\Rmul\cote\nCable\nCable
+			\Rmul\cote\cote{0.1}
+			\LineThreeD(\nCable,\iY,\cote)(\nCable,\iY,0)
+		}%
+	}%
+	\LineThreeD[linewidth=3\pslinewidth](-9,-2,0)(-5,-2,2.5)
+	\LineThreeD[linewidth=3\pslinewidth](9,-2,0)(5,-2,2.5)
+	\LineThreeD[linewidth=3\pslinewidth](-9,2,0)(-5,2,2.5)
+	\LineThreeD[linewidth=3\pslinewidth](9,2,0)(5,2,2.5)
+}
+\def\bridge(#1)(#2){{%
+\begin{pspicture}(#1)(#2)
+	\FrameThreeD[normaleLongitude=90,normaleLatitude=90,% the river
+		linestyle=none,fillstyle=gradient,gradbegin=white,%
+		gradend=blue,gradangle=45](0,0,-2)(-4,-9)(4,9)
+	{\psset{fracHeight=0.62, fillstyle=solid, %
+		ColorFaceA=lightgray,ColorFaceB=gray}
+	\PyramideThreeD[A=.4,B=.4,C=.4](-5,-2,-2){7}% Bridge
+	\PyramideThreeD[A=.5,B=.5,C=.5](5,-2,-2){7}}
+	\CubeThreeD[normaleLongitude=90,% the street
+		normaleLatitude=90,fillstyle=solid,A=9,B=2,C=0.05](0,0,0)
+	\multido{\nL=-8.8+0.2}{89}{%
+		\LineThreeD[linecolor=lightgray](\nL,-2,0)(\nL,2,0)
+    }
+	\AxesThreeD[linestyle=dashed,arrowsize=0.2,linecolor=red](6)
+	\cables
+	\psset{fracHeight=0.62, fillstyle=solid, %
+		ColorFaceA=lightgray,ColorFaceB=gray}
+	\PyramideThreeD[A=.4,B=.4,C=.4](-5,2,-2){7}% Bridge
+	\PyramideThreeD[A=.5,B=.5,C=.5](5,2,-2){7}
+\end{pspicture}
+}}
+
+\begin{document}
+\begin{center}
+\psset{PHI=30,THETA=45,Dobs=15,Decran=10}
+\bridge(-7.5,-8.5)(7.5,4.5)
+
+\clearpage
+\makebox[\linewidth]{
+\psset{PHI=0,THETA=0,Dobs=15}
+\bridge(-8,-2.5)(8,4.25)
+}
+
+\psset{PHI=90,THETA=0,Dobs=15}
+\bridge(-5,-6)(5,6)
+\end{center}
+\end{document}

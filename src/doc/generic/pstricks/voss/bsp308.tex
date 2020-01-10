@@ -1,0 +1,20 @@
+\documentclass{minimal}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{multido}
+\pagestyle{empty}
+\begin{document}
+\SpecialCoor
+
+\newcommand\tABC{%
+  \pspolygon[fillcolor=cyan,fillstyle=solid,linecolor=red]%
+     (0,0)(2,3)(3,2.5)}%
+\psset{unit=0.75}
+\begin{pspicture}(-5,-5)(7.5,7.5)
+  \rput(3,2){
+    \qdisk(0,0){3pt}\uput[-90](0,0){(3,2)}
+    \multido{\iA=90+60,\iB=-60+60}{6}{\rput{\iB}(3;\iA){\tABC}}}
+  \pscircle*[linecolor=red]{5pt}\uput[-90](0,0){Origin}
+\end{pspicture}
+
+\end{document}

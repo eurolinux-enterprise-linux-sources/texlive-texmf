@@ -1,0 +1,71 @@
+          Es ist soweit! Nach langem Basteln ist es fertig:
+
+                              UMRAND.STY
+
+                            und die Fonts
+
+                       UMRANDA.MF + UMRANDB.MF
+
+                             Version 1.2
+
+sind verf"ugbar! Dies ist die erste offiziell verbreitete Version.
+Mit UMRAND.STY kann man Umrandungen in TeX setzen. Kann man doch mit
+\fbox? Klar, aber nicht solche:
+
+                    *+++*+++*+++*+++*+++*+++*+++*
+                    +                           +
+                    +      TeX & METAFONT       +
+                    *            for            *
+                    +         President!        +
+                    +                           +
+                    *+++*+++*+++*+++*+++*+++*+++*
+
+Statt + und * gibt es in unseren Fonts Linienelemente, Meander,
+Fische, Schlangen, Blumen, Kringel und vieles andere. Die Rahmen-
+gr"o"se wird automatisch aus dem Inhalt ermittelt. Beliebige
+Zusammenstellungen von Randelementen sind m"oglich.
+
+Eine Einschr"ankung mu"sten wir leider machen: Die Fonts funktionieren
+nur auf Ausgabeger"aten mit gleicher x- und y-Aufl"osung. Also bei
+180x360dpi gehts schief. Kleiner Trost: Vielleicht mal ausprobieren,
+das eine oder andere Zeichen ist wahrscheinlich zu gebrauchen. Ob
+sich das mal "andern wird, ist sehr ungewi"s!
+
+PS: Da sieht man mal, was auf unserem Wuppertaler Stammtisch so alles
+    ausgeheckt wird!
+
+Wir, das sind in diesem Fall
+
+      Andreas H"orstemeier                 Andreas Schrell
+      Oberlinweg 7              und        Windh"ovel 2
+      D-58675 Hemer                        D-42279 Wuppertal
+
+           E-MAIL: Andreas.Schrell @ FernUni-Hagen.de
+
+Ach ja, das Paket steht unter den Namen
+
+      umrand12.zip       umrand12.readme_g       umrand12.readme_e
+
+in Stuttgart:       ftp.uni-stuttgart.de
+in Aston:           ftp.tex.ac.uk
+in Texas:           ftp.shsu.edu
+im Verzeichnis:     tex-archive/macros/generic/umrand
+
+Es sind PK-Fonts in 101 dpi (Bildschirm)
+                    300 dpi (Atari-Laser SLM)
+                    300 dpi (HP-Laser/DeskJet) enthalten.
+
+Wir hoffen, da"s andere Server es von dort uebernehmen. Das Paket ist
+nat"urlich frei verteilbar, es d"urfen aber wie immer keine Dateien
+ver"andert werden. Fehlermeldungen und Vorschl"age bitte an eine der
+oben genannten Adressen.
+
+            ooooooooooooooooooooooooooooooooooooooooooooooo
+            o                                             o
+            o  Wir freuen uns allerdings besonders "uber  o
+            o  POSTKARTEN der Heimatstadt von allen, die  o
+            o  unsere Umrandungen m"ogen und benutzen!    o
+            o                                             o
+            ooooooooooooooooooooooooooooooooooooooooooooooo
+
+Viel Spa"s w"unschen Andreas & Andreas!

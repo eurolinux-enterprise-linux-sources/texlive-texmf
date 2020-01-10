@@ -1,0 +1,35 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp01.tex ---
+%% Autor           : Herbert Voss <voss@perce.de>
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{article}
+\usepackage{pstricks}
+\xdefinecolor{gray95}{gray}{0.95}
+\xdefinecolor{gray85}{gray}{0.85}
+
+\parindent=0pt
+\pagestyle{empty}
+\begin{document}
+
+\pspicture(-4,-5)(9.25,8)
+\pscircle(0,0){4}
+\psarc(9,0){10}{130}{210}
+\psarc(0,0){0.75}{0}{92}% Winkel beta
+\rput(0.25,0.25){$\beta$}\rput(-0.25,-0.25){B}
+\psarc(9,0){0.75}{157}{180}% Winkel alpha
+\rput(8.5,0.5){$\alpha$}\rput(9.25,0){A}
+\rput(-0.25,4.3){C}\rput(-0.25,-4.3){C'}
+\rput(-1.25,-0.25){D}
+\rput(3.75,0.25){E}
+\psline(0,0)(9,0)(-0.15,3.98)(0,0)
+\psline[linestyle=dotted](-2,0)(0,0)
+\psline[linestyle=dotted](0,0)(0,5)
+\rput(5,-0.25){$d=9cm$}\rput(5,2.5){$r_2=10cm$}\rput[l](0,2){$r_1=4cm$}
+\pswedge[fillstyle=solid, fillcolor=gray85](0,0){4}{267.4}{0}% Markieren
+\pscustom[fillstyle=solid,fillcolor=gray95]{% 
+  \psarc(9,0){10}{180}{200}% 
+  \psline(-0.15,-3.98)(0,0)(-1,0)}
+\endpspicture
+
+\end{document}

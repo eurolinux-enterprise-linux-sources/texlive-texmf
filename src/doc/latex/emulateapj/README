@@ -1,0 +1,255 @@
+This is emulateapj.cls, version August 13, 2006
+For the latest version check http://hea-www.harvard.edu/~alexey/emulateapj
+
+2/9/03: MAJOR CHANGE: This is a complete rewrite of emulateapj.  It adds
+the use of single-column floats (figures, tables and footnotes) in the
+two-column mode.  All standard LaTeX/AASTeX environments such as
+{figure}, {table}, {figure*}, {table*} and {deluxetable} (and
+{deluxetable*} added here) should work as expected. Enjoy. 
+
+
+`emulateapj' is a LaTeX2e class to emulate the Astrophysical Journal
+(ApJ) page layout. The page length of the resulting document is very
+close to that in ApJ when Times fonts are used instead of the LaTeX
+default CM fonts (see below).
+
+If a manuscript is prepared for ApJ submission using the standard AAS
+(American Astronomical Society) LaTeX macros and the `aastex' style (see
+instructions for authors on the ApJ web site), the only thing required
+from the user should be to replace \documentclass{aastex} with
+\documentclass{emulateapj}, and perhaps resize figures as desired and
+replace {deluxetable} with {deluxetable*}
+(possible minor problems are described below).
+
+emulateapj requires revtex4.cls. If you don't have it already, it can be
+downloaded from http://publish.aps.org/revtex4/ (it's a small package).
+Other extrnal packages used are latexsym, graphicx, amssymb, longtable,
+epsf. They should already be present in the modern TeX distributions; if
+not, download them from www.ctan.org.
+
+To switch to the Times font, use the accompanying file apjfonts.sty (see
+the site above):
+\usepackage{apjfonts}. Alternatively, e.g., use the standard
+\usepackage{mathptmx}, the only difference is in math and Greek symbols.
+
+Alexey Vikhlinin <alexey@head-cfa.harvard.edu>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Release notes (02/09/03):
+
+1) This is a complete rewrite of emulateapj. The package is now
+based on revtex instead of aastex + multicol. Some inconsistencies with
+aastex may have been missed, so please don't hesitate to report them.
+
+2) The {deluxetable} environment is re-implemented (the problem with the
+the aastex's deluxetable is it does not float). There is also a new
+environment {deluxetable*} (absent in aastex) to set a floating table
+two-column wide. These were not thoroughly tested, so please report any
+problems. Known problems:
+  (a) \rotate doesn't work (too difficult to implement). Solution:
+      - load package lscape  (\usepackage{lscape} in the header)
+      - move table at the end of the paper after references
+      - \clearpage before the table
+      - \LongTables if the table will span more than 1 page (see next item)
+      - put the table inside the landscape environment and \clearpage
+        at the end: 
+        \clearpage
+        \LongTables % optionally
+        \begin{landscape}
+          \begin{deluxetable}
+          ....
+          \end{deluxetable}
+        \clearpage
+        \end{landscape}
+
+3) Multi-page tables cannot be set properly inside the main text; you
+need to move the table to the end of the paper (after the references) and
+issue the command \LongTables before it.
+
+4) By default, deluxetables are typeset with \footnotesize. If you want
+to use a different size, use, e.g., \tabletypesize{\normalsize} _outside_
+the deluxetable environment. If you need to increase interline spacing
+in the tables, use \def\arraystretch{1.XXX} also _outside_ deluxetables.
+
+5) Option `onecolumn' (as in \documentclass[onecolumn]{emulateapj})
+sets the whole paper (except the reference section) in one column
+as done by the ApJ for papers with long equations.
+
+6) Options `apj' and `apjl' (\documentclass[apj]{emulateapj}) change the
+spacing of the references (the default is ApJL wide spacing), and
+also the spacing between figures and text (last check with printed
+Journal in 4/2005).
+
+7) By default, appendix subsections are not numbered:
+            APPENDIX
+     Derivation of Equations
+If you want them numbered (`A. Derivation of Equations'), use the option
+\documentclass[numberedappendix]{emulateapj}
+ 
+It is recommended to use the {appendix} environment instead of the
+stand-alone \appendix command. Figure, table, and  equation counter are
+reset within the {appendix} to something like A1,A2,B1 etc. Table and
+figure counters are restored at the \end{appendix} because sometimes we
+want to place figures and tables belonging to the main matter at the end
+of the paper.
+ 
+8) By default, the comment in the upper-left corner of the title page and
+under the abstract will say "Draft version \today". There are additional
+commands \journalinfo{} and \submitted{} (the latter is equivalent to the
+aastex \slugcomment{} which also works) to change those comments. Used
+alone, \submitted{} will act on both those places.
+
+9) The \title command sets the entire title, including math, in upper
+case. If this is undesirable, use \lowercase{} macro, e.g., 
+\title{UPPER CASE OK HERE \lowercase{$a+b=c$}}.
+
+10) On the last page where the references start, there may be problems
+with placement of footnotes. There is a command \lastpagefootnotes which
+can be issued somewhere before those footnotes. It will result in the
+remaining footnotes set together at the end of the text, properly
+adjusted.
+
+11) There may be problems with single-column figure placements on the
+last page; try moving the figure around or explicitly specifying the [t]
+placement.  There may also be minor column misalignments on
+complicated pages with footnotes, sections, etc.; these are too difficult
+to fix.
+
+12) Any footnotes in the paper title should be set as
+\title{Title\footnotemark[1]} \footnotetext[1]{text} (with foootnotetext
+outside the title), rather that simply a \footnote{}. 
+
+NOTE that if you use the footnote in the title, the footnote counter for
+the main text will be wrong. You need to reset it manually _after_ the
+first \section. For example, if the frontmatter footnotes (title +
+affiliations) stop at 3, you need \setcounter{footnote}{3}
+
+13) \label's within the deluxetable environments should go INSIDE the
+\tablecaption{...} command or after \tablehead
+
+14) ... if, however, you use \tablenum [not recommended], \label should
+    go IMMEDIATELY AFTER the \tablenum command
+
+15) Marc Audard reports that if the bibliography is exactly finishing the
+page, and the next page should be a table, latex is not working. If an
+empty character (\mbox{~}) is added after (or before) the bibliography,
+i.e., starting a new page, the problem disappears.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Change Log
+
+2/14/3: fixed several bugs in deluxetable and footnotes inside the title.
+
+3/3/3:  Table caption is made in two lines. works only in {table} or
+{table*}, but not in {deluxetable}
+
+3/3/3:  Redefine p@subsection etc. for ApJ-style cross-references.
+
+3/16/3:  Define \tablerefs
+
+3/25/3:  Fix two-column references in the onecolumn mode (see 
+         \set@column@hsize{2})
+
+4/9/3:  Change the definition of \tablenotemark. It is less general but
+        works in the table caption. Also, put the body of deluxetable*
+        inside a minipage to fix table footnotes.
+
+5/14/3: Change section title font sizes. They are now different for 'apj'
+        and 'apjl' options
+
+7/8/3:  redefine NAT@sort@cites after loding revtex4 to prevent citations
+        from being sorted
+
+7/15/3: Fix \and in the author list
+
+7/17/3: Make \colhead to center column titles by default
+
+7/27/3: Redefile \@biblabel to remove the numbered list from thebibliography
+
+9/08/3: Further fixes to cutinhead: define @ptabularcr and use LT@cols
+
+10/08/3: Copy definitions for \anchor and \url from aastex.
+
+10/10/3: define \paragraph, \subparagraph. suppress section numbering
+         below \subsection. If you want subsubsections numbered, use 
+         \setcounter{secnumdepth}{3}
+         in the header
+
+11/13/3: add 'unsortedaddress' option to revtex4 to prevent groupin the
+authors by the institute
+
+11/26/3: define \def\blankaffiliation{~} after revtex4 to prevent \and's
+         from combining
+
+2/10/4: implement \tablewidth; works as documented in aastex;
+        change format for caption of deluxetables from Table 1. Title to
+                         Table 1.
+                          Title
+        Make table notes of the same width as the table.
+        Fix tabletypesize for table notes
+
+2/12/4: fix \tablewidth: \tablewidth{0pt} gives natural size (as does no
+        \tablewidth at all)
+        Remove dot after "Table 1."
+        Also change format to Table 1--- Continued
+
+2/19/4: implement \tablenum within deluxetable; abstract paragraphs
+        indented; 
+
+3/19/4: if no \tablehead is given, \startdata still prints out the caption
+
+4/2/4: remove a spurious space from the definition of \tablehead
+
+4/12/4: Due to popular demand, define \tablecomments and \tablerefs for
+        ordinary {table}s.
+
+6/6/4: Proper implementation of \sidehead in the deluxetable
+
+6/21/4: Fix issues with table heading which were introduced when I tried
+        to implement deluxetable's _without_ any heading.
+
+6/22/4: correct implementation of \tablenotetext in the \LongTable mode
+        (they previously generated plain footnotes at the end of the table)
+
+9/21/4: fix bug fix figure and table numbers in the appendicies
+
+10/8/4: add \object \facility \dataset from aastex
+
+11/26/4: Change floats-to-text distance to 5mm in ApJLetter style and
+         7mm in ApJ style (verified with Journal version in Dec 2004)
+ 
+4/21/5: change \renewcommand{\dbltopfraction}{0.85}; add
+        \renewcommand{\dblfloatpagefraction}{0.85}
+        \setcounter{topnumber}{9}
+        \setcounter{bottomnumber}{9}
+        \setcounter{totalnumber}{20}
+        \setcounter{dbltopnumber}{9} 
+
+11/27/5: Add parameters to fine-tune spacing to deluxetables:
+        \abovedeluxetableskip   % = 0 by default
+        \belowdeluxetableskip   % = 0 
+
+        Use these to fiddle with the spacing, e.g.
+        \setlength{\abovetableskipamount}{-1\baselineskip}
+
+12/14/5: no more explicit setting of tabcolsep inside deluxetables (so
+         the user has control over this parameter)
+
+
+08/13/6: Collect altaffiltext into token and issue \altaffiliation
+          only once. This overcomes the problem with 2**n processing 
+          time for long affiliation lists.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Copyright 2000-2006 Alexey Vikhlinin
+
+The first version of this package was written by Maxim Markevitch. 
+Pieces of AASTeX code are used for compatibility with aastex.cls.
+
+This program can be redistributed and/or modified under the terms
+of the LaTeX Project Public License available from CTAN archives in
+directory macros/latex/base/lppl.txt. This means you are free to use and
+distribute this package; however, if you modify anything, please change the
+file name and remove the authors email address.
+
+Alexey Vikhlinin <alexey@head.cfa.harvard.edu>

@@ -1,0 +1,15 @@
+%1 = $PFM$
+%2 = $TEXMF$fonts/type1/bh/lumath/
+
+@LucidaNewMath-Arrows-Demi = hlcda %2,1,b="lbmad"
+@LucidaNewMath-DemiItalic = hlcdim %2,1,b="lbmdi"
+@LucidaNewMath-AltDemiItalic = hlcdima %2,1,b="lbmdo"
+@LucidaNewMath-Demibold = hlcdm %2,1,b="lbmd"
+@LucidaNewMath-Symbol-Demi = hlcdy %2,1,b="lbmsd"
+@LucidaNewMath-Arrows = hlcra %2,1,b="lbma"
+@LucidaNewMath-Italic = hlcrim %2,1,b="lbmi"
+@LucidaNewMath-AltItalic = hlcrima %2,1,b="lbmo"
+@LucidaNewMath-Roman = hlcrm %2,1,b="lbmr"
+@LucidaNewMath-Extension = hlcrv %2,1,b="lbme"
+@LucidaNewMath-Symbol = hlcry %2,1,b="lbms"
+

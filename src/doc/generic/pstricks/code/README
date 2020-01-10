@@ -1,0 +1,20 @@
+latex pst-code
+makeindex -s gind.ist pst-code.idx
+latex pst-code
+
+or
+
+pdflatex pst-code 
+makeindex -s gind.ist pst-code.idx
+pdflatex pst-code
+
+or use one of the alternative make commands
+
+make dvi
+make pdf
+make ps
+make clean
+make zip
+
+-------------
+2006-12-17  Herbert Voss

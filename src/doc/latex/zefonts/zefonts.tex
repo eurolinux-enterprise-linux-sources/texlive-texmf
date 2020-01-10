@@ -1,0 +1,71 @@
+\documentclass{article}
+\title{The `ze' fonts
+       (virtual T1 fonts)\\
+       version 2.1}
+\author{Robert Fuster\\
+        \footnotesize Departament de Matem\`atica Aplicada\\
+        \footnotesize Universitat Polit\`ecnica de Val\`encia\\
+        \footnotesize 46071 Val\`encia (Spain)\\
+        \footnotesize e-mail: \texttt{rfuster\@ mat.upv.es}\\
+        \footnotesize URL: \texttt{HTTP://www.upv.es/\~{}rfuster}}
+\date{\small June 24, 1997\\
+      September 22, 1998\\
+      July 17, 2000}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Description}
+    The `zd' fonts by Constantin Kahn (\verb<kahn@math.uni-hannover.de<)
+    are virtual T1 encoded Computer Modern fonts based on (OT1) Computer Modern,
+    Times, and Helvetica fonts, intended for simulate `dc'
+    fonts.\footnote{Waine Sullivan's `dm' fonts are another approach to
+    the substitution of `dc' fonts by virtual ones.}
+
+    Because `dc' fonts are now obsolete, I've adapted the Kahn's package to
+    `ec' fonts. The resulting virtual fonts are named according to the ec
+    fonts names, changing `ec' by `ze' (\verb+zerm1000.vf+
+    simulates \verb+ecrm1000+, and so on)
+                             
+    Another virtual T1 encoded Computer Modern fonts are the almost european
+    (`am') fonts, by Lars Engebretsen (\texttt{enge@nada.kth.se}). The main
+    difference between `am' and `ze' fonts is that almost european fonts only
+    use Computer Modern fonts to simulate the European Modern and, then,
+    more characters are lost.
+\section{Installation}
+    The installation is very easy: you only need to put every file in its
+    correct directory.
+    \begin{itemize}
+        \item Copy all the files from the \verb+vf+ directory where your
+        dvi driver can find virtual files.\footnote{Your dvi driver must
+        support virtual fonts, of course.}
+        \item Copy all the files from the \verb+tfm+ directory where \TeX{}
+        look for font metrics.
+        \item Copy all the files from the \verb+texinput+ directory
+        where \LaTeX{} look for input files.
+        \item If you have the \verb+dvips+ driver, copy the files from the
+        \verb+dvips+ directory where \verb+dvips+ looks for font mapping.
+        \item \textbf{If you have an (very) old version of zefonts}, remove
+        this files:
+        \begin{itemize}
+              \item  cmsy10o.vf
+                     cmmi10o.vf
+                     cmvtt10o.vf
+                     cmbsy10o.vf
+                     cmmib10o.vf and
+                     cmbxi10f.vf
+                    (from your virtual fonts path),
+              \item ze.map and config.ze (from the directory where dvips
+              search for font mapping).
+        \end{itemize}
+    \end{itemize}
+\section{Warnings}
+\begin{itemize}
+\item
+This is an unsupported software, and it comes without any kind of warranty.
+\item
+You can distribute it freely.
+\item
+My work for construct the `ze' fonts was a simple adaptation from the
+`zd' fonts by C. Khan.
+\end{itemize}
+\end{document}

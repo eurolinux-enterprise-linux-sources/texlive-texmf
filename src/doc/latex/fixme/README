@@ -1,0 +1,69 @@
+		      This is the README file for FiXme,
+		  a LaTeX2e package for putting fixme notes
+			     in draft documents
+
+
+
+* Copyright
+===========
+
+Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005 Didier Verna
+
+
+This file is part of FiXme.
+
+FiXme may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either version 1.1
+of this license or (at your option) any later version.
+The latest version of this license is in
+http://www.latex-project.org/lppl.txt
+and version 1.1 or later is part of all distributions of LaTeX
+version 1999/06/01 or later.
+
+FiXme consists of the following files:
+
+- README (this file)
+- NEWS
+- fixme.ins
+- fixme.dtx
+- fixme.el
+
+
+* Description
+=============
+
+	This package provides you with a way of inserting fixme notes in your
+documents. Such notes can appear inline, as marginal notes, footnotes, index
+entries, in the log file and as warnings on stdout. It is also possible to
+summarize them in a list. When you switch from draft to final mode, any
+remaining fixme note will be logged, but removed from the document's body.
+Additionally, critical notes will abort compilation with an informative
+message. FiXme also comes with support for AUC-TeX.
+
+
+* Installation
+==============
+
+	To install the package, please follow these steps:
+
+- Run LaTeX on the file `fixme.ins' to create the style file `fixme.sty'.
+- Run LaTeX on the file `fixme.dtx' to create the doc   file `fixme.dvi'.
+- Install these files anywhere you see fit.
+
+	If you're an AUC-TeX user, you can also install the file `fixme.el' in
+a suitable AUC-TeX style directory.
+
+	Have fun!
+
+--
+Didier Verna, didier@lrde.epita.fr, http://www.lrde.epita.fr/~didier
+
+EPITA / LRDE, 14-16 rue Voltaire   Tel.+33 (1) 44 08 01 85
+94276 Le Kremlin-Bicêtre, France   Fax.+33 (1) 53 14 59 22   didier@xemacs.org
+
+
+
+
+Local Variables:
+mode: outline
+End:

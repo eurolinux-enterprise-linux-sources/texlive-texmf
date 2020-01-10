@@ -1,0 +1,170 @@
+\documentclass[a4paper]{article}
+% Manuel Luque <MLuque@aol.com>
+% Herbert Voss <voss@perce.de>  - 2003/12/20
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\usepackage{pst-grad}
+\usepackage{pst-vue3d}
+\usepackage{multido}
+
+\input random
+
+\definecolor{pelouse}{cmyk}{0.14,0.42,0.56,0}
+\definecolor{base}{rgb}{1,0.8,0}
+\newpsstyle{surface}{fillstyle=vlines,hatchcolor=marron,%
+	hatchwidth=0.2\pslinewidth,hatchsep=1\pslinewidth}
+\newpsstyle{sol}{fillstyle=vlines,hatchcolor=lightgray,%
+	hatchwidth=0.2\pslinewidth,hatchsep=1\pslinewidth}
+
+\SpecialCoor
+
+\def\fleuve{%
+	\FrameThreeD[normaleLatitude=90,normaleLongitude=90,%
+		linestyle=none,fillstyle=gradient,%
+		gradbegin=blue,gradend=white](0,0,-2.5)(-12,-14)(12,14)
+}
+\newcommand{\tablier}{%
+	\FrameThreeD[normaleLatitude=90,normaleLongitude=90,%
+		linestyle=none,fillstyle=gradient,%
+		gradbegin=gray,gradend=white](0,0,0)(-\Xcinf,-2)(\Xcinf,2)%
+    \multido{\nL=-\Xcinf+0.2}{196}{%
+        \LineThreeD[linecolor=lightgray](\nL,-2,0)(\nL,2,0)%
+	}%
+}
+\newcommand\rembardes{%
+	\multido{\iY=-2+4}{2}{%
+		\LineThreeD[linecolor=red](-\Xcinf,\iY,0.5)(\Xcinf,\iY,0.5)
+		\multido{\rX=-\Xcinf+0.4}{98}{%
+			\LineThreeD[linecolor=red](\rX,\iY,0)(\rX,\iY,0.5)%
+		}%
+	}%
+}
+\newcommand\bases{%
+	\multido{\iYpos=-2+4}{2}{%
+		\multido{\rXpos=-\Xc+\twoXc}{2}{%
+			\parametricplot[fillstyle=solid,fillcolor=base]{0}{360}{%
+				/Xabscisse t cos 1.5 mul \rXpos\space add def
+				/Zcote -2.5 def
+				/Yordonnee t sin 1.5 mul \iYpos\space add def
+				tx@3DDict begin
+				    formulesTroisD
+				    Xi Yi
+ 				end
+			}%
+		}%
+	}%
+}
+\newcommand\Berges{%
+	\pNodeThreeD(-\Xcinf,-14,-2){B1}
+	\pNodeThreeD(-12,-14,-2.5){B2}
+	\pNodeThreeD(-\Xcinf,14,-2){B4}
+	\pNodeThreeD(-12,14,-2.5){B3}
+	\pspolygon[fillstyle=solid,fillcolor=pelouse](B1)(B2)(B3)(B4)
+	\pNodeThreeD(\Xcinf,-14,-2){B1}
+	\pNodeThreeD(12,-14,-2.5){B2}
+	\pNodeThreeD(\Xcinf,14,-2){B4}
+	\pNodeThreeD(12,14,-2.5){B3}
+	\pspolygon[fillstyle=solid,fillcolor=pelouse](B1)(B2)(B3)(B4)%
+}
+
+\pagestyle{empty}
+
+\def\Radius{14}
+\def\Xc{6.5}
+\newdimen\tempXc
+\tempXc=\Xc pt
+\multiply\tempXc by 3
+\def\Xcinf{\pointless\tempXc}
+\newdimen\temptwoXc
+\temptwoXc=\Xc pt
+\multiply\temptwoXc by 2
+\def\twoXc{\pointless\temptwoXc}
+
+\begin{document}
+
+\begin{pspicture}(-4,-10)(15,10)
+\psset{PHI=20,THETA=-30,Dobs=30,Decran=10}
+\pNodeThreeD(0,0,0){fictif}
+\fleuve\Berges\bases%
+\multido{\iY=-2+4}{2}{%
+	\pnode(!
+    	/Xc \Xc\space def
+		/Radius \Radius\space def
+		/radius1 Xc 2 Radius mul add Xc Radius mul Radius dup mul add
+		sqrt 2 mul sub def
+		/X1 radius1 def
+		/Hpile Radius 1 1 Xc 2 mul dup mul 4 Radius dup mul mul div
+			sub sqrt sub mul neg def
+		X1 radius1){PointInitial}
+	\LineThreeD(-\Xcinf,\iY,-2)(-\Xcinf,\iY,0)
+	\LineThreeD(\Xcinf,\iY,-2)(\Xcinf,\iY,0)
+	\LineThreeD(-19.5,\iY,0)(19.5,\iY,0)
+	\LineThreeD(-\Xc,\iY,-2.5)(-\Xc,\iY,0)
+	\LineThreeD(\Xc,\iY,0)(\Xc,\iY,-2.5)
+	\multido{\nX=-13+13}{3}{%
+		\parametricplot{62.336}{117.664}{%
+			/Xabscisse t cos Radius mul \nX\space add def
+			/Zcote t sin Radius mul Radius sub def
+			/Yordonnee \iY\space def
+			tx@3DDict begin
+			    formulesTroisD
+			    Xi Yi
+			end
+		}
+		\parametricplot{0}{360}{%
+			/Xabscisse t cos radius1 mul radius1 add Xc sub \nX\space add def
+			/Zcote t sin radius1 mul radius1 add neg def
+			/Yordonnee \iY\space def
+				tx@3DDict begin
+				    formulesTroisD
+				    Xi Yi
+				end
+		}
+		\parametricplot{0}{360}{%
+			/Xabscisse t cos radius1 mul radius1 add neg Xc 2 mul add \nX\space add Xc sub def
+			/Zcote t sin radius1 mul radius1 add neg def
+			/Yordonnee \iY\space def
+			tx@3DDict begin
+			    formulesTroisD
+			    Xi Yi
+			end
+		}
+	}
+	\multido{\i=0+1}{30}{%
+		\pnode(!
+			/B Radius X1 mul Xc radius1 mul sub neg def
+			/A Radius radius1 sub def
+			/C X1 X1 mul Radius mul Xc Xc mul radius1 mul sub def
+			/Discriminant B B mul A C mul sub sqrt def
+			/X2 B neg Discriminant add A div def
+			/radius2 X2 X1 sub 2 exp 4 radius1 mul div def
+			X2 radius2){fictif1}
+		\multido{\nX=-13+13}{3}{%
+			\parametricplot{0}{360}{%
+				/Xabscisse t cos radius2 mul X2 add Xc sub \nX\space add def
+				/Zcote t sin radius2 mul radius2 add neg def
+				/Yordonnee \iY\space def
+				tx@3DDict begin
+		    		formulesTroisD
+		    		Xi Yi
+				end
+			}
+			\parametricplot{0}{360}{%
+				/Xabscisse t cos radius2 mul X2 add neg Xc 2 mul add Xc sub \nX\space add def
+				/Zcote t sin radius2 mul radius2 add neg def
+				/Yordonnee \iY\space def
+				tx@3DDict begin
+				    formulesTroisD
+				    Xi Yi
+				end
+			}%
+		}
+		\pnode(! /X1 X2 def /radius1 radius2 def X1 radius1){fictif2}
+	}%
+}
+\tablier
+\rembardes
+\AxesThreeD[linestyle=dashed,arrowsize=0.2](21,16,10)
+\end{pspicture}
+\end{document}

@@ -1,0 +1,51 @@
+<!DOCTYPE rdf:RDF SYSTEM "../tpm.dtd">
+<rdf:RDF xmlns:rdf="">
+  <rdf:Description about="modroman.tar.gz">
+    <TPM:Name>modroman</TPM:Name>
+    <TPM:Type>package</TPM:Type>
+    <TPM:Date>2004/05/19 11:30:00</TPM:Date>
+    <TPM:Version>0.3</TPM:Version>
+    <TPM:Creator>Yvon HENEL</TPM:Creator>
+    <TPM:Title>
+      to write number in lower case roman numeral with a `j' instead of a `i'
+      as the final letter and optionnaly `u' for `v'
+    </TPM:Title>
+    <TPM:Size></TPM:Size>
+    <TPM:Description>
+     This package provides only two macros viz. \modromannumeral which
+     writes the number given as argument in lower case roman numeral with a
+     `j' instead of a `i' as the final letter of numbers greater than 1
+     and \modroman{MyCounter} which writes the value of a counter in the
+     same way. You have to use the first as the TeX primitive \romannumeral
+     and the second as LaTeX command \roman. 
+     
+     The default option is `vpourv' with which 5 is `translated' by `v' and
+     option `upourv' whith which the same 5 is given as `u'.
+    </TPM:Description>
+    <TPM:Build>
+      <TPM:RunPatterns>
+	texmf/tex/latex/modroman/*
+	texmf/tpm/package/modroman.tpm
+      </TPM:RunPatterns>
+      <TPM:DocPatterns>
+	texmf/doc/latex/modroman/*
+      </TPM:DocPatterns>
+      <TPM:SourcePatterns>
+	texmf/source/latex/modroman/*
+      </TPM:SourcePatterns>
+    </TPM:Build>
+    <TPM:RunFiles size="">
+      texmf/tex/latex/modroman/modroman.sty
+      texmf/tpm/package/modroman.tpm
+    </TPM:RunFiles>
+    <TPM:DocFiles size="">
+      texmf/doc/latex/modroman/modroman.pdf
+    </TPM:DocFiles>
+    <TPM:SourceFiles size="">
+      texmf/source/latex/modroman/modroman.dtx
+      texmf/source/latex/modroman/modroman.ins
+    </TPM:SourceFiles>
+    <TPM:Provides>package/modroman</TPM:Provides>
+  </rdf:Description>
+</rdf:RDF>
+

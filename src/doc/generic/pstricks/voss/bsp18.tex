@@ -1,0 +1,51 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{pstricks}
+\usepackage{pst-plot}
+\pagestyle{empty}
+
+\begin{document}
+
+The highest polygon is drawn first, then the one before, a.s.o.
+In this way we can use the fill option without \verb|pscustom|.
+
+\psset{unit=1mm}
+\pspicture(-14,-13)(132,162)
+\psset{xunit=10mm}
+\pspolygon[fillstyle=solid,fillcolor=yellow]%
+  (0,28)(1,147)(2,110)(3,54)(4,17)(5,25)(6,4.5)(7,7.75)
+  (8,6)(9,5)(10,2)(11,3)(12,4.75)(13,3)
+  (13,0)(0,0)(0,28)
+%
+\pspolygon[fillstyle=solid,fillcolor=blue]%
+  (0,28)(1,144.5)(2,101)(3,42)(4,13.5)(5,16)(6,3)(7,5)
+  (8,4)(9,1.5)(10,.75)(11,1.5)(12,0)(13,2)
+  (13,0)(0,0)(0,28)
+%
+\pspolygon[fillstyle=solid,fillcolor=red]%
+  (0,27)(1,135)(2,95)(3,35)(4,12)(5,14)(6,2)(7,4.5)
+  (8,3)(9,1)(10,.75)(11,1.5)(12,0)(13,1.5)
+  (13,0)(0,0)(0,27)
+%
+\pspolygon[fillstyle=solid,fillcolor=green]%
+  (0,24)(1,105.5)(2,54)(3,22)(4,3.5)(5,7)(6,0)(7,1)
+  (8,1)(9,0)(10,0)(11,1.5)(12,0)(13,1.5)
+  (13,0)(0,0)(0,24)
+%
+\pspolygon[fillstyle=solid,fillcolor=cyan]%
+  (0,14)(1,67)(2,20)(3,18)(4,2)(5,6)(6,0)(7,1)
+  (8,1)(9,0)(10,0)(11,.5)(12,0)(13,.5)
+  (13,0)(0,0)(0,14)
+%
+\psset{unit=1mm}
+\rput[lB](70,110){\psframe[fillstyle=solid,fillcolor=yellow](7,5)\rput[lB](10,1.5){Enl¦vement burinant}}
+\rput[lB](70,102){\psframe[fillstyle=solid,fillcolor=blue](7,5)\rput[lB](10,1.5){Marche}}
+\rput[lB](70,94){\psframe[fillstyle=solid,fillcolor=red](7,5)\rput[lB](10,1.5){Plume}}
+\rput[lB](70,86){\psframe[fillstyle=solid,fillcolor=green](7,5)\rput[lB](10,1.5){Charni¦re}}
+\rput[lB](70,78){\psframe[fillstyle=solid,fillcolor=cyan](7,5)\rput[lB](10,1.5){Languette}}
+\psaxes[tickstyle=bottom,ticksize=2pt,linewidth=.4pt,
+  Dx=1,dx=1truecm,Dy=10,dy=1.145truecm](130,160.35)
+\rput[b]{90}(-11,80){Nombre de pi¦ces}
+\rput[t](65,-9){Longueur de la trace en mm}
+\endpspicture
+
+\end{document}

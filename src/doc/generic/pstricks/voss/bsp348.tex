@@ -1,0 +1,137 @@
+\listfiles
+\documentclass[a4paper]{article}%  Herbert Voss 2004-10-06
+\usepackage{pstricks}
+\usepackage{pst-plot}
+\usepackage{pstricks-add}
+\usepackage{multido}
+\usepackage{url}
+%
+% ----------- first example --------------------
+%
+\def\func{%
+    const0 x sin dup mul 3 mul div neg /p exch def
+    p abs sqrt neg /r exch def
+    const1 2.0 div neg /q exch def
+    p 0 lt {
+      p dup mul p mul q dup mul add 0 le {
+        q r 3 exp div arccos 
+        3 div cos r dup add neg mul
+      }{
+        q r 3 exp div arch
+        3 div cosh r dup add neg mul
+      } ifelse
+    }{
+      q r 3 exp div arsh
+      3 div sinh r dup add neg mul      
+    } ifelse
+}
+%
+% ----------- second example --------------------
+% by Manfred Baum
+%The equation  f = z + a^2/z  is converted into the quadratic equation
+%
+%  z^2 – f z + a^2 z = 0
+%
+%which can be solved for  z  by the standard formula. 
+%The unknown  z  and the coefficient  f, however, are 
+%complex numbers. Having solved the equation, just 
+%set  z = x + iy  and  f = phi + i psi. Thus the solution  
+%z = …  provides the points (x, y) corresponding to the 
+%pair of potential and stream function (phi, psi). 
+%This is just inverting the original setting  f = f(z), 
+%where you obtain the complex potential  f  corresponding to a given point  z.  
+%
+%If you fix the potential  phi  and let the stream function  
+%psi  run over a certain interval, you get an equipotential 
+%line. If you fix the stream function  psi  and allow the 
+%potential  phi  to vary, you get a streamline.  Therefore 
+%the two commands intended to draw equipotential and stream 
+%lines differ only in what is fixed and what is the running 
+%curve parameter  t.  In the case of streamlines, for instance, 
+%the curve parameter  t  is the potential phi, while the stream 
+%function  psi  is kept at the fixed value  #1.  
+%
+%The code starting with  { t #1 … } puts the potential  phi = t  
+%and the stream function  psi = #1  on the stack.  These two 
+%values are regarded as the real and imaginary parts of one 
+%complex number  f. What follows relies on the operations 
+%performed with complex numbers.  For instance, if a complex 
+%number is on the stack and you write  “ 2 copy cmul “, the 
+%complex number will be duplicated and then multiplied with itself. 
+%As a result the complex number  z^2  is on the stack. 
+%The operations for complex addition, multiplication, square 
+%root, etc. are provided by the command  \complex, which simply 
+%writes the definitions of these operations using  \pstVerb{ … }.  
+%
+\def\compl{%
+  \pstVerb{
+    /cadd { 3 -1 roll add 3 1 roll add exch } def
+    /csub { exch 4 -1 roll sub neg 3 1 roll sub } def
+    /cmul { 3 index 2 index mul 3 index 2 index mul sub 5 1 roll
+      4 -1 roll mul 3 1 roll mul add } def
+    /crec { 2 copy dup mul exch dup mul add 3 -1 roll 1 index div
+      3 1 roll div neg } def
+    /creal { pop } def
+    /cimag { exch pop } def
+    /cabs { dup mul exch dup mul add sqrt } def
+    /carg { exch atan } def
+    /csqrt { 2 copy cabs sqrt 3 1 roll carg 2 div 2 copy cos mul 3 1
+      roll sin mul } def
+  }%
+}
+%
+\newcommand\streamline[2]{%
+% A streamline is drawn for #1 as the value of the stream function
+% (divided by $2u_\infty$).  The potential function, also normalized,
+% takes values in the range (-1.5,+1.5).  The (x, y)-coordinates of
+% the points may be modified by providing PostScript commands in #2.
+% The streamline through the stagnation points (#1 = 0) is excluded.
+  \parametricplot{-1.5}{1.5}{t #1 2 copy 2 copy cmul 1 0 csub csqrt cadd #2}}
+\newcommand\equipotline[2]{%
+% An equipotential line is drawn in the same way.  The potential must
+% not assume the value 1 exactly, because of the singularity at the
+% stagnation points.
+  \parametricplot{0}{1.25}{#1 t 2 copy 2 copy cmul 1 0 csub csqrt cadd #2}}
+
+\pagestyle{empty}
+\begin{document}
+
+\begin{pspicture*}(-5,-2.5)(5,2.5)
+  \pstVerb{
+    /arccos { dup dup mul neg 1.0 add sqrt exch atan } def
+    /sinh { dup Euler exch exp exch neg Euler exch exp sub 2 div } def
+    /cosh { dup Euler exch exp exch neg Euler exch exp add 2 div } def
+    /arsh { dup dup mul 1 add sqrt add ln } def
+    /arch { dup dup mul 1 sub sqrt add ln } def
+  }
+  \psaxes(0,0)(-5,-2.25)(5,2.25)
+  \pscircle[linecolor=red]{1}
+  \psset{plotpoints=100,linewidth=0.05pt,polarplot=true,linecolor=blue}
+  \multido{\rA=0.005+0.05}{5}{
+    \psplot{1}{179}{%
+      /const0 \rA\space def 
+      /const1 1.0 def % cylinder radius
+      \func
+    }
+    \psplot{181}{359}{%
+      /const0 \rA\space def 
+      /const1 1.0 def % cylinder radius
+      \func
+    }%
+  }
+  \multido{\rA=0.03+0.25}{20}{
+    \psplot{1}{179}{%
+      /const0 \rA\space def 
+      /const1 1.0 def % cylinder radius
+      \func
+    }
+    \psplot{181}{359}{%
+      /const0 \rA\space def 
+      /const1 1.0 def % cylinder radius
+      \func
+    }%
+  }
+\end{pspicture*}
+
+\end{document}
+

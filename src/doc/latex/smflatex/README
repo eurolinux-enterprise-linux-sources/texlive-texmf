@@ -1,0 +1,34 @@
+The Société mathématique de France provides 
+a set of classes, packages and bibtex styles
+that are used in its publications.
+They are based on Ams classes (whose code is sometimes recopied)
+and mainly "upward-compatible".
+
+Their main features are
+   1. quite different design
+   2. new environments for typesetting some informations
+in two languages (altabstract, alttitle, altkeywords)
+   3. if necessary, use of babel (option frenchb) and desactivation
+of some features of frenchb.
+
+The following files are included.
+
+  smfart.cls
+  smfbook.cls   classes for articles and books
+
+  smfenum.sty   package for new alignment style of enumerations
+  smfthm.sty    package for simplified definition of theorems
+
+  smfplain.bst
+  smfalpha.bst  BibTeX styles 
+
+  e-doc.tex     documentation and advices (in english)
+  f-doc.tex     documentation et conseils (in french)
+
+--
+Société mathématique de France
+Institut Henri Poincaré
+11 rue Pierre et Marie Curie, F-75231 Paris cedex 05
+
+Email : revues@smf.ens.fr
+Url : http://smf.emath.fr

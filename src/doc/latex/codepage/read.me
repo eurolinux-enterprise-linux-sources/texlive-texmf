@@ -1,0 +1,35 @@
+These files compound the package "codepage". This package translates all
+the characters above 128 from differents codepage into TeX characters.
+
+It works with all variant of TeX (Plain, LateX, latex2e). However, the printing
+of documentation and the installation of the code need LaTeX2e (or a recent
+version of the DOC package).
+The directory "installe" contain all the package preinstalled.
+
+The file "demo.zip" (binary file) contain two files with the same poem
+from Arthur Rimbaud (a french poet). The first file is written using the
+code page 850, the second using the code page ISO Latin set 1. Then
+you will have at least a version of the two files which do not correspond
+to your code page. Once all the files from the package "codepage" are installed
+in your TeX's input directory, you can typeset them with LaTeX 2.09
+(since these file were packed on a Unix machine, you should probably
+use the "-a" option when you do the unzip).
+
+To generate all the files of the package "codepage", the following
+command should be issued: latex codepage.ins
+To generate a french introduction to the package, the following command 
+should be issued:
+                    latex frintro.drv
+To print all the documentation in english (4 pages of introduction on 
+how to use the package and 45 pages about the code of package), 
+the following command should be issued:
+                    latex codepage.drv
+
+To Install the package the only thing to do is the copy of all the
+files (except the DVI files) from the "installe" directory inside
+the TeX's input directory.
+
+send your comment, bug or remarks to aubord@uni2a.unige.ch
+
+A. Aubord
+

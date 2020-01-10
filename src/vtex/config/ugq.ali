@@ -1,0 +1,6 @@
+%1 = $PFM$
+%2 = $TEXMF$fonts/type1/urw/grotesq/
+
+@URWGroteskT-Bold = ugqb8a %2,1
+@URWGroteskT-Bold-8r = ugqb8r %2,1,r="8r",b="ugqb8a"
+

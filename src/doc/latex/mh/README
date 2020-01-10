@@ -1,0 +1,88 @@
+                      The mh bundle
+                      =============
+              Morten H\o gholm (c) 2002-2004
+              email: moho01ab@student.cbs.dk
+          License: LaTeX Project Public License
+
+The files in the mh bundle are:
+
+  mhsetup.dtx          mhsetup.ins
+  mathtools.dtx        mathtools.ins
+  empheq.dtx           empheq.ins
+  empheq07.dtx         empheq07.ins
+
+and derived files. The derived files of each .dtx-file are listed
+at the top of the respective .dtx-file.
+
+
+INSTALLATION
+============
+This follows the usual procedure of .dtx-files. Run LaTeX on each
+.ins-file to get the runtime files. These should all be placed in
+       TEXMF/tex/latex/mh
+on your computer, where TEXMF is your (local) texmf tree.
+
+
+DESCRIPTION
+===========
+
+The mh bundle is a series of packages designed to enhance the
+appearance of documents containing a lot of math. The main
+backbone is amsmath, so those unfamiliar with this required part
+of the LaTeX system will probably not find the packages very
+useful.
+
+mathtools v1.01a 2004/10/10
+=========
+
+The mathtools package provides many useful tools for mathematical
+typesetting. It is based on amsmath and fixes various deficiencies
+of amsmath and standard LaTeX. It provides:
+  -- Extensible symbols, such as brackets, arrows, harpoons, etc.
+  -- Various symbols such as \coloneqq (:=).
+  -- Easy creation of new tag forms.
+  -- Showing only the referenced equations.
+  -- Extensible arrows, harpoons and hookarrows.
+  -- Starred versions of the amsmath matrix environments for
+     specifying the column alignment.
+  -- More building blocks: multlined, cases-like environments, new
+     gathered environments.
+  -- Math versions of \makebox, \llap, \rlap etc.
+  -- Cramped math styles.
+  -- and more...
+
+mathtools requires mhsetup.
+
+empheq v2.11a 2004/10/10
+======
+
+The empheq package is a visual markup extension designed to
+function on top of amsmath. It features:
+  -- Boxing multi line math displays while leaving equation
+     numbers untouched at the margin. Any kind of box will do.
+  -- Making the ntheorem package place end-of-theorem markers
+     perfectly.
+  -- Placing arbitrary material on either side of math displays.
+     This includes delimiters that automatically scale to the
+     correct size.
+
+empheq requires mathtools.
+
+empheq07 v0.7d 2004/07/27
+========
+
+The obsolete version of the empheq package. It is incompatible
+with current empheq (and will continue to be so) and is only
+provided to make old documents work.
+
+
+mhsetup v1.01a 2004/10/10
+=======
+
+The mhsetup package defines various programming tools needed by
+both empheq and mathtools. In the future, most of these tools will
+probably be an integral part of LaTeX3.
+
+
+===========
+This README file was last revised 2004/10/10.

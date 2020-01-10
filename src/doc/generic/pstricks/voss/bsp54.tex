@@ -1,0 +1,1294 @@
+\documentclass[]{article}
+\usepackage{pstricks}
+\usepackage{pst-circ}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\begin{center}
+\psset{unit=0.7}
+\psset{intensitycolor=red,
+  intensitylabelcolor=red,tensioncolor=green,%
+  tensionlabelcolor=green,intensitywidth=3pt}
+\begin{pspicture}(-1.25,0)(13.5,9)
+  \circledipole[tension,tensionlabel=$U_0$,tensionoffset=-0.75,%
+         tensionlabeloffset=-1,labeloffset=0](0,6)(0,0){\LARGE\textbf{=}}
+  \wire[intensity,intensitylabel=$i_0$](0,6)(2.5,6)
+  \diode[dipolestyle=thyristor](2.5,6)(4.5,6){$T_1$}
+  \wire[intensity,intensitylabel=$i_1$](4.5,6)(6.5,6)
+  \multidipole(6.5,7.5)(2.5,7.5)%
+    \coil[dipolestyle=rectangle,labeloffset=-0.75]{$L_5$}%
+    \diode[labeloffset=-0.75]{$D_5$}.
+  \wire[intensity,intensitylabel=$i_5$](6.5,6)(6.5,7.5)
+  \wire(2.5,7.5)(2.5,3)
+  \wire[intensity,intensitylabel=$i_c$](2.5,4.5)(2.5,6)
+  \qdisk(2.5,6){2pt}\qdisk(6.5,6){2pt}
+  \diode[dipolestyle=thyristor](2.5,4.5)(4.5,4.5){$T_2$}
+  \wire[intensity,intensitylabel=$i_2$](4.5,4.5)(6.5,4.5)
+  \capacitor[tension,tensionlabel=$u_c$,%
+    tensionoffset=-0.75,tensionlabeloffset=-1](6.5,4.5)(6.5,6){$C_k$}
+  \qdisk(2.5,4.5){2pt}\qdisk(6.5,4.5){2pt}
+  \wire[intensity,intensitylabel=$i_3$](6.5,4.5)(6.5,3)
+  \multidipole(6.5,3)(2.5,3)%
+    \coil[dipolestyle=rectangle,labeloffset=-0.75]{$L_3$}%
+    \diode[labeloffset=-0.75]{$D_3$}.
+  \wire(6.5,6)(9,6)\qdisk(9,6){2pt}
+  \diode(9,0)(9,6){$D_4$}
+  \wire[intensity,intensitylabel=$i_4$](9,3.25)(9,6)
+  \wire[intensity,intensitylabel=$i_a$](9,6)(11,6)
+  \multidipole(11,6)(11,0)%
+    \resistor{$R_L$}
+    \coil[dipolestyle=rectangle]{$L_L$}%
+    \circledipole[labeloffset=0,tension,tensionoffset=0.7,%
+      tensionlabel=$U_B$]{\LARGE\textbf{=}}.
+  \wire(0,0)(11,0)\qdisk(9,0){2pt}
+  \tension(12.5,5.5)(12.5,0.5){$u_a$}
+\end{pspicture}%
+\end{center}
+
+\end{document}
+
+
+\documentclass{article}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{multido}
+%
+\newcommand{\PstFillBox}[3]{%
+  \definecolor{MyColor}{rgb}{#1,#2,#3}%
+  \begin{pspicture}(-0.44,-0.47)(0.44,0.47)
+    \psframe[fillstyle=solid,%
+       fillcolor=MyColor,%
+       linecolor=MyColor](-0.5,-0.5)(0.5,0.5)
+  \end{pspicture}
+}
+\setlength{\parindent}{0cm}
+
+\begin{document}
+
+\definecolor{lightblue}{rgb}{0,0,.5}
+\definecolor{Navy}{rgb}{0,0,0.5}
+\definecolor{LemonChiffon}{rgb}{1,0.98,0.8}
+\definecolor{ForestGreen}{rgb}{0.13,0.55,0.13}
+\psset{unit=.825cm}
+\begin{pspicture}(10,8)
+  \psset{fillstyle=solid,linestyle=none,linewidth=0}
+  \psframe[fillcolor=lightblue](10,8)
+  \pscircle[fillcolor=yellow](2,6){.8} % Sun
+  {% Rays
+   \psset{linecolor=yellow,linestyle=solid,linewidth=.3}
+   \degrees[8]
+   \multido{\i=1+1}{8}{\rput{\i}(2,6){\psline(1,0)(1.5,0)}}
+  }%
+  \pspolygon[fillcolor=green](6,0)(10,2)(10,0)% Grass
+  \psdiamond[fillcolor=red,gangle=-45](8,6)(1.5,2.5)% Kite
+  \rput{45}(8,6){\pnode(-2.5,0){Kitetail}}
+  \rput{-10}(.8,1.5){\psdiamond[fillcolor=yellow](.6,.1)(.6,.3)}
+  \rput{-80}(.8,1.5){\psdiamond[fillcolor=yellow](.6,.1)(.6,.3)}
+  \pnode(.8,1.5){Tailend}
+  \nccurve[fillstyle=none,angleA=270,angleB=125,ncurvB=.9,ncurvA=1.4,
+           linestyle=dotted,dotstyle=square,linewidth=.25]{Kitetail}{Tailend}
+  \newcommand{\bunting}{\pstriangle(.35,.35)}
+  \psset{fillcolor=red,labelsep=.01}
+  \naput[nrot=115,npos=.15]{\bunting}
+  \nbput[nrot=25,npos=.15]{\bunting}
+  \naput[nrot=75,npos=.4]{\bunting}
+  \nbput[nrot=115,npos=.4]{\bunting}
+  \naput[nrot=115,npos=.7]{\bunting}
+  \nbput[nrot=25,npos=.7]{\bunting}
+\end{pspicture}
+
+
+
+\multido{\nCountA=0+0.1}{10}{%
+  \multido{\nCountB=0+0.1}{10}{%
+    \PstFillBox{\nCountA}{\nCountB}{0.75}%
+  }\\%
+}
+\end{document}
+
+
+\begin{filecontents}{Literatur.bib}
+@manual{KEITH,
+  author = "Keith Reckdahl",
+  title  = "Using Imported Graphics in \LaTeXe\ Documents",
+  year   = "1997",
+  month  = dec,
+  note   = "CTAN: \url{tex-archive/info/epslatex.ps}"}
+\end{filecontents}
+%
+\documentclass{article}
+\usepackage{url}
+\begin{document}
+
+Das ist eine Referenz.\cite{KEITH}
+
+\bibliographystyle{plain}
+\bibliography{Literatur}
+\end{document} 
+
+
+
+\documentclass[a6paper,12pt]{scrartcl}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{longtable}
+\setlength\parindent{0pt}
+\begin{document}
+
+\setlongtables
+\begin{longtable}{*{3}{p{3cm}}}
+Jetzt kommt hier erst einmal beliebiger Text,
+der nur dazu dienen soll, zu zeigen, dass
+hier kein Seitenumbruch erfolgt, weil eben
+zwischendurch keine neue \textbf{Tabellenzeile}
+eingefügt wird.\\
+
+Jetzt kommt hier erst einmal beliebiger Text,
+der nur dazu dienen soll, zu zeigen, dass
+hier kein Seitenumbruch erfolgt, weil eben
+zwischendurch keine neue \textbf{Tabellenzeile}
+eingefügt wird.\\
+
+Jetzt kommt hier erst einmal beliebiger Text,
+der nur dazu dienen soll, zu zeigen, dass
+hier kein Seitenumbruch erfolgt, weil eben
+zwischendurch keine neue \textbf{Tabellenzeile}
+eingefügt wird.
+& neue Spalte & neue Spalte\\
+neue Spalte & neue Spalte & neue Spalte
+\end{longtable}
+
+\end{document}
+
+
+
+
+\documentclass{article}
+\usepackage{pstricks,pstricks-add,pst-plot,calc,ifthen}
+
+\newlength{\haut}
+\newlength{\bas}
+\newcounter{bam}
+\newlength{\base}
+\newlength{\hauteur}
+\newlength{\haute}
+\newlength{\milieu}
+
+% MonAxe{abs_déb}{abs_fin}{incrément}
+\newcommand{\MonAxe}[3]{%
+  \setcounter{bam}{-1}
+  \psaxes[yAxes=false,tickstyle=bottom,xLabel=\scriptsize,Dx=#3]%
+    {-}(0,0)(#1,0)(#2,0.01)}
+
+%\bam{min}{d1}{q1}{med}{q2}{d9}{max}
+\newcommand{\bam}[7]{%
+  \psset{fillstyle=solid}
+  \addtocounter{bam}{2}
+  \setlength{\haut}{\thebam\psyunit+.5\psyunit}
+  \setlength{\bas}{\thebam\psyunit-.5\psyunit}
+  \psline[linestyle=dotted](#1,\thebam\psyunit)(#7,\thebam\psyunit)
+  \psline{|-|}(#2,\thebam\psyunit)(#6,\thebam\psyunit)  %moustaches
+  \psframe(#3,\bas)(#5,\haut) % boîte
+  \psline(#4,\bas)(#4,\haut)  %médiane
+}
+
+%  \histo{borne_gauche_int}{borne_droite_int}{effectif}
+%               pour tracer des histogramme en traçant
+%               l'un après l'autre chaque rectangle
+\makeatletter
+\newcommand{\histo}[3]{%
+  \psset{fillstyle=crosshatch}
+  \setlength{\milieu}{0pt}
+  \addtolength{\milieu}{#1pt+#2pt}
+  \pst@divide{\milieu}{2pt}{\mil}
+  \setlength{\base}{0pt}
+  \addtolength{\base}{#2pt-#1pt}
+  \setlength{\hauteur}{#3pt}
+  \pst@divide{#3pt}{\base}{\quotient}
+  \setlength{\haute}{\quotient\psyunit+.3\psyunit}
+  \psframe(#1,0)(#2,\quotient)
+  \rput[b](\mil,\haute){\scriptsize #3}
+}
+\makeatother
+
+\begin{document}
+
+\histo{12}{20}{50}
+
+\end{document}
+
+\documentclass{scrartcl}
+\usepackage{pst-all,pst-slpe}
+\begin{document}
+
+% most letters:
+  $X \,{}^k\mkern -3mu I$ % \mkern -3mu is equivalent to \! 
+  % but more for A and J:
+  $X \,{}^k\mkern -6mu A$ 
+  $X \,{}^k\mkern -6mu J$
+  % and less for T and W 
+  $X \,{}^k\mkern -1mu T$
+  $X \,{}^k\mkern -1mu W$
+
+
+\definecolor{feB}{rgb}{0.35,0.14,0.00}
+\definecolor{fbB}{rgb}{1.00,0.87,0.00}
+\definecolor{feC}{rgb}{0.00,0.14,0.35}
+\definecolor{fbC}{rgb}{0.00,0.87,1.00}
+\definecolor{feA}{rgb}{0.35,0.00,0.14}
+\definecolor{fbA}{rgb}{1.00,0.00,0.87}
+
+\newcommand{\Oxygen}{\begin{pspicture}[][0.5](-0.75,-0.4)(0.75,0.4)%
+\pscircle[fillstyle=ccslope,slopebegin=fbA,%
+slopeend=feA,linestyle=none,slopecenter=0.5 0.5](-0.35,0){0.4cm}%
+\pscircle[fillstyle=ccslope,slopebegin=fbA,%
+slopeend=feA,linestyle=none,slopecenter=0.5 0.5](0.35,0){0.4cm}
+\end{pspicture}}
+
+\newcommand{\Oatom}{\begin{pspicture}[][0.5](-0.4,-0.4)(0.4,0.4)%
+\pscircle[fillstyle=ccslope,slopebegin=fbA,%
+slopeend=feA,linestyle=none,slopecenter=0.5 0.5](0,0){0.4cm}
+\end{pspicture}}
+
+\newcommand{\Ozone}{\mbox{\begin{pspicture}[][0.5](-0.75,-0.4)(0.75,1)%
+%\psgrid(-10,-0.5)(2,2)
+\pscircle[fillstyle=ccslope,slopebegin=fbA,%
+slopeend=feA,linestyle=none,slopecenter=0.5 0.5](-0.35,0){0.4cm}%
+\pscircle[fillstyle=ccslope,slopebegin=fbA,%
+slopeend=feA,linestyle=none,slopecenter=0.5 0.5](0.35,0){0.4cm}%
+\pscircle[fillstyle=ccslope,slopebegin=fbA,%
+slopeend=feA,linestyle=none,slopecenter=0.5 0.5](0.0,0.6){0.4cm}
+\end{pspicture}}}
+
+
+\begin{psmatrix}[rowsep=10.0cm,colsep=3.0cm,nodealign=true,ref=c]
+\Oxygen & \Oatom & \Ozone
+\ncarc[arcangleA=60,arcangleB=50,nodesepA=0pt,linewidth=2pt]{->}{1,1}{1,2}
+\ncarc[arcangleA=60,arcangleB=50,nodesepA=0pt,linewidth=2pt]{->}{1,2}{1,1}
+\end{psmatrix}
+
+
+\end{document}
+
+
+
+
+
+
+
+\documentclass{scrartcl}
+\listfiles
+\input kvmacros
+\begin{document}
+
+\karnaughmap{2}{a}{bc}{1111}{}
+
+\begin{picture}(40,40)(0,0)
+  \put(20,20){\circle{10}}
+\end{picture}
+\end{document}
+
+\documentclass[12pt]{book}
+
+\usepackage{pst-node}
+\usepackage{pst-slpe}
+\makeatletter
+\def\@enterMathMode{\def\@stopfield{$\color@endgroup\egroup}$}
+\makeatother
+
+\begin{document}
+
+
+\end{document}
+
+
+\documentclass[a4paper,12pt]{article}
+\usepackage{alltt}
+\begin{document}
+
+\begin{verbatim}
+das ist \emph{emph} und das eine Wurzel \(\sqrt{7}\)
+\end{verbatim}
+
+\begin{alltt}
+das ist \emph{emph} und das eine Wurzel \(\sqrt{7}\)
+\end{alltt}
+
+\end{document}
+
+
+\documentclass[12pt]{article}
+\usepackage{pst-3dplot}
+\begin{document}
+\psset{unit=3cm,Beta=10,Alpha=60}
+\begin{pspicture}(-1,-1)(1,1)
+\pstThreeDCoor[xMax=2.5,yMax=2.5,zMax=2.5,drawing=false]
+\pstThreeDBox(1,1,-1)(-2,0,0)(0,-2,0)(0,0,2)
+\psplotThreeD[linecolor=blue,drawStyle=xyLines](-1,1)(-1,1){x 2 exp y mul}
+\psplotThreeD[linecolor=red,drawStyle=yLines](-1,1)(-1,1){x 2 exp y mul}
+\end{pspicture}
+\end{document}
+
+
+\documentclass[a4paper,12pt]{article}
+\usepackage{pstricks,pst-plot}
+\SpecialCoor
+\makeatletter
+
+\makeatother
+\begin{document}
+
+\begin{pspicture}(5,5)
+\psaxes[xInterrupt=3](5,5)
+\end{pspicture}
+\end{document}
+
+\documentclass[a4paper,10pt,twoside,showtrims]{memoir}
+
+\usepackage[utf8]{inputenc} % für Fedora, andere u. U. Option latin1
+\usepackage[T1]{fontenc}    % für Latin Modern Fonts
+\usepackage{lmodern}        % für Latin Modern Fonts
+\usepackage[latin]{babel}   % für korrekte lateinische Worttrennung
+\usepackage{multicol}       % für Satz in zwei Spalten
+\usepackage{fixltx2e}       % für Verszählung bei Satz in zwei Spalten
+\usepackage{lettrine}       % für Versalien
+\usepackage{extramarks}     % für Kopfzeilen
+\usepackage{ifthen}         % für Kopfzeilen
+\usepackage[activate=normal]{pdfcprot}       % für optischen Randausgleich mit pdfTeX
+
+% Seitenlayout mit Makros der memoir-Klasse
+\settrimmedsize{207mm}{132mm}{*}
+\setlength{\trimtop}{45mm}
+\setlength{\trimedge}{39mm}
+\settypeblocksize{180mm}{108mm}{*}
+\setcolsepandrule{4mm}{0pt}
+\setulmargins{14mm}{*}{*}
+\setlrmargins{10mm}{*}{*}
+\setheadfoot{3mm}{6mm}
+\setheaderspaces{7mm}{*}{*}
+\checkandfixthelayout
+
+% Beschnittmarken definieren - werden durch die showtrims-Option im Klassenaufruf aktiviert
+\renewcommand{\trimmark}{%
+  \begin{picture}(0,0)
+   \setlength{\unitlength}{0.5cm}\thicklines
+   \put(-2,0){\line(1,0){4}}
+   \put(0,-2){\line(0,1){4}}
+  \end{picture}
+}
+
+% Gestaltung der Kopf- und Fußzeilen
+% Markierung des ersten und letzten Verses auf einer Seite, Formatierung der Versnummern:
+
+\newcommand{\versmark}[1]{\markboth{#1}{#1}{\oldstylenums{\small #1}}}
+
+% wenn alle Verse auf einer Seite zu nur einem Bibelkapitel gehören, soll die
+% Nummer des Kapitels nur einmal aufgerufen werden. \firstleftxmark und 
+% \lastleftxmark werden von extramarks.sty geliefert:
+
+\newcommand{\kapitelmark}{%
+            
+\ifthenelse{\equal{\firstleftxmark}{\lastleftxmark}}{}{\lastleftxmark,~}}
+
+% Das eigentliche Layout der Kopf- und Fußzeilen (Makros der memoir-Klasse):
+
+\makepagestyle{bibel}
+  \makeevenhead{bibel}{\firstxmark, \rightmark{} -- \kapitelmark
+\leftmark}{\lastxmark}{}
+  \makeoddhead{bibel}{}{\lastxmark}{\firstxmark, \rightmark{} --
+\kapitelmark \leftmark}
+  \makeevenfoot{bibel}{\thepage}{}{}
+  \makeoddfoot{bibel}{}{}{\thepage}
+
+\pagestyle{bibel}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{multicols}{2}\extramarks{1}{Genesis}
+
+   \lettrine[lines=4, lhang=0.4]{I}{} n principio creavit Deus caelum et
+terram. 
+   \versmark{2}   Terra autem erat inanis et vacua, et tenebrae super
+faciem abyssi,
+   et spiritus Dei ferebatur super aquas.
+
+   \versmark{3}   Dixitque Deus: Fiat lux. Et facta est lux.
+   \versmark{4}   Et vidit Deus lucem quod esset bona et divisit Deus
+lucem ac
+   tenebras.
+   \versmark{5}   Appellavitque Deus lucem Diem et tenebras Noctem.
+Factumque est
+   vespere et mane, dies unus.
+
+viele viele weitere Verse des Buches Genesis
+
+ \versmark{24} Quibus transactis, locutus est fratribus suis: Post
+mortem meam
+   Deus visitabit vos et ascendere vos faciet de terra ista ad terram,
+   quam iuravit Abraham, Isaac et Iacob.
+   \versmark{25} Cumque adiurasset eos atque dixisset: Deus visitabit
+vos; asportate
+   ossa mea vobiscum de loco isto ,
+   \versmark{26} mortuus est, expletis centum decem vitae suae annis. Et
+conditus
+   aromatibus repositus est in loculo in Aegypto.
+
+\end{multicols}
+\end{document}
+
+
+\documentclass[12pt]{article} 
+\usepackage{pstricks-add}
+
+\begin{document}
+
+% normally done with \readdata and nStep=...:
+\def\dataB{%
+   0.0000000e+00   0.0000000e+00   0.0000000e+00
+   1.0000000e+00   0.0000000e+00   0.0000000e+00
+   2.0000000e+00   0.0000000e+00   2.4000000e+04
+   3.6000000e+00   0.0000000e+00   2.4000000e+04
+   4.5000000e+00   0.0000000e+00   0.0000000e+00
+   14.5		   0		   0
+   111.55	   0		   0
+   1.2400000e+02   0.0000000e+00   0.0000000e+00
+   1.2700000e+02  -1.2000000e+04   0.0000000e+00
+   1.2750000e+02  -6.0000000e+03   2.4000000e+04
+   1.2800000e+02   0.0000000e+00   0.0000000e+00
+}
+
+\psset{xunit=2.75cm,yunit=0.5mm}
+\begin{pspicture}(-0.55,-15)(1.4,33)
+  \psaxes[labels=y,Dy=10,tickstyle=bottom,xAxes=false]{<->}(0,0)(0,-15)(1.45,30)%
+  \psaxes[tickstyle=bottom,yAxes=false](0,0)(0,-15)(1.45,30)%
+  \rput{70}(1.45,0){\psline(-0.1,0)(0.1,0)}%
+  \listplot[plotstyle=line,linestyle=solid,xunit=2.75mm,yunit=0.0005mm,%
+      plotNo=1,plotNoMax=2,xEnd=14.5]{\dataB}%
+  \listplot[plotstyle=line,linestyle=solid,linecolor=blue,xunit=2.75mm,yunit=0.0005mm,%
+  plotNo=2,plotNoMax=2,xEnd=14.5]{\dataB}%
+\end{pspicture}\hspace{0.75em}
+%
+\begin{pspicture}(-0.5,-15)(4,33)
+  \rput{70}(-0.5,0){\psline(-0.1,0)(0.1,0)}
+  \psaxes[Ox=11,tickstyle=bottom,yAxes=false]{->}(0,0)(-0.5,-15)(1.4,30)
+  \listplot[Ox=11,plotstyle=line,xunit=0.275mm,yunit=0.0005mm,%
+    plotNo=1,plotNoMax=2,xStart=10]{\dataB}
+  \listplot[plotstyle=line,linecolor=blue,xunit=0.275mm,yunit=0.0005mm,%
+    plotNo=2,plotNoMax=2,xStart=10]{\dataB}
+\end{pspicture}
+
+\end{document}
+
+\documentclass[a4paper,12pt]{article}
+\usepackage{pst-plot}
+
+\begin{document}
+
+\begin{psmatrix}
+a & b \newline
+[name=a] c & d
+\end{psmatrix}
+
+
+
+\psset{xunit=0.5}
+\begin{pspicture}(0,-5)(13,5)
+\rput(20,-4){%
+	$\displaystyle J_n(x)=\frac{1}{\pi}\int_0^\pi\cos(x\sin t-nt)\mathrm{d}t$%
+}
+\psaxes[Dx=4]{->}(0,0)(0,-5)(26,5)
+\psset{linewidth=1pt}
+\pstVerb{%
+   /nBessel 2 def % J_nBessel
+   /PI 3.141592654 def
+   /radDeg { 57.29577951 mul } def
+   /degRad { 57.29577951 div } def
+   /dt PI 500 div def % step
+   /Bessel {
+     /xVal exch def
+     /JB 0 def % start value
+     0 dt PI {
+      /tB exch def
+      /JB JB dt xVal tB radDeg sin mul tB nBessel mul sub radDeg cos mul add def
+     } for
+     JB PI div
+   } def
+}
+\psplot[plotpoints=500,yunit=5]{-5}{24}{x Bessel}
+%\psplot[plotpoints=500]{0}{24}{x Bessel 1.3 mul x radDeg sin 2.3 mul add 3.7 add}
+\end{pspicture}
+
+\end{document}
+
+
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+
+From mathmode.pdf, page 55:
+\[
+\begin{split}
+\vec{a} = &\mathop{\framebox[0.35\columnwidth]{x}}\\
+          &+\framebox[0.75\columnwidth]{x}\\
+          &+\framebox[0.65\columnwidth]{x}\\
+          &+\framebox[0.95\columnwidth]{x}
+\end{split}
+\]
+
+Better spacing after the ``$=$'' with added ``\{\}''s:
+\[
+\begin{split}
+\vec{a} = {} &\framebox[0.35\columnwidth]{x}\\
+          {} &\framebox[0.75\columnwidth]{x}\\
+          {} &\framebox[0.65\columnwidth]{x}\\
+          {} &\framebox[0.95\columnwidth]{x}
+\end{split}
+\]
+
+\end{document}
+\documentclass[a4paper,12pt]{scrreprt}
+
+\usepackage{filecontents}
+\begin{filecontents*}{LONGTAB.tex}
+\begin{longtable}{lX}
+  EINS &
+  Auf der Mauer III
+  \\
+  ZWEI &
+  auf der Lauer
+  \\
+  DREI &
+  sitzt 'ne kleine Wanze
+\end{longtable}
+\end{filecontents*}
+
+
+\usepackage[german]{babel}
+\usepackage[latin1]{inputenc}
+
+\usepackage{ltxtable}
+
+\begin{document}
+  \LTXtable{\textwidth}{LONGTAB}
+\end{document}
+
+\documentclass[a4paper,12pt,]{scrartcl}
+
+\usepackage{ngerman}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[ansinew]{inputenc}
+
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage[]{ragged2e}% Flattersatz mit Trennung
+
+\begin{document}
+
+\begin{table}
+ \centering
+ \setlength{\extrarowheight}{1.5mm}
+ \setlength{\tabcolsep}{2mm}
+ \captionabove{Beschriftung}
+ \begin{tabularx}{\textwidth}{%
+    >{\footnotesize\RaggedRight\arraybackslash}p{3.5cm}
+    >{\footnotesize\RaggedRight\arraybackslash}X 
+    >{\footnotesize\RaggedRight\arraybackslash}X
+    >{\footnotesize\RaggedRight\arraybackslash}X@{}
+    >{\footnotesize\RaggedRight\arraybackslash}X} \hline
+ Nature of process & \multicolumn{3}{l}{\footnotesize{RRA \dotfill}} & PRA \\ \hline
+ Mode & Extractive & Elicitive & Sharing & Empowering \\
+ Outsider's Role & \multicolumn{3}{l}{\footnotesize{Investigator \dotfill}} & Facilitator \\[\extrarowheight]
+ \parbox[b]{3.5cm}{Information owned, analyzed and used by} &
+    \multicolumn{3}{l}{\footnotesize{Outsiders \dotfill}} & 
+    Local people \\  \hline
+ \end{tabularx}
+\end{table}
+
+\end{document} 
+
+\documentclass[ngerman]{article}
+\usepackage{babel} 
+\parindent=0pt
+\begin{document}
+
+\begin{tabular}{l|p{5cm}|r}
+ links & zentriert & rechts\\\hline
+     A &  jetzt hat diese Spalte eine fixe
+          Breite und ein\newline
+          sorgt für eine neue
+          Zeile in der Spalte  & B \\\cline{2-2}
+     1 &  2  & 3\\\hline
+\end{tabular}
+
+\bigskip
+\begin{tabular}{l|p{5cm}|r}
+ links & zentriert & rechts\\\hline
+     A &  jetzt hat diese Spalte eine fixe
+          Breite und ein\\
+          sorgt für eine neue
+          Zeile in der Spalte  & B \\\cline{2-2}
+     1 &  2  & 3\\\hline
+\end{tabular}
+
+\end{document}
+
+
+\documentclass[12pt]{article}
+\usepackage{ifpdf} 
+\ifpdf
+   \usepackage{pst-eps}
+   \usepackage[pdftex]{graphicx}
+   \usepackage{epstopdf}
+\fi
+ \usepackage{pst-circ}
+ \newcommand{\pssave}[2]{%      
+   \PSTtoEPS[headerfile=pstricks.pro,headers=all,%
+      bbllx=-2,bblly=-2,bburx=2,bbury=2]{#1.eps}{#2}}
+\begin{document}
+
+\ifpdf
+  \includegraphics{circtest}
+\else
+  \pssave{circtest}{%
+  \begin{pspicture}(-2,-2)(2,2)%
+   \psgrid[subgriddiv=1,griddots=10]%
+   \pnode(-2,-2){A}%
+   \pnode(2,2){B}%
+   \resistor[ dipolestyle = zigzag ](A)(B){$R$}%
+  \end{pspicture}%
+  }
+\fi
+\end{document}
+
+\documentclass{dantebuch}
+\usepackage{dantebuch-add}
+\begin{document}
+
+\chapter{blah}
+\bigskip
+\begin{Beispiel}[colwidth=3.5cm]
+\begin{pspicture}(-0.5,0.5)(3,-2)
+  \psaxes[axesstyle=frame,linestyle=dashed]{->}(3,-2)
+\end{pspicture}
+\end{Beispiel}
+
+
+\end{document}
+
+
+
+\documentclass[12pt]{article}
+\usepackage{pst-3d} 
+\usepackage{pst-node} 
+\SpecialCoor
+\begin{document}
+
+\begin{tabular}{l}
+\pstilt{60}{%
+\begin{tabular}{|p{1em}|p{1em}|p{1em}|}\hline
+\rotateleft{\rnode{c1}{\hphantom{ column 1 }}} &  
+\rotateleft{\rnode{c2}{}} &  
+\rotateleft{\rnode{c3}{}} 
+\end{tabular}
+}\\
+\rput[lt]{60}(c1){ column 1}
+\rput[lt]{60}(c2){ column 2}
+\rput[lt]{60}(c3){ column 2}
+\begin{tabular}{|p{1em}|p{1em}|p{1em}|}\hline
+ 1 & 2 & 3 \\\hline
+ 4 & 5 & 6 \\\hline
+\end{tabular}
+\end{tabular}
+
+\end{document}
+
+
+% Rolf Niepraschk, 2004-05-17, <Rolf.Niepraschk@ptb.de>
+
+\documentclass[a4paper]{article}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{manfnt,shortvrb,calc,lettrine,pstricks,multido}
+
+\MakeShortVerb{\|}
+
+\makeatletter
+\newsavebox{\dBox}
+
+\newenvironment{dangerPar*}
+{\gdef\dangerSym{\dbend\,\dbend}\@dangerPar}
+{\end@dangerPar}
+
+\newenvironment{dangerPar}{%
+ \gdef\dangerSym{\dbend\phantom{\,\dbend}}\@dangerPar%
+}{\end@dangerPar}
+
+\def\@dangerPar{%
+  \begin{lrbox}{\dBox}
+    \minipage[c]{\linewidth-\widthof{\dangerSym}-\columnsep}%
+}
+\def\end@dangerPar{%
+    \endminipage
+  \end{lrbox}%
+  \trivlist\item\relax
+    \noindent
+    \minipage[c]{\widthof{\dangerSym}}
+      \raisebox{\height}[.9\height][.1\height]{\dangerSym}% ???
+    \endminipage
+    \hfill
+    \minipage[c]{\wd\dBox}
+      \usebox{\dBox}
+    \endminipage%
+  \endtrivlist
+}
+
+\makeatother
+
+\newsavebox{\bombbox}
+
+\sbox\bombbox{%
+  \psset{unit=.55ex}%
+  \begin{pspicture}(-4,-4)(4,4)
+    \pscircle[fillcolor=gray,fillstyle=solid]{4}
+    \rput{45}{\scaleboxto(6,0){\textsf{\textbf{PS}}}}
+    \psellipse*(0,3.8)(1,.2)
+    \psellipse*(0,5.5)(1,.2)
+    \psframe*(-1,3.8)(1,5.5)
+    \psbezier(0,5.5)(0,7)(1,8)(3.5,8)
+    \multido{\r=-0+40}{9}{\rput{\r}(3.5,8){\psline(0,0)(.4,0)}}
+  \end{pspicture}}
+
+\newcommand\danger{%
+  \lettrine[lines=2,lraise=0.65,nindent=0pt,findent=.5em]{\normalsize\dbend}}
+  
+\newcommand\ddanger{%
+  \lettrine[lines=2,lraise=0.65,nindent=0pt,findent=.5em]{%
+    \normalsize\dbend\,\dbend}}
+    
+\newcommand\DANGER{%    
+  \lettrine[lines=3,lraise=0.01,lhang=0,nindent=0pt,findent=.75em]{%
+    \usebox\bombbox}}
+
+\begin{document}
+
+\begin{dangerPar}
+  Existiert für |\psline| nur ein Koordinatenpaar, so wird
+  grundsätzlich vom aktuellen Punkt aus zum angegeben
+  Punkt gezeichnet, wobei der aktuelle Punkt immer auf den
+  Koordinatenursprung (0,0) gesetzt wird.
+  Existiert für |\psline| nur ein Koordinatenpaar, so wird
+  grundsätzlich vom aktuellen Punkt aus zum angegeben
+  Punkt gezeichnet, wobei der aktuelle Punkt immer auf den
+  Koordinatenursprung (0,0) gesetzt wird.  
+\end{dangerPar}
+
+\begin{dangerPar*}
+  Existiert für |\psline| nur ein Koordinatenpaar, so wird
+  grundsätzlich vom aktuellen Punkt aus zum angegeben
+  Punkt gezeichnet, wobei der aktuelle Punkt immer auf den
+  Koordinatenursprung (0,0) gesetzt wird.
+  Existiert für |\psline| nur ein Koordinatenpaar, so wird
+  grundsätzlich vom aktuellen Punkt aus zum angegeben
+  Punkt gezeichnet, wobei der aktuelle Punkt immer auf den
+  Koordinatenursprung (0,0) gesetzt wird.  
+\end{dangerPar*}
+
+\danger
+Existiert für |\psline| nur ein Koordinatenpaar, so wird
+grundsätzlich vom aktuellen Punkt aus zum angegeben
+Punkt gezeichnet, wobei der aktuelle Punkt immer auf den
+Koordinatenursprung (0,0) gesetzt wird.
+Existiert für |\psline| nur ein Koordinatenpaar, so wird
+grundsätzlich vom aktuellen Punkt aus zum angegeben
+Punkt gezeichnet, wobei der aktuelle Punkt immer auf den
+Koordinatenursprung (0,0) gesetzt wird.  
+
+\ddanger
+Existiert für |\psline| nur ein Koordinatenpaar, so wird
+grundsätzlich vom aktuellen Punkt aus zum angegeben
+Punkt gezeichnet, wobei der aktuelle Punkt immer auf den
+Koordinatenursprung (0,0) gesetzt wird.
+Existiert für |\psline| nur ein Koordinatenpaar, so wird
+grundsätzlich vom aktuellen Punkt aus zum angegeben
+Punkt gezeichnet, wobei der aktuelle Punkt immer auf den
+Koordinatenursprung (0,0) gesetzt wird.
+
+\DANGER
+Existiert für |\psline| nur ein Koordinatenpaar, so wird
+grundsätzlich vom aktuellen Punkt aus zum angegeben
+Punkt gezeichnet, wobei der aktuelle Punkt immer auf den
+Koordinatenursprung (0,0) gesetzt wird.
+Existiert für |\psline| nur ein Koordinatenpaar, so wird
+grundsätzlich vom aktuellen Punkt aus zum angegeben
+Punkt gezeichnet, wobei der aktuelle Punkt immer auf den
+Koordinatenursprung (0,0) gesetzt wird.  
+
+\end{document}
+
+
+\documentclass{minimal}
+
+\usepackage{pst-plot}
+\makeatletter
+
+\let\@nil\relax
+
+\def\PSTLinReg#1{%
+  \expandafter\PSTLinReg@i#1 D \@nil
+}
+
+\def\PSTLinReg@i#1 #2 #3 #4\@nil{%
+  \PSTLinReg@ii#2 #4\@nil
+}
+
+\def\PSTLinReg@ii#1 D #2\@nil{%
+  \def\arg{#1}
+  \def\suite{#2}
+  Traitement de \arg\par
+  \ifx\suite\empty
+    \let\next\relax
+    \let\suite\relax
+  \else
+    \let\next\PSTLinReg@ii
+  \fi
+  \expandafter\next\suite\@nil
+}
+\makeatother
+\begin{document}
+
+
+\readdata{\data}{/home/voss/Documents/data.txt}
+\PSTLinReg{\data}
+
+\data
+\end{document}
+
+\documentclass{article}
+
+\usepackage[latin9]{inputenc}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{pstricks}
+
+\lstset{fancyvrb=true, moredelim=[is][\bfseries\red]{µ}{µ}}
+
+\fvset{commandchars=\\\{\}}
+
+\newcommand{\boiterouge}[1]{\hskip -\fboxsep\fcolorbox{green}{red}{#1}}
+
+\begin{document}
+
+\leftskip=0pt plus 1fil
+\rightskip=-\leftskip
+\parfillskip=\leftskip
+\parindent=0pt
+
+\bgroup
+\raggedright
+ein interessantes Layout, allerdings nicht ganz das was ich suchte. Ich
+möchte nämlich alles in eine Box packen (wie ?) die komplett in die nächste
+Zeile geschoben wird, wenn sie über den Seitenrand hinausragt.
+\egroup
+
+
+\end{document}
+\begin{lstlisting}
+debut
+y = a * x + b
+µy = m * x + pµ
+y = a * x + b
+y = m * x + p
+fin
+\end{lstlisting}
+
+\begin{BVerbatim}
+debut
+y = a * x + b
+\boiterouge{y = m * x + p}
+y = a * x + b
+y = m * x + p
+fin
+\end{BVerbatim}
+
+{\red texte}
+
+\end{document}
+
+
+
+\documentclass[ngerman,12pt]{book}
+\usepackage[T1]{fontenc} 
+\usepackage[latin1]{inputenc} 
+\usepackage{graphicx} 
+\usepackage{rotating} 
+\usepackage{pst-3d} 
+\usepackage{babel} 
+\usepackage[justification=raggedright,singlelinecheck=false]{caption} 
+\makeatletter
+\newsavebox\PSTBox
+\def\thickhrulefill{\leavevmode \leaders \hrule height 1ex \hfill \kern \z@}
+\def\@makechapterhead#1{%
+  \reset@font
+  \parindent \z@ 
+  \vspace*{10\p@}%
+  \hbox{%
+      \begin{tabular}{cl}
+        \centering\scshape\large\strut\@chapapp{} & \\[-.25ex]\cline{2-2}
+        \fbox{%
+          \parbox[t][10em][t]{5ex}{\centering
+          \LARGE\bfseries\strut\thechapter%
+          }} & 
+      \advance\hsize by -2cm
+      \parbox[t]{\hsize}{%
+      \vspace{-1ex}
+%      \hrule\par%
+      \vskip 6pt%
+      \Huge\bfseries#1
+      
+      \raggedleft\usebox\PSTBox
+      }
+      \end{tabular}%
+    }%
+  \vskip 100\p@
+}
+\def\@makeschapterhead#1{%
+  \reset@font
+  \parindent \z@ 
+  \vspace*{10\p@}%
+ \hbox{%
+      \begin{tabular}{p{1cm}l}
+        \scshape \strut \phantom{\@chapapp{}} & \\[-.25ex]\cline{2-2}
+        \fbox{%
+          \parbox[t][10em][t]{3ex}{
+          \LARGE \bfseries \strut \phantom{\thechapter}%
+          }} & 
+      \advance\hsize by -2cm
+      \parbox[t]{\hsize}{%
+%      \hrule\par%
+      \vskip 6pt%
+      \Huge\bfseries#1\\[10pt]
+      
+      \raggedleft\usebox\PSTBox
+      }
+      \end{tabular}%
+    }%
+  \vskip 100\p@
+}
+\begin{document}
+\tableofcontents
+\sbox\PSTBox{\includegraphics[height=2cm]{Sinus2}}
+\chapter{Einführung}
+
+\begin{tabular}{l}
+\pstilt{60}{%
+\begin{tabular}{|p{1em}|p{1em}|p{1em}|}\hline
+\begin{turn}{90}{{colum 1\ }\end{turn} &  
+\begin{turn}{90}{{colum 2\ }\end{turn} & 
+\begin{turn}{90}{{colum 3\ }\end{turn}
+\end{tabular}
+}\\
+\begin{tabular}{|p{1em}|p{1em}|p{1em}|}\hline
+ 1 & 2 & 3 \\\hline
+ 4 & 5 & 6 \\\hline
+\end{tabular}
+\end{tabular}
+
+\vspace{0.5cm}
+\begin{tabular}{l}
+\psTilt{60}{%
+\begin{tabular}{|p{1em}|p{1em}|p{1em}|}\hline
+\begin{turn}{90}{{colum 1\ }\end{turn} &  
+\begin{turn}{90}{{colum 2\ }\end{turn} & 
+\begin{turn}{90}{{colum 3\ }\end{turn}
+\end{tabular}
+}\\
+\begin{tabular}{|p{1em}|p{1em}|p{1em}|}\hline
+ 1 & 2 & 3 \\\hline
+ 4 & 5 & 6 \\\hline
+\end{tabular}
+\end{tabular}
+
+
+\paragraph{Gracilariaceae}
+\begin{table}[!h]
+\begin{footnotesize}
+\caption{Gracilariaceae}
+\begin{tabular*}{\textwidth}{lll}
+\hline
+soort & inzameling & code\\
+\hline
+\textit{Gracilaria corticata} & The Wreck, Mirbat, Oman, 27 september 2003 &
+DHO196\\
+\textit{Gracilaria debilis} & Hoon's Bay, Mirbat, Oman, 28 september 2003 &
+DHO228\\
+\textit{Gracilaria textorii} & Hoon's Bay, Mirbat, Oman, 28 september 2003 &
+DHO246\\
+\textit{Fauchea} sp. & Hoon's Bay, Mirbat, Oman, 28 september 2003 &
+DHO244\\
+\hline
+\end{tabular*}
+\end{footnotesize}
+\end{table}
+
+\end{document}
+
+
+\documentclass[12pt]{article}
+\usepackage{pstricks} 
+\usepackage{pst-3dplot} 
+\usepackage{pst-grad} 
+\begin{document}
+ 
+\begin{pspicture*}(-5,-4)(5,5)
+\newpsstyle{hiddenStyle}{fillstyle=gradient,gradbegin=red,gradend=white}
+\psset{Beta=45,Alpha=30}
+\psplotThreeD[hiddenLine=true,drawStyle=yLines,plotstyle=curve](-3,3)(-3,3){%
+x dup mul 0.5 mul y dup mul sub}
+\pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5,linecolor=black]
+\end{pspicture*}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\def\afterfi#1\fi{\fi#1}
+  \def\afterelse#1\else#2\fi{\fi#1}
+  \def\empty{}
+  \def\sort#1#2{\sorta{#1}{}{}#2,\relax,}
+  \def\sorta#1#2#3#4,{%
+    %% #1 = comparison operator
+    %% #2 = current extremum
+    %% #3 = already compared values
+    %% #4 = next item to compare
+    \ifx\relax#4\empty%
+      %% #4 = \relax, that means end of list: print the current extremum
+      #2%
+      \ifx\relax#3\relax\else
+        %% #3 is not empty, so continue to process
+        , \sort{#1}{#3}%
+      \fi
+    \else\afterfi{%
+      %% #4 is supposed to be an acceptable item (i.e. a number)
+      \ifx\relax#2\relax\afterelse{%
+        %% #2 is empty, #4 is the extremum
+        %%  continue processing with #4 as the current extremum
+        \sorta{#1}{#4}{#3}%
+      }%
+      \else\afterfi{%
+        %% #2 is not empty...
+        \ifnum#2#1#4 \afterelse{% THE SPACE HERE I IMPORTANT
+          %% the current extremum is less than the next item
+          \ifx\relax#3\relax\afterelse{%
+            %% #3 = empty
+            \sorta{#1}{#4}{#2}%
+          }%
+          \else\afterfi{%
+            \sorta{#1}{#4}{#2,#3}%
+          }%
+          \fi
+        }%
+        \else\afterfi{%
+          \ifx\relax#3\relax\afterelse{%
+            %% #3 = empty
+            \sorta{#1}{#2}{#4}%
+          }%
+          \else\afterfi{%
+            \sorta{#1}{#2}{#3,#4}%
+          }%
+          \fi
+        }%
+        \fi
+      }%
+      \fi
+    }%
+    \fi
+  }
+
+  \edef\tempa{%
+    \sort<{1,2,3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,%
+      3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,%
+      3,4,51,2,3,4,51,2,3,4,5%
+      ,1,2,3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,%
+      3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,%
+      3,4,51,2,3,4,51,2,3,4,5%
+      ,1,2,3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,%
+      3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,3,4,51,2,%
+      3,4,51,2,3,4,51,2,3,4,5}% 171 elements si j'ai bien compté
+  }
+
+  \show\tempa
+
+  \bye
+  
+  
+  \documentclass[a4paper,11pt, titlepage]{report}
+\usepackage{pslatex}
+\usepackage{graphicx}
+\usepackage{pst-all}
+\usepackage{subfigure}
+
+
+\begin{document}
+\begin{figure}[htb]%
+\centering
+\subfigure[Préférences unimodales]{
+\psset{xunit=1cm, yunit=1cm}
+ \pspicture(0,2)(6,8)
+ \psline(1,7)(1,3)(5,3)
+  \uput[0](4,2.5){C}
+  \psline[linewidth=1.4pt](2,6)(3,5)(4,4)
+ \endpspicture
+}
+\subfigure[Préférences non-unimodales]{
+\psset{xunit=1cm, yunit=1cm}
+ \label{prefnonunimodales}
+ \pspicture(0,2)(6,8)
+ \psline[linewidth=1.4pt, linestyle=dotted](2,4)(3,4)(4,6)
+ \endpspicture
+}\\
+\caption{Exemples de préférences unimodales et non-unimodales.}
+\label{prefunimodnonunimod}
+\end{figure}
+\end{document}
+
+
+\documentclass[12pt]{article}
+\usepackage{pst-optic}
+\def\cropMark(#1,#2){%
+  \pscustom{%
+     \translate(#1,#2)%
+     \pscircle{3mm}%
+     \psline[liftpen=2](0,-5mm)(0,5mm)%
+     \psline[liftpen=2](-5mm,0)(5mm,0)%
+  }}
+\def\setCropMarks{%
+  \cropMark(0,0)\cropMark(\textwidth,0)%
+  \cropMark(0,-\textheight)\cropMark(\textwidth,-\textheight)%
+}
+\begin{document}
+\setCropMarks%
+
+\makeatletter
+\SpecialCoor
+\def\arclens{\@ifnextchar[{\arc@lens}{\arc@lens[]}}
+\def\arc@lens[#1](#2,#3)(#4,#5)#6{%
+  \begingroup
+  \SpecialCoor
+  \def\AL@opt{#1}%
+  \dimen0=#2\psxunit
+  \advance\dimen0 by#4\psxunit
+  \dimen0=0.5\dimen0
+  \dimen1=#3\psyunit
+  \advance\dimen1 by#5\psyunit
+  \dimen1=0.5\dimen1
+  %
+  \dimen2=#2\psxunit
+  \advance\dimen2 by-#4\psxunit
+  \dimen3=#3\psyunit
+  \advance\dimen3 by-#5\psyunit
+  \def\d{
+    #4\space #2 sub dup mul
+    #5\space #3 sub dup mul
+    add sqrt 2 div }
+  \def\r{ #6 dup mul }
+  \def\l{
+    #6 dup mul
+    \d dup mul
+    sub }
+    \ifx\empty\AL@opt
+      \rput{(\dimen3,-\dimen2)}(\dimen0,\dimen1){%
+        \psarc(!\l sqrt 0){#6}%
+          {!\d \l\space sqrt div 1 atan neg 180 add}%
+          {!\d \l\space sqrt div 1 atan 180 add}}
+    \else
+      \rput{(\dimen3,-\dimen2)}(\dimen0,\dimen1){%
+        \expandafter\psarc\expandafter[\AL@opt](!\l sqrt 0){#6}%
+        {!\d \l\space sqrt div 1 atan neg 180 add}%
+        {!\d \l\space sqrt div 1 atan 180 add}}
+    \fi
+  \endgroup
+}
+\makeatother
+
+
+\begin{pspicture}(0,0)(10,10)
+  \arclens[linecolor=red](1,2)(0,-3){4}
+  \arclens[linecolor=red](0,-3)(1,2){4}
+  \psdots[dotscale=1.5](1,2)(0,-3)
+  \rput{20}(5,2){
+    \arclens(0,0)(0,4){5}
+    \arclens(1,4)(1,0){5}
+    \psline(0,0)(1,0)
+    \psline(0,4)(1,4)
+  }
+
+\end{pspicture}
+\rput{20}(0,0){\lens[AB=2]}
+
+
+
+
+blah
+
+blubber
+\newpage\setCropMarks%
+blah
+
+blubber
+\end{document}
+
+\documentclass{article}
+\usepackage{amsmath}
+
+\makeatletter
+\newenvironment{numberedpars}
+{%
+  \setcounter{secnumdepth}{4}
+  \renewcommand{\theparagraph}{\arabic{paragraph}}
+  \renewcommand{\@seccntformat}[1]
+  {\expandafter\ifx\csname##1\endcsname\paragraph\csname 
+the##1\endcsname\else\csname the##1\endcsname\quad\fi}
+  \let\old@par=\par
+  \def\new@par{\let\par=\old@par\paragraph{}\let\par=\new@par}
+  \let\par=\new@par
+  \par
+}{}
+\makeatother
+
+\begin{document}
+
+\begin{numberedpars}
+dies ist\\
+ein Gedicht\\
+oh weh
+
+und nun\\
+noch eins\\
+o weh oh weh
+\end{numberedpars}
+\end{document} 
+
+

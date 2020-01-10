@@ -1,0 +1,174 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{pstricks}
+\SpecialCoor
+\usepackage{multido}
+\usepackage{pst-3dplot}
+\usepackage{pst-grad}
+\usepackage{url}
+\usepackage{listings}
+\lstset{language=[LaTeX]TEX,basicstyle=\ttfamily\scriptsize,%
+  extendedchars=true,numbers=left,numberstyle=\tiny,%
+  xleftmargin=2em,breaklines=true}
+\makeatletter
+\def\modulo#1#2#3{%
+  \pst@cnta=#1\pst@cntb=#2\relax%
+  \pst@cntc=\pst@cnta%
+  \divide\pst@cnta by \pst@cntb%
+  \multiply\pst@cntb by \pst@cnta%
+  \advance\pst@cntc by -\pst@cntb%
+  \def\pst@tempa{\the\pst@cntc}%
+  \let#3\pst@tempa%
+}
+\makeatother
+
+\begin{document}
+
+This demo file uses the \verb+\pst@mod+ macro from \verb+pstricks-add+, which is
+available at \url{http://www.perce.de/LaTeX/pstricks-add}. If you install this package
+then delete the macro in the preamble of this document.
+
+
+\begin{center}
+\begin{pspicture}(-6,-2.25)(6,5)
+  \pstThreeDCoor[xMin=-3,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5,drawCoor=false]%
+  \multido{\iA=0+30,\iB=30+30,\iC=1+1}{12}{%
+    \modulo{\iC}{7}{\iCTemp}%
+    \ifcase\iCTemp\psset{fillcolor=black,gradend=black}%
+      \or\psset{fillcolor=red,gradend=red}%
+      \or\psset{fillcolor=green,gradend=green}%
+      \or\psset{fillcolor=blue,gradend=blue}%
+      \or\psset{fillcolor=cyan,gradend=cyan}%
+      \or\psset{fillcolor=magenta,gradend=magenta}%
+      \or\psset{fillcolor=yellow,gradend=yellow}%
+    \fi%
+    \pstThreeDLine[SphericalCoor=true,%
+%    fillstyle=solid,linestyle=none]%
+       fillstyle=gradient,gradbegin=white,gradmidpoint=0]%
+       (0,0,0)(1,\iA,60)(2,\iA,50)(3,\iA,40)(4,\iA,30)(5,\iA,20)(6,\iA,10)%
+       (6,\iB,10)(5,\iB,20)(4,\iB,30)(3,\iB,40)(2,\iB,50)(1,\iB,60)(0,0,0)
+  }%
+  \pstThreeDLine[linecolor=red](0,0,0)(0,0,5)%
+\end{pspicture}
+\end{center}
+
+
+
+\begin{lstlisting}[float=h,label={Use of the 3D line macro}]
+\begin{pspicture}(-6,-2.25)(6,5)
+  \pstThreeDCoor[xMin=-3,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5,drawCoor=false]
+  \multido{\iA=0+30,\iB=30+30,\iC=1+1}{12}{%
+    \modulo{\iC}{7}{\iCTemp}
+    \ifcase\iCTemp\psset{fillcolor=black,gradend=black}
+      \or\psset{fillcolor=red,gradend=red}
+      \or\psset{fillcolor=green,gradend=green}
+      \or\psset{fillcolor=blue,gradend=blue}
+      \or\psset{fillcolor=cyan,gradend=cyan}
+      \or\psset{fillcolor=magenta,gradend=magenta}
+      \or\psset{fillcolor=yellow,gradend=yellow}
+    \fi
+    \pstThreeDLine[SphericalCoor=true,%
+%    fillstyle=solid,linestyle=none]%
+       fillstyle=gradient,gradbegin=white,gradmidpoint=0]%
+       (0,0,0)(1,\iA,60)(2,\iA,50)(3,\iA,40)(4,\iA,30)(5,\iA,20)(6,\iA,10)%
+       (6,\iB,10)(5,\iB,20)(4,\iB,30)(3,\iB,40)(2,\iB,50)(1,\iB,60)(0,0,0)
+  }
+  \pstThreeDLine[linecolor=red](0,0,0)(0,0,5)
+\end{pspicture}
+\end{lstlisting}
+
+\begin{center}
+\begin{pspicture}(-6,-4)(6,5)
+  \psset{Beta=45}%
+  \pstThreeDCoor[xMin=-3,xMax=6,yMin=-1,yMax=6,zMin=-1,zMax=5,drawCoor=false]
+  \multido{\iA=0+30,\iB=30+30,\iC=1+1}{12}{%
+    \modulo{\iC}{7}{\iCTemp}%
+    \ifcase\iCTemp\psset{fillcolor=black,gradend=black}%
+      \or\psset{fillcolor=red,gradend=red}%
+      \or\psset{fillcolor=green,gradend=green}%
+      \or\psset{fillcolor=blue,gradend=blue}%
+      \or\psset{fillcolor=cyan,gradend=cyan}%
+      \or\psset{fillcolor=magenta,gradend=magenta}%
+      \or\psset{fillcolor=yellow,gradend=yellow}%
+    \fi%
+    \pstThreeDLine[SphericalCoor=true,%
+%      fillstyle=solid,linestyle=none]%
+       fillstyle=gradient,gradbegin=white,gradmidpoint=0,gradangle=\iA]%
+        (0,0,0)(1,\iA,60)(2,\iA,50)(3,\iA,40)(4,\iA,30)(5,\iA,20)(6,\iA,10)%
+        (6,\iB,10)(5,\iB,20)(4,\iB,30)(3,\iB,40)(2,\iB,50)(1,\iB,60)(0,0,0)%
+  }
+  \pstThreeDLine[linecolor=red]{->}(0,0,0)(0,0,5)%
+\end{pspicture}
+\end{center}
+
+\begin{lstlisting}[label={Another view}]
+\begin{pspicture}(-6,-4)(6,5)
+  \psset{Beta=45}
+  \pstThreeDCoor[xMin=-3,xMax=6,yMin=-1,yMax=6,zMin=-1,zMax=5,drawCoor=false]
+  \multido{\iA=0+30,\iB=30+30,\iC=1+1}{12}{%
+    \modulo{\iC}{7}{\iCTemp}
+    \ifcase\iCTemp\psset{fillcolor=black,gradend=black}
+      \or\psset{fillcolor=red,gradend=red}
+      \or\psset{fillcolor=green,gradend=green}
+      \or\psset{fillcolor=blue,gradend=blue}
+      \or\psset{fillcolor=cyan,gradend=cyan}
+      \or\psset{fillcolor=magenta,gradend=magenta}
+      \or\psset{fillcolor=yellow,gradend=yellow}
+    \fi
+    \pstThreeDLine[SphericalCoor=true,%
+%      fillstyle=solid,linestyle=none]%
+       fillstyle=gradient,gradbegin=white,gradmidpoint=0,gradangle=\iA]%
+        (0,0,0)(1,\iA,60)(2,\iA,50)(3,\iA,40)(4,\iA,30)(5,\iA,20)(6,\iA,10)%
+        (6,\iB,10)(5,\iB,20)(4,\iB,30)(3,\iB,40)(2,\iB,50)(1,\iB,60)(0,0,0)
+  }
+  \pstThreeDLine[linecolor=red]{->}(0,0,0)(0,0,5)
+\end{pspicture}
+\end{lstlisting}
+
+
+\begin{center}
+\begin{pspicture}(-6.5,-6)(6,6.25)
+  \psset{Alpha=0,Beta=90}
+  \pstThreeDCoor[xMin=-3,xMax=6,yMin=-1,yMax=6,zMin=-1,zMax=5,drawCoor=false]
+  \multido{\iA=0+30,\iB=30+30,\iC=1+1}{12}{%
+    \modulo{\iC}{7}{\iCTemp}% 
+    \ifcase\iCTemp\psset{fillcolor=black,gradend=black}%
+      \or\psset{fillcolor=red,gradend=red}%
+      \or\psset{fillcolor=green,gradend=green}%
+      \or\psset{fillcolor=blue,gradend=blue}%
+      \or\psset{fillcolor=cyan,gradend=cyan}%
+      \or\psset{fillcolor=magenta,gradend=magenta}%
+      \or\psset{fillcolor=yellow,gradend=yellow}%
+    \fi
+    \pstThreeDLine[SphericalCoor=true,%
+      fillstyle=gradient,gradbegin=white,gradmidpoint=0,gradangle=\iA]%
+       (0,0,0)(1,\iA,60)(2,\iA,50)(3,\iA,40)(4,\iA,30)(5,\iA,20)(6,\iA,10)%
+       (6,\iB,10)(5,\iB,20)(4,\iB,30)(3,\iB,40)(2,\iB,50)(1,\iB,60)(0,0,0)%
+  }%
+  \pstThreeDLine[linecolor=red]{->}(0,0,0)(0,0,5)
+\end{pspicture}
+\end{center}
+
+\begin{lstlisting}[label={View from above}]
+\begin{pspicture}(-6.5,-6)(6,6.25)
+  \psset{Alpha=0,Beta=90}%
+  \pstThreeDCoor[xMin=-3,xMax=6,yMin=-1,yMax=6,zMin=-1,zMax=5,drawCoor=false]%
+  \multido{\iA=0+30,\iB=30+30,\iC=1+1}{12}{%
+    \modulo{\iC}{7}{\iCTemp}%
+    \ifcase\iCTemp\psset{fillcolor=black,gradend=black}%
+      \or\psset{fillcolor=red,gradend=red}%
+      \or\psset{fillcolor=green,gradend=green}%
+      \or\psset{fillcolor=blue,gradend=blue}%
+      \or\psset{fillcolor=cyan,gradend=cyan}%
+      \or\psset{fillcolor=magenta,gradend=magenta}%
+      \or\psset{fillcolor=yellow,gradend=yellow}%
+    \fi%
+    \pstThreeDLine[SphericalCoor=true,%
+      fillstyle=gradient,gradbegin=white,gradmidpoint=0,gradangle=\iA]%
+       (0,0,0)(1,\iA,60)(2,\iA,50)(3,\iA,40)(4,\iA,30)(5,\iA,20)(6,\iA,10)%
+       (6,\iB,10)(5,\iB,20)(4,\iB,30)(3,\iB,40)(2,\iB,50)(1,\iB,60)(0,0,0)%
+  }%
+  \pstThreeDLine[linecolor=red]{->}(0,0,0)(0,0,5)%
+\end{pspicture}
+\end{lstlisting}
+
+\end{document}

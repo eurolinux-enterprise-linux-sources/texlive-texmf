@@ -1,0 +1,57 @@
+$Id: README,v 3.6 2006/11/09 21:55:06 lehman stable $
+
+ABOUT
+
+This package provides advanced facilities for inline and display
+quotations. It is designed for a wide range of tasks ranging from
+the most simple applications to the more complex demands of formal
+quotations. The facilities include commands, environments, and
+user-definable `smart quotes' which dynamically adjust to their
+context. Quotation marks are switched automatically if quotations
+are nested and they can be adjusted to the current language. There
+are additional facilities designed to cope with the more specific
+demands of academic writing, especially in the humanities and the
+social sciences. All quote styles as well as the optional active
+quotes are freely configurable.
+
+LICENSE
+
+Copyright (c) 2003--2006 Philipp Lehman, author-maintained.
+Permission is granted to copy, distribute and/or modify this
+software under the terms of the LaTeX Project Public License (LPPL),
+version 1.3.
+
+This software is provided `as is', without warranty of any kind,
+either expressed or implied, including, but not limited to, the
+implied warranties of merchantability and fitness for a particular
+purpose.
+
+INSTALLATION
+
+Copy csquotes.sty and csquotes.cfg to a directory that is searched
+for LaTeX input files. Don't forget to update the file hash tables
+after installing the files. Please see the following TeX FAQ answers
+for details:
+
+http://www.tex.ac.uk/cgi-bin/texfaq2html?label=instpackages
+http://www.tex.ac.uk/cgi-bin/texfaq2html?label=wherefiles
+http://www.tex.ac.uk/cgi-bin/texfaq2html?label=tds
+
+USAGE
+
+Refer to csquotes.pdf for a systematic reference manual and to
+tutorial.tex for a hands-on tutorial including practical examples.
+
+CHANGES
+
+A list of changes relevant to users of this package is included at
+the end of csquotes.pdf. Skimming the respective section of the
+manual is highly recommended.
+
+MANIFEST
+
+csquotes.sty
+csquotes.cfg
+csquotes.pdf
+tutorial.tex
+README

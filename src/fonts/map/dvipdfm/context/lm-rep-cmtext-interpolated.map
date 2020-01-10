@@ -1,0 +1,20 @@
+cmbxti12 lm-rep-cmit lmbxi10 -r
+cmbxti7 lm-rep-cmit lmbxi10 -r
+cmcsc8 lm-rep-cmsc lmcsc10 -r
+cmcsc9 lm-rep-cmsc lmcsc10 -r
+cmitt12 lm-rep-cmitt lmtti10 -r
+cmitt9 lm-rep-cmitt lmtti10 -r
+cmsl6 lm-rep-cmrm lmro8 -r
+cmsltt9 lm-rep-cmtt lmtto10 -r
+
+
+% This file belongs to the Latin Modern package. The work is released under
+% the GUST Font License. See the MANIFEST.txt and README.eng files
+% for the details. For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+% Prepared by Thomas Esser and Staszek Wawrykiewicz (May 14, 2005).
+% Touched by Bogus\l{}aw Jackowski (April 13, 2006).
+% Support for CM fonts in Type1 format: map lines which replace the new 
+% cmtext-bsr-interpolated.map and ams-cmsc-bsr-interpolated.map
+% (or parts of an old bsr-interpolated.map).

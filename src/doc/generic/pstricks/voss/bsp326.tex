@@ -1,0 +1,22 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage{pstricks,pstricks-add}
+\SpecialCoor
+
+\parindent=0pt
+\pagestyle{empty}
+
+\begin{document}
+
+\def\pshlabel#1{\footnotesize$#1$}
+\begin{pspicture}(0,-0.75)(10,1)
+\psaxes[labelsep=2pt,yAxis=false,%
+  labelsep=-10pt,ticksize=0 10mm,subticks=10,subticksize=0.75,%
+  tickcolor=red,subtickcolor=blue,tickwidth=1pt,%
+  subtickwidth=0.5pt](10.01,0)
+\end{pspicture}
+
+\end{document}

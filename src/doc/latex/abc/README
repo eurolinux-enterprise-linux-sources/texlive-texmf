@@ -1,0 +1,49 @@
+The abc package lets you include lines of music written in the ABC Plus
+language (http://abcplus.sourceforge.net).
+
+This is version 1.0 of the package
+
+ Copyright 2006 Enrico Gregorio
+
+ This program is provided under the terms of the
+ LaTeX Project Public License distributed from CTAN
+ archives in directory macros/latex/base/lppl.txt.
+
+ Author: Enrico Gregorio
+         Enrico dot Gregorio at univr dot it
+
+ This work has the LPPL maintenance status "author-maintained".
+
+ This work consists of the following files:
+
+README (this file)
+abc.dtx
+abc.ins
+abc.pdf
+
+ and of the derived files
+
+abc.sty
+example.tex
+poll.abc
+
+To install the distribution:
+
+o run "latex abc.ins"
+o run "latex -shell-escape example.tex" for a test
+o move "abc.sty" to locations where LaTeX will find
+  it (the FAQ on CTAN in /help/uktug-FAQ gives more
+  information about this magic place
+
+Please note that you need, on your system, the
+utilities "abcm2ps" (http://abcplus.sourceforge.net),
+either "ps2eps" (which comes with teTeX) or "ps2epsi"
+(which comes with Ghostscript), and epstopdf (which
+comes with teTeX) if you use pdflatex.
+
+Note also that you must enable "shell escape" on
+your TeX system via the command line switch (at least);
+see the teTeX documentation.
+
+2006/03/22
+Enrico Gregorio

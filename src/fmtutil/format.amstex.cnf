@@ -1,0 +1,6 @@
+# Change "amstex.ini -> bamstex.ini" and "- -> language.dat"
+# if you want babel support in amstex:
+amstex  pdftex         -               -translate-file=cp227.tcx *amstex.ini
+# Change "pdfamstex.ini -> pdfbamstex.ini" and "- -> language.dat"
+# if you want babel support in pdfamstex:
+#! pdfamstex    pdftex                 -       -translate-file=cp227.tcx *pdfamstex.ini

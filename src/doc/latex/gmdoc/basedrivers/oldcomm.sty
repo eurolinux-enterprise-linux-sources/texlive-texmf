@@ -1,0 +1,111 @@
+% 
+% This is a~fragment of the \pk{ltxdoc} class by David Carlisle 
+% for handling the old comments in \LaTeXe\ Source Files.
+% 
+%
+% \section{Old Comments}
+%
+% The \LaTeXe\ sources contain a lot of code inherited from
+% \LaTeX2.09. The comments in this code were not designed to be
+% typeset, and do not contain the necessary \LaTeX\ markup. The
+% \texttt{oldcomments} environment typesets these comments,
+% automatically sensing when any control sequence appears, and
+% implicitly adding the |\verb|. This procedure does not produce
+% particularly beautiful pages, but it allows us to fully document new
+% sections, and have some form of typeset comments on all the old
+% code. 
+% \changes{v2.0e}{1994/03/18}{Use a fixed font.}
+%
+% Scan control names and put them in tt.
+% will actually (incorrectly) scan past |\\| but this does not matter as
+% this is almost never followed by a letter in practice.  
+% (ie |\\foo|) would put |foo| in |\ttfamily|.
+%    \begin{macrocode}
+\def\oc@scan#1{%
+  \ifx\oc@bslash#1%
+                      \egroup\let\next\oc@bslash\else
+  \ifcat a\noexpand#1%
+                      #1\let\next\oc@scan\else
+  \ifx\oc@percent#1%
+                      \def\next{\char`\%\egroup}%
+  \else
+                      #1\let\next\egroup
+  \fi\fi\fi\next}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\def\oc@bslash{\bgroup\oc@ttf\char`\\\oc@scan}%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\def\oc@verb#1{%
+  \catcode`#1\active
+  \uccode`\~`#1%
+  \uppercase{\def~{{\oc@ttf\char`#1}}}}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\begingroup
+  \obeyspaces%
+  \catcode`\/=\catcode`\\
+% \CodeEscapeChar\/
+  /catcode`/\/active
+  /catcode`<=/catcode`{%
+  /catcode`>=/catcode`}%
+  /catcode`/{/active%
+  /catcode`/}/active%
+  /gdef/oldc< \end{oldcomments}>%
+  /gdef/begmac<    \begin{macrocode}>%
+  /gdef/obs</def <</oc@ttf/ >>>%
+/endgroup%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\begingroup
+  \catcode`\/=\catcode`\\
+  \catcode`\\=13
+% \CodeEscapeChar\/
+  /catcode`/|=/catcode`/%
+  /catcode`/%=13
+  /gdef/oldcomments{|
+    /makeatletter
+    /let/do/oc@verb/dospecials
+    /frenchspacing/@vobeyspaces/obs
+    /raggedright
+    /oc@verb/>|
+    /oc@verb/<|
+    /let\/oc@bslash
+    /let%/oc@percent
+    /obeylines
+    /parindent/z@
+    /ttfamily/expandafter/let/expandafter/oc@ttf/the/font
+    /rmfamily
+    /hfuzz/maxdimen
+    }
+/endgroup
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\begingroup
+  \sloppy%
+  \obeylines%
+  \gdef\oc@percent#1^^M{%
+    \ifvmode%
+    \def\commentline{#1}%
+    \ifx\commentline\oldc%
+    \end{oldcomments}%
+    \else%
+    \ifx\commentline\begmac%
+    \begin{macrocode}%
+    \else%
+    \leavevmode%
+    #1^^M%
+    \fi\fi%
+    \else%
+    {\oc@ttf\char`\%}#1^^M%
+    \fi}%
+\endgroup%
+%    \end{macrocode}
+%
+%
+\def\task#1#2{}

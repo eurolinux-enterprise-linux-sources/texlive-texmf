@@ -1,0 +1,136 @@
+%%
+%% This is file `demodate.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% dates.dtx  (with options: `demo')
+%% 
+\documentclass{minimal}
+\usepackage{dates}
+\begin{document}
+
+\makeatletter
+\message{^^J---------------------------------------------------------}
+\message{This is a demonstration file for the LaTeX dates package.}
+\message{It will print a number of dates to the terminal.^^J}
+\message{The code demonstrated by this package is not intended}
+\message{for direct use by humans, so I have not worked very hard}
+\message{to make its output look pretty, and it won't actually}
+\message{print anything.  But if you get a cluttered list of dates}
+\message{and no error messages, the package is working for you.}
+\message{---------------------------------------------------------}
+\dateread
+{\message{\theshorttext}%
+ \message{\theday/\the\dates@month/\the\dates@year}%
+ \ifx\thelongtext\dates@empty%
+ \else%
+   \message{\thelongtext}%
+ \fi}
+   december 10 1995 {Start of First Period of Time}
+to jan     10 1996 {End of First Period of Time}
+   december 10 1996 {Start of Second Period of Time}
+to jan     10 1997 {End of Second Period of Time}
+February 18 1997 {Frank's Next Birthday}
+ [The best presents come in small packages.^^JIt
+  would be a terrific present for someone to make
+  this one smaller.]
+February 18 1998 {Frank's Next Birthday But One}
+Every Monday {(Monday Coffee)}
+Every Third Tuesday {(Third Tuesday Meeting)}
+Function moonsinit moonsincrement {%
+  \global\dates@date=\dates@subrange@start%
+  \caldate%
+  \newcount\moonno%
+ \newif\ifsign%
+  \def\firstmoon{\moonno=\dates@year
+  \multiply\moonno by123685
+  \divide\moonno by10000
+  \multiply\moonno by4\advance\moonno by-1
+  \loop\moondate\relax
+  \ifnum\dates@date<\dates@subrange@start
+  \advance\moonno by1\repeat}
+  \def\moondate{{\dates@ct@z=\moonno
+  \lin 202.126.369+0.\dates@ct@z=\count1
+  \count6=0
+  \lin 0.2.319+2907.\sin\fac{3}
+  \divide\count6  by1000
+  \lin 365.249.86+7593.\id\fac{1}
+  \divide\count6 by10\count7 =\count6
+  \ifodd\moonno\quarters
+  \else\fullornew\fi\global\dates@date=\count7}
+  \jdttol}
+  \def\fullornew{\count6=0
+  \lin -393.0.0+0.
+  \divide\count1 by100000000
+  \advance\count6  by\count1
+  \lin 0.628.300+6269.\sin
+  \multiply\count6  by\count4
+  \lin -7.-700.-369+  928.\sin\fac{  -74}
+  \lin  0. 628. 300+ 6269.\sin\fac{ 1734}
+  \lin  1. 256. 600+12539.\sin\fac{   21}
+  \lin  8. 328. 670+ 5341.\sin\fac{-4068}
+  \lin  8. 538. 220+-4597.\sin\fac{   10}
+  \lin  8. 956. 970+11610.\sin\fac{  -51}
+  \lin 16. 238. 589+-5526.\sin\fac{   -4}
+  \lin 16. 657. 340+10682.\sin\fac{  161}
+  \lin 16. 866. 890+  743.\sin\fac{  104}
+  \lin 17. 285. 640+16951.\sin\fac{   50}
+  \lin 17. 495. 190+ 7013.\sin\fac{    4}
+  \lin 24. 986.  10+16023.\sin\fac{   -4}
+  \lin 25. 195. 560+ 6084.\sin\fac{   -6}
+  \divide\count6  by10000
+  \advance\count7 by\count6 }
+  \def\quarters{\lin -393.0.0+0.
+  \divide\count1  by100000000
+  \count6 =\count1  \lin 0.628.300+6269.
+  \sin\multiply\count6  by\count4
+  \lin -16. -29. -40+-4413.\sin\fac{   40}
+  \lin  -7.-700.-369+  928.\sin\fac{  -47}
+  \lin  -7. -72. -69+ 7198.\sin\fac{  -30}
+  \lin   0. 628. 300+ 6270.\sin\fac{ 1721}
+  \lin   1. 256. 600+12539.\sin\fac{   21}
+  \lin   8. 328. 670+ 5341.\sin\fac{-6280}
+  \lin   8. 538. 220+-4598.\sin\fac{   21}
+  \lin   8. 956. 970+11611.\sin\fac{ -119}
+  \lin  16. 238. 589+-5526.\sin\fac{   -4}
+  \lin  16. 657. 340+10682.\sin\fac{   89}
+  \lin  16. 866. 890+  743.\sin\fac{   79}
+  \lin  17. 285. 640+16952.\sin\fac{    3}
+  \lin  17. 495. 190+ 7013.\sin\fac{    3}
+  \lin  24. 986.  10+16023.\sin\fac{   -4}
+  \lin  25. 195. 560+ 6085.\sin\fac{   -6}
+  \count8=\count6\count6=28000
+  \lin 628. 300. 373+ 6270.\cos\fac{   -4}
+  \lin   8. 328. 670+ 5341.\cos\fac{    3}
+  \count2=\moonno
+  \advance\count2 by-1\divide\count2 by2
+  \ifodd\count2\multiply\count6  by-1 \fi
+  \advance\count6 by\count8
+  \divide\count6  by10000
+  \advance\count7  by\count6 }
+  \def\phase{{\dates@ct@z=\moonno
+  \count1=\moonno
+  \divide\dates@ct@z by4\multiply\dates@ct@z by4
+  \advance\count1 by-\dates@ct@z\relax
+  \xdef\themoon{\ifcase\count1
+  New Moon\or First Quarter\or
+  Full Moon\or Last Quarter\fi}}}
+  \gdef\moonsinit{%
+  \firstmoon
+  \global\dates@month=12\global\dates@day=31\dates@fix\global\advance\dates@date by1
+  \count1=\dates@date
+  \moondate
+  \phase
+  \caldate}
+  \gdef\moonsincrement{%
+  \advance\moonno by 1
+  \moondate\phase
+  \caldate}
+  }
+  {\themoon}
+\end{document}
+
+%% 
+%%
+%% End of file `demodate.tex'.

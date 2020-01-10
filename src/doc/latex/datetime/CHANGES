@@ -1,0 +1,48 @@
+datetime.sty history
+
+Version 2.49: Fixed some of the multilingual problems, tidied up
+code documentation
+
+Version 2.48: Fixed bug in \pdfdate
+
+Version 2.47: Defined \ier if it doesn't already exist.
+
+Version 2.46: Made \today robust.
+
+Version 2.45: Added command to store dates.
+
+Version 2.44: Fixed spelling mistakes (oops!) and minor 
+bugs in LaTeX2HTML style files
+
+New to version 2.43: Package now compatible with 
+LaTeX2HTML
+
+New to version 2.42: Package now compatible with babel.
+
+New to version 2.41: Package has been split into two 
+files: datetime.sty and fmtcount.sty.  The latter file 
+contains the definitions for all the macros that display 
+the value of a counter (e.g. \ordinal, \octal).
+Extra macro \decimal added (like \arabic, but can pad it 
+with leading zeroes.)
+
+New to version 2.4: New commands: \binary, \octal, 
+\hexadecimal, \aaalph, \abalph, \Hexadecimal, \AAAlph 
+and \ABAlph.  Added provision for configuration
+file datetime.cfg.
+
+New to version 2.31: The command \pdfdate has been added
+(minor bug fixed in version 2.32)
+
+New to version 2.3: The command \newtimeformat can be 
+used to define new time formats.  Added the command 
+\currenttime
+
+New to version 2.2: The command \newdateformat can be 
+used to define new date formats in addition to the ones 
+provided by this package.
+
+see accompanying README file for license and installation
+information.
+
+http://theoval.cmp.uea.ac.uk/~nlct/

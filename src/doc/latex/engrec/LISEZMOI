@@ -1,0 +1,37 @@
+% -*- coding: iso-8859-15 -*-
+%%% 2004-05-22
+
+ENGREC 1 2004-05-20
+
+Ce lot comprend
+
+% le module lui-même
+engrec.sty  
+% documentation bilingue OnlyDescription 
+engrec.pdf
+% pour *nix make
+Makefile    
+% sources
+engrec.dtx  
+engrec.ins 
+% CTAN-ware
+engrec.xml 
+engrec.tpm 
+% partie anglaise
+README      
+Changes     
+% partie française
+LISEZMOI    % ce fichier
+Changements 
+
+Description :
+Deux macros \engrec et \EnGrec pour numéroter, par exemple
+des listes, avec des minuscules ou des majuscules grecques. 
+Leur syntaxe est celle de \alph.
+
+Pour utilisateur *nix :
+make help
+pour obtenir de l'aide
+
+-- 
+Yvon Henel, le TeXnicien de surface

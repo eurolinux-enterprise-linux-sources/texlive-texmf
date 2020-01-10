@@ -1,0 +1,24 @@
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Pagella.txt
+% and README-TeX-Gyre-Pagella.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+\ProvidesFile{ly1qpl.fd}[2006/11/01 v1.0 font definition file for LY1/qpl]
+
+\DeclareFontFamily{LY1}{qpl}{}
+\DeclareFontShape{LY1}{qpl}{b}{sc}{<->texnansi-qplb-sc}{}
+\DeclareFontShape{LY1}{qpl}{b}{n}{<->texnansi-qplb}{}
+\DeclareFontShape{LY1}{qpl}{b}{scit}{<->texnansi-qplbi-sc}{}
+\DeclareFontShape{LY1}{qpl}{b}{it}{<->texnansi-qplbi}{}
+\DeclareFontShape{LY1}{qpl}{m}{sc}{<->texnansi-qplr-sc}{}
+\DeclareFontShape{LY1}{qpl}{m}{n}{<->texnansi-qplr}{}
+\DeclareFontShape{LY1}{qpl}{m}{scit}{<->texnansi-qplri-sc}{}
+\DeclareFontShape{LY1}{qpl}{m}{it}{<->texnansi-qplri}{}
+\DeclareFontShape{LY1}{qpl}{bx}{n}{<->ssub * qpl/b/n}{}
+\DeclareFontShape{LY1}{qpl}{bx}{it}{<->ssub * qpl/b/it}{}
+\DeclareFontShape{LY1}{qpl}{bx}{sc}{<->ssub * qpl/b/sc}{}
+\DeclareFontShape{LY1}{qpl}{bx}{scit}{<->ssub * qpl/b/scit}{}
+\endinput
+% End of ly1qpl

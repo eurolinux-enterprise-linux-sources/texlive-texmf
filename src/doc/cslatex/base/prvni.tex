@@ -1,0 +1,1554 @@
+
+%  První setkání s TeXem
+%%%%%%%%%%%%%%%%%%%%%%%%
+% (C) 1999    Petr Ol¹ák
+
+% format: csplain, kódování ISO-8859-2
+
+% Tento dokument mù¾ete vytisknout pro vlastní potøeby nebo jej
+% elektronicky dále ¹íøit v nezmìnìné podobì jako soubory prvni.tex,
+% prvni.ps a prvni.pdf
+
+\chyph
+\magnification\magstep1
+\advance\vsize by\baselineskip
+
+%% Varianta pro pdftex
+\ifx\pdfoutput\undefined
+  \def\zalozka#1{}
+\else
+  \def\zalozka#1{%
+     \advance\secnum by1
+     \pdfdest num\secnum fitbh
+     {\let~=\space \def\TeX{TeX}%
+     \pdfoutline goto num\secnum count 0 {#1}}}
+  \pdfinfo{
+     /Author (Petr Olsak)
+     /CreationDate (D:19990328)
+     /ModDate (D:19990328)     
+     /Creator (TeX)  
+     /Producer (pdfTeX)
+     /Title (Prvni setkani s TeXem)
+     /Subject (manual)  
+     /Keywords (TeX) }
+  \pdfcatalog{/PageMode /UseOutlines} 
+  \pdfcompresslevel=9
+\fi
+
+%% Vzhled dokumentu
+\parindent=11pt
+\lineskiplimit=-4pt
+\emergencystretch=2em
+\raggedbottom
+
+%% Deklarace registrù
+\newcount\bibnum
+\newcount\footnum
+\newcount\secnum
+
+% Fonty
+\input cpalatin
+\font\tentt=cstt10 \hyphenchar\tentt=-1
+\font\cmit=csti10
+\font\mflogo=logo10
+\font\showtt=cstt9
+\font\tencsr=csr10
+\font\titulfont=\fontname\tenbf\space scaled\magstep2
+\font\bigfont=\fontname\tenbf\space scaled\magstep5
+\font\scriptm=\fontname\tenrm\space at7pt
+\scriptfont0=\scriptm
+
+%% Základní makra
+\def\sekce #1\par{\removelastskip\bigskip
+   \zalozka{#1}
+   \noindent{\titulfont #1}\par\nobreak\medskip}
+\def\bod{\item{$\triangleright$}}
+\def\bib{\parindent=22pt\global\advance\bibnum by1 
+  \par\hang\indent\llap{[\the\bibnum]\hskip11pt}\ignorespaces}
+
+%% Èárka místo teèky v matematice:
+\mathcode`\.="013B
+\def\doteq{\buildrel\hbox{.}\over=}
+
+%% Verbatim prostøedí \begtt...\endtt, "...".
+{\obeyspaces \gdef\activespace{\obeyspaces\let =\ }}
+\def\setverb{\def\do##1{\catcode`##1=12}\dospecials}
+\def\begtt{\medskip\hbox\bgroup\vrule\vbox\bgroup\hrule
+  \smallskip\bgroup \setverb \catcode`\"=12 \activespace 
+  \baselineskip=.9\baselineskip
+  \def\par{\leavevmode\strut\endgraf} 
+  \obeylines \startverb} 
+{\obeylines \catcode`\|=0 \catcode`\\=12 
+  |gdef|startverb#1^^M#2\endtt{%
+    |showtt#2|egroup|smallskip|hrule|egroup|vrule|egroup|medskip}} 
+\def\"{"} \catcode`\"=13
+\def"{\leavevmode\hbox\bgroup\let"=\egroup\setverb\obeyspaces\tt}
+
+%% Prostøedí ukázek
+\def\beguk{\medskip\hbox\bgroup\vrule\vbox\bgroup\hrule\medskip
+   \leftskip=\parindent \rightskip=\parindent \relax}
+\def\enduk{\medskip\hrule\egroup\vrule\egroup\medskip}
+
+%% Tabulky
+\def\begtable{$$\vbox\bgroup
+  \let\par=\cr \obeylines \halign\bgroup &##\hfil\qquad\cr}
+\def\endtable{\egroup\egroup$$}
+\abovedisplayskip=\abovedisplayshortskip
+\def\tabline{\noalign{\smallskip\hrule}}
+\def\.{\hphantom{0}}
+
+%% Výètová prostøedí 
+\def\begitems{\medskip\bgroup}
+\def\enditems{\par\egroup\medskip}
+
+%% Loga
+\def\LaTeX{L\kern-.36em\raise.5ex\hbox{\sevenrm A}\kern-.12em\TeX}
+\def\CS{$\cal C\kern-.1667em\lower.5ex\hbox{$\cal S$}\kern-.075em $}
+\def\mf{{\mflogo META}\-{\mflogo FONT}}
+\def\AMS{$\cal A\kern-.166em\lower.5ex\hbox{$\cal M$}\kern-.075em S$}
+\def\twoe{$2_{\textstyle\varepsilon}$}
+
+%% Poznámky pod èarou
+\let\orifootnote=\footnote
+\def\footnote{\global\advance\footnum by1\orifootnote{$^{\the\footnum}$}}
+
+%% Pomocné
+\def\url#1{{\tt #1}}
+\let\pp=\noindent
+\let\,=\thinspace
+
+%% Titulní strana
+\bgroup \nopagenumbers \pageno=0
+\null\vfill
+{\baselineskip=40pt
+\centerline{\bigfont První setkání s~\TeX{}em}
+\centerline{\bigfont Petr Ol¹ák}
+}
+\vskip 0pt plus2fill\break
+\parindent=0pt \parskip=\bigskipamount
+\null\vfil
+Autor programu \TeX{} je profesor Donald Knuth.
+\par
+\TeX{} je ochranná známka American Mathematical Society.
+\par
+Ostatní v manuálu pou¾ité názvy programových produktù, firem
+apod. mohou být ochrannými známkami nebo registrovanými ochrannými
+známkami pøíslu¹ných vlastníkù.
+\vfill
+Copyright $\copyright$ RNDr. Petr Ol¹ák, 1999
+\par
+Tento text si mù¾ete vytisknout pro vlastní potøeby. Je k~dispozici
+spoleènì s~balíkem \CS\TeX{} na
+\url{ftp://math.feld.cvut.cz/pub/cstex/doc} 
+ve zdrojovém textu ({\tt prvni.tex}), PostScriptu ({\tt prvni.ps}) a ve
+formátu PDF ({\tt prvni.pdf}).  Mù¾ete jej také distribuovat, ale pouze
+v~nezmìnìné elektronické podobì.
+\bigskip\break
+\egroup
+\pageno=1
+
+
+
+\sekce Úvod
+%%%%%%%%%%%
+
+Tento manuál je koncipován jako \uv{první seznámení s~programem \TeX{}%
+    \footnote{Název \TeX{} se ète \uv{tech}, nikoli \uv{teks}.}
+na jeden veèer}. Mìl by umo¾nit zaèáteèníkovi porozumìt
+základním principùm \TeX{}u. Manuál obsahuje ukázku jednoduchého dokumentu,
+který by si mìl ètenáø sám pøepsat do svého poèítaèe a na nìm \TeX{}
+vyzkou¹et. Je to dobrý první krok do pestrého svìta tohoto programu plného
+zajímavých mo¾ností. Ukázka by mìla té¾ naznaèit u¾iteènost dobrého návrhu
+znaèkování vstupního textu tak, aby byl oddìlen obsah dokumentu od jeho
+formy. Pøedvedená ukázka také ilustruje základní principy roz¹íøení \TeX{}u
+(plain nebo \LaTeX). Tím mù¾e u¾ivatel hned na prvním dokumentu rozhodnout,
+které \TeX{}ové roz¹íøení je bli¾¹í jeho srdci a podle toho vybrat dal¹í
+literaturu pro doplòující studium.
+
+Pøedpokládáme, ¾e ètenáø má urèité dùvody proè pou¾ít \TeX{}, tak¾e se zde
+nebudeme zdr¾ovat výètem jeho výhod, rozepisovat ob¹írnì jeho historii a
+nebudeme polemizovat o~u¾iteènosti èi neu¾iteènosti dávkového èi
+interaktivního systému na pøípravu sazby.
+
+
+\sekce \TeX\ a jeho okolí
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\TeX{} je formátor. Je to program, kterému pøedlo¾íme vstupní text
+dokumentu v~\uv{holé} textové podobì doplnìný textovými
+znaèkami, které vymezují strukturu dokumentu nebo dávají \TeX{}u pokyny
+o~zpùsobu formátování dokumentu. Bývá obvyklé (ale není to nutné)
+pojmenovat tento soubor s~pou¾itím pøípony {\tt.tex}, napøíklad 
+\hbox{\tt dokument.tex}. Na výstupu pak po zpracování \TeX{}em dostaneme
+tzv.~{\tt dvi} soubor%,
+    \footnote{odvozeno z~anglického \uv{device independent}~-- na
+              zaøízení nezávislý},
+který obsahuje definitivní informace o~pou¾itých fontech a o~umístìní
+jednotlivých znakù na stránce. Tento soubor má název odvozený od názvu
+vstupního souboru, ale má pøíponu {\tt.dvi}. Lze jej prostøednictvím
+vhodného programu prohlédnout na obrazovce (vidíme, jak bude dokument
+skuteènì vypadat), nebo jej vytisknout na tiskárnì.
+
+\TeX{} tedy ète na svém vstupu soubor s~dobøe definovanou syntaxí jazyka
+znaèek a na výstupu je rovnì¾ soubor s~úplným popisem sazby. \TeX{}
+jako takový je nezávislý na operaèním systému. Vývoj samotného \TeX{}u
+je zastaven, tak¾e pro u¾ivatele nehrozí nebezpeèí vzniku dal¹ích
+nekompatibilních verzí. Dal¹í programy \uv{okolo \TeX{}u} tvoøí
+dohromady tzv.~implementaci \TeX{}u a umo¾ní s~\TeX{}em rozumným
+zpùsobem pracovat.
+
+Zaèínající u¾ivatel se samozøejmì hlavnì ptá po zpùsobu, jak mù¾e
+v~konkrétním operaèním systému s~konkrétní \TeX{}ovou implementací
+s~tímto programem pracovat, jak jej spustit, jakými tlaèítky se ovládá
+textový editor, jaké nabídky jsou k~dispozici, co nad kterým obrázkem udìlá
+my¹. Ptá se tedy po u¾ivatelském rozhraní. Jednotlivé manuály o~\TeX{}u
+tradiènì odkazují na tzv.~\uv{místní pøíruèku} (Local Guide), která by
+mìla toto rozhraní popisovat. Tato pøíruèka je závislá na pou¾itém
+operaèním systému, na pou¾ité implementaci \TeX{}u, na vybraném textovém
+editoru a nìkdy té¾ na administrátorovi systému, který konfiguruje nìkteré
+vìci specificky pro vìt¹í pohodlí u¾ivatelù. Ani v~tomto manuálu nejsou
+uvedeny podrobnosti o~u¾ivatelském rozhraní.
+
+V~graficky orientovaných operaèních systémech je vìt¹inou mo¾né otevøít
+souèasnì v~jednom okénku textový editor, ve kterém u¾ivatel pí¹e nebo
+modifikuje vstupní text a ve vedlej¹ím okénku prohlí¾eè výstupního
+{\tt dvi} souboru. Po modifikaci vstupního textu a spu¹tìní \TeX{}u
+(nejlépe klávesovou zkratkou pøímo z~editoru) se bìhem pár sekund 
+projeví zmìna v~prohlí¾eèi výsledného dokumentu.
+
+Textový editor, ve kterém pøipravujeme nebo modifikujeme vstupní texty
+dokumentù, nesmí ukládat na disk ¾ádné skryté formátovací informace
+implementované jen pro tento editor (jako napøíklad zmìna fontu, mìkké
+konce øádku apod.). To dìlají tzv.~textové procesory, na které v~pøípadì
+práce s~\TeX{}em vìt¹inou nepou¾íváme.
+
+Zvyklosti ve znaèkování dokumentu jsou vesmìs závislé na pou¾itém {\it
+formátu} \TeX{}u, který modifikuje jeho chování. Øíkáme, ¾e je
+dokument napsán ve formátu {\it \LaTeX}, pokud je nìkde na zaèátku
+vstupního textu dokumentu uvedena znaèka "\documentclass" nebo
+"\documentstyle".  Pokud tam tuto znaèku nenajdeme, mù¾eme
+pøedpokládat, ¾e je dokument napsán ve formátu {\it plain}, v~pøípadì
+èesky psaného dokumentu pak ve formátu {\it csplain}. Tento manuál je
+napøíklad napsán ve formátu csplain a je ulo¾en v~souboru 
+{\tt prvni.tex}. Mù¾e se stát, ¾e nìjaký dokument je napsán ve formátu
+\AMS\TeX{} nebo v~jiném ménì pou¾ívaném formátu. Tím se ale zde nebudeme
+zabývat. Rozdíl mezi plainem a \LaTeX{}em a smysl pou¾ití formátù vyplyne
+a¾ z~dal¹ího textu.
+
+Následující tabulka pøedpokládá, ¾e pracujeme
+v~operaèním systému, který umo¾òuje u¾ivateli zadávat pokyny z~pøíkazového
+øádku. Tím nevyluèujeme, ¾e nelze nìkteré popisované èinnosti implementovat
+do nìjaké u¾ivatelské nabídky konkrétního u¾ivatelského rozhraní.
+Pøedpokládáme, ¾e jsme pøipravili vstupní text dokumentu do souboru
+{\tt dokument.tex}.
+
+\begtable
+  pøíkazový øádek    &  komentáø
+  \tabline
+  "tex dokument"       &  anglický dokument, formát plain
+  "csplain dokument"   &  èeský nebo slovenský dokument, formát csplain
+  "latex dokument"     &  formát \LaTeX, jazyk je deklarován v~dokumentu
+  "cslatex dokument"   &  modifikovaný \LaTeX{} pro èe¹tinu a sloven¹tinu
+\endtable  
+
+V¹imneme si, ¾e v~pøíkazovém øádku pí¹eme za jméno formátu název vstupního
+souboru a ¾e pøíponu {\tt.tex} nemusíme psát. Dobøe instalovaná
+implementace \TeX{}u by mìla podle jména formátu spustit \TeX{} modifikovaný
+právì tímto formátem.
+
+Pokud nemáte ve své implementaci \TeX{}u formát csplain, je to ¹patné
+znamení. Nebudete toti¾ schopni zpracovat ani tento manuál ani
+ukázku, která je v~nìm obsa¾ena. V~takovém pøípadì doporuèujeme
+poohlédnout se po \CS\TeX{}u, který najdete napøíklad na
+\url{http://math.feld.cvut.cz/olsak/cstex}.
+
+K~prohlédnutí dokumentu se pou¾ívají rùzné programy (tzv.~dvi~prohlí¾eèe).
+Volba prohlí¾eèe závisí na pou¾itém operaèním systému a na implementaci
+\TeX{}u. V~UNIXu je nejèastìj¹í program {\tt xdvi} (staèí napsat 
+"xdvi dokument"). V~MS Windows se pou¾ívá {\tt windvi}, {\tt dviwin}
+nebo {\tt yapp}. V~DOSu se stekáme nejèastìji s~programem {\tt dviscr}
+z~implementace em\TeX{}. Pro OS/2 má em\TeX{} \uv{okenní} variantu
+prohlí¾eèe {\tt dvipm}.
+
+Na PostScriptovou tiskárnu vytiskneme dokument programam {\tt dvips},
+pøíkazový øádek: "dvips -Ptiskarna dokument". Nemáme-li PostScriptovou
+tiskárnu, vìt¹inou pøed ní pøedøadíme Ghostscript, co¾ je volnì
+dostupný konvertor z~PostScriptu. Nìkdy lze té¾ najít ovladaè pro 
+tiskárnu pøímo v~pøíslu¹né \TeX{}ové implementaci.
+
+
+\sekce Jdeme na to
+%%%%%%%%%%%%%%%%%%
+
+Nejprve zkusíme v~nìjakém textovém editoru vytvoøit soubor {\tt pokus.tex},
+který obsahuje zku¹ební vìtu:
+
+\begtt %--------------------------------------------------------------
+Ahoj svìte!
+\bye
+\endtt %--------------------------------------------------------------
+
+Pokud zpracujeme tento soubor \TeX{}em s~formátem csplain
+(pøipomínáme, ¾e je mo¾né pou¾ít povel {\tt csplain pokus}), 
+dostaneme výstupní soubor {\tt pokus.dvi}. Navíc
+\TeX{} ulo¾í informaci o~zpracování do souboru {\tt pokus.log}. Výsledný
+{\tt dvi} soubor si mù¾eme prohlédnout prohlí¾eèem. Dostaneme
+oèekávaný  výsledek:
+
+\beguk %-------------------------------------------------------------
+\tencsr Ahoj svìte!
+\enduk %-------------------------------------------------------------
+
+\pp Pøitom dole na stránce je je¹tì vyti¹tìno èíslo strany:~1.
+
+Pokud zkusíme tentý¾ soubor zpracovat \TeX{}em s~formátem plain
+(pøíkazový øádek {\tt tex pokus}), výstup bude zmr¹ený: \uv{Ahoj svte!}.
+Vidíme, ¾e textový soubor s~akcenty nelze jednodu¹e vnutit originálnímu
+americkému \TeX{}u, ale místo formátu plain je potøeba pou¾ít modifikovaný
+csplain.
+
+Kdybychom chtìli tentý¾ soubor zpracovat \TeX{}em s~formátem \LaTeX{}
+(krátce øíkáme, ¾e soubor zpracováváme \LaTeX{}em), obdr¾íme chybové
+hlá¹ení:
+
+\begtt %--------------------------------------------------------------
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 A
+     hoj svìte!
+? 
+\endtt %--------------------------------------------------------------
+
+Vidíme tedy, ¾e soubor není vhodnì pøipraven ke zpracování \LaTeX{}em.
+Chybí mu "\begin{document}". Pozdìji uká¾eme, ¾e mu chybí více vìcí, ale
+v~tuto chvíli radìji zùstaneme u~csplainu. Komunikaci s~\TeX{}em pøi
+chybovém hlá¹ení ukonèíme odesláním znaku {\tt x}. Chceme-li, aby
+\TeX{} chybu ignoroval a pokraèoval ve zpracování dokumentu, staèí na
+otazník odpovìdìt \uv{Enter} (v~tomto pøíkladì, kdy dokument vhodný
+pro csplain chceme zpracovat \LaTeX{}em, se pouze doèkáme dal¹í
+zavleèené chyby).
+
+Zkusíme si nyní pøepsat do poèítaèe následující ponìkud rozsáhlej¹í
+dokument. Soubor nazveme tøeba {\tt mujprvni.tex} a vytvoøíme jej
+libovolným textovým editorem. Pokud je ètenáø od pøírody \uv{lenivý}, mù¾e
+se místo zdlouhavého pøepisování pokusit najít text ukázky ve vstupním
+souboru {\tt prvni.tex} tohoto manuálu a pøenést jej do svého souboru
+{\tt mujprvni.tex} jako blok v~textovém editoru.
+
+Mo¾ná nám mù¾e pøipadat èást oznaèená jako \uv{oblast definic} hodnì
+nepochopitelná, skoro jako porucha na lince. Pøesto se zatím pokusíme
+pøekonat odpor k~této poru¹e a dùslednì v¹echny znaky pøepí¹eme.
+\TeX{} se nám za to odvdìèí silnými mo¾nostmi, které budeme postupnì
+odhalovat.
+
+Nemusíme se obtì¾ovat pøepisováním textù, schovaných za znakem "%", proto¾e
+tímto znakem je zahájen komentáø, který konèí koncem øádku a který je pøi
+zpracování \TeX{}em ignorován. V~ka¾dém pøípadì ale nevynechávejme prázdné
+øádky v~ukázce a vìnujme pozornost obsahu èásti oznaèené jako \uv{vlastní
+text}, kde jsou vyjmenovány základní jevy, se kterými se pøi poøizování
+textù pro \TeX{} budeme neustále setkávat.
+
+\begtt %=============================================================
+%%%%%%%% Zde zaèíná "oblast definic" pro tento dokument %%%%%%%%%%%
+
+\chyph       % inicializace èeského dìlení slov v csplainu
+\font\titulfont=\fontname\tenbf\space scaled \magstep2  % vìt¹í font
+\def\bod{\item{$\bullet$}}  % definice zkratky \bod pro výèet
+\def\nadpis#1\par{          % definice nadpisu:
+   \removelastskip\bigskip  %   odma¾e poslední vert. mezeru a pøidá vlastní
+   \indent{\titulfont #1}   %   odsazený text nadpisu vìt¹ím fontem
+   \par\nobreak\medskip}    %   konec øádku, zakázaný zlom, men¹í mezera
+\let\itemskip=\medskip      % kolem výètu prvkù bude men¹í mezera \medskip
+
+%%%%%%%% Zde zaèíná "vlastní text" dokumentu %%%%%%%%%%%%%%%%%%%%%%%%
+
+\nadpis Mùj první dokument
+
+Zkou¹ím napsat první text v~\TeX u. Tento odstavec musí být
+tak dlouhý, aby bylo vidìt, ¾e se rozlomil aspoò na dva øádky.
+
+Jednotlivé odstavce oddìlujeme od sebe prázdným øádkem. Prázdnými øádky
+vùbec ne¹etøíme, proto¾e zvy¹ují pøehlednost zdrojového textu.
+Vyzkou¹íme si nyní nìkolik vìcí.
+
+\itemskip
+\bod Budeme pou¾ívat èeské \uv{uvozovky}, které se li¹í od ``anglických''.
+     Uvìdomíme si, ¾e pou¾ití "tìchto znakù" je úplnì ¹patnì!
+\bod Rozli¹ujme mezi spojovníkem (je-li), pomlèkou ve vìtì~--
+     a dlouhou pomlèkou---ta se pou¾ívá v~anglických dokumentech.
+\bod Pøedpokládáme, ¾e ka¾dý doká¾e rozeznat 1 (jednièku) od l
+     (písmene el) a 0 (nulu) od O~(písmene~O).
+\bod Zkusíme pøepnout do {\bf polotuèného písma}, nebo do
+     {\it kurzívy}. Také vyzkou¹íme {\tt strojopis}.
+\bod V¹imneme si, ¾e ve slovech grafika, firma, apod. se písmena
+     f a i automaticky promìnila v~jediný znak fi (srovnáme to
+     s~nesprávným f\/i).
+\bod Mezery mezi písmeny jsou automaticky vyrovnávány podle tvaru písmen.
+     Ve slovì \uv{Tento} je napøíklad písmeno~e tìsnìji pøisazeno
+     k~písmenu~T, aby se mezery mezi písmeny opticky jevily stejnomìrné.
+\bod Vypravíme se na malou exkurzi do matematiky: $a^2 + b^2 = c^2$.
+     Zjistíme, ¾e èíslo -1 je zde napsáno ¹patnì (prokletý spojovník),
+     zatímco správnì má být $-1$.
+\bod Proto¾e \% uvozuje komentáø a \$ pøepíná do matematické sazby,
+     musíme pøed nì napsat zpìtné lomítko, chceme-li ji dostat do dokumentu.
+\itemskip
+
+\nadpis Závìr
+
+To by pro zaèátek staèilo. Pøíkazem {\tt\char`\\bye} ukonèíme na¹e pokusy.
+\bye
+\endtt %=============================================================
+
+Po zpracování tohoto dokumentu formátem csplain si mù¾eme prohlédnout
+prohlí¾eèem {\tt dvi} souboru následující výsledek:
+
+\beguk %=============================================================
+\parindent=20truept
+\baselineskip=12truept
+\font\tenbf=csbx10 at10truept \font\tenit=csti10 at10truept 
+\font\tentt=cstt10 at10truept
+\font\tenrm=csr10 at10truept \tenrm
+\font\symbol=cmsy10 at10truept
+\font\mmi=cmmi10 at10truept \font\sevenrm=csr7 at7truept
+\textfont0=\tenrm \scriptfont0=\sevenrm
+\textfont1=\mmi \textfont2=\symbol
+\font\titulfont=csbx10 scaled\magstep1  % vìt¹í font
+\def\bod{\item{$\bullet$}}  % definice zkratky \bod pro výèet
+\def\nadpis#1\par{          % definice nadpisu:
+   \removelastskip\bigskip  %   odma¾e poslední vert. mezeru a pøidá vlastní
+   \indent{\titulfont #1}   %   odsazený text nadpisu vìt¹ím fontem
+   \par\nobreak\medskip}    %   konec øádku, zakázaný zlom, men¹í mezera
+\bigskipamount=12truept \medskipamount=6truept
+\let\itemskip=\medskip       % kolem výètu prvkù bude men¹í mezera \medskip
+
+\nadpis Mùj první dokument
+
+Zkou¹ím napsat první text v~\TeX u. Tento odstavec musí být
+tak dlouhý, aby bylo vidìt, ¾e se rozlomil aspoò na dva øádky.
+
+Jednotlivé odstavce oddìlujeme od sebe prázdným øádkem. Prázdnými øádky
+vùbec ne¹etøíme, proto¾e zvy¹ují pøehlednost zdrojového textu.
+Vyzkou¹íme si nyní nìkolik vìcí.
+
+\itemskip
+\bod Budeme pou¾ívat èeské \uv{uvozovky}, které se li¹í od ``anglických''.
+     Uvìdomíme si, ¾e pou¾ití \"tìchto znakù\" je úplnì ¹patnì!
+\bod Rozli¹ujme mezi spojovníkem (je-li), pomlèkou ve vìtì~-- 
+     a dlouhou pomlèkou---ta se pou¾ívá v~anglických dokumentech.
+\bod Pøedpokládáme, ¾e ka¾dý doká¾e rozeznat 1 (jednièku) od l
+     (písmene el) a 0 (nulu) od O~(písmene~O).
+\bod Zkusíme pøepnout do {\bf polotuèného písma}, nebo do
+     {\it kurzívy}. Také vyzkou¹íme {\tt strojopis}.
+\bod V¹imneme si, ¾e ve slovech grafika, firma, apod. se písmena
+     f a i automaticky promìnila v~jediný znak fi (srovnáme to
+     s~nesprávným f\/i).
+\bod Mezery mezi písmeny jsou automaticky vyrovnávány podle tvaru písmen.
+     Ve slovì \uv{Tento} je napøíklad písmeno~e tìsnìji pøisazeno
+     k~písmenu~T, aby se mezery mezi písmeny opticky jevily stejnomìrné.
+\bod Vypravíme se na malou exkurzi do matematiky: $a^2 + b^2 = c^2$.
+     Zjistíme, ¾e èíslo -1 je zde napsáno ¹patnì (prokletý spojovník),
+     zatímco správnì má být $-1$.
+\bod Proto¾e \% uvozuje komentáø a \$ pøepíná do matematické sazby,
+     musíme pøed nì napsat zpìtné lomítko, chceme-li ji dostat do dokumentu.
+\itemskip
+
+\nadpis Závìr
+
+To by pro zaèátek staèilo. Pøíkazem {\tt\char`\\bye} ukonèíme na¹e pokusy.
+\enduk %=============================================================
+
+V¹imnìme si, ¾e v~pøíkladu je dùslednì oddìlena forma od obsahu dokumentu.
+V~èásti oznaèené \uv{vlastní text} jsou pou¾ity znaèky "\nadpis",
+"\bod" a "\itemskip", které ohranièují logické èásti dokumentu (vymezení
+nadpisu, uvedení dal¹í polo¾ky ve výètu prvkù, obklopení skupiny výètu prvkù)
+a nepopisují ¾ádné konkrétní formátovací informace (volba fontu, velikost
+fontu, velikost mezer nad a pod nadpisem, tvar puntíku ve výètu prvkù
+apod.).
+
+Znaèky vymezující strukturu dokumentu jsou definovány v~èásti \uv{oblast
+definic}. Zde je øeèeno, jaký bude mít nadpis font, jak bude
+v~textu umístìn a jak bude vypadat formátování výètu prvkù. Podrobnìj¹í
+rozbor tìchto definic uvedeme za chvíli.
+
+Toto oddìlení formy od obsahu se v~mnoha pøípadech zaèáteèníkùm nedaøí.
+Pøímo v~textu jejich dokumentù se vyskytují znaèky jako "\vskip12mm"
+(vertikální mezera 12\,mm), "\vfill\break" (vynucené ukonèení strany) a mnoho
+dal¹ích ne¹varù. My se pokusíme hned z~poèátku se takovým vìcem pokud mo¾no
+vyhnout. V~sekci \uv{zmìna vzhledu dokumentu} uvidíme, ¾e se nám to bohatì
+vyplatí.
+
+
+\sekce Vysvìtlení pou¾itých znaèek v~pøíkladu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Jednotlivé znaèky, které øídí formátování a vymezují strukturu dokumentu
+jsou vesmìs ve tvaru "\slovo". Tyto znaèky se nazývají
+{\it øídicí sekvence\/} a nìkdy té¾ budeme hovoøit o~{\it pøíkazech},
+proto¾e jimi pøikazujeme, aby \TeX{} nìco vykonal.
+
+Øídicí sekvence v~pøíkladu rozdìlíme na dvì skupiny. 1.~ty, co jsou
+definovány v~samotném \TeX{}u nebo v~pou¾itém formátu (v~na¹em pøípadì
+ve formátu {\tt csplain}). 2.~øídicí sekvence, které jsme definovali sami.
+
+Zaèneme rozborem druhé skupiny øídicích sekvencí:
+
+\begitems
+\bod "\nadpis" je sekvence, která oèekává za sebou text nadpisu a pak
+     prázdný øádek.
+\bod "\titulfont" je pøepínaè pro vìt¹í velikost fontu pro nadpis.
+     Je definován na øádku zaèínajícím pøíkazem "\font" a pou¾it v~definici
+     øídicí sekvence "\nadpis".
+\bod "\bod" je sekvence, která uvozuje polo¾ku ve výètu prvkù. Promìní se
+     v~nìjakou grafickou realizaci zará¾ky (zde puntík) a zpùsobí odsazení
+     textu polo¾ky.
+\bod "\itemskip" vytvoøí vertikální mezeru, která oddìlí výèet prvkù
+     od ostatního textu. Pou¾ije se na zaèátku i na konci výètu.
+\enditems
+
+Ostatní øídicí sekvence jsou definovány v~pou¾itém formátu nebo pøímo
+zabudovány v~\TeX{}u. U¾ivatel se s~nimi bude postupnì seznamovat
+studiem vhodné literatury. Zde uvedeme velmi struènì jen ty nejdùle¾itìj¹í
+øídicí sekvence, abychom usnadnili pochopení pøíkladu.
+
+\begitems
+\bod "\chyph". Tato øídicí sekvence inicializuje èeské vzory dìlení slov a
+     je definována pouze ve formátu csplain. V~pøípadì èeských textù
+     bychom ji nikdy nemìli vynechat! Analogicky "\shyph" inicializuje
+     slovenské vzory dìlení slov. Bez tìchto pøíkazù \TeX{} pracuje
+     implicitnì s~anglickými vzory dìlení.
+\bod "\font" zavede z~instalace \TeX{}u do dokumentu dal¹í font.
+     Struktura parametrù pøíkazu bude vysvìtlena v~sekci o~fontech.
+\bod "\def" definuje novou øídicí sekvenci (zde "\bod" a "\nadpis").
+     Za øídicí sekvencí mù¾e následovat formální popis parametrù nové
+     sekvence a pak následuje ve slo¾ených závorkách tìlo definice.
+     V~ní je popsáno, co se pøi pou¾ití nové øídicí sekvence má vykonat.
+\bod "\item" zahájí výètovou polo¾ku (odsazením textu) a pøevezme
+     za sebou ve slo¾ených závorkách parametr, který popisuje vzhled puntíku.
+\bod "\bullet" vytvoøí v~matematickém módu èerný puntík: $\bullet$.
+\bod "\bigskip" vytvoøí vertikální mezeru velikosti jednoho øádku a
+     "\medskip" velikosti poloviny øádku. "\indent" odsadí dal¹í text
+     o~velikost odstavcové zará¾ky.
+\bod Øídicí sekvence "\par" je explicitní ukonèení odstavce. \TeX{} ji
+     internì vytváøí v~místì ka¾dého prázdného øádku. Ve formálním popisu
+     parametru za "\def\nadpis" má ale "\par" pouze vymezovací
+     úèinek. Formální popis parametru v~na¹em pøíkladì èteme takto:
+     novì definovaná øídicí sekvence "\nadpis" pøevezme za sebou text
+     a¾ po první výskyt "\par" (tedy a¾ po první výskyt prázdného øádku)
+     a ulo¾í jej do \uv{promìnné} s~oznaèením "#1".
+\bod "\let" èteme èesky nech». Tento pøíkaz ztoto¾ní význam nové
+     øídicí sekvence (v~na¹em pøíkladì "\itemskip") s~pøedlohou (v~tomto
+     pøíkladì "\medskip").
+\enditems
+
+V~na¹í ukázce jsme pou¾ili té¾ nìkteré speciální \TeX{}ovské znaky.
+Vysvìtlíme si nyní struènì jejich význam.
+
+\begitems
+\bod Znak "~" znamená nedìlitelnou mezeru. Je zde pou¾ita za neslabiènými
+     pøedlo¾kami a pøed jednopísmennými ukázkami, aby se v~tìchto místech
+     nerozdìlil øádek. Pøi poøizování textu nemusíme psát za neslabiènými 
+     pøedlo¾kami vlnku \uv{ruènì}. Vlnky tam lze doplnit pozdìji jednoduchými
+     programy, které bývají souèástí \TeX{}ovských instalací.
+\bod Znaky "{ }" mají v~\TeX{}u tøi mírnì odli¹né významy.
+\itemitem{1.} Obklopují tìla definic za pøíkazem "\def", jak ji¾ bylo øeèeno.
+\itemitem{2.} Obklopují parametry nìkterých øídicích sekvencí (viz
+     napøíklad text {\tt uvozovky}, který je parametrem øídicí sekvence
+     "\uv", nebo text "$\bullet$", který je parametrem øídicí sekvence
+     "\item".
+\itemitem{3.} Samotné znaky "{ }" vymezují jisté skupiny, ve kterých je
+     ve¹keré pøiøazení a nastavení lokální. Skupiny se èasto pou¾ívají pro
+     vymezení platnosti pøepínaèù písma (viz "\bf", "\it", "\tt" a
+     "\titulfont").
+\item{} Závorky "{ }" musí vzájemnì párovat, co¾ je dùle¾ité zejména ve
+     vymezovacích významech~(ad~1 a~2). Proto tøeba tìlo definice
+     "\bod" obsahuje text "\item{$\bullet$}" a je ukonèeno a¾ druhou
+     závorkou~"}".
+\bod Znak "%" uvozuje komentáø a¾ do konce øádku.
+\bod Znak "$" pøepíná do {\it matematického módu} a zpìt. V matematickém
+     módu \TeX{} sestavuje sazbu ponìkud odli¹ným zpùsobem (v¹imneme
+     si, ¾e napøíklad promìnné $a$, $b$ jsou v matematickém módu
+     automaticky sázeny kurzívou).
+\bod Znak "^" v~matematickém módu uvozuje horní index (exponent).
+\enditems
+
+\sekce Zmìna vzhledu dokumentu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Pøedvedeme, v~èem spoèívá výhoda oddìlení obsahu
+dokumentu od formy. Pøedpokládejme, ¾e nám nìjaký zku¹enìj¹í kolega
+pomù¾e s~pøípravou definic pro ná¹ dokument. Pøedpokládejme dále, ¾e onen
+kolega má na vìc ponìkud jiný typografický názor a zaène vìci pøedìlávat.
+V~editoru modifikuje definice a ve vedlej¹ím okénku v~prohlí¾eèi se prùbì¾nì
+mìní ná¹ první dokument skoro k~nepoznání. Pøitom kolega
+{\it vùbec nemusí\/} zasáhnout do vlastního textu dokumentu.
+
+Pøedev¹ím se mu nelíbí rodina fontù Computer Modern, která je
+v~\TeX{}u implicitnì nastavena. Mnoho instalací \TeX{}u obsahuje
+nástroje pro práci s~dal¹ími, zejména PostScriptovými, fonty. Máme-li
+takovou instalaci, mù¾eme napsat na zaèátek dokumentu tøeba 
+"\input cbookman" a máme celý dokument v~rodinì Bookman. Pøíkaz "\input"
+zavádí do dokumentu externí soubor definic, zde soubor s~názvem {\tt
+cbookman.tex}. Tento soubor obsahuje pøíkazy "\font" na zavedení
+skupiny fontù Bookman a nastaví je jako implicitní.
+
+Kolega se dále rozhodl vkládat mezi ka¾dý odstavec drobnou vertikální mezeru
+a místo puntíkù pro výèty chce pou¾ít ètvereèky, které ve vìt¹í velikosti
+zaøadí i do nadpisù. Koneènì velikost fontu pro nadpis se mu zdá pøíli¹
+velká (místo "\magstep2" v~øádku "\font" pou¾ije \uv{men¹í} "\magstep1").
+Výsledek jeho sna¾ení v~\uv{oblasti definic} dopadne tøeba takto:
+
+\begtt %=============================================================
+\chyph             % inicializace èeského dìlení slov v csplainu
+\magnification\magstep1     % celý dokument bude 1,2 krát vìt¹í
+\input cbookman \setsimplemath  % pou¾ité písmo: Bookman i v matematice
+\font\titulfont=\fontname\tenbf\space scaled \magstep1  % vìt¹í font
+\newdimen\indskip \indskip=15pt % výèty budou odsazeny 15pt
+\def\ctverecek#1{\noindent  % ètvereèek promìnné velikosti v místì \indskip
+   \hbox to\indskip{\vrule height#1pt depth0pt width#1pt\hss}}
+\def\bod{\par\hangindent=\indskip \ctverecek{4}}  % definice zkratky \bod
+\def\nadpis#1\par{          % definice nadpisu:
+   \removelastskip\bigskip  %   odma¾e poslední vert.mezeru a pøidá vlastní
+   \ctverecek{7}{\titulfont #1} % nadpis odsazený ètvereèkem
+   \par\nobreak}            %   konec øádku, zakázaný zlom, ¾ádná mezera
+\parskip=\medskipamount     % mezi odstavci bude mezera jako \medskip
+\parindent=0pt              % odstavce nebudou odsazeny zará¾kou
+\let\itemskip=\relax        % ¾ádné dal¹í mezery mezi výèty
+\endtt %=============================================================
+
+Ná¹ dokument vypadá pak následovnì:
+
+\beguk %=============================================================
+\input cbookman             % pou¾ité písmo: Bookman
+\font\mmi=\fontname\tenit 
+\font\sevenrm=\fontname\tenrm\space at 7pt
+\textfont0=\tenrm \scriptfont0=\sevenrm
+\textfont1=\mmi 
+
+\font\titulfont=\fontname\tenbf\space scaled \magstep1  % vìt¹í font
+\newdimen\indskip \indskip=15pt  % výèty budou odsazeny 15pt
+\def\ctverecek#1{\noindent  % ètvereèek o promìnné velikosti v místì \indskip
+   \hbox to\indskip{\vrule height#1pt depth0pt width#1pt\hss}}
+\def\bod{\par\hangindent=\indskip \ctverecek{4}}  % definice zkratky \bod
+\def\nadpis#1\par{          % definice nadpisu:
+   \removelastskip\bigskip  %   odma¾e poslední vert. mezeru a pøidá vlastní
+   \ctverecek{7}{\titulfont #1} % nadpis odsazený ètvereèkem
+   \par\nobreak}            %   konec øádku, zakázaný zlom, ¾ádná mezera
+\parskip=\medskipamount     % mezi odstavci bude mezera jako \medskip
+\parindent=0pt              % odstavce nebudou odsazeny zará¾kou
+\let\itemskip=\relax        % ¾ádné dal¹í mezery mezi výèty
+
+\nadpis Mùj první dokument
+
+Zkou¹ím napsat první text v~\TeX u. Tento odstavec musí být
+tak dlouhý, aby bylo vidìt, ¾e se rozlomil aspoò na dva øádky.
+
+Jednotlivé odstavce oddìlujeme od sebe prázdným øádkem. Prázdnými øádky
+vùbec ne¹etøíme, proto¾e zvy¹ují pøehlednost zdrojového textu.
+Vyzkou¹íme si nyní nìkolik vìcí.
+
+\itemskip
+\bod Budeme pou¾ívat èeské \uv{uvozovky}, které se li¹í od ``anglických''.
+     Uvìdomíme si, ¾e pou¾ití \"tìchto znakù\" je úplnì ¹patnì!
+\bod Rozli¹ujme mezi spojovníkem (je-li), pomlèkou ve vìtì~-- 
+     a dlouhou pomlèkou---ta se pou¾ívá v~anglických dokumentech.
+\bod Pøedpokládáme, ¾e ka¾dý doká¾e rozeznat 1 (jednièku) od l
+     (písmene el) a 0 (nulu) od O~(písmene~O).
+\bod Zkusíme pøepnout do {\bf polotuèného písma}, nebo do
+     {\it kurzívy}. Také vyzkou¹íme {\tt strojopis}.
+\bod V¹imneme si, ¾e ve slovech grafika, firma, apod. se písmena
+     f a i automaticky promìnila v~jediný znak fi (srovnáme to
+     s~nesprávným f\/i).
+\bod Mezery mezi písmeny jsou automaticky vyrovnávány podle tvaru písmen.
+     Ve slovì \uv{Tento} je napøíklad písmeno~e tìsnìji pøisazeno
+     k~písmenu~T, aby se mezery mezi písmeny opticky jevily stejnomìrné.
+\bod Vypravíme se na malou exkurzi do matematiky: $a^2 + b^2 = c^2$.
+     Zjistíme, ¾e èíslo -1 je zde napsáno ¹patnì (prokletý spojovník),
+     zatímco správnì má být $-1$.
+\bod Proto¾e \% uvozuje komentáø a \$ pøepíná do matematické sazby,
+     musíme pøed nì napsat zpìtné lomítko, chceme-li ji dostat do dokumentu.
+\itemskip
+
+\nadpis Závìr
+
+To by pro zaèátek staèilo. Pøíkazem {\tt\char`\\bye} ukonèíme na¹e pokusy.
+\enduk %==============================================================
+
+Kdyby ná¹ kolega chtìl, implementoval by tøeba automatické èíslování
+polo¾ek, automatické èíslování nadpisù, generování obsahu a dal¹í vìci.
+Vysvìtlení nových øídicích sekvencí, které kolega pou¾il, bohu¾el
+pøekraèuje rámec tohoto úvodního dokumentu.
+
+Definice lze umístit do jiného souboru ne¾ vlastní text dokumentu.
+Na zaèátku dokumentu pak soubor definic naèteme pøíkazem "\input".
+Nebo naopak, hlavní bude soubor definic, ze kterého se pøíkazem "\input"
+postupnì naèítají jednotlivé kapitoly rozsáhlej¹ího díla.
+
+
+\sekce Stojíme na køi¾ovatce
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+V~pøedchozím pøíkladì jsme ilustrovali dùle¾itou vlastnost \TeX{}u~--
+schopnost mìnit vzhled dokumentu jen výmìnou nìkterých definic. Kromì toho
+ale tyto definice také musejí navazovat na úmluvu, jakými znaèkami bude
+autor vymezovat strukturu svého dokumentu. Kdyby autor pou¾il místo znaèky
+"\nadpis" znaèku "\section", \TeX{} by nám pøi zpracování dokumentu vynadal:
+
+\begtt %--------------------------------------------------------------
+! Undefined control sequence.
+l.14 \section
+              Mùj první dokument
+?
+\endtt %--------------------------------------------------------------
+
+\pp tedy: nedefinovaná øídicí sekvence. Odpovíme-li na otazník pouhým
+stiskem klávesy Enter, \TeX{} tuto sekvenci zcela ignoruje a pracuje dál.
+®ádného zvýraznìní nadpisu bychom se nedoèkali. Je tedy vidìt,
+¾e je hodnì dùle¾ité ujasnit si, jaké znaèkování struktury dokumentu
+pou¾ijeme.
+
+V~této souvislosti si musíme odpovìdìt jednu dùle¾itou otázku. Chceme se
+nauèit jazyk definic \TeX{}u na takové úrovni, jako ná¹ imaginární kolega
+z~pøedchozího pøíkladu? Budeme radìji sami kontrolovat ka¾dý detail vzhledu
+dokumentu prostøednictvím vlastních definic, ne¾ abychom pøebírali hotová
+øe¹ení odjinud? Pokud na tyto otázky odpovíme \uv{ano}, pak je pro nás
+výhodné pou¾ít formát plain (pro èeské a slovenské dokumenty jen mírnì
+modifikovaný formát csplain), který definuje jen minimum základních
+øídicích sekvencí. O~dal¹í øídicí sekvence stejnì jako o~modifikaci
+vzhledu dokumentu podle na¹ich pøedstav se musíme postarat sami.
+V~takovém pøípadì si mù¾eme sami rozhodnout, jaké znaèky pro vymezení
+struktury dokumentu pou¾ijeme, proto¾e si pro nì nakonec udìláme vlastní
+definice.
+
+Na druhé stranì, pokud rádi pøebíráme hotová øe¹ení, pokud nechceme
+zbyteènì pronikat do problematiky jazyka definic \TeX{}u, pokud se
+spokojíme s~u¾ pøipravenými ¹ablonami vzhledu dokumentu (tzv. styly),
+pokud jsme ochotni se místo tøí set základních pøíkazù \TeX{}u uèit
+zhruba tisíc u¾ivatelských znaèek pro \LaTeX, bude pro nás
+výhodné pou¾ít radìji formát \LaTeX{}.
+
+\LaTeX{} doporuèuje urèité znaèkování struktury dokumentu. Napøíklad se
+pøedpokládá èlenìní na kapitoly (znaèka "\chapter") a na sekce (znaèka
+"\section"). Ka¾dý dokument by mìl zaèít záhlavím uvozeným sekvencí
+"\documentclass" (u~staré verze \LaTeX{}u se mù¾eme setkat je¹tì se
+sekvencí "\documentstyle"). Parametrem této sekvence by mìl být název
+základního stylového souboru (souboru definic upravujících vzhled
+dokumentu). Nejèastìji bývá tímto parametrem "book" (formát knihy)
+nebo "article" (formát èlánku). Doplòkové stylové soubory se naèítají pomocí
+sekvence "\usepackage". Vlastní text dokumentu musí být uzavøen mezi
+znaèkami "\begin{document}" a "\end{document}". Èasto se vyskytují dal¹í
+znaèky "\begin" a "\end" vymezující v~\LaTeX{}u jistá prostøedí (napøíklad
+prostøedí pro výètové polo¾ky).
+
+Vra»me se k~na¹emu pøíkladu a pøepi¹me jej do znaèkování podle \LaTeX{}u.
+
+\begtt %=============================================================
+\documentclass{article}  % základní styl bude "odborný èlánek"
+\usepackage{czech}       % doplòkový soubor definic pro èeský jazyk
+\begin{document}         % povinné
+
+\section{Mùj první dokument}
+
+Zkou¹ím napsat první text v~\TeX u. Tento odstavec musí být
+tak dlouhý, aby bylo vidìt, ¾e se rozlomil aspoò na dva øádky.
+
+Jednotlivé odstavce oddìlujeme od sebe prázdným øádkem. Prázdnými øádky
+vùbec ne¹etøíme, proto¾e zvy¹ují pøehlednost zdrojového textu.
+Vyzkou¹íme si nyní nìkolik vìcí.
+
+\begin{itemize}
+\item Budeme pou¾ívat èeské \uv{uvozovky}, které se li¹í od ``anglických''.
+      Uvìdomíme si, ¾e pou¾ití "tìchto znakù" je úplnì ¹patnì!
+\item Rozli¹ujme mezi spojovníkem (je-li), pomlèkou ve vìtì~-- 
+      a dlouhou pomlèkou---ta se pou¾ívá v~anglických dokumentech.
+\item Pøedpokládáme, ¾e ka¾dý doká¾e rozeznat 1 (jednièku) od l
+      (písmene el) a 0 (nulu) od O~(písmene~O).
+\item Zkusíme pøepnout do {\bf polotuèného písma}, nebo do
+      {\it kurzívy}. Také vyzkou¹íme {\tt strojopis}.
+\item V¹imneme si, ¾e ve slovech grafika, firma, apod. se písmena
+      f a i automaticky promìnila v~jediný znak fi (srovnáme to
+      s~nesprávným f\/i).
+\item Mezery mezi písmeny jsou automaticky vyrovnávány podle tvaru písmen.
+      Ve slovì \uv{Tento} je napøíklad písmeno~e tìsnìji pøisazeno
+      k~písmenu~T, aby se mezery mezi písmeny opticky jevily stejnomìrné.
+\item Vypravíme se na malou exkurzi do matematiky: $a^2 + b^2 = c^2$.
+      Zjistíme, ¾e èíslo -1 je zde napsáno ¹patnì (prokletý spojovník),
+      zatímco správnì má být $-1$.
+\item Proto¾e \% uvozuje komentáø a \$ pøepíná do matematické sazby,
+      musíme pøed nì napsat zpìtné lomítko, chceme-li ji dostat do dokumentu.
+\end{itemize}
+
+\section{Závìr}
+
+To by pro zaèátek staèilo. Pøíkazem \verb|\bye| ukonèíme na¹e pokusy.
+\end{document}
+\endtt %--------------------------------------------------------------
+
+Poznamenejme, ¾e zavedení doplòkového stylu {\tt czech} zpùsobí aktivaci
+èeských vzorù dìlení slov a písma s~èeskými znaky. Bez pou¾ití tohoto stylu
+pracuje \LaTeX{} implicitnì s~anglickými vzory dìlení slov a s~písmy, která
+neobsahují háèkovaná a èárkovaná písmena.
+
+Upozoròujeme, ¾e v~souèasné dobì je \LaTeX{}ù nìkolik druhù. U¾
+zmínìný \uv{starý \LaTeX} (tzv.~verze 2.09), ve kterém se
+struktura záhlaví dokumentu mírnì li¹ila. Dále je pro potøeby
+èeských dokumentù nutné rozli¹ovat mezi tzv.~\uv{babelizovaným
+\LaTeX{}em} a \CS\LaTeX{}em. Babelizovaný \LaTeX{} implementuje 
+èeský a slovenský jazyk pomocí balíku maker \uv{Babel}, který k~nám
+byl importován ze zahranièí. Babelizovaný \LaTeX{} implicitnì
+neobsahuje èeské ani slovenské vzory dìlení slov a pøi instalaci je
+potøeba tyto vzory dìlení do nìj zavést. Na druhé stranì \CS\LaTeX{} je
+modifikace \LaTeX{}u pro potøeby èeských a slovenských
+dokumentù a vzory dìlení èe¹tiny i sloven¹tiny jsou v~nìm implicitnì
+obsa¾eny. Vý¹e uvedená ukázka je pou¾itelná pro \CS\LaTeX. V~pøípadì
+dobøe instalovaného babelizovaného \LaTeX{}u by záhlaví dokumentu
+mohlo vypadat asi takto:
+
+\begtt
+\documentclass{article}       % základní styl bude "odborný èlánek"
+\usepackage[cp1250]{inputenc} % je nutno specifikovat kódování dokumentu
+\usepackage[T1]{fontenc}      % po¾adujeme LaTeXovské fonty s akcenty
+\usepackage[czech]{babel}     % voláme styl czech z Babelu
+\begin{document}
+\endtt
+
+Výsledek po zpracování na¹eho dokumentu \LaTeX{}em v~tomto manuálu
+pro struènost neuvádíme. Kdo chce, mù¾e si sám \LaTeX{}
+vyzkou¹et. Nelíbí se nám, ¾e za èísly v~nadpisech nejsou teèky?
+Zavedeme do dokumentu prostøednictvím "\usepackage" dal¹í doplòkový
+styl, který toto výchozí chování základního stylu {\tt article}
+upraví. Nelíbí se nám, ¾e jsou mezi jednotlivými polo¾kami ve výètu
+velké mezery a polo¾ky jsou a¾ pøíli¹ odsazeny? Pou¾ijeme v~dokumentu
+dal¹í doplòkový styl. Nelíbí se nám, ¾e je pou¾ito písmo Computer
+Modern? Napi¹me tøeba "\usepackage{times}".
+
+Otázka ale je, kdo pro nás tyto doplòkové styly (neboli doplòující sady
+definic pro \TeX) bude pøipravovat. Velké mno¾ství stylù na v¹echno mo¾né
+lze nalézt ve veøejných archivech \TeX{}ovského softwaru. \LaTeX{} nám tedy
+pøi jednoduchých ¹ablonovitých po¾adavcích na vzhled dokumentu umo¾òuje
+zùstat v~roli autora, který poøizuje text. Nemusíme umìt pomìrnì slo¾itý
+jazyk definic \TeX{}u.
+
+Pokud nám ¾ádná z~mo¾ností nabízených stylù nevyhovuje, musíme se pokusit
+tyto styly modifikovat podle své potøeby. To ale mù¾e být u¾ hodnì
+komplikované. Zále¾í znovu na nás, zda rádi modifikujeme zdrojové kódy
+cizích programù nebo si radìji napí¹eme programy vlastní. Pokud pí¹eme
+radìji programy vlastní, asi nám bude spí¹e vyhovovat jednodu¹¹í výchozí
+formát plain (csplain).
+
+Jestli¾e jsme se rozhodli pracovat radìji v~plainu, pak lze k~dal¹ímu
+studiu doporuèit následující literaturu:
+
+\begitems
+\bib Michael Doob. {\it Jemný úvod do \TeX{}u}. Tøetí vydání èeského
+     pøekladu, \CS{}TUG 1993. Kní¾ka je rovnì¾ volnì k~dispozici ve
+     zdrojových textech jako {\tt jemny.tex} v~archivu 
+     {\tt ftp://math.feld.cvut.cz/pub/cstex/doc/jemny.tar.gz}.
+     Anglický originál je volnì ¹íøen jako {\tt gentle.tex}.
+\bib Petr Ol¹ák. {\it \TeX{}book naruby}. Konvoj 1997. Celý text knihy je
+     volnì k~dispozici ve formátu {\tt pdf}
+     na \url{http://math.feld.cvut.cz/olsak/tbn.html}.
+\enditems
+
+Vyhovuje-li nám více \LaTeX, pak je mo¾né sáhnout po tìchto manuálech:
+
+\begitems
+\bib Jiøí Rybièka. {\it \LaTeX{} pro zaèáteèníky}. Druhé, upravené vydání,
+     Konvoj 1999.
+\bib Tobias Oetiker. {\it Ne pøíli¹ struèný úvod do systému
+     \LaTeX{} \twoe}. Text je ¹íøen volnì vèetnì zdrojových textù a je
+     pøelo¾en do mnoha jazykù. Do èe¹tiny pøelo¾il Michal Koèer.
+     {\tt ftp://math.feld.cvut.cz/pub/cstex/doc/lshort2e.tar.gz}
+\bib Leslie Lamport. {\it\LaTeX---A Document Preparation System---User's
+     Guide and Reference Manual}. Ad\-di\-son-Wes\-ley, Reading, MA, 
+     USA, 2nd ed. 1994. 
+\bib Michel Goossens, Frank Mittelbach, Alexander Samarin.
+     {\it The \LaTeX{} Companion}. Druhé vydání, Addisson Wesley 1994.
+\bib Michel Goossens, Sebastian Rahtz, Frank Mittelbach.
+     {\it The \LaTeX{} Graphics Companion: Illustrating Documents with
+     \TeX{} and PostScript}. Addisson Wesley 1997.
+\enditems
+
+Pokud budeme pou¾ívat \LaTeX{} a budeme chtít rozumìt pou¾itým stylovým
+souborùm, mù¾eme pou¾ít knihu [2]. Popisuje toti¾ vnitøní algoritmy
+\TeX{}u, co¾ jsou informace, které vyu¾ijeme jak v~plainu tak v~\LaTeX{}u.
+
+Pro úplnost je¹tì citujme dva tituly. První z~nich je základní biblí
+k~\TeX{}u od samotného autora \TeX{}u (èeská alternativa [2] ji pomìrnì
+dobøe nahrazuje) a druhý titul obsahuje informace o~\TeX{}ových
+souvislostech, tj. popis spolupracujících programù v~bì¾ných distribucích,
+implementace fontù, vkládání obrázkù apod.
+
+\begitems
+\bib Donald E. Knuth. {\it The \TeX{}book}. Mnohonásobné vydání. Addison
+     Wesley, 1986--{\tt*}. Díl~A~z~pìtidílné monografie k~\TeX{}u a \mf{}u
+     \uv{Computers \& Typesetting}.
+\bib Petr Ol¹ák. {\it Typografický systém \TeX}. \CS{}TUG 1995.
+\enditems
+
+Dal¹í text v~tomto manuálu se vìnuje základùm \TeX{}u, které bývají
+shodné pøi pou¾ití vìt¹iny formátù. Ukázky budeme pro jednoduchost
+nadále zkou¹et ve formátu csplain, proto¾e jinak bychom museli kolem
+vlastního textu ukázky pøidat zmínìné \uv{obkladové øádky} závislé na
+pou¾itém \uv{druhu} \LaTeX{}u.
+
+
+\sekce Technické pozadí formátù
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+V~pøedchozím textu jsme na mnoha místech hovoøili o~formátech \TeX{}u
+(plain, \LaTeX{}, csplain), ale zatím jsme poøádnì neøekli, co to je.
+
+Formát je binární soubor (v~\TeX{}ové implementaci má pøíponu {\tt.fmt}),
+který zahrnuje:
+
+\begitems
+\bod výchozí sadu definic, která roz¹iøuje vestavìné øídicí sekvence
+     o~dal¹í, pro u¾ivatele vìt¹inou snadnìji pou¾itelné,
+\bod výchozí nastavení vnitøních parametrù \TeX{}u (napøíklad ¹íøka
+     odstavce nebo velikost odstavcové zará¾ky),
+\bod výchozí fonty, které budou v~dokumentu pou¾ity, pokud u¾ivatel
+     nespecifikuje jiné,
+\bod vzory dìlení vybraných jazykù, podle kterých \TeX{} dìlí slova pøi
+     zalamování odstavce.
+\enditems
+
+A¾ na vzory dìlení lze v¹e ostatní ve vlastním dokumentu pomocí
+\TeX{}ových definic dodateènì mìnit. Pro naètení vzorù dìlení
+jednotlivých jazykù má \TeX{} speciální øídicí sekvenci "\patterns",
+která funguje jen pøi vytváøení formátu.  Existuje je¹tì jedna øídicí
+sekvence, která má smysl pouze pøi generování formátu: "\dump". Tento
+pøíkaz zpùsobí ulo¾ení \uv{nabytých vìdomostí}
+\TeX{}u z~jeho vnitøní pamìti do binárního formátového souboru {\tt *.fmt}
+a ukonèí èinnost \TeX{}u. Tento soubor se mù¾e pozdìji pøi startu
+\TeX{}u naèíst, a \TeX{} tím zaèíná se svými znalostmi z~místa, kde
+naposledy naèítání definic skonèil v~dobì pøíkazu "\dump".
+
+Pøíkazy "\patterns" a "\dump" umí speciální varianta \TeX{}u zvaná
+ini\TeX{}. V~nových implementacích \TeX{}u není tato varianta
+reprezentována samostatným programem, ale vyvolá se prostøednictvím
+pøepínaèe {\tt -i} nebo {\tt -ini}. Napøíklad k~vygenerování formátu
+plain lze postupovat takto:
+
+\begtt
+> tex -ini plain
+* \dump
+\endtt
+
+\TeX{} zde ve variantì ini\TeX{} naèetl soubor definic plain.tex a ulo¾il
+nabyté vìdomosti do souboru {\tt plain.fmt}. Nyní lze formátový soubor
+pou¾ít:
+
+\begtt
+> tex &plain document
+\endtt
+
+V~bì¾ných \TeX{}ových distribucích je implementována nìjakým zpùsobem
+zkratka, která u¾ivateli umo¾ní místo {\tt tex \&plain} psát pouze
+{\tt tex} a tøeba místo {\tt tex \&latex} psát pouze {\tt latex}.
+
+
+\sekce Rozmìrové jednotky pou¾ívané v~\TeX u a typografii
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Z~historických dùvodù v~typografii stále pøe¾ívají mìrné jednoty
+rozdílné od soustavy SI. Základní mìrnou jednotkou, která se pou¾ívá
+v~anglosaských zemích, je jednotka point ({\tt pt}), která má rozmìr
+asi tøetinu milimetru. Dvanáctinásobek je pica (èteme pajka, {\tt
+pc}).  Jednotkou, která se pou¾ívala v~Evropì, je \uv{Didotùv bod}
+({\tt dd}), který je vìt¹í ne¾ point, ale zhruba taky mìøí tøetinu
+milimetru.  Dvanáctinásobek tohoto bodu je cicero ({\tt cc}). 
+V~poèítaèových programech pro sazbu se pou¾ívá poèítaèový bod
+({\tt bp}), který je jen velmi nepatrnì vìt¹í. 72 poèítaèových bodù se
+pøesnì vejde do jednoho palce ({\tt in}, inch pou¾ívaný pøedev¹ím
+v~Americe).
+
+V¹echny tyto jednotky je mo¾né pou¾ít v~\TeX{}u jako dvoupísmenové zkratky,
+jak ukazuje následující tabulka. Navíc lze pou¾ít jednotky odvozené
+z~metru.
+
+\begtable
+  "pt"  &  monotypový bod     & $1\,{\tt pt} = 1/72.27\,{\tt in} \doteq %
+                                             0.35146\,{\tt mm}$       
+  "pc"  &  pica               & $1\,{\tt pc} = 12\,{\tt pt}$            
+  "bp"  &  poèítaèový bod     & $1\,{\tt bp} = 1/72\,{\tt in}$          
+  "dd"  &  Didotùv bod        & $1\,{\tt dd} = 1238/1157\,{\tt pt}$     
+  "cc"  &  cicero             & $1\,{\tt cc} = 12\,{\tt dd}$            
+  "in"  &  palec (inch, coul) & $1\,{\tt in} = 25.4\,{\tt mm}$          
+  "cm"  &  centimetr          & $1\,{\tt cm} = 10\,{\tt mm}$            
+  "mm"  &  milimetr           & $1\,{\tt mm} \doteq 2.84528\,{\tt pt}$  
+  "sp"  &  jednotka \TeX{}u   & $1\,{\tt sp} = 1/65536\,{\tt pt}$       
+  "em"  &  velikost písma     & závislé na aktuálním písmu               
+  "ex"  &  vý¹ka malého x     & závislé na aktuálním písmu               
+\endtable
+
+Velikost písma se mìøí zhruba jako celková vý¹ka øádku, který obsahuje
+v¹echny znaky písma (mimo akcentované verzálky, tj. neuva¾ujeme v~takovém
+øádku háèky a èárky nad velkými písmeny). Zhruba to také odpovídá
+¹íøce velkého písmene M (odtud jednotka {\tt em}). Bohu¾el, na jednotlivých
+písmech není nic spoleèného, co by se dalo v¾dy jednodu¹e zmìøit a pøesnì
+øíci, ¾e právì to je ona velikost písma.
+
+
+\sekce Práce s~fonty
+%%%%%%%%%%%%%%%%%%%%
+
+Implicitní fonty, které jsou v~ka¾dé implementaci \TeX{}u k~dispozici
+a které jsou nezávislé na pou¾itém operaèním systému, jsou fonty
+rodiny Computer Modern. Bì¾ná antikva v~této rodinì má název {\tt
+cmr10}. To je zkratka pro \uv{Computer Modern Roman ve velikosti 10pt}. 
+Fonty Computer Modern bývají u¾ naèteny ve formátu a pro
+jednotlivé varianty (antikva, kurzíva, polotuèné, strojopis) bývají
+pøipraveny pøepínaèe "\rm", "\it", "\bf", "\tt".
+
+Fonty Computer Modern neobsahují akcentovaná písmena (s~háèky a èárkami).
+Proto jsou ve formátu csplain místo nich implicitnì naèteny tak zvané
+\CS{}fonty, které roz¹iøují Computer Modern fonty o~písmena s~akcenty
+z~èeské a slovenské abecedy. Bì¾ná antikva v~této rodinì má název
+{\tt csr10}. \LaTeX{} také implicitnì pracuje s~rodinou Computer Modern a
+\CS\LaTeX{} navíc po zavedení stylu {\tt czech.sty}  (pøíkazem
+"\usepackage{czech}") pøepíná na implicitní pou¾ití \CS{}fontù. Pak je tedy
+mo¾né psát èeský text.
+
+Kromì toho \LaTeX{} mù¾e pracovat s~jiným roz¹íøením Computer Modern
+fontù, s~tzv. DC nebo EC fonty. Tyto fonty mají specifické kódování
+(v~\LaTeX{}u oznaèované jako T1) a obsahují v¹echny znaky abeced latinkou
+pí¹ících evropských zemí.
+
+Ve v¹ech formátech ale mù¾ete zavést nový pøepínaè pro nové písmo
+pomocí pøíkazu "\font". Ten má následující syntaxi:
+
+\begtt
+\font\pøepínaè=název-fontu nepovinné parametry zvìt¹ení
+\endtt
+
+Napøíklad
+
+\begtt
+\font\titulfont=csr10 scaled \magstep2
+\endtt
+
+\pp zavede do \TeX{}u font csr10 (tedy bì¾nou poèe¹tìnou antikvu
+odvozenou z~Computer Modern) ve zvìt¹ení $1.44$ krát normální
+velikost, která je 10 bodù. Tento font se pak v~textu aktivuje
+pøepínaèem "\titulfont". Proè zrovna koeficient $1.44$? To je
+koeficient, pro který byla v~\TeX{}u vytvoøena zkratka
+"\magstep2". Následující tabulka shrnuje v¹echny zkratky typu
+"\magstep", které jsou definovány ve v¹ech bì¾nì pou¾ívaných
+formátech.
+
+\begtable
+   sekvence       &   koeficient           & implementováno jako 
+   \tabline
+   "\magstep0"    &   1:1 (¾ádné zvìt¹ení) & 1000               
+   "\magstep1"    &   $1.2$                & 1200               
+   "\magstep2"    &   $1.2^2 = 1.44$       & 1440               
+   "\magstep3"    &   $1.2^3 = 1.728$      & 1728               
+   "\magstep4"    &   $1.2^4 = 2.0736$     & 2074               
+   "\magstep5"    &   $1.2^5 = 2.48832$    & 2488               
+   "\magstephalf" &   $\sqrt{1.2}\doteq1.095445$ & 1095         
+\endtable
+
+Odstupòování jednotlivých velikostí písma pomocí mocnin èísla $1.2$ bývá
+v~typografii dobrým zvykem.
+
+Ve sloupci \uv{implementováno jako} vidíme, ¾e koeficient se za slovem
+{\tt magstep} (stejnì jako na mnoha dal¹ích místech v~\TeX{}u) zadává jako
+celé èíslo odpovídající tisícinásobku uva¾ované hodnoty. Chceme-li tedy
+pou¾ít font dvojnásobnì velký, pou¾ijeme {\tt scaled~2000} a pøi po¾adavku
+na polovièní velikost pí¹eme {\tt scaled~500}.
+
+Kromì koeficientu zvìt¹ení (slovo {\tt scaled}) mù¾eme chtít zvìt¹it
+font bez ohledu na jeho pùvodní velikost do námi po¾adované velikosti.
+K~tomu se pou¾ívá slovo {\tt at}, napøíklad:
+
+\begtt %--------------------------------------------------------------
+\font\prvni=csr10 at 20pt
+\font\druhy=csr10 scaled 2000
+\endtt %--------------------------------------------------------------
+
+Oba øádky této ukázky zavádìjí stejný font ve stejném zvìt¹ení.
+
+Rodina písma Computer Modern (a jeho odvozeniny, napøíklad \CS{}fonty)
+obsahuje rùzné velikosti stejné varianty písma, pøitom tyto
+alternativy nejsou jen stejnomìrným násobením v¹ech rozmìrù. 
+Doporuèuje se, zvlá¹tì v~men¹ích velikostech písma, pou¾ívat
+implicitní velikost písma a dále ji nezmen¹ovat ani nezvìt¹ovat. 
+Implicitní velikost písma je oznaèena èíslem v~názvu
+fontu, tj. napøíklad {\tt csr10} má implicitní velikost 10\,pt a 
+{\tt csr5} má velikost 5\,pt. Srovnáme výsledek tohoto pøíkladu:
+
+\begtt %--------------------------------------------------------------
+\font\zvetseny=csr5 at10pt
+\font\normalni=csr10
+\normalni Tady je pøirozená velikost písma 10 bodù
+\zvetseny a tady je písmo navr¾ené pro pìt bodù zvìt¹eno na 10 bodù.
+\endtt %--------------------------------------------------------------
+
+Na výstupu dostaneme:
+
+\beguk %--------------------------------------------------------------
+\font\zvetseny=csr5 at10truept
+\font\normalni=csr10 at10truept
+\baselineskip=12truept
+\normalni Tady je pøirozená velikost 10 bodù
+\zvetseny a tady je písmo navr¾ené pro pìt bodù zvìt¹eno na 10 bodù.
+\enduk %--------------------------------------------------------------
+
+Pøepnout písmo dokumentu do jiné rodiny fontù znamená postarat se o~zmìnu
+významu v¹ech pøepínaèù jednotlivých variant písma ("\rm", "\bf", "\it" a
+"\tt") a nezapomenout na vhodnou zmìnu fontu té¾ v~nadpisech a v~dal¹ích
+velikostech písma, které jsou v~dokumentu pou¾ity. Jednoduché definice
+alternativních pøepínaèù najdeme pro csplain v~následujících souborech:
+
+\begtable
+  soubor         &  Rodina fontù
+  \tabline
+  "cavantga.tex"   &  Avantgarde Book
+  "cbookman.tex"   &  Bookman
+  "chelvet.tex"    &  Helvetica
+  "cncent.tex"     &  New Century
+  "cpalatin.tex"   &  Palatino
+  "ctimes.tex"     &  Times Roman
+\endtable
+
+Tyto rodiny fontù jsou instalovány v~ka¾dém výstupním PostScriptovém
+zaøízení, tak¾e s~tìmito fonty mù¾eme v~\TeX{}u pracovat, ani¾ bychom je
+museli mít zakoupené. \TeX{} samotný toti¾ pracuje pouze s~metrickými
+informacemi k~fontùm a do výstupu vkládá pouze odkazy na fonty. Metrické
+informace jsou obvykle k~dispozici zdarma. Pokud budeme tisknout na
+PostScriptovém zaøízení, pak jsme s~cenou PostScriptového modulu tyto fonty
+vlastnì koupili a mù¾eme v~nich tisknout \TeX{}ové dokumenty. Pokud budeme
+tisknout na zaøízení bez PostScriptu, pak je vhodné PostScriptový kód
+zpracovat volnì dostupným programem Ghostscript, který má v~sobì zahrnuty
+volnì dostupné alternativy k~uvedeným základním fontùm. Rozdíl mezi
+alternativou a draze koupeným fontem pøitom ani moc nepoznáme.
+
+Chceme-li napøíklad pøepnout do písma Bookman, staèí napsat do dokumentu
+"\input bookman". Takovou vìc jsme u¾ ilustrovali na na¹em pøíkladì
+v~pøedchozím textu.
+
+Podíváme-li se do souborù {\tt cbookman.tex} a dal¹ích, které najdeme
+v~instalaci \TeX{}u nìkde v~adresáøi {\tt csplain}, zjistíme, ¾e zde nejsou
+pøedefinovány pøímo pøepínaèe "\rm", "\bf", "\it" a "\tt", ale ¾e se zde
+místo nich pracuje s~pøepínaèi "\tenrm", "\tenbf", "\tenit" a "\tentt".
+To jsou toti¾ v~plainu (i csplainu) skuteèné pøepínaèe \uv{nejni¾¹í
+úrovnì}. Pro u¾ivatele se pak definují znaèky "\rm", "\bf", "\it" a "\tt"
+s~dal¹ím pøihlédnutím na chování tìchto znaèek v~matematickém módu.
+Napøíklad "\bf" je definováno takto:
+
+\begtt %--------------------------------------------------------------
+\def\bf{\tenbf \fam\bffam}
+\endtt %--------------------------------------------------------------
+
+Je-li tedy pøedefinován pøepínaè "\tenbf", bude se od této chvíle chovat
+jinak i znaèka "\bf". Kód "\fam\bffam" zde nebudeme rozebírat, proto¾e
+pøekraèuje rámec tohoto úvodního textu. Spokojíme se s~tím, ¾e v~textovém
+módu nemá tento kód ¾ádný vliv a v~matematickém módu cosi udìlá.
+
+Pøíkaz "\fontname\pøepínaè\space" se promìní zpìt v~pùvodní název
+fontu ukonèený mezerou. Tato vlastnost byla pou¾ita v~na¹em pøíkladu,
+kde jsme zavádìli vìt¹í font pomocí této konstrukce:
+
+\begtt %---------------------------------------------------------------
+\font\titulfont=\fontname\tenbf\space scaled \magstep2  % vìt¹í font
+\endtt %---------------------------------------------------------------
+
+Výhodou tohoto zápisu je fakt, ¾e nemusíme znát název fontu, staèí si
+zapamatovat základní pøepínaèe "\tenrm", "\tenbf", "\tenit" a "\tentt".
+Názvy fontù se nejenom tì¾ko pamatují, ale také se mohou zmìnit,
+pokud pøed takovou konstrukcí pou¾ijeme "\input cbookman" nebo nìco
+podobného.
+
+V~\LaTeX{}u asi takové obraty nebudeme potøebovat, proto¾e o~zavedení
+potøebných fontù pro rùzné velikosti se \LaTeX{} stará sám. Pro
+pøepínání mezi rodinami fontù pou¾íváme v~\LaTeX{}u pøíkaz
+"\usepackage" a následuje ve slo¾ených závorkách jedno ze slov
+{\tt avantgar}, {\tt bookman}, {\tt helvet}, {\tt newcent}, 
+{\tt palatino}, {\tt times}. Písmeno {\tt c} na zaèátku názvu rodiny 
+fontù (na rozdíl od csplainu) nepí¹eme.
+
+Mo¾ná nás zaène zajímat, jaké fonty máme v~\TeX{}ové instalaci
+pøipraveny k~pou¾ití. Staèí udìlat men¹í prùzkum v~adresáøi {\tt tfm}
+(odvozeno od zkratky \TeX{} font metrics) a podívat se do jednotlivých
+podadresáøù na názvy pøítomných souborù. To jsou souèasnì názvy fontù,
+které jsou pou¾itelné v~pøíkaze "\font". Chceme rychle vìdìt, jak který
+font vypadá? Napi¹me na pøíkazový øádek 
+
+\begtt %-----------------------------------------------------------------
+tex testfont
+\endtt %-----------------------------------------------------------------
+
+\TeX{} se nás vyptá na název fontu, který zadáme bez pøípony
+{\tt.tfm}. Pak nás po¾ádá o~instrukci, co s~naèteným fontem má dìlat.
+Nejlépe je odpovìdìt "\table\end" a podívat se na tabulku znakù
+testovaného fontu tøeba pomocí "xdvi testfont".
+
+
+\sekce Speciální znaky
+%%%%%%%%%%%%%%%%%%%%%%
+
+V~této sekci popí¹eme chování speciálních vstupních znakù, které
+nejsou \TeX{}em vìt¹inou slepì pøepisovány do výstupu, ale \TeX{} na
+nì urèitým zpùsobem zareaguje.
+
+Jedním takovým speciálním znakem je "\" (zpìtné lomítko). Pokud za ním
+následuje písmeno, \TeX{} pøeète øídicí sekvenci typu "\slovo"
+ukonèenou prvním znakem, který není písmeno (separátorem). Je-li 
+tímto separátorem mezera, pak se na výstupu neobjeví. Ostatní
+separátory nejsou na rozdíl od mezery ignorovány.
+Vyzkou¹ejte si:
+
+\begtt %----------------------------------------------------------
+Zkou¹ím \TeX.  % Teèka je separátor sekvence \TeX, který se vytiskne
+Pí¹u v \TeX u  % Separátorem je mezera pøed u, která se netiskne
+\TeX   je formátor.  
+\endtt %----------------------------------------------------------
+
+Z~posledního øádku ukázky dostáváme nesprávný výsledek: \TeX je formátor.
+Projevila se toti¾ dal¹í vlastnost \TeX{}u: jednu mezeru i více mezer
+za sebou pova¾uje za mezeru jedinou a ta v~na¹em pøíkladì funguje jako
+separátor, který mizí. Proto se èasto pou¾ívají \uv{zbyteèné skupiny},
+jejich¾ závorky mají funkci separátoru øídicí sekvence:
+
+\begtt %-----------------------------------------------------------
+Pí¹u v \TeX{}u. \TeX{} je formátor.
+Nebo radìji pí¹u v {\TeX}u a pou¾ívám {\TeX} jako formátor.
+\endtt %-----------------------------------------------------------
+
+Pokud za zpìtným lomítkem následuje nìco jiného, ne¾ písmeno
+(napøíklad "\$"), je øídicí sekvence tvoøena jen tímto znakem.
+Mezery za takovými jednoznakovými sekvencemi zùstávají
+zachovány: 
+
+\begtt %-----------------------------------------------------------
+Pracuji se 100\% nasazením.
+\endtt %-----------------------------------------------------------
+
+Vidíme, ¾e dal¹ím speciálním znakem v~\TeX{}u je mezera. Jak jsme pøed
+chvílí uvedli, více mezer za sebou se chová jako mezera jediná.
+
+V¹echny mezery na zaèátku øádku jsou ignorovány a¾ po první znak, který
+není mezera. Toho mù¾eme vyu¾ít pro zlep¹ení pøehlednosti na¹ich
+vstupních textù (viz na¹e ukázka s~výètem prvkù).
+
+Konec øádku je v~\TeX{}u interpretován jako mezera, která se vytiskne,
+pokud není separátorem øídicí sekvence. Pokud si mezeru z~konce
+øádku nepøejeme, mù¾eme ji \uv{zamaskovat} komentáøovým znakem:
+
+\begtt %-----------------------------------------------------------
+Toto            je
+      zvrácený
+pøí%
+klad v~\TeX
+u.
+\endtt %-----------------------------------------------------------
+
+Prázdný øádek vytvoøí interní pøíkaz "\par", který ukonèuje
+odstavec. Není-li co ukonèovat, "\par" nedìlá nic. Proto více
+prázdných øádkù pod sebou se chovají stejnì jako jeden prázdný
+øádek. I~toho lze vyu¾ít pro zvý¹ení pøehlednosti zdrojových textù.
+
+V~následující tabulce je pøehled v¹ech znakù, které bývají 
+nastaveny jako speciální:
+
+\begtable
+  "\"          & uvozuje øídicí sekvenci
+  mezera       & speciální vlastnosti popsány vý¹e
+  konec øádku  & speciální vlastnosti popsány vý¹e
+  "{"          & zahájení skupiny, parametru nebo definice
+  "}"          & konec skupiny, parametru nebo definice
+  "$"          & pøepínaè matematického módu
+  "&"          & separátor pou¾ívaný v tabulkách
+  "#"          & oznaèení parametru v definicích
+  "^"          & konstruktor mocniny v matematickém módu
+  "_"          & konstruktor indexu v matematickém módu
+  "~"          & nedìlitelná mezera
+  "%"          & zahajuje na øádku komentáø
+\endtable
+
+Speciální význam ka¾dého znaku lze v~\TeX{}u nastavit pomocí urèitých
+definic. Vý¹e uvedená tabulka tedy není v~nièem definitivní.
+Uvedený seznam speciálních znakù bývá takto nastaven ve
+formátech plain, csplain i \LaTeX. 
+
+Pokud chceme vytisknout souvislej¹í èást textu bez speciální
+interpretace, musíme tìmto znakùm jejich speciální funkce odebrat. 
+V~\LaTeX{}u se pro tyto úèely pou¾ívá \LaTeX{}ové prostøedí vymezené 
+pøíkazy "\begin{verbatim}" a "\end{verbatim}". V¹e mezi tìmito pøíkazy%
+  \footnote{s výjimkou sekvence ètrnácti znakù 
+           \uv{{\tt \char`\\end\char`\{verbatim\char`\}}}}
+se vytiskne tak, jak je napsáno ve vstupním textu. Uvedené prostøedí
+v¾dy ukonèí odstavec a zahájí tisk textu bez speciální interpretace.
+Pokud chceme mít bez speciální interpretace jen èást textu uvnitø
+odstavce, pou¾ijeme v~\LaTeX{}u pøíkaz "\verb|text bez svislé èáry|"
+nebo tøeba "\verb+text bez znaku plus+".
+
+V~plainu ani v~csplainu hotové øe¹ení na vypnutí speciální
+interpretace znakù nenajdeme. Mù¾eme se inspirovat dvojicí "\begtt"
+a "\endtt" ve zdrojovém textu tohoto manuálu.
+
+Pokud chceme vytisknout jen jednotlivé speciální znaky, mìli bychom
+vìdìt, jakou sekvencí to zaøídit. Pro znaky pou¾ívané v~bì¾ném textu
+("$", "&", "#" a "_") jsou ve v¹ech formátech pøipraveny øídicí
+sekvence "\$", "\&", "\#" a "\_". Tím po¾adovaný znak vytiskneme 
+v~libovolném fontu.  Výjimkou je znak \$, který se v~kurzívì 
+Computer Modern fontu mìní v~libru: {\cmit\$}. Je to taková malá 
+kuriozita \TeX{}u.
+
+S~ostatními speciálními znaky to tak jednoduché není. V~implicitnì
+nastaveném fontu Computer Modern toti¾ tyto znaky vesmìs nemají ve
+fontu svùj odpovídající obraz. Napøíklad na pozici 92 bychom mìli
+najít podle normy ASCII znak~"\" (zpìtné lomítko), ale místo nìj tam
+najdeme znak~`` (obrácené uvozovky).  Nemile nás pøekvapí i jinak
+obyèejný znak "<" (symbol pro relaci je men¹í), který nemá ve fontu
+svùj obraz a místo nìho dostaneme do výstupu < (obrácený
+vykøièník). Pokud chceme, aby se do výstupu vìrnì dostal znak, který
+známe z~tabulky ASCII, musíme pou¾ít variantu fontu "\tt" (strojopis),
+nebo jinou rodinu fontu, která má fonty v~kódování pøesnì podle
+ASCII. Následující tabulka ukazuje v¹echny bì¾né ASCII znaky, které
+mají v~Computer Modern jiný obraz:
+
+\begtable
+  kód znaku & "\tt" (strojopis)  & Computer Modern 
+  \tabline
+  \.60             &  "<"        & \tencsr <       
+  \.62             &  ">"        & \tencsr >       
+  \.92             &  "\"        & \tencsr \char92 
+   123             &  "{"        & \tencsr --      
+   124             &  "|"        & \tencsr ---     
+   125             &  "}"        & \tencsr \char125
+\endtable
+
+Znak z~dané pozice ve fontu vytiskneme pomocí pøíkazu "\char kód".
+Napøíklad "\char92" nám vytiskne ve strojopisu "\" a v~antikvì
+Computer Modern {\tencsr\char92}. Pokud si nepamatujeme èíselnou
+hodnotu ASCII kódu nìjakého znaku, mù¾eme místo ní pou¾ít konstrukci
+"`\znak", tak¾e napøíklad "`\\" vrátí èíslo 92. Proto pøi tisku
+zpìtného lomítka pí¹eme "{\tt\char`\\}".
+
+Budeme-li chtít vytisknout nìkterý ze znakù "< > \ { | }", musíme si
+uvìdomit, jaký význam daný znak reprezentuje. Vìt¹inou se jedná
+o~matematické symboly, tak¾e pro nì pou¾ijeme odpovídající øídicí
+sekvence v~matematickém módu (mezi dvìma dolary). Relace \uv{je men¹í}
+a \uv{je vìt¹í} lze dokonce v~matematickém módu napsat pøímo, zatímco
+v~textovém módu se promìní ve ¹panìlskou interpunkci. Následující
+tabulka udává doporuèený zpùsob tisku pøíslu¹ných znakù podle jejich
+významu:
+
+$$\vbox{\let\par=\cr \obeylines \halign{&#\hfil\quad
+   význam znaku          & jak jej zapsat         & jak se vytiskne 
+   \tabline
+   relace \uv{je men¹í}  & "$a < b$"              & $a < b$ 
+   relace \uv{je vìt¹í}  & "$a > b$"              & $a > b$ 
+   uzavøený interval     & "$\langle a,b\rangle$" & $\langle a,b\rangle$
+   ASCII znaky "< >"     & "{\tt < >}"            & "< >"
+   rozdíl mno¾in         & "$A\setminus B$"      & $A\setminus B$
+   ASCII znak "\"        & "{\tt\char`\\}"        & "\"
+   Mno¾inové závorky     & "$M = \{a,b,c\}$"      & $M = \{a,b,c\}$
+   ASCII znaky "{ }"     & "{\tt\char`\{ \char`\}}" & "{ }"
+   Vlnka jako akcent     & "\~a"                  & \~a
+   Samostatný akcent     & "\~{}"                 & \~{}
+   ASCII znak "~"        & "{\tt\char`\~}"        & "~"
+   Støí¹ka jako akcent   & "\^a"                  & \^a
+   ASCII znak "^"        & "{\tt\char`\^}"        & "^"      
+}}$$
+
+V~\LaTeX{}u lze místo konstrukcí "{\tt\char`\znak}" pou¾ít
+jednodu¹¹ího "\verb|znak|". Ov¹em pøíkaz "\verb", který odebírá znaku
+jeho speciální funkci a zapíná tisk ve strojopisu, nemusí fungovat
+v¹ude. Napøíklad jej nelze pou¾ít jako argument jiného pøíkazu
+("\section", "\uv", apod.).
+
+
+\sekce Umístìní sazby na papíøe
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Pøi poznávání \TeX{}u si jistì velmi brzo polo¾íme otázku, jak je
+mo¾né zmìnit velikost okrajù, neboli jak umístit sazbu na papíøe.
+
+V~plainu jsou implicitnì nastaveny velikosti okrajù jeden palec 
+z~ka¾dé strany papíru amerického formátu Letter. Takové formáty papíru
+u~nás vìt¹inou nerostou, tak¾e plain nám na papíru A4 udìlá jen levý a
+horní okraj velikosti jeden palec a pravý okraj bude men¹í a spodní
+vìt¹í.
+
+V~csplainu jsou implicitnì nastaveny velikosti okrajù jeden palec 
+z~ka¾dé strany pro formát A4. Sazba je tedy v~csplainu mírnì u¾¹í a
+vy¹¹í, ne¾ v~plainu. Sazbu pøitom mìøíme bez pøípadného záhlaví a bez
+stránkových èíslic.
+
+Umístìní sazby mìøíme vzhledem k~poèátku, který se nalézá na papíøe
+1~palec od levého okraje a 1~palec od horního okraje. Levý horní roh
+sazby se kryje s~tímto poèátkem, pokud jsou nastaveny registry
+"\hoffset=0pt" a "\voffset=0pt". Levý horní roh sazby se posune
+doprava o~hodnotu "\hoffset" a dolù o~hodnotu "\voffset".  Pøi
+záporných hodnotách tìchto registrù se sazba posunuje samozøejmì doleva
+respektive nahoru.
+
+©íøka sazby (pøesnìji ¹íøka zpracovávaného odstavce) se nastaví pomocí
+registru "\hsize". Vý¹ka sazby na stránce se nastaví pomocí "\vsize".
+V~následující ukázce jsou uvedeny hodnoty, které nastavuje plain.
+
+\begtt
+\voffset=0in       % velikost horního okraje = \voffset + 1 palec
+\hoffset=0in       % velikost levého okraje  = \hoffset + 1 palec
+\hsize=6.5in       % ¹íøka øádku, 165.1mm
+\vsize=8.9in       % vý¹ka sazby, 266mm
+\endtt
+
+Formát csplain má registry "\hoffset" a "\voffset" také nulové, ale
+¹íøku a vý¹ku sazby nastavuje odli¹nì:
+
+\begtt
+\hsize= 159.2 mm   % ¹íøka øádku v csplainu (¹íøka A4 - 2in)
+\vsize= 239.2 mm   % vý¹ka sazby (vý¹ka A4 - 2in)
+\endtt
+
+Pokud chceme nastavit vlastní velikosti, doporuèujeme nejprve registry
+"\hoffset" a "\voffset" nastavit na hodnotu $-1$\,in a pak k~nim pøièíst
+hodnoty po¾adovaných okrajù pomocí pøíkazu "\advance". Dále
+doporuèujeme vý¹ku sazby pøesnì rozmìøit na poèet øádkù. K~tomu
+potøebujeme vìdìt, ¾e vzdálenost dvou øádkù se urèí pomocí registru
+"\baselineskip" (pozor: pøi vìt¹ím písmu se toto øádkování mù¾e
+rozhodit). Plain i csplain nastavují "\baselineskip" na 12\,pt.
+Kromì toho je úèaøí prvního øádku od pomyslného horního okraje sazby
+vzdáleno o~"\topskip", který má v~plainu i v~csplainu hodnotu 10\,pt.
+Proto¾e se vý¹ka sazby "\vsize" mìøí od horního pomyslného okraje po
+úèaøí posledního øádku na stránce, vychází "\vsize" jako
+\hbox{$"\topskip" + (n-1)\times "\baselineskip"$}, kde $n$ je poèet øádkù na
+stránce. Nastavení velikosti sazby tedy mù¾eme udìlat napøíklad takto:
+
+\begtt
+\voffset=-1in
+\advance\voffset by 2cm   % velikost horního okraje bude 2cm
+\hoffset=-1in
+\advance\hoffset by 1.5cm % velikost pravého okraje bude 1.5cm
+\hsize=10cm               % ¹íøka øádku bude 10 cm
+\vsize=\topskip
+\advance\vsize by 15\baselineskip % sazba bude mít 16 øádkù na stránce
+\endtt 
+
+V~\LaTeX{}u se pøi nastavování rozmìrù sazby pou¾ívají registry
+speciálnì deklarované v~tomto formátu. Jedná se o~"\textheight" (vý¹ka
+sazby), "\textwidth" (¹íøka sazby), "\oddsidemargin" (levý okraj na
+lichých stránkách), "\evensidemargin" (levý okraj na sudých stránkách)
+a "\topmargin" (horní okraj).  \LaTeX{} pak sám podle hodnot tìchto
+registrù nastaví vnitøní registry \TeX{}u "\hoffset", "\voffset",
+"\hsize" a "\vsize".  U¾ivatel \LaTeX{}u by k~nim nemìl pøistupovat
+pøímo a navíc by mìl s~registry zacházet \uv{\LaTeX{}ovsky}, co¾ 
+prakticky znamená, ¾e místo jednoduchého pøiøazení nebo pøíkazu 
+"\advance" by mìl zapisovat své po¾adavky zhruba takto:
+
+\begtt
+\setlength\topmargin{-1in}
+\addtolength\topmargin{2cm}       % velikost horního okraje bude 2cm
+\setlength\oddsidemargin{-1in}
+\addtolength\oddsidemargin{1.5cm} % velikost pravého okraje bude 1.5cm 
+\setlength\evensidemargin{\oddsidemargin}
+\setlength\textwidth{10cm}        % ¹íøka sazby bude 10cm
+\setlength\textheight{\topskip}
+\addtolength\textheight{15\baselineskip} % 16 øádkù
+\endtt
+
+\TeX{}em vìt¹inou nenastavujeme parametry pro archovou montá¾ sazby,
+tak¾e nám vý¹e uvedené pøíklady pro nastavení velikosti sazby bohatì
+staèí. Pokud bychom chtìli se sazbou dále manipulovat a umis»ovat ji
+na jednotlivé archy podle urèitých po¾adavkù, pou¾ijeme vìt¹inou
+pomocné programy, které manipulují s~PostScriptovým výstupem.
+Pøedstavme si, ¾e chceme stránky tohoto manuálu zmen¹it tak, aby se
+ve¹ly dvì vedle sebe na stranu A4. Dále chceme tyto stránky uspoøádat
+tak, abychom po oboustranném vyti¹tìní manuálu na ¹est archù A4
+dostali svazeèek, který pøelo¾íme v~pùli a máme kní¾eèku 
+s~24 na sebe navazujícími stránkami. Pro takový úkol se asi nejlépe hodí
+programy z~volnì ¹íøeného balíèku psutils. Na pøíkazový øádek mù¾eme
+postupnì napsat tyto instrukce:
+
+\begtt
+> csplain prvni
+> dvips prvni
+> psbook prvni.ps p0.ps
+> pstops "4:0L@.7(21cm,.5cm)+1L@.7(21cm,14.4cm)" p0.ps p1.ps
+> pstops "4:2L@.7(21cm,.5cm)+3L@.7(21cm,14.4cm)" p0.ps p2.ps
+> lpr -Ptiskarna p1.ps
+> lpr -Ptiskarna p2.ps
+> rm prvni.ps p0.ps p1.ps p2.ps
+\endtt
+
+Pøíkaz {\tt dvips} pøevede dokument do PostScriptu a {\tt psbook}
+uspoøádá stránky pro pou¾ití do \uv{svazeèku}. První volání pøíkazu 
+{\tt pstops} vybere v¾dy dvì ze ètyø stránek, zmen¹í je na
+$0.7$\,násobek pùvodní velikosti ({\tt @.7}) a umístí je do archu
+podle uvedených parametrù. Tím vzniká podklad pro tisk lícových stran
+archù A4 ({\tt p1.ps}). Podobnì druhé volání pøíkazu {\tt pstops}
+vytvoøí podklad pro rubovou stranu archù. Vlastní tisk ({\tt lpr})
+pak mù¾eme provést na tiskárnì, která neumí oboustranný tisk, ve dvou
+prùchodech. Pøed druhým prùchodem obrátíme vyti¹tìné papíry a vlo¾íme
+je do zásobníku tiskárny znovu.
+
+
+\sekce Overfull/Underfull box
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Pøi práci s~\TeX{}em narazíme postupnì na celou øadu chybových
+hlá¹ení, pøi kterých se program vìt¹inou zastaví a vyzve nás k~nìjaké
+akci. Aèkoli tøeba jen zmáèkneme klávesu Enter, uvìdomíme si, ¾e je
+nìco ¹patnì a pokusíme se chybu øe¹it.
+
+Kromì toho \TeX{} vypisuje varování o~pøeteèených (overfull) a
+nedoplnìných (underfull) boxech. Proto¾e se pøi tìchto výpisech
+nezastavuje, pova¾ují to mnozí zaèáteèníci za men¹í zlo, kterého si
+není nutné v¹ímat. Není to tak docela pravda.
+
+Pøeteèené boxy (overfull) bychom mìli rovnì¾ zaøadit do kategorie
+chyb. \TeX{}u se toti¾ nepodaøilo vmìstnat sazbu do pøedepsané ¹íøky
+"\hsize". Prakticky to znamená, ¾e sazba v~daném místì \uv{vyènívá}
+na pravé stranì ven smìrem do okraje. Hlá¹ení obsahuje údaj, o~kolik
+bodù sazba vyènívá, èíslo øádku ve zdrojovém kódu a kus textu, který urèuje
+problémové místo. Plain a csplain dále nastavuje registr
+"\overfullrule" na 5\,pt, tak¾e se v~sazbì na problémovém místì objeví
+tì¾ko pøehlédnutelný èerný obdélník. \LaTeX{} tento registr nuluje,
+tak¾e èerné obdélníky nejsou vidìt, co¾ dává u¾ivateli pocit, ¾e je
+v¹echno v~poøádku. 
+
+Objeví-li se pøeteèený box v~odstavci, vìt¹inou staèí \uv{rozvolnit}
+mezery. Mezery mezi slovy mají toti¾ pru¾nost (mohou se smr¹»ovat
+natahovat). Tato pru¾nost ale není neomezená, ale daná jistými
+parametry podle pou¾itého fontu. Chceme-li dát mezerám vìt¹í volnost 
+v~roztahování, ne¾ si pøál autor fontu, pi¹me napøíklad
+"\emergencystretch=2cm". \TeX{} má plno dal¹ích vnitøních registrù,
+jejich¾ nastavením ovlivníme algoritmy na sestavování
+odstavce. Jejich popis ov¹em pøekraèuje rámec tohoto úvodního textu.
+
+Nedoplnìné boxy (underfull) mù¾eme na rozdíl od pøeteèených boxù
+pova¾ovat pouze za varování. \TeX{} nás informuje, ¾e byl nucen
+v~nìkterém místì natáhnout mezery víc, ne¾ je esteticky zdrávo. Hodnota
+{\tt badness}, která hlá¹ení doprovází, udává zhruba stupeò estetické
+vady v~takovém místì (nebo také velikost násilí provedené na
+mezerách). Èím vy¹¹í badness, tím hor¹í výsledek.  Maximální hodnota
+badness je 1000, co¾ znaèí, ¾e nìkterý øádek je úplnì ¹patnì. Stojí
+zato se podívat do sazby na takto oznaèená místa a zamyslet se, co by
+se dalo zmìnit, aby se zlep¹ila estetická úroveò výsledku.
+
+\LaTeX{}oví u¾ivatelé dosti èasto neopatrnì pracují s~pøíkazem "\\",
+který se v~rùzných \LaTeX{}ových prostøedích chová jako ukonèení
+øádku. Nìkdy se dostane takový pøíkaz i na konec odstavce, co¾ samo
+o~sobì nemá logiku, proto¾e na konci odstavce se samo sebou ukonèí
+øádek. Pokud se tak stane, \TeX{} na konci odstavce vytvoøí je¹tì dal¹í
+prázdný øádek, ve kterém nemá ¾ádnou mezeru k~nata¾ení na ¹íøku
+"\hsize" a oprávnìnì se rozèílí: {\tt Underfull hbox badness 1000}. 
+V~tomto pøípadì vlastnì \TeX{} køièí na u¾ivatele, který nebyl schopen
+opustit principy starodávného psacího stroje a potøebuje mít k~ruce tu
+velikou páku, do které je obèas potøeba pra¹tit, aby se pøe¹lo na nový
+øádek.
+
+
+
+\end
+
+
+
+

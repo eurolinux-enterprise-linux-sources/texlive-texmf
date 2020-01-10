@@ -1,0 +1,23 @@
+
+Package SciWordConv to use with LaTeX 2e.
+
+These somewhat tricky macros allows you to combine the power of 
+graphical front-end of Scientific Word/Scientific WorkPlace (SW/SWP) 
+with your favourite TeX compiler (for example, MiKTeX). SW/SWP creates 
+TeX source files with commands \Unicode{character code} (versions 3.0) or 
+\U{character code} (versions 3.5 and up) instead of usual characters, and 
+we have to redefine these commands, with no change of source file. 
+This idea is generic, i.e. it can also be applied to other european 
+languages. You may or may not use `babel' multilanguage support package.
+
+Implementation for russian language includes Sw2Rus.sty and sample 
+Shell template file "Berik - Generic Russian Standard LaTeX Article.shl".
+Copy the first file to texmf\tex\latex\SciWordConv directory, and the 
+second one - to Shells directory (I recommend to create directory SciWordConv
+and put there) in your Scientific Word/Scientific WorkPlace tree.
+Do not forget also copy file (SW/SWP root)\TCITeX\TeX\LaTeX\tci\tcilatex.tex
+to somewhere of your localtexmf tree.
+
+Enjoy!
+
+Berik I. Tuleuov, Karaganda, Kazakhstan. E-mail: berik_tuleuov@yahoo.com

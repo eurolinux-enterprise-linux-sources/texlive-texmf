@@ -1,0 +1,62 @@
+#! /bin/csh
+# repartition
+set w=`whoami`.rmk
+set OLD=/tmp/$w/OLD
+set WCL=/tmp/$w/CL
+echo 'Repartition of files into classes'
+foreach i ( 0 1 2 3 4 5 6 7 8 9 )
+  if ( -e ${WCL}$i ) then
+    \rm -rf ${WCL}$i
+  endif
+  if ( -d ${WCL}$i ) then
+    \rm -rf ${WCL}$i/*
+    rmdir ${WCL}$i
+  else 
+    mkdir -m 755 -p ${WCL}$i
+  endif
+end
+# class 0
+echo 'Class 0'
+cp minitoc.dtx minitoc.ins fminitoc.dtx ${WCL}0
+# class 1
+echo 'Class 1'
+cp minitoc.sty mtcoff.sty mtcmess.sty mtcpatchmem.sty ${WCL}1
+cp *.mld *.mlo ${WCL}1
+# class 2
+echo 'Class 2'
+cp INSTALL minitoc.l README CATALOG TODO ${WCL}2
+# class 3
+echo 'Class 3'
+cp mtc-add.bib ${WCL}3
+foreach i ( tex pdf )
+  foreach j ( \
+     mtc-2c mtc-2nd mtc-add mtc-ads mtc-amm mtc-apx mtc-art mtc-bk mtc-bo mtc-ch0 mtc-cri \
+     mtc-fo1 mtc-fo2 mtc-gap mtc-hi1 mtc-hi2 mtc-hia mtc-hir mtc-hop mtc-liv mtc-mem mtc-mm1 \
+     mtc-mu mtc-sbf mtc-scr mtc-syn mtc-tbi mtc-tlc mtc-tlo mtc-tsf \
+  )
+  cp $j.$i ${WCL}3
+end
+# class 4
+echo 'Class 4'
+cp minitoc.bug minitoc.sum ${WCL}4
+# class 5
+echo 'Class 5'
+cp minitoc.dtx minitoc.ins minitoc.bib minitoc.ist minitoc.lan en-mtc.bst ${WCL}5
+cp lamed.eps lamed.pdf lamed.tex ${WCL}5
+# class 6
+echo 'Class 6'
+cp minitoc.dtx fminitoc.dtx fminitoc.bib fminitoc.ist fminitoc.lan minitoc.pre ${WCL}6
+cp franc.sty frbib.sty frnew.sty fr-mtc.bst ${WCL}6
+# class 7
+echo 'Class 7'
+cp minitoc.pdf minitoc.ps ${WCL}7
+# class 8
+echo 'Class 8'
+cp fminitoc.pdf fminitoc.ps ${WCL}8
+# class 9
+echo 'Class 9'
+cp pmk imk emk fmk rmk tmk xmk duplex2v.pro ${WCL}9
+# it's all!
+echo "Repartition done"
+exit
+

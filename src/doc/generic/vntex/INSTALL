@@ -1,0 +1,285 @@
+vntex-3.1.5
+
+This file is part of VnTeX.  License: LPPL, version 1.3 or newer,
+see: http://www.latex-project.org/lppl.txt 
+Author: Reinhard Kotucha <reinhard.kotucha@web.de> 
+
+
+See Appendix A where to get help.
+
+
+Installation
+============
+
+UNIX, Linux, MacOS/X, TeXLive (UNIX or Windows)
+-----------------------------------------------
+To install VnTeX on a web2c system you have to unpack vntex-3.1.5.zip 
+inside of a texmf tree.  It is recommended to create an own directory tree
+for vntex so that you can remove it easily when you update your TeX system.
+
+This directory tree should be the first item of TeX's search path,
+otherwise you have to remove old versions of VnTeX or vncmr completely.
+
+On UNIX systems this is something like /usr/local/share/texmf-vntex
+for a system-wide installation or $HOME/texmf-vntex if you do not have
+access to this directory.  On Windows c:\texmf-vntex is a good place.
+
+* Unpack the .zip file in this directory.
+
+* Create a local copy of the system texmf.cnf file.
+
+* Edit this copy:
+
+  -- Add texmf-vntex with its complete path to the variable TEXMF.  It
+     should appear before TEXMFDIST and TEXMFMAIN.
+
+  -- Set font_mem_size to a value of at least 1100000 if you want to
+     compile the font samples in texmf-vntex/doc/generic/vntex/tests 
+     manually.
+     This is not required if you use tha Makefile, see README in the
+     tests directory.
+     Add C:/WINDOWS/FONTS to TTFONTS if you're under Windows.
+
+* Set the environment variable TEXMFCNF to the directory in which
+  your local copy of texmf.cnf resides.  See Appendix B for details.
+
+* Run texhash.
+
+* Now you have to update the map files.
+
+  System-wide installation
+  ~~~~~~~~~~~~~~~~~~~~~~~~
+  If there is a program updmap-sys on your system, run
+
+    updmap-sys --nohash --nomkmap --disable vnr.map
+    updmap-sys --nohash --nomkmap --enable MixedMap vnrtext.map
+    updmap-sys --nohash --nomkmap --enable MixedMap vnrother.map
+    updmap-sys --nohash --nomkmap --enable Map urwvn.map
+    updmap-sys --nohash --nomkmap --enable Map chartervn.map
+    updmap-sys --nohash --nomkmap --enable Map mscorevn.map
+    updmap-sys --nohash --nomkmap --enable Map arevvn.map
+    updmap-sys --nohash --nomkmap --enable Map classicovn.map
+    updmap-sys --nohash --nomkmap --enable Map cmbrightvn.map
+    updmap-sys --nohash --nomkmap --enable Map comicvn.map
+    updmap-sys --nohash --nomkmap --enable Map concretevn.map
+    updmap-sys --nohash --nomkmap --enable Map garamondvn.map
+    updmap-sys --nohash --nomkmap --enable Map grotesqvn.map
+    updmap-sys --nohash --nomkmap --enable Map vntopia.map
+    updmap-sys --nohash --nomkmap --enable Map txttvn.map
+    updmap-sys
+
+  Otherwise, run
+
+    updmap --nohash --nomkmap --disable vnr.map
+    updmap --nohash --nomkmap --enable MixedMap vnrtext.map
+    updmap --nohash --nomkmap --enable MixedMap vnrother.map
+    updmap --nohash --nomkmap --enable Map urwvn.map
+    updmap --nohash --nomkmap --enable Map chartervn.map
+    updmap --nohash --nomkmap --enable Map mscorevn.map
+    updmap --nohash --nomkmap --enable Map arevvn.map
+    updmap --nohash --nomkmap --enable Map classicovn.map
+    updmap --nohash --nomkmap --enable Map cmbrightvn.map
+    updmap --nohash --nomkmap --enable Map comicvn.map
+    updmap --nohash --nomkmap --enable Map concretevn.map
+    updmap --nohash --nomkmap --enable Map garamondvn.map
+    updmap --nohash --nomkmap --enable Map grotesqvn.map
+    updmap --nohash --nomkmap --enable Map vntopia.map
+    updmap --nohash --nomkmap --enable Map txttvn.map
+    updmap
+
+  from your command line.  But don't use updmap if updmap-sys is
+  available.
+
+  Personal installation
+  ~~~~~~~~~~~~~~~~~~~~~
+  If you don't have access to the system directories, you have unpacked
+  your files in $HOME/texmf-vntex or c:\texmf-vntex.
+
+  If there is a program updmap on your system, run
+
+    updmap --nohash --nomkmap --disable vnr.map
+    updmap --nohash --nomkmap --enable MixedMap vnrtext.map
+    updmap --nohash --nomkmap --enable MixedMap vnrother.map
+    updmap --nohash --nomkmap --enable Map urwvn.map
+    updmap --nohash --nomkmap --enable Map mscorevn.map
+    updmap --nohash --nomkmap --enable Map arevvn.map
+    updmap --nohash --nomkmap --enable Map classicovn.map
+    updmap --nohash --nomkmap --enable Map cmbrightvn.map
+    updmap --nohash --nomkmap --enable Map comicvn.map
+    updmap --nohash --nomkmap --enable Map concretevn.map
+    updmap --nohash --nomkmap --enable Map garamondvn.map
+    updmap --nohash --nomkmap --enable Map grotesqvn.map
+    updmap --nohash --nomkmap --enable Map vntopia.map
+    updmap --nohash --nomkmap --enable Map txttvn.map
+    updmap
+
+  from the command line.  If not, ask your system administrator to
+  install VnTeX.
+
+
+MikTeX
+------
+* Remove (if any) previous version of VnTeX by running
+  [Programs]-->[MikTeX]-->[MikTeX Options], then select
+  [Packages]-->[Language]-->[Vietnamese]-->[vntex].
+
+* Unpack vntex .zip file to some location, e.g., c:\texmf-vntex if you
+  have installed MikTeX to c:\texmf.  If you have installed MikTeX to
+  e.g c:\miktex\texmf, then it is recommended to unpack it in
+  c:\miktex\texmf-vntex.
+
+* Run [Programs]-->[MikTeX]-->[MikTeX Options], then select
+  [Roots]-->[Add] and add c:\texmf-vntex (or c:\miktex\texmf-vntex).
+
+* Refresh the file name database.
+
+* If you want to use the T1 fonts that come with VnTeX, you also
+  need to make dvips and pdftex aware of those fonts:
+
+  Add the following lines to updmap.cfg:
+
+    MixedMap vnrtext.map
+    MixedMap vnrother.map
+    Map urwvn.map
+    Map chartervn.map
+    Map mscorevn.map
+    Map arevvn.map
+    Map classicovn.map
+    Map cmbrightvn.map
+    Map comicvn.map
+    Map concretevn.map
+    Map garamondvn.map
+    Map grotesqvn.map
+    Map vntopia.map
+    Map txttvn.map
+    
+  If there is an entry `MixedMap vnr.map', remove it.
+
+* Run "initexmf -mkmaps".
+
+* Edit the file MIKTEX.INI
+
+  -- Add c:\windows\fonts to TTFPath.
+
+  -- Set font_mem_size to a value of at least 1100000 if you want to
+     compile the font samples in texmf-vntex/doc/generic/vntex/tests.
+
+
+Tex4ht (all systems)
+--------------------
+The Vietnamese fonts for tex4ht are now part of the tex4ht distribution.
+In order to use tex4ht you have to install the files needed by VnTeX.
+
+Make sure your tex4ht distribution is not too old.
+
+
+plnfss (all systems)
+--------------------
+The plain TeX font selection macros are now a separate package.
+You don't neeed it if you are using LaTeX.
+
+* Download from:
+
+    http://ctan.tug.org/tex-archive/macros/plain/plnfss
+
+* Unpack the archive in the same texmf tree as VnTeX.
+
+* Refresh the file database.
+
+_______________________________________________________________________
+_______________________________________________________________________
+  
+Appendix A:  Getting Help
+=========================
+If you have any problems, don't hesitate to ask.  There is a mailing
+list (very low traffic) for questions about VnTeX and typesetting
+Vietnamese.  To subscribe to the list, visit
+
+    http://lists.sourceforge.net/lists/listinfo/vntex-users
+
+The primary site of VnTeX is:
+
+    http://vntex.org
+
+The current maintainers are:
+
+    Han The Thanh <HanTheThanh@gmx.net>
+    Werner Lemberg <WL@gnu.org>
+    Reinhard Kotucha <Reinhard.Kotucha@web.de>
+
+
+
+Appendix B:  Setting Environment Variables
+==========================================
+(This is not needed for MikTeX)
+
+UNIX
+~~~~
+
+  Personal installation
+  ---------------------
+  Put
+
+    TEXMFCNF=<path_to_texmf.cnf>
+
+  into the file ~/.profile .
+
+  TEXMFCNF must be an absolute path (beginning with /) to the
+  directory in which the file texmf.cnf resides.
+
+  Run "source ~/.profile" to execute this file in the current shell.
+  Next time you log in this file will be evaluated automatically.
+
+  System wide installation
+  ------------------------
+  Put the variable into /etc/profile.  If there is a directory
+  /etc/profile.d, add a file "vntex.sh" to this directory which
+  contains the variable.
+  
+  The variable is evaluated when a user logs in.
+
+
+Windows (TeXLive) ^1
+~~~~~~~~~~~~~~~~~~~~
+  -- Windows 95/98
+
+    Edit your autoexec.bat.  Add the line:
+
+      set TEXINPUTS=c:\texmf-vntex//:
+
+    and reboot your system.
+
+  -- Windows ME
+
+    You need to run the special program c:\windows\system\msconfig.exe
+    to be able to change any environment variable.  From this program,
+    select the `Environment' tab, and then add or modify the variable
+    you want.  You will be asked to reboot the machine upon any
+    change.
+
+  -- Windows NT/2K/XP
+
+    Click left on "Start-->Settings-->Control Panel-->Environment variables".
+    Now the window with the control panel icons opens.  Double click
+    on System.  The System Properties window opens.  Click on the tab
+    Environment or look for a button named Environment Variables among
+    the dialog boxes.  Now you can change the environment variables
+    for your user account.
+
+    Note:
+    There are also displayed the environment settings for the
+    system.  Normally, you can't change the system variables unless
+    you have administrator rights on your machine.  If you want to
+    change the PATH for all users, you will have to contact your system
+    administrator or be the system administrator yourself -- in the
+    latter case you should know what you are doing.
+
+########################################################################
+  Don't forget to remove TEXMFCNF (and your copy of the file texmf.cnf)
+  if you install a new TeX system which already provides VnTeX!
+########################################################################
+
+________________
+
+^1 See: http://tug.org/texlive/doc/texlive-en/live.html
+

@@ -1,0 +1,49 @@
+tabto.sty
+
+version 1.0  (May 2006)
+
+Donald Arseneau, Vancouver, Canada (asnd@triumf.ca)
+
+Tabbing to fixed positions in a paragraph.
+
+Two new text positioning commands are defined: \tabto and \tab.
+
+\tabto{<length>}
+
+Tab to a position relative to the left margin in a paragraph
+(any indentation due to a list is part of the `margin' in this
+context).  If the text on the line already goes past the desired
+position, the tab starts a new line and moves to the requested
+horizontal  position.
+
+\tabto*{<length>}
+
+Similar to \tabto, except it will perform backspacing, and over-
+print previous text on the line whenever that text is already
+longer than the specified length (i.e., no linebreak is produced).
+Line-breaks are suppressed immediately after \tabto or \tabto*.
+
+\tab
+
+Tab to the next tab-stop chosen from a list of tab positions, in
+the traditional style of typewriters.  A \tab will always move
+to the next tab stop (or the next line), even if it is already
+exactly at a tab stop. Thus, "\tab\tab" skips a position.  A
+linebreak is permitted immediately following a \tab, in case the
+ensuing text does not fit well in the remaining space.
+
+The tab-stop positions are declared using either \TabPositions
+or \NumTabs:
+
+\TabPositions{<length>, <length>,...<length>}
+
+Declares the tab stops as a comma-separated list of positions 
+relative to the left margin. A tab-stop at 0pt is implicit, and 
+need not be listed.
+
+\NumTabs{<number>}
+
+Declares a list of <number> equally-spaced tabs, starting at the
+left margin and spanning \linewidth.  For example \NumTabs{2} 
+declares tab-stops at 0pt and 0.5\linewidth, the same as
+\TabPositions{0pt, 0.5\linewidth} or \TabPositions{0.5\linewidth}

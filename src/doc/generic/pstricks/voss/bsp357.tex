@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{pstricks,pstricks-add}
+\usepackage{lmodern}
+\parindent=0pt
+\pagestyle{empty}
+
+\begin{document}
+
+\psset{unit=5}
+\psset{method=rk4, algebraic=true, whichabs=0, whichord=1,
+    plotpoints=500,linewidth=1pt}
+
+\begin{pspicture}(-1.2,-0.2)(1.2,0.2)
+  \psgrid[subgriddiv=5,subgridcolor=black!10,gridlabels=7pt](-1.2,-0.2)(1.2,0.2)
+  \psplotDiffEqn[linecolor=red]{0}{12}{0 0 0 0}{%
+    y[2]|y[3]|6.283185*y[3]|4*cos(0.6283185*x)-6.283185*y[2]}
+\end{pspicture}
+
+
+%\begin{verbatim}
+%  \psplotDiffEqn[linecolor=red]{0}{12}{0 0 0 0}{%
+%    y[2]|y[3]|6.283185*y[3]|4*cos(0.6283185*x)-6.283185*y[2]}
+%\end{verbatim}
+
+\bigskip
+\begin{pspicture}(-1.2,-0.2)(1.2,0.2)
+  \psgrid[subgriddiv=5,subgridcolor=black!10,gridlabels=7pt](-1.2,-0.2)(1.2,0.2)
+  \parametricplot[plotpoints=500,linecolor=blue]{0}{12}{%
+    4/(6.283185^2-(0.6283185)^2)*(sin(0.6283185*t)/0.1-sin(6.283185*t))|% 
+    4/(6.283185^2-(0.6283185)^2)*(cos(0.6283185*t)-cos(6.283185*t))}
+\end{pspicture}
+
+%\begin{verbatim}
+%  \parametricplot[plotpoints=500,linecolor=blue]{0}{12}{%
+%    4/(6.283185^2-(0.6283185)^2)*(sin(0.6283185*t)/0.1-sin(6.283185*t))|% 
+%    4/(6.283185^2-(0.6283185)^2)*(cos(0.6283185*t)-cos(6.283185*t))}
+%\end{verbatim}
+
+\end{document}
+
+
+

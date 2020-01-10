@@ -1,0 +1,22 @@
+\documentclass[a4paper]{article}% Dominique Rodriguez/hv 2005
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{pstricks,pstricks-add}
+\pagestyle{empty}
+\begin{document}
+
+\newcommand{\InitCond}{ 0  0  5   10}
+\newcommand{\OMEGA}{6.283185}
+\newcommand{\h}{0.1}
+\psset{unit=2}
+\begin{pspicture}[showgrid=true](0,-2)(3,1.2)
+  \psset{method=rk4,algebraic=true,whichabs=0,whichord=1}
+  \psplotDiffEqn[linecolor=red,linewidth=1pt,plotpoints=500]
+     {0}{10}{\InitCond}{y[2]|y[3]|\OMEGA*y[3]-\h*(sqrt(y[2]^2+y[3]^2))*y[2]|-\OMEGA*y[2]-\h*(sqrt(y[2]^2+y[3]^2))*y[3]}
+  \psline{->}(0.5,1)
+  \uput[90](0.5,1){$\overrightarrow{v}_0$}
+  \pscircle{0.1}\psdot(0,0)
+  \uput{3mm}[180](0,0){$\overrightarrow{B}$}
+\end{pspicture}
+
+\end{document}

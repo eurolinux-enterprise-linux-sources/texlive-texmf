@@ -1,0 +1,16 @@
+\documentclass{article}
+\usepackage{pstricks}
+\pagestyle{empty}
+\parindent=0pt
+\begin{document}
+
+\begin{center}
+\begin{pspicture}(8,4)  \psgrid[subgriddiv=0]
+  \psset{linewidth=2pt,showpoints=true}
+  \pscurve[arrows=->,arrowscale=3,linecolor=red](0,0)(1,3)(2,1)(6,3)(2,3.5)(1,1)
+  \pscurve*[linecolor=blue](5,0)(5,1)(6,0)(8,4)
+  \pscurve[linecolor=red](5,0)(5,1)(6,0)(8,4)
+\end{pspicture}
+\end{center}
+
+\end{document}

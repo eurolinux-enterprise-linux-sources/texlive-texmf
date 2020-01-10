@@ -1,0 +1,106 @@
+=== dvdcoll.cls ===
+
+-- dvdcoll.cls v0.6a (<- v0.6 2006/10/25) --
+
+2006/10/25  Bugfix env Dvd [jk]
+              solving the indent problems within the environment Dvd
+			  Indent (SPACE(s) in this case) in new line after using commands within env Dvd
+			  Solution: (1) manual adding of % at the end of the commands by the user 
+			            not useful, therefore
+			            (2) insert \endlinechar=-1 in env Dvd
+						    see: Msg-ID: <ehnv22$i4h$1@news.BelWue.DE> by Heiko Oberdiek
+                            -> empty line is needed between two Dvds
+							
+		    reported by: myself
+
+2006/10/25  revision of env Dvd [jk]
+              after solving the indent problem:
+			  changed the table definition to \tabularx{\textwidth}{lXr}
+
+-- dvdcoll.cls v0.6 (<- v0.53dev 2006/10/06) --
+
+2006/10/06  solving some indent problems in 1st column [jk]
+              just %ing all ends of lines of code
+              still indent with all \DvdTitleWithDescription - space consuming pdf anchor??
+			  and at all \SetSeason{} within the Dvd environment but not outside??
+
+2006/10/05  switching from cooltooltips.sty to pdfnotiz.sty [jk]
+
+2006/09/01  new command \SetLFRName [jk]
+
+2006/09/01  completion of season support [jk]
+              various changes and new commands
+			  
+2006/06/27  new feature: descriptions in pdf annotation (only with pdflatex in pdf mode; Acrobat Reader >= 7) [jk]
+              \dc@pdf@desc, \Description, \DvdTitleWithDescription
+
+2006/06/27  revision of \DvdTitle [jk]
+              making the printing of the counter in \DvdTitle ajustable
+              -> \dc@print@counter
+
+2006/06/23  revision of Dvd [jk]
+              making size adjustments possible in the dvd tables
+              -> \dc@size@table@title (\Large), \dc@size@table@cells (\large)
+
+
+-- dvdcoll.cls v0.52 (<- v0.51dev 2006/06/14) --
+
+2006/06/14  revision of the *Numwidth and *Indent commands [jk]
+
+2006/06/12  Bugfix: env Dvd, \AutoTitle, \DvdCounter [jk]
+              incorrect (different) spaces (in TOC) in different types of
+              automatic titling
+
+            reported by: myself
+			
+2006/06/12  Bugfix: \SetThirdColumnAddition [jk]
+              wrong variable \dc@addhspace@title@count instead of \dc@third
+	 
+            reported by: myself
+
+=== pdfnotiz.sty ===
+
+-- pdfnotiz.sty v1.0 --
+
+2006/10/05  final adjustments to pdfnotiz.sty [jk]
+			
+			
+=== language definition files (dcl) ===
+
+2006/09/18  moved definitions from german.dcl to germanb.dcl [jk]
+              -> adjustments of all german related dcl files; loading germanb.dcl
+
+2006/09/18  added definitions of \dc@pdf@subject to all .dcl files [jk]
+
+2006/06/19  added support for language french [jk]
+              added acadian.dcl, canadien.dcl, francais.dcl, french.dcl, frenchb.dcl
+
+            contributed by François Pétiard
+
+			
+=== dvdcoll.pdf ===
+
+
+2006/10/26  adjustments for version 0.6a
+
+2006/10/09  adjustments for version 0.6
+
+2006/06/14  adjustments for version 0.52
+
+2006/06/12  added forgotten section References [jk]
+
+
+=== INSTALL ===
+
+
+2006/06/12  added FNDB update [jk]
+            correction of wrong path for documentation [jk]
+              localtexmf/doc/latex/dvdcoll/
+
+			  
+=== IPO ===
+			
+			
+-- dvdcoll bundle v0.5  --
+
+2006/06/11  IPO of dvdcoll on CTAN

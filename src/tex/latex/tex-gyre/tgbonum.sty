@@ -1,0 +1,35 @@
+%% Begin of file `tgbonum.sty'. 
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Bonum.txt
+% and README-TeX-Gyre-Bonum.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+%% ----------------------------------------------------------------------------
+%% [EN] LaTeX2e support for Tex Gyre Bonum fonts
+%% The declaration `\usepackage{tgbonum}' in the LaTeX preamble
+%% will set TeX Gyre Bonum as the default (serif) font for the document. 
+%%
+%% [PL] Wspomaga stosowanie w LaTeXu kroju Tex Gyre Bonum
+%% Umieszczenie linijki `\usepackage{tgbonum}' w preambule spowoduje
+%% ustawienie TeX Gyre Bonum jako podstawowego szeryfowego kroju
+%% dokumentu, czyli kroju skojarzonego z poleceniem \rmfamily.
+%% W dokumentach po polsku konieczne jest uaktywnienie kodowania
+%% T1, QX lub OT4 (najlepiej przy pomocy pakietu 'polski'). Np.:
+%%
+%% \usepackage{tgbonum}
+%% \usepackage[T1]{polski}
+%% ----------------------------------------------------------------------------
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tgbonum}
+  [2006/11/01 v1.0 TeX Gyre Bonum as default roman family]
+
+\renewcommand{\rmdefault}{qbk}
+\renewcommand{\familydefault}{\rmdefault}
+\fontfamily{\familydefault}
+
+\endinput
+%% 
+%% End of file `tgbonum.sty'.

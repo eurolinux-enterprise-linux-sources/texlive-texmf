@@ -1,0 +1,24 @@
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Termes.txt
+% and README-TeX-Gyre-Termes.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+\ProvidesFile{t5qtm.fd}[2006/11/01 v1.0 font definition file for T5/qtm]
+
+\DeclareFontFamily{T5}{qtm}{}
+\DeclareFontShape{T5}{qtm}{b}{sc}{<->t5-qtmb-sc}{}
+\DeclareFontShape{T5}{qtm}{b}{n}{<->t5-qtmb}{}
+\DeclareFontShape{T5}{qtm}{b}{scit}{<->t5-qtmbi-sc}{}
+\DeclareFontShape{T5}{qtm}{b}{it}{<->t5-qtmbi}{}
+\DeclareFontShape{T5}{qtm}{m}{sc}{<->t5-qtmr-sc}{}
+\DeclareFontShape{T5}{qtm}{m}{n}{<->t5-qtmr}{}
+\DeclareFontShape{T5}{qtm}{m}{scit}{<->t5-qtmri-sc}{}
+\DeclareFontShape{T5}{qtm}{m}{it}{<->t5-qtmri}{}
+\DeclareFontShape{T5}{qtm}{bx}{n}{<->ssub * qtm/b/n}{}
+\DeclareFontShape{T5}{qtm}{bx}{it}{<->ssub * qtm/b/it}{}
+\DeclareFontShape{T5}{qtm}{bx}{sc}{<->ssub * qtm/b/sc}{}
+\DeclareFontShape{T5}{qtm}{bx}{scit}{<->ssub * qtm/b/scit}{}
+\endinput
+% End of t5qtm

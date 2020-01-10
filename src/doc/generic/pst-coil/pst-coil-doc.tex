@@ -1,0 +1,452 @@
+\documentclass[english]{article}
+%
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\listfiles
+\usepackage[scaled]{luximono}
+\usepackage{lmodern}
+\usepackage{xspace}
+\usepackage[bottom]{footmisc}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage[NewCommands,NewParameters]{ragged2e}
+\usepackage[dvipsnames]{pstricks}
+\usepackage{pst-node}% muss _nach_ pst-grad geladen werden
+\usepackage{pst-coil}
+\definecolor{hellgelb}{rgb}{1,1,0.8}
+%
+\def\PST{{\texttt{PSTricks}}\xspace}
+\def\PDF{{\texttt{PDF}}\xspace}
+\def\pst{{\texttt{pstricks}}\xspace}
+\def\PS{PostScript\xspace}
+\newcommand*\CMD[1]{{\UrlFont\texttt{\textbackslash #1}}}
+%
+\def\tIndex#1{\index{#1@{\UrlFont\texttt{#1}}}}
+\def\cIndex#1{\index{#1@\CMD{#1}}}
+\def\pIndex#1{\index{Parameter@\textbf{Parameter}!{\UrlFont\texttt{#1}}}}
+\def\ppIndex#1{\index{Parameter@\textbf{Parameter}!{#1}}}
+\def\sIndex#1{\index{Syntax@\textbf{Syntax}!\CMD{#1}}}
+\def\csIndex#1{\sIndex{#1}\cIndex{#1}}
+\def\PIndex#1{\index{Paket@\textbf{Paket}!\texttt{#1}}}
+\def\mIndex#1{\texttt{#1}\tIndex{#1}\pIndex{#1}}
+%
+\pretolerance=500
+\tolerance=1000 
+\hbadness=3000
+\vbadness=3000
+\hyphenpenalty=400
+
+\usepackage{showexpl}% not a real PSTricks package
+\usepackage{babel}
+\usepackage{makeidx}
+\makeindex
+\usepackage[dvips,colorlinks,linktocpage]{hyperref} % PDF-support
+%
+\renewcommand{\ttdefault}{ul9}% Luxi Mono
+\lstset{keywordstyle=\small\fontfamily{ul9}\bfseries} 
+\lstset{language=PSTricks,moredelim=**[is][\bf\color{blue}]{§}{§}}% oder andere Begrenzer
+%
+
+\begin{document}
+%
+\title{\texttt{pst-coil}:\newline Coils, springs and zigzag lines}
+\author{Herbert Voß\thanks{Thanks to Eugene Ressler for translating this documentation!}}
+\maketitle
+
+\begin{abstract}
+\index{Paket@\textbf{Paket}!\texttt{pst-coil}}Coils, springs and zigzag curves
+do not really count to the ordinary when creating graphics. They are of some
+importance though when dealing with the creation of coilish connections. They
+can also be used for node connections which will be shown
+at the end of this chapter.
+
+The parameters especially for the \verb+coil+ variants are only easy to
+understand when keeping in mind that three dimensional helixes are dealt with,
+which are only projected onto the two dimensional paper plane. This will be
+elaborated on at the corresponding places.
+\end{abstract}
+
+\tableofcontents
+
+\clearpage
+% ---------------------------------------------------------------------------------------
+\section{Parameters}\label{sec:pstcoil:parameter}
+% ---------------------------------------------------------------------------------------
+Table~\ref{tab:pst-coil:parameter} shows a compilation of the special parameters
+valid for \verb+pst-coil+.
+
+\begin{longtable}{@{}>{\ttfamily}l>{\ttfamily}l>{\ttfamily}l@{}}
+\caption{Compilation of all parameters for  \texttt{pst-coil}}\label{tab:pst-coil:parameter}\\[-5pt]
+\textrm{name} & \textrm{value}  & \textrm{default}\\\hline
+\endfirsthead
+\textrm{name} & \textrm{value}  & \textrm{default}\\\hline
+\endhead
+coilwidth  &  <value[unit]> & 1cm\\
+coilheight  &  <value> & 1\\
+coilarm  &  <value[unit]> & 0.5cm\\
+coilarmA  &  <value[unit]> & 0.5cm\\
+coilarmB  &  <value[unit]> & 0.5cm\\
+coilaspect  &  <angle> & 45\\
+coilinc  &  <angle> & 45\\
+\end{longtable}
+\tIndex{coilwidth}\tIndex{coilheight}\tIndex{coilarm}\tIndex{coilaspect}\tIndex{coilinc}%
+\pIndex{coilwidth}\pIndex{coilheight}\pIndex{coilarm}\pIndex{coilaspect}\pIndex{coilinc}%
+
+% ---------------------------------------------------------------------------------------
+\subsection{\texttt{coilwidth}}\label{subsec:pstcoil:coilwidth}
+% ---------------------------------------------------------------------------------------
+\tIndex{coilwidth}\verb+coilwidth+ denotes the diameter\index{diameter} of the
+coil resp. the height of a zigzag line\index{zigzag line}\index{coil}. The
+diameter corresponds to the height with a perpendicular parallel projection
+transverse to the length.
+
+\medskip\noindent
+\begin{minipage}{5cm}
+\begin{pspicture}(0,-5)(5,5)
+\pscoil(0,4)(3.5,4)
+{
+\psset{linewidth=0.2pt}
+\psline[arrowscale=2,tbarsize=3mm]{|<->|}(4.5,3.5)(4.5,4.5)
+\psline[linestyle=dashed](3.25,4.5)(4.5,4.5)
+\psline[linestyle=dashed](2.75,3.5)(4.5,3.5)
+}
+\uput*[0](3.5,4){coilwidth}
+\pscoil[coilwidth=0.75cm](0,2.6)(3.6,2.6)
+\uput*[0](3.5,2.6){0.75cm}
+\pscoil[coilwidth=0.5cm](0,1.8)(3.5,1.8)
+\uput*[0](3.5,1.8){0.50cm}
+\pscoil[coilwidth=0.25cm](0,1.2)(3.5,1.2)
+\uput*[0](3.5,1.2){0.25cm}
+\pscoil*[coilwidth=0.5cm](0,0.5)(3.5,0.5)
+\uput*[0](3.5,0.5){0.50cm}
+% zigzag
+\pszigzag(0,-4)(3.5,-4)
+{
+\psset{linewidth=0.2pt}
+\psline[arrowscale=2,tbarsize=3mm]{|<->|}(4.5,-3.5)(4.5,-4.5)
+\psline[linestyle=dashed](3.25,-4.5)(4.5,-4.5)
+\psline[linestyle=dashed](2.75,-3.5)(4.5,-3.5)
+}
+\uput*[0](3.5,-4){coilwidth}
+\pszigzag[coilwidth=0.75cm](0,-2.6)(3.6,-2.6)
+\uput*[0](3.5,-2.6){0.75cm}
+\pszigzag[coilwidth=0.5cm](0,-1.8)(3.5,-1.8)
+\uput*[0](3.5,-1.8){0.50cm}
+\pszigzag[coilwidth=0.25cm](0,-1.2)(3.5,-1.2)
+\uput*[0](3.5,-1.2){0.25cm}
+\pszigzag*[coilwidth=0.5cm](0,-0.5)(3.5,-0.5)
+\uput*[0](3.5,-0.5){0.50cm}
+\end{pspicture}
+\end{minipage}\hfill%
+\begin{minipage}{\linewidth-5cm-1em}
+\begin{lstlisting}
+\begin{pspicture}(0,-5)(5,5)
+\pscoil(0,4)(3.5,4)
+{\psset{linewidth=0.2pt}
+\psline[arrowscale=2,tbarsize=3mm]{|<->|}(4.5,3.5)(4.5,4.5)
+\psline[linestyle=dashed](3.25,4.5)(4.5,4.5)
+\psline[linestyle=dashed](2.75,3.5)(4.5,3.5)}
+\uput*[0](3.5,4){coilwidth}
+\pscoil[coilwidth=0.75cm](0,2.6)(3.6,2.6)
+\uput*[0](3.5,2.6){0.75cm}
+\pscoil[coilwidth=0.5cm](0,1.8)(3.5,1.8)
+\uput*[0](3.5,1.8){0.50cm}
+\pscoil[coilwidth=0.25cm](0,1.2)(3.5,1.2)
+\uput*[0](3.5,1.2){0.25cm}
+\pscoil*[coilwidth=0.5cm](0,0.5)(3.5,0.5)
+\uput*[0](3.5,0.5){0.50cm}
+% zigzag
+\pszigzag(0,-4)(3.5,-4)
+
+[ ... ]
+\end{lstlisting}
+\end{minipage}
+
+
+
+% ---------------------------------------------------------------------------------------
+\subsection{\texttt{coilheight}}\label{subsec:pstcoil:coilheight}
+% ---------------------------------------------------------------------------------------
+\tIndex{coilheight}\verb+coilheight+ is in contrast to \verb+coilwidth+ no
+length but only a factor, whereat the distance between two
+windings\index{winding} resp. jags is composed as follows:
+\begin{equation}dx = coilheight\cdot coilwidth \end{equation}
+
+As can be seen in the following example, not the same physical distance is
+yielded. This is caused by the internal three dimensional
+representation\index{three dimensional representation} of the coil; it is not
+seen under an angle of $90$° but $45$°. (section~\ref{subsec:pstcoil:coilaspect})
+
+\medskip\noindent
+\begin{LTXexample}[width=5cm]
+\begin{pspicture}(0,-4)(5,5)
+\pscoil(0,4)(3.5,4)
+{\psset{linewidth=0.2pt}
+\psline[arrowscale=2,tbarsize=3mm]{|<->|}(4.5,3.5)(4.5,4.5)
+\psline[linestyle=dashed](3.25,4.5)(4.5,4.5)
+\psline[linestyle=dashed](2.75,3.5)(4.5,3.5)
+\psline[arrowscale=2,tbarsize=3mm]{|<->|}(1.75,3.2)(2.5,3.2)
+\uput[-90](2.15,3){\footnotesize\texttt{coilheight$\times$coilwidth}}}
+\uput*[0](3.5,4){coilwidth}
+\pscoil[coilheight=0.75](0,1.5)(3.6,1.5)
+\uput*[0](3.5,1.5){0.75}
+\pscoil[coilheight=0.5](0,0)(3.5,0)
+\uput*[0](3.5,0){0.50}
+\pscoil[coilheight=1.25](0,-1.5)(3.5,-1.5)
+\uput*[0](3.5,-1.5){1.25}
+\pscoil*[coilheight=0.5](0,-3)(3.5,-3)
+\uput*[0](3.5,-3){0.50}
+\end{pspicture}
+\end{LTXexample}
+
+
+\medskip\noindent
+\begin{LTXexample}[width=5cm]
+\begin{pspicture}(0,-4)(5,5)
+\pszigzag(0,4)(3.5,4)
+{ \psset{linewidth=0.2pt}
+\psline[arrowscale=2,tbarsize=3mm]{|<->|}(4.5,3.5)(4.5,4.5)
+\psline[linestyle=dashed](2.5,4.5)(4.5,4.5)
+\psline[linestyle=dashed](2.75,3.5)(4.5,3.5)
+\psline[arrowscale=2,tbarsize=3mm]{|<->|}(1.75,3.2)(2.75,3.2)
+\uput[-90](2.15,3){\footnotesize\texttt{coilheight$\times$coilwidth}} }
+\uput*[0](3.5,4){coilwidth}
+\pszigzag[coilheight=0.75](0,1.5)(3.6,1.5)
+\uput*[0](3.5,1.5){0.75}
+\pszigzag[coilheight=0.5](0,0)(3.5,0)
+\uput*[0](3.5,0){0.50}
+\pszigzag[coilheight=1.25](0,-1.5)(3.5,-1.5)
+\uput*[0](3.5,-1.5){1.25}
+\pszigzag*[coilheight=0.5](0,-3)(3.5,-3)
+\uput*[0](3.5,-3){0.50}
+\end{pspicture}
+\end{LTXexample}
+
+
+
+% ---------------------------------------------------------------------------------------
+\subsection{\texttt{coilarm}, \texttt{coilarmA} and \texttt{coilarmB}}\label{subsec:pstcoil:coilarm}
+% ---------------------------------------------------------------------------------------
+\tIndex{coilarm}\tIndex{coilarmA}\tIndex{coilarmB}\verb+coilarm+ denotes the
+part of a straight line made left and right. Negative values are possible, but
+do not make a lot of sense as a rule. As can be gathered from the example, the
+coil is lenghtened by a negative value in this case, so that the part of a
+straight line is led back to the specified starting point resp. endpoint and
+consequently has a negative ``direction''{}. This parameter is not available for
+\CMD{psCoil}.
+
+\medskip\noindent
+\begin{LTXexample}[width=4cm]
+\begin{pspicture}(4,4.5)
+\pscoil(0,4)(4,4)
+\psset{coilwidth=0.5}
+\pscoil[coilarm=0](0,3)(4,3)
+\pscoil[coilarmA=1cm,coilarmB=0.2cm](0,2)(4,2)
+\pscoil[coilarm=-10pt](0,1)(4,1)
+\end{pspicture}
+\end{LTXexample}
+
+\medskip\noindent
+\begin{LTXexample}[width=4cm]
+\begin{pspicture}(4,4.5)
+\pszigzag(0,4)(4,4)
+\psset{coilwidth=0.5}
+\pszigzag[coilarm=0](0,3)(4,3)
+\pszigzag[coilarmA=1cm,coilarmB=0.2cm](0,2)(4,2)
+\pszigzag[coilarm=-10pt](0,1)(4,1)
+\end{pspicture}
+\end{LTXexample}
+
+
+
+% ---------------------------------------------------------------------------------------
+\subsection{\texttt{coilaspect}}\label{subsec:pstcoil:coilaspect}
+% ---------------------------------------------------------------------------------------
+\tIndex{coilaspect}In section~\ref{subsec:pstcoil:coilheight} the three
+dimensional representation of the coil has been pointed out already. If it was
+regarded right-angled to its axis, the windings would not be recognizable. With
+\verb+coilaspect+ this ``perspective''{} can be influenced, which is only
+possible for the ``coil''{} variants of course. \verb+coilaspect=0+ yields a
+sine curve.
+
+\medskip\noindent
+\begin{LTXexample}[width=4cm]
+\begin{pspicture}(4,4.5)
+\pscoil(0,4)(4,4)
+\psset{coilwidth=0.75}
+\pscoil[coilaspect=0](0,3)(4,3)
+\pscoil[coilaspect=30,coilheight=0.3](0,2)(4,2)
+\pscoil[coilaspect=-30,coilheight=0.3](0,1)(4,1)
+\end{pspicture}
+\end{LTXexample}
+
+
+% ---------------------------------------------------------------------------------------
+\subsection{\texttt{coilinc}}\label{subsec:pstcoil:coilinc}
+% ---------------------------------------------------------------------------------------
+\tIndex{coilinc}The curve is drawn with the \verb+lineto+ procedure of \PS,
+whereat \verb+coilinc+ specifies the rotation angle in the angular measure at
+which the next point is calculated. It has already been mentioned that the
+calculation is done as a three dimensional coil and is projected onto the two
+dimensional plane only in the end.
+
+\verb+coilinc+ does also not make sense for zigzag lines, so that this parameter
+again only is available for the \verb+coil+ variant. Large angles result in a
+polygon line, small angles in harmonic progressions with increased calculation
+effort.
+
+\medskip\noindent
+\begin{LTXexample}[width=4cm]
+\begin{pspicture}(4,4.5)
+\psset{coilwidth=0.8}
+\pscoil(0,4)(4,4)
+\psset{coilinc=0}
+\pscoil[coilinc=5](0,3)(4,3)
+\pscoil[coilinc=30](0,2)(4,2)
+\pscoil[coilinc=60](0,1)(4,1)
+\end{pspicture}
+\end{LTXexample}
+
+
+% ---------------------------------------------------------------------------------------
+\section{Makros}\label{sec:pstcoil:makros}
+% ---------------------------------------------------------------------------------------
+\verb+pst-coil+ defines three macros, which make the creation of coil or zigzag
+shaped lines possible.\index{zigzag line}
+\begin{verbatim}
+\pscoil[<parameters>](<x1,y1>)
+\pscoil[<parameters>](<x0,y0>)(<x1,y1>)
+\pscoil[<parameters>]{<arrows>}(<x0,y0>)(<x1,y1>)
+\pscoil*[<parameters>](<x1,y1>)
+\pscoil*[<parameters>](<x0,y0>)(<x1,y1>)
+\pscoil*[<parameters>]{<arrows>}(<x0,y0>)(<x1,y1>)
+\psCoil[<parameters>]{<angle1>}{<angle2>}
+\psCoil*[<parameters>]{<angle1>}{<angle2>}
+\pszigzag[<parameters>](<x1,y1>)
+\pszigzag[<parameters>](<x0,y0>)(<x1,y1>)
+\pszigzag[<parameters>]{<arrows>}(<x0,y0>)(<x1,y1>)
+\pszigzag*[<parameters>](<x1,y1>)
+\pszigzag*[<parameters>](<x0,y0>)(<x1,y1>)
+\pszigzag*[<parameters>]{<arrows>}(<x0,y0>)(<x1,y1>)
+\end{verbatim}
+\csIndex{pscoil}\csIndex{psCoil}\csIndex{pszigzag}
+
+\begin{itemize}
+\item If only one coordinate pair is specified, the first point is automatically
+	set to the origin of ordinates $(0,0)$.
+\item Arrows may be set with the own parameter or with the optional parameter
+	with \verb+arrows=<arrows>+.
+\item For \verb+psCoil+ the coils are principally drawn without ``arms''{}.
+\end{itemize}
+
+
+The asterisk version are in principle pointless, since they do not allow a
+meaningful representation. Some could be seen with the description of
+parameters, but will not be described further in the following.
+
+
+% ---------------------------------------------------------------------------------------
+\subsection{\CMD{pscoil}}\label{subsec:pstcoil:pscoil}
+% ---------------------------------------------------------------------------------------
+Since \verb+pscoil+ is nothing but a polygon line, also all parameters are
+available which aplly for lines.
+
+\medskip\noindent
+\begin{LTXexample}[width=4cm]
+\begin{pspicture}(4,4)
+\pscoil[coilarm=.5cm,linewidth=1.5pt,coilwidth=.5cm]{|->}(4,3)
+\pscoil[linecolor=red,coilheight=0.25](3,4)(3,1)
+\pscoil[doubleline=true,linecolor=cyan,coilheight=0.75](0,4)(3,0)
+\end{pspicture}
+\end{LTXexample}
+
+% ---------------------------------------------------------------------------------------
+\subsection{\CMD{psCoil}}\label{subsec:pstcoil:psCoil}
+% ---------------------------------------------------------------------------------------
+\verb+\psCoil+ draws starting at the current point to the angle $\alpha$ an
+invisible line and then from $\alpha$ to $\beta$ a helix.
+\verb+\rput+\cIndex{rput} has to be used if they are to be placed at a
+particular position. The advantage is that with \verb+psCoil+ the number of
+helixes to draw can be specified exactly.
+
+\medskip\noindent
+\begin{LTXexample}[width=4cm]
+\begin{pspicture}(4,4)
+\psCoil[linewidth=1.5pt,coilwidth=.5cm]{1800}{3600}
+\rput{-90}(3,4){\psCoil[linecolor=red,coilheight=0.25]{0}{3600}}
+\rput{-45}(0,3.5){\psCoil[doubleline=true,linecolor=cyan,coilheight=0.75]{100}{2700}}
+\end{pspicture}
+\end{LTXexample}
+
+
+
+% ---------------------------------------------------------------------------------------
+\subsection{\CMD{pszigzag}}\label{subsec:pstcoil:zigzag}
+% ---------------------------------------------------------------------------------------
+\cIndex{pszigzag}This macro represents the two dimensional variant and is
+correspondly easy to use. Especially the \verb+linearc+ option can bring good
+results for \verb+\pszigzag+. The specification of the ``arm length''{} is not
+absolute here, since the line is principally ended in the geometrical middle and
+then led to the specified arm length.
+
+\medskip\noindent
+\begin{LTXexample}[width=4cm]
+\begin{pspicture}(4,4)
+\pszigzag[coilarm=.5cm,linewidth=1.5pt,coilwidth=.5cm]{|->}(4,3)
+\pszigzag[linecolor=red,coilheight=0.2](3,4)(3,1)
+\pszigzag[doubleline=true,linecolor=cyan,coilheight=0.75](0,4)(3,0)
+\end{pspicture}
+\end{LTXexample}
+
+
+% ---------------------------------------------------------------------------------------
+\section{Node connections}\label{sec:pstcoil:knotenverbindungen}
+% ---------------------------------------------------------------------------------------
+Prerequisite for this macro is that \verb+pst-node+\tIndex{pst-node}
+is loaded, then the following node connections are
+available:
+%
+\begin{verbatim}
+\nccoil[<parameters>]{<nodeA>}{<nodeB>}
+\nccoil[<parameters>]{<arrows>}{<nodeA>}{<nodeB>}
+\nccoil*[<parameters>]{<nodeA>}{<nodeB>}
+\nccoil*[<parameters>]{<arrows>}{<nodeA>}{<nodeB>}
+\nczigzag[<parameters>]{<nodeA>}{<nodeB>}
+\nczigzag[<parameters>]{<arrows>}{<nodeA>}{<nodeB>}
+\nczigzag*[<parameters>]{<nodeA>}{<nodeB>}
+\nczigzag*[<parameters>]{<arrows>}{<nodeA>}{<nodeB>}
+\pccoil[<parameters>](<nodeA>)(<nodeB>)
+\pccoil[<parameters>]{<arrows>}(<nodeA>)(<nodeB>)
+\pccoil*[<parameters>](<nodeA>)(<nodeB>)
+\pccoil*[<parameters>]{<arrows>}(<nodeA>)(<nodeB>)
+\pczigzag[<parameters>](<nodeA>)(<nodeB>)
+\pczigzag[<parameters>]{<arrows>}(<nodeA>)(<nodeB>)
+\pczigzag*[<parameters>](<nodeA>)(<nodeB>)
+\pczigzag*[<parameters>]{<arrows>}(<nodeA>)(<nodeB>)
+\end{verbatim}
+
+These connections behave completely analogue to those dealt with the
+package \verb+pst-node+ so that
+no further explanations are needed here.
+
+\medskip\noindent
+\begin{LTXexample}[width=4cm]
+\begin{pspicture}(4,3)
+\cnode(0.5,0.5){0.5}{A}
+\cnode[fillstyle=solid,fillcolor=lightgray](3.5,2.5){0.5}{B}
+\nccoil[coilwidth=0.4,coilaspect=35,coilheight=0.5]{<->}{A}{B}
+\end{pspicture}
+\end{LTXexample}
+
+
+\nocite{*}
+\bgroup
+\raggedright
+\bibliographystyle{plain}
+\bibliography{\jobname}
+\egroup
+
+\printindex
+
+
+\end{document}

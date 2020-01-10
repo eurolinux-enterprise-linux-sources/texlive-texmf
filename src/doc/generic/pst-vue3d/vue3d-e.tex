@@ -1,0 +1,1260 @@
+\listfiles
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{lmodern}% only for PDF output
+\usepackage[a4paper,bmargin=2cm,tmargin=2cm]{geometry}
+\usepackage{url}
+\usepackage{morefloats}
+\setcounter{totalnumber}{10}
+\setcounter{dbltopnumber}{10}
+\renewcommand{\textfraction}{0}
+\usepackage{subfigure}
+% Mluque5130@aol.com
+% 17 octobre 2003
+% Herbert Voss <voss@pstricks.de>
+% September 2004
+\def\UrlFont{\small\ttfamily}
+\makeatletter
+\def\verbatim@font{\footnotesize\normalfont\ttfamily}
+\makeatother
+\usepackage[colorlinks,linktocpage]{hyperref}
+\usepackage[english]{babel}
+\usepackage{pstricks,multido,pst-grad}
+\usepackage{pst-vue3d}
+\let\VueFversion\fileversion
+\usepackage{pst-example}
+%
+\definecolor{GrisClair} {rgb}{0.6,0.7,0.8}
+\definecolor{GrisTresClair} {rgb}{0.8,0.9,0.7}
+\definecolor{GrayA} {rgb}{0.35,0.95,0.95}
+\definecolor{GrayB} {rgb}{0.85,0.85,0.35}
+\definecolor{GrayC} {rgb}{0.75,0.35,0.55}
+\definecolor{GrayD} {rgb}{0.65,0.65,0.65}
+\definecolor{GrayE} {rgb}{0.7,0.9,0.65}
+\definecolor{LightBlue}{rgb}{.68,.85,.9}
+%
+\newcommand\tapis{%
+	\psset{normaleLatitude=90,normaleLongitude=0}
+	\FrameThreeD[fillcolor=green,fillstyle=solid](0,0,-5)(-20,-20)(20,20)
+	\QuadrillageThreeD[grille=10](0,0,-5)(-20,-20)(20,20)%
+}
+%
+\def\Table{{%
+    \CubeThreeD[A=30,B=30,C=2,CubeColorFaceOne={.7 .6 .5}](0,0,-2)
+    \psset{normaleLongitude=0,normaleLatitude=90}
+    \QuadrillageThreeD[linewidth=0.2mm,linecolor=white,%
+		grille=5](0,0,0)(-30,-30)(30,30)
+}}
+%
+\def\DessusTable{{%
+    \psset{normaleLongitude=0,normaleLatitude=90}
+    \QuadrillageThreeD[linewidth=0.2mm,linecolor=gray,%
+		grille=5](0,0,0)(-30,-30)(30,30)%
+}}
+\def\PlansOXYZ{{%
+	\psset{normaleLongitude=0,normaleLatitude=90}
+	\FrameThreeD[fillstyle=solid,fillcolor=GrisClair](0,0,0)(-50,0)(0,50)
+	\QuadrillageThreeD[linewidth=0.2mm,grille=10](0,0,0)(-50,0)(0,50)%
+	\psset{normaleLongitude=90,normaleLatitude=0}
+	\FrameThreeD[fillstyle=solid,fillcolor=GrisTresClair](0,0,0)(0,0)(50,-50)
+	\QuadrillageThreeD[linewidth=0.2mm,grille=10](0,0,0)(0,-50)(50,0)%
+	\psset{normaleLongitude=0,normaleLatitude=0}
+	\FrameThreeD[fillstyle=solid,fillcolor=GrisTresClair](0,0,0)(-50,0)(0,-50)
+	\QuadrillageThreeD[linewidth=0.2mm,grille=10](0,0,0)(-50,-50)(0,0)%
+	}}
+\psset{CubeColorFaceOne=1 1 1,%
+       CubeColorFaceTwo=1 0 0,%
+       CubeColorFaceThree=0 1 0,%
+       CubeColorFaceFour=0 0 1,%
+       CubeColorFaceFive=1 1 0,%
+       CubeColorFaceSix=0 1 1}
+%
+\def\hexagon{%
+\begin{pspicture}(-2.2,-2.2)(2.2,2)
+    \Table
+    \pNodeThreeD(-8.66,-5,0){A6}
+    \pNodeThreeD(-8.66,5,0){A1}
+    \pNodeThreeD(0,10,0){A2}
+    \pNodeThreeD(8.66,5,0){A3}
+    \pNodeThreeD(8.66,-5,0){A4}
+    \pNodeThreeD(0,-10,0){A5}%
+    \psclip{\pspolygon[fillstyle=solid,fillcolor=GrisClair,%
+        linestyle=none](A1)(A2)(A3)(A4)(A5)(A6)}
+        \DessusTable
+    \endpsclip
+    \psset{A=5,B=5,C=5}
+    \CubeThreeD[RotZ=60](-6.83,-11.830,5)%6
+    \CubeThreeD[RotZ=120](6.83,-11.830,5)%5
+    \CubeThreeD(-13.86,0,5)%1
+    \CubeThreeD[RotZ=-60](-6.83,11.830,5)%2
+    \CubeThreeD[RotZ=-120](6.83,11.830,5)%3
+    \CubeThreeD[RotZ=180](13.86,0,5)%4
+\end{pspicture}%
+}
+%
+\def\stardodecagon{%
+    \begin{pspicture}(-2.2,-2)(2.2,2.2)
+    \Table
+    \pNodeThreeD(-6.83,-11.83,0){A6}%
+    \pNodeThreeD(-13.86,0,0){A1}%
+    \pNodeThreeD(-6.83,11.83,0){A2}%
+    \pNodeThreeD(6.83,11.83,0){A3}%
+    \pNodeThreeD(13.86,0,0){A4}%
+    \pNodeThreeD(6.83,-11.83,0){A5}%
+    \psclip{\pspolygon[fillstyle=solid,fillcolor=GrisClair,%
+        linestyle=none](A1)(A2)(A3)(A4)(A5)(A6)}
+        \DessusTable
+    \endpsclip%
+    \psset{A=5,B=5,C=5}
+    \CubeThreeD[RotZ=105](-10.6066,6.12372,5)%2
+    \CubeThreeD[RotZ=45](0,12.2474,5)%1
+    \CubeThreeD[RotZ=345](10.6066,6.12372,5)%6
+    \CubeThreeD[RotZ=165](-10.6066,-6.12372,5)%3
+    \CubeThreeD[RotZ=225](0,-12.2474,5)%4
+    \CubeThreeD[RotZ=285](10.6066,-6.12372,5)%5
+\end{pspicture}}
+%
+\def\pentagon{%
+    \begin{pspicture}(-2.2,-2.2)(2.2,2.2)
+    \Table
+    \pNodeThreeD(8.5065,0,0){A1}%
+    \pNodeThreeD(2.6287,8.09,0){A2}%
+    \pNodeThreeD(-6.882,5,0){A3}%
+    \pNodeThreeD(-6.882,-5,0){A4}%
+    \pNodeThreeD(2.6287,-8.09,0){A5}%
+    \psclip{\pspolygon[fillstyle=solid,fillcolor=GrisClair,%
+        linestyle=none](A1)(A2)(A3)(A4)(A5)}
+        \DessusTable
+    \endpsclip%
+    \psset{A=5,B=5,C=5}
+    \CubeThreeD(-11.88,0,5)%1
+    \CubeThreeD[RotZ=72](-3.617,-11.3,5)%5
+    \CubeThreeD[RotZ=-72](-3.617,11.3,5)%2
+    \CubeThreeD[RotZ=-144](9.61267,6.984,5)%3
+    \CubeThreeD[RotZ=144](9.61267,-6.984,5)%4
+\end{pspicture}}
+%
+\def\stardecagon{%
+    \begin{pspicture}*(-2.2,-1.75)(2.2,2.2)
+    \Table
+    \pNodeThreeD(-12.03,0,0){A1}%
+    \pNodeThreeD(-3.7178,-11.44,0){A2}%
+    \pNodeThreeD(9.7325,-7.071,0){A3}%
+    \pNodeThreeD(9.7325,7.071,0){A4}%
+    \pNodeThreeD(-3.7178,11.44,0){A5}%
+    \psclip{\pspolygon[fillstyle=solid,fillcolor=GrisClair,%
+        linestyle=none](A1)(A2)(A3)(A4)(A5)}
+        \DessusTable
+    \endpsclip%
+    \psset{A=5,B=5,C=5}
+    \CubeThreeD[RotZ=81](-7.87375,-5.72061,5)%4
+    \CubeThreeD[RotZ=9](-7.87375,5.72061,5)%3
+    \CubeThreeD[RotZ=153](3.0075,-9.2561,5)%5
+    \CubeThreeD[RotZ=-63](3.0075,9.25615,5)%2
+    \CubeThreeD[RotZ=-135](9.73249,0,5)%1
+\end{pspicture}%
+}
+\def\octogon{%
+    \begin{pspicture}(-2.2,-2.2)(2.2,2.2)
+    \Table
+    \pNodeThreeD(12.07,5,0){A1}%
+    \pNodeThreeD(5,12.07,0){A2}%
+    \pNodeThreeD(-5,12.07,0){A3}%
+    \pNodeThreeD(-12.07,5,0){A4}%
+    \pNodeThreeD(-12.07,-5,0){A5}%
+    \pNodeThreeD(-5,-12.071,0){A6}%
+    \pNodeThreeD(5,-12.07,0){A7}%
+    \pNodeThreeD(12.07,-5,0){A8}%
+    \psclip{\pspolygon[fillstyle=solid,fillcolor=GrisClair,%
+        linestyle=none](A1)(A2)(A3)(A4)(A5)(A6)(A7)(A8)}
+        \DessusTable
+    \endpsclip%
+    \psset{A=5,B=5,C=5}
+    \CubeThreeD(-17.07,0,5)%5
+    \CubeThreeD[RotZ=45](-12.07,-12.07,5)%6
+    \CubeThreeD[RotZ=90](0,-17.07,5)%7
+    \CubeThreeD[RotZ=135](12.07,-12.07,5)%8
+    \CubeThreeD[RotZ=-45](-12.07,12.07,5)%4
+    \CubeThreeD[RotZ=-90](0,17.07,5)%3
+    \CubeThreeD[RotZ=-135](12.07,12.07,5)%2
+    \CubeThreeD[RotZ=180](17.07,0,5)%1
+\end{pspicture}%
+}
+%
+\def\starhexadecagon{%
+    \begin{pspicture}(-2.2,-2)(2.2,2.2)
+    \Table
+    \pNodeThreeD(17.07,7.07,0){A1}%
+    \pNodeThreeD(7.07,17.07,0){A2}%
+    \pNodeThreeD(-7.07,17.07,0){A3}%
+    \pNodeThreeD(-17.07,7.07,0){A4}%
+    \pNodeThreeD(-17.07,-7.07,0){A5}%
+    \pNodeThreeD(-7.07,-17.07,0){A6}%
+    \pNodeThreeD(7.07,-17.07,0){A7}%
+    \pNodeThreeD(17.07,-7.07,0){A8}%
+    \psclip{\pspolygon[fillstyle=solid,fillcolor=GrisClair,%
+        linestyle=none](A1)(A2)(A3)(A4)(A5)(A6)(A7)(A8)}
+        \DessusTable
+    \endpsclip%
+    \psset{A=5,B=5,C=5}
+    \CubeThreeD[RotZ=225](-17.07,0,5)%5
+    \CubeThreeD[RotZ=-90](-12.07,-12.07,5)%6
+    \CubeThreeD[RotZ=-45](0,-17.07,5)%7
+    \CubeThreeD(12.07,-12.07,5)%8
+    \CubeThreeD[RotZ=180](-12.07,12.07,5)%4
+    \CubeThreeD[RotZ=135](0,17.07,5)%3
+    \CubeThreeD[RotZ=90](12.07,12.07,5)%2
+    \CubeThreeD[RotZ=45](17.07,0,5)%1
+\end{pspicture}}
+%
+\def\DecorSable{%
+  \FrameThreeD[normaleLongitude=0,normaleLatitude=90,%
+     fillstyle=solid,fillcolor=GrayE](0,0,0)(-60,-60)(60,60)
+  \QuadrillageThreeD[normaleLongitude=0,normaleLatitude=90,%
+     linecolor=GrayA,linewidth=0.2mm,grille=10](0,0,0)(-60,-60)(60,60)%
+}
+\newpsstyle{GradGrayWhite}{fillstyle=gradient,%
+    gradbegin=blue,gradend=white,linewidth=0.1mm}%
+
+\begin{document}
+
+\title{3D views with \texttt{pst-vue3d}\\[3ex]
+ \normalsize (v. \VueFversion)}
+\author{Manuel Luque\thanks{\url{mluque5130 _at_ aol.com}}\ 
+and Herbert Vo\ss\thanks{\url{voss _at_ pstricks.de}}}
+
+\maketitle
+\tableofcontents
+\clearpage
+
+\section{Presentation}
+The 3D representation of an object or a landscape is one of the
+most interesting subject in computer science and have many
+industrial applications (car and plane design, video game
+etc\ldots). In a smaller way, one can obtain very didactic
+realizations using PSTricks with two peculiarities:
+\begin{itemize}
+  \item using PostScript;
+  \item being manageable through \LaTeX.
+\end{itemize}
+Package \texttt{pst-key} of David \textsc{Carlisle} allows to
+write commands with parameters. Using this as an interface, one
+can observe the result of little modifications of some parameters.
+Our parameters being here: the position of the watcher, the choice
+of an solid (cube, sphere etc\ldots) and many other things. I want
+to signal that
+\begin{itemize}
+\item
+Regarding 3D representation, one does not forget the package pst-3d by Timothy Van Zandt
+who has used the best part of Post\-Script. Althrought limited to parallel projections,
+this package allows to draw very interesting 3D figure.\footnote{A lot of different examples
+for 3D images are available at: \url{http://members.aol.com/Mluque5130/}}
+\item Thanks to Denis \textsc{Girou}, i have discovered the
+package \texttt{pst-xkey} and I have learned it.
+\item I have written another package for drawing picture reflecting
+in  spherical mirrors.%
+\footnote{\url{http://melusine.eu.org/syracuse/mluque/BouleMiroir/boulemiroir.html}}
+
+It is a french paper which illustrate a study of Pr. Henri
+\textsc{Bouasse} from this book \textit{Optique sup\'erieure}, edited in $1917$ by  Delagrave.
+\end{itemize}
+
+
+\section{Aims}
+First, we want to draw the 3D representation with elimination of
+the hidden parts of some objects.
+
+The position of  the watcher will be defined by its spherical
+coordinates: the distances from the origin, the longitude $\theta$
+and the latitude $\phi$. We will choose, too, the distance of the
+projection screen from this point.
+
+Second, we want to define some $3D$ elements of the scene: the bricks.
+
+The following bricks are already defined
+\begin{itemize}
+\item A box given by its three dimensions \verb+A,B,C+: it could
+be turn into a cube or a dice.
+\item A point which can be defined it two ways
+\begin{itemize}
+\item By cartesian coordinates $(x,y,z)$
+\item Or by  spherical coordinates $(R,\theta,\phi)$
+ ($\theta$, $\phi$ are, respectively, longitude and latitude).
+\end{itemize}
+\item A rectangle.
+\item A circle defined by the normal line to its plane, its center
+and its radius. An arc is defined as the circle with two limit
+angles.
+\item A tetrahedron given by the coordinates of the center of its
+base and the radius of the circle containing the vertex of each
+faces.  We can make it rotate.
+\item A square pyramid given by the half of the length of the side
+of its base and its height. We can make it rotate and move.
+\item A sphere given by the coordinates of its center \verb+\SphereThreeD(x,y,z){Radius}+
+and its radius. We can make it rotate with the parameters
+\verb+RotX=...+, \verb+RotY=...+, \verb+RotZ=...+ We can choose to
+draw only some meridians and parallel circles.
+ \item A  solid or empty half-sphere (same parameters than a sphere)
+ \item A vertical cylinder defined by its radius and its height. We
+ can make it rotate using the parameters \verb+RotX=...+, \verb+RotY=...+, \verb+RotZ=...+
+ An we can choose the center of its base in the same way than the Sphere.
+\item A cone and a truncated cone defined by the radius of their
+base, the height and the height of the truncature.
+\end{itemize}
+
+\vspace*{1cm}
+To construct a scene, one may choose himself the order of the
+objects. For example, if an object 1 is partially hidden by an
+object 2, we write, in the list of commands, first object 1 and
+second object 2.
+
+\section{Rotating in the 3D space}
+
+A 3D object can be rotated around every axes with the \verb+RotX+, \verb+RotY+ and
+\verb+RotZ+ option. They can be mixed in every combination. Figure~\ref{fig:rot} shows
+how a rotation around the z-axes works.
+
+\begin{figure}[!htb]
+\multido{\iRotZ=0+45}{8}{%
+  \begin{pspicture}(-1.5,-1.5)(1.5,1.5)
+    \psset{THETA=70,PHI=30,Dobs=200,Decran=10}
+    \psset{A=5,B=5,C=A,fillstyle=solid,fillcolor=GrisClair,%
+       linecolor=red, RotZ=\iRotZ}
+    \tapis\DieThreeD(0,0,0)%
+    \LineThreeD[linecolor=red,linestyle=dashed,arrows=->](0,0,0)(0,0,25)
+    \pNodeThreeD(0,0,12.5){Z'}
+    \uput[180](Z'){\texttt{RotZ=\iRotZ}}
+  \end{pspicture}\hfill %
+}
+
+\psset{THETA=-10,PHI=20,Dobs=200,Decran=10}
+\multido{\iCX=0+30}{8}{%
+  \begin{pspicture}(-1.5,-1.5)(1.5,1.5)
+    \AxesThreeD{->}(50,20,20)
+    \psset{A=20,B=5,C=10,fillstyle=solid,fillcolor=LightBlue,linecolor=gray}
+    \psset{RotZ=0,RotY=0,RotX=\iCX}
+    \CubeThreeD(0,0,0)%
+    \psset{linestyle=dashed}
+  \end{pspicture}\hfill%
+}%
+\caption{Diffenerent views of a die and a cube\label{fig:rot}}
+\end{figure}
+
+
+\section{Location of the cube in the space}
+Suppose that one wants to place a 10-units edge cube at the point
+$(x=40,y=40,z=35)$. First, the half edge of the cube will be
+define by the parameters : \verb+A=5,B=5,C=5+, and next the
+coordinates of its center by \texttt{(40,40,35)}. On the
+figure, the period of the grid is 10~units
+(figure~\ref{coordinates}).
+
+\begin{figure}[!htb]
+\centering
+\begin{Beispiel}[colwidth=0.45\linewidth]
+\psset{THETA=30,PHI=30,Dobs=200,Decran=12}
+\begin{pspicture}(-2.8,-3)(3.5,3.5)
+    \PlansOXYZ
+    \pNodeThreeD(40,40,35){G}
+    \pNodeThreeD(40,40,0){G_XY}
+    \pNodeThreeD(40,0,0){G_X}
+    \pNodeThreeD(0,40,0){G_Y}
+    \pNodeThreeD(0,0,35){G_Z}
+    \pNodeThreeD(0,40,35){G_YZ}
+    \pNodeThreeD(40,0,35){G_XZ}
+    \psdots(G)(G_XY)(G_XZ)(G_YZ)(G_X)(G_Y)(G_Z)
+    \psline(G)(G_XY)
+    \psline(G)(G_XZ)
+    \psline(G)(G_YZ)
+    \psline(G_Z)(G_XZ)
+    \psline(G_Z)(G_YZ)
+    \AxesThreeD{->}(55)
+\end{pspicture}
+\end{Beispiel}
+\caption{\label{coordinates}Origin \texttt{(40,40,35)}}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\begin{Beispiel}[colwidth=0.45\linewidth]
+\psset{THETA=30,PHI=30,Dobs=200,Decran=12}
+\begin{pspicture}(-2.8,-3)(3.5,3.5)
+  \PlansOXYZ
+  \pNodeThreeD(40,40,35){G}
+  \pNodeThreeD(40,40,0){G_XY}
+  \pNodeThreeD(40,0,0){G_X}
+  \pNodeThreeD(0,40,0){G_Y}
+  \pNodeThreeD(0,0,35){G_Z}
+  \pNodeThreeD(0,40,35){G_YZ}
+  \pNodeThreeD(40,0,35){G_XZ}
+  \psdots(G)(G_XY)(G_XZ)(G_YZ)(G_X)(G_Y)(G_Z)
+  \psline(G)(G_XY)
+  \psline(G)(G_XZ)
+  \psline(G)(G_YZ)
+  \psline(G_Z)(G_XZ)
+  \psline(G_Z)(G_YZ)
+  \psset{A=5,B=5,C=5}
+  \DieThreeD(40,40,35)%
+  \AxesThreeD{->}(55)
+\end{pspicture}
+\end{Beispiel} 
+\caption{\label{CubeOne}The placed cube.}
+\end{figure}
+
+
+To make it rotate of  around  $OX$ , one adds the parameter \verb+RotX=90+(figure~\ref{RotX}).
+
+\begin{figure}[!ht]
+\begin{Beispiel}[colwidth=0.45\linewidth]
+\psset{THETA=30,PHI=30,Dobs=200,Decran=12}
+\begin{pspicture}(-2.8,-3)(3.5,3.5)
+  \PlansOXYZ
+  \AxesThreeD{->}(55)
+  \psset{A=5,B=5,C=5,RotX=90}
+  % projections sur les plaans
+  \DieThreeD(40,40,5)%
+  \DieThreeD(5,40,35)%
+  \DieThreeD(40,5,35)%
+  \pNodeThreeD(40,40,35){G}
+  \pNodeThreeD(40,40,10){G_XY}
+  \pNodeThreeD(10,40,35){G_YZ}
+  \pNodeThreeD(40,10,35){G_XZ}
+  \psline(G)(G_XY)
+  \psline(G)(G_XZ)
+  \psline(G)(G_YZ)
+  \DieThreeD(40,40,35)%
+\end{pspicture}
+\end{Beispiel}
+\caption{\label{RotX} 90\textsuperscript{o} rotation around $OX$ and plane projections.}
+\end{figure}
+
+
+Three successive rotations around three axes with: \verb+RotX=60,RotY=20,RotZ=110+, are illustrate in figure~\ref{RotXYZ}.
+
+\begin{figure}[!ht]
+\begin{Beispiel}[colwidth=0.45\linewidth]
+\psset{THETA=30,PHI=30,Dobs=200,Decran=12}
+\begin{pspicture}(-2.8,-3)(3.5,3.5)
+  \PlansOXYZ
+  \AxesThreeD(55)
+  \DieThreeD[A=5,B=5,C=5,RotX=30,RotY=20,RotZ=150](40,40,35)%
+\end{pspicture}
+\end{Beispiel}
+\caption{\label{RotXYZ}rotations around $OX$, $OY$ et $OZ$: \texttt{RotX=60,RotY=20,RotZ=110}.}
+\end{figure}
+
+\section{Constructions using cubes}
+This section was done after a book first published in  1873 and
+titled:
+
+\begin{figure}[!ht]
+\centering
+\psframebox{%
+\begin{pspicture}(-3.1,-3.8)(3.1,3)
+\rput(0,2.6){M\'ETHODE INTUITIVE}
+\rput(0,2){\Large EXERCICES ET TRAVAUX}
+\rput(0,1.5){POUR LES ENFANTS}
+\rput(0,1){\tiny SELON LA M\'ETHODE ET LES PROC\'ED\'ES}
+\rput(0,0){de \textbf{PESTALOZZI et FR\OE{}BEL}}
+\rput(0,-1){M\textsuperscript{me} FANNY DELON}
+\rput(0,-1.5){\tiny Directrice d'une \'Ecole professionnelle \`a Paris}
+\rput(0,-2){M. CH. DELON}
+\rput(0,-2.5){\tiny Licenci\'e \`es sciences}
+\rput(0,-3){PARIS}
+\rput(0,-3.5){1873}
+\end{pspicture}}
+\end{figure}
+
+for children at infant school! One can not be surprised that
+theses kinds of pedagogue gave rise to the generation of Eintein,
+Maxwell, Bohr etc.
+
+
+
+\begin{figure}[ht]
+\begin{Beispiel}[colwidth=0.45\linewidth]
+\psset{THETA=15,PHI=50,Dobs=200,Decran=15}
+\hexagon
+\end{Beispiel}
+\caption{\label{hexagone}hexagon.}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{Beispiel}[colwidth=0.45\linewidth]
+\psset{THETA=15,PHI=50,Dobs=200,Decran=15}%
+\stardodecagon
+\end{Beispiel}
+\caption{\label{dodecagone}star dodecagon.}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{Beispiel}[colwidth=0.45\linewidth]
+\psset{THETA=-15,PHI=50,Dobs=200,Decran=15}
+\pentagon
+\end{Beispiel}
+\caption{\label{pentagone}pentagon.}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{Beispiel}[colwidth=0.45\linewidth]
+\psset{THETA=-15,Decran=10,Dobs=100,PHI=75}
+\stardecagon
+\end{Beispiel}
+\caption{\label{decagone}star decagon.}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{Beispiel}[colwidth=0.45\linewidth]
+\psset{THETA=20,PHI=75,Decran=10,Dobs=100}
+\begin{pspicture*}(-2.5,-2.5)(2.5,2)
+\Table
+\psset{A=5,B=5,C=5}
+\CubeThreeD(-7.88675,0,5)%1
+\CubeThreeD[RotZ=-120](3.94338,6.83,5)%2
+\CubeThreeD[RotZ=120](3.94338,-6.83,5)%3
+\end{pspicture*}
+\end{Beispiel}
+\caption{\label{triangle}triangle.}
+\end{figure}
+
+
+\begin{figure}[ht]
+\begin{Beispiel}[colwidth=0.45\linewidth]
+\psset{THETA=-15,PHI=50,Decran=10,Dobs=150}
+\octogon
+\end{Beispiel}
+\caption{\label{octogone}octogon.}
+\end{figure}
+
+
+\begin{figure}[ht]
+\begin{Beispiel}[colwidth=0.45\linewidth]
+\psset{THETA=-15,Decran=10,Dobs=150,PHI=75}
+\starhexadecagon
+\end{Beispiel}
+\caption{\label{hexadecagon}star hexadecagon.}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{Beispiel}[colwidth=0.45\linewidth]
+\psset{THETA=-15,Decran=10,Dobs=150,PHI=75}
+\begin{pspicture}(-2.2,-1.75)(2.2,2.2)
+  \Table
+  \pNodeThreeD(-8.66,-5,0){A6}
+  \pNodeThreeD(-8.66,5,0){A1}
+  \pNodeThreeD(0,10,0){A2}
+  \pNodeThreeD(8.66,5,0){A3}
+  \pNodeThreeD(8.66,-5,0){A4}
+  \pNodeThreeD(0,-10,0){A5}%
+  \psclip{\pspolygon[fillstyle=solid,fillcolor=GrisClair,%
+    linestyle=none](A1)(A2)(A3)(A4)(A5)(A6)}
+    \DessusTable
+  \endpsclip
+  \psset{A=5,B=5,C=5}
+  \DieThreeD[RotZ=60,RotX=-90](-6.83,-11.83,5)%
+  \DieThreeD[RotZ=120,RotY=-90](6.83,-11.83,5)%
+  \DieThreeD[RotX=90](-13.86,0,5)%
+  \DieThreeD[RotZ=-60,RotY=90](-6.83,11.83,5)%
+  \DieThreeD[RotZ=-120,RotY=180](6.83,11.83,5)%
+  \DieThreeD[RotZ=180](13.86,0,5)%
+\end{pspicture}
+\end{Beispiel}
+\caption{\label{pentagoneDie}hexagon with dices.}
+\end{figure}
+
+Observing figure from off :
+\begin{verbatim}
+\psset{PHI=90,THETA=0}
+\end{verbatim}
+ one obtains classical geometric
+figures :
+
+(\ref{hexagonePlan}) (\ref{dodecagonePlan}) (\ref{pentagonePlan}) (\ref{decagonePlanStar})
+(\ref{trianglePlan}) (\ref{octogonePlan}) (\ref{hexadecagonePlan}) (\ref{hexagonePlanDie}).
+
+\begin{figure}[ht]
+\centering
+\psset{THETA=0,Decran=10,Dobs=125,PHI=90}
+\hexagon
+\caption{\label{hexagonePlan}``flat'' hexagon.}
+\end{figure}
+
+
+\begin{figure}[ht]
+\centering
+\psset{Decran=10,Dobs=100}
+\psset{PHI=90,THETA=0}
+\stardecagon
+\caption{\label{dodecagonePlan}``flat'' star dodecagone.}
+\end{figure}
+%
+\begin{figure}[ht]
+\centering
+\psset{Decran=10,Dobs=125}
+\psset{PHI=90,THETA=0}
+\pentagon
+\caption{\label{pentagonePlan}``flat'' pentagon.}
+\end{figure}
+
+
+\begin{figure}[ht]
+\centering
+\psset{THETA=0,Decran=10,Dobs=125,PHI=90}
+\stardecagon
+\caption{\label{decagonePlanStar}``flat'' star decagon.}
+\end{figure}
+%
+
+
+%
+\begin{figure}[ht]
+\centering
+\psset{PHI=90,THETA=0,Decran=10,Dobs=100}
+\begin{pspicture}*(-2.2,-2.2)(2.2,2.2)
+\Table
+\psset{A=5,B=5,C=5}
+\CubeThreeD(-7.88675,0,5)%1
+\CubeThreeD[RotZ=-120](3.94338,6.83,5)%2
+\CubeThreeD[RotZ=120](3.94338,-6.83,5)%3
+\end{pspicture}
+\caption{\label{trianglePlan}``flat'' triangle.}
+\end{figure}
+
+
+\begin{figure}[ht]
+\centering
+\psset{PHI=90,THETA=0,Decran=10,Dobs=125}
+\octogon
+\caption{\label{octogonePlan}``flat'' octogon.}
+\end{figure}
+
+
+
+\begin{figure}[ht]
+\centering
+\psset{PHI=90,THETA=0,Decran=10,Dobs=125}
+\starhexadecagon
+\caption{\label{hexadecagonePlan}``flat'' star hexadecagon.}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\psset{PHI=90,THETA=0,Decran=10,Dobs=125}
+\begin{pspicture}(-2.2,-2.2)(2.2,2.2)
+\Table
+\pNodeThreeD(-8.66,-5,0){A6}
+\pNodeThreeD(-8.66,5,0){A1}
+\pNodeThreeD(0,10,0){A2}
+\pNodeThreeD(8.66,5,0){A3}
+\pNodeThreeD(8.66,-5,0){A4}
+\pNodeThreeD(0,-10,0){A5}%
+\psclip{\pspolygon[fillstyle=solid,fillcolor=GrisClair,linestyle=none](A1)(A2)(A3)(A4)(A5)(A6)}
+\DessusTable
+\endpsclip
+\psset{A=5,B=5,C=5}
+\DieThreeD[RotZ=60,RotX=-90](-6.83,-11.83,5)%
+\DieThreeD[RotZ=120,RotY=-90](6.83,-11.83,5)%
+\DieThreeD[RotX=90](-13.86,0,5)%
+\DieThreeD[RotZ=-60,RotY=90](-6.83,11.83,5)%
+\DieThreeD[RotZ=-120,RotY=180](6.83,11.83,5)%
+\DieThreeD[RotZ=180](13.86,0,5)%
+\end{pspicture}
+\caption{\label{hexagonePlanDie}``flat'' hexagon with dices.}
+\end{figure}
+
+
+
+
+\clearpage
+
+
+\section{Sphere, part of sphere, half-sphere, parallels and meridians}
+
+Beside \verb+sphereThreeD+ there exist several macro for spheres:
+
+\begin{itemize}
+\item \verb|SphereInverseThreeD|
+\item \verb|\SphereCercleThreeD|
+\item \verb|\SphereMeridienThreeD|
+\item \verb|\DemiSphereThreeDThreeD|
+\item \verb|\SphereCreuseThreeD|
+\item \verb|\PortionSphereThreeD|
+\end{itemize}
+
+
+The macro:
+\begin{verbatim}
+\SphereThreeD(10,30,20){20}
+\end{verbatim}
+draws the sphere defined by the coordinates of its centre and its radius which is shown in
+figure~\ref{sphere} together with the macro
+\begin{verbatim}
+\PortionSphereThreeD(0,0,0){20}
+\end{verbatim}
+and some more additional lines.
+
+\begin{verbatim}
+\begin{pspicture}(-3,-3.5)(3,5)
+\psset{THETA=30,PHI=30,Dobs=100,Decran=10}
+{\psset{style=GradGrayWhite}%
+\SphereThreeD(0,0,0){20}
+\psset{fillstyle=solid,fillcolor=gray}
+\PortionSphereThreeD(0,0,0){20}
+\pNodeThreeD(20;10;10){C1}
+\pNodeThreeD(40;10;10){D1}
+\psline(C1)(D1)
+\pNodeThreeD(20;10;-10){C2}
+\pNodeThreeD(40;10;-10){D2}
+\psline(C2)(D2)
+\pNodeThreeD(20;-10;-10){C3}
+\pNodeThreeD(40;-10;-10){D3}
+\psline(C3)(D3)
+\pNodeThreeD(20;-10;10){C4}
+\pNodeThreeD(40;-10;10){D4}
+\psline(C4)(D4)
+\PortionSphereThreeD%
+	[style=GradGrayWhite](0,0,0){40}}
+% PhiCercle=latitude of the cercle
+% \SphereCercle[PhiCercle=...]{radius}
+\psset{linecolor=white,PhiCercle=45}
+\SphereCercleThreeD(0,0,0){20}
+% ThetaMeridien=longitude of the meridian
+% \SphereMeridien[ThetaMeridien=...]{radius}
+\SphereMeridienThreeD%
+	[ThetaMeridien=45](0,0,0){20}
+\pNodeThreeD(20;45;45){A}
+\pNodeThreeD(50;45;45){B}
+\psline[linecolor=black]{->}(A)(B)
+\pNodeThreeD(20;0;90){Nord}
+\pNodeThreeD(40;0;90){Nord1}
+\psline[linecolor=black]{->}(Nord)(Nord1)
+\SphereCercleThreeD[PhiCercle=0](0,0,0){20}
+\SphereMeridienThreeD%
+	[ThetaMeridien=0](0,0,0){20}
+\end{pspicture}
+\end{verbatim}
+
+
+
+\begin{figure}[!htb]
+\begin{pspicture}(-3,-3.5)(3,5)
+\psset{THETA=30,PHI=30,Dobs=100,Decran=10}
+\bgroup
+  \psset{style=GradGrayWhite}%
+  \SphereThreeD(0,0,0){20}
+  \psset{fillstyle=solid,fillcolor=gray}
+  \PortionSphereThreeD(0,0,0){20}
+  \pNodeThreeD(20;10;10){C1}
+  \pNodeThreeD(40;10;10){D1}
+  \psline(C1)(D1)
+  \pNodeThreeD(20;10;-10){C2}
+  \pNodeThreeD(40;10;-10){D2}
+  \psline(C2)(D2)
+  \pNodeThreeD(20;-10;-10){C3}
+  \pNodeThreeD(40;-10;-10){D3}
+  \psline(C3)(D3)
+  \pNodeThreeD(20;-10;10){C4}
+  \pNodeThreeD(40;-10;10){D4}
+  \psline(C4)(D4)
+  \PortionSphereThreeD[style=GradGrayWhite](0,0,0){40}
+\egroup
+% PhiCercle=latitude of the cercle
+% \SphereCercle[PhiCercle=...]{radius}
+  \psset{linecolor=white,PhiCercle=45}
+  \SphereCercleThreeD(0,0,0){20}
+% ThetaMeridien=longitude of the meridian
+% \SphereMeridien[ThetaMeridien=...]{radius}
+  \SphereMeridienThreeD[ThetaMeridien=45](0,0,0){20}
+% \pNodeThreeD(radius}{longitude}{latitude}{name of the point}
+  \pNodeThreeD(20;45;45){A}
+  \pNodeThreeD(50;45;45){B}
+  \psline[linecolor=black]{->}(A)(B)
+  \pNodeThreeD(20;0;90){Nord}
+  \pNodeThreeD(40;0;90){Nord1}
+  \psline[linecolor=black]{->}(Nord)(Nord1)
+  \SphereCercleThreeD[PhiCercle=0](0,0,0){20}
+  \SphereMeridienThreeD[ThetaMeridien=0](0,0,0){20}
+\end{pspicture}
+\caption{\label{sphere}A Sphere.}
+\end{figure}
+
+
+\begin{figure}[!htb]
+\centering
+\begin{pspicture}(-3,-2)(3,5)
+  \psset{THETA=60,PHI=30,Dobs=100,Decran=10}
+% \DemiSphereThreeD(x,y,z){radius}
+  \DemiSphereThreeD[RotX=180,style=GradGrayWhite](0,0,0){20}
+  \SphereCreuseThreeD[RotX=180,linecolor=white,style=GradGrayWhite](0,0,0){20}
+  \AxesThreeD[linestyle=dashed](30,30,40)
+\end{pspicture}
+\caption{\label{halfsphere}half-sphere.}
+\end{figure}
+
+
+\begin{figure}[!htb]
+\centering
+\begin{pspicture}(-3,-2)(3,2)
+\psset{THETA=60,PHI=20,Dobs=100,Decran=10}
+\psset{style=GradGrayWhite}%
+\SphereThreeD(0,0,0){10}%
+\DemiSphereThreeD[RotX=180](0,0,0){20}%
+\begin{psclip}{%
+\SphereCreuseThreeD[RotX=180,linecolor=white](0,0,0){20}}%
+\SphereThreeD(0,0,0){10}
+\end{psclip}%
+\end{pspicture}
+\caption{\label{egg} levitation}
+\end{figure}
+
+
+\section{A Hole in a sphere}
+
+\begin{figure}[!htb]
+\centering
+\psset{THETA=10,PHI=30,Dobs=100,Decran=10}
+\begin{pspicture}*(-3,-3)(3,3)
+  \SphereThreeD[style=GradGrayWhite,gradmidpoint=0.2](0,0,0){40}%
+  \begin{psclip}{\PortionSphereThreeD[PortionSpherePHI=40,%
+       DeltaPHI=30,DeltaTHETA=30,linewidth=4\pslinewidth](0,0,0){40}}%
+    \SphereInverseThreeD[style=GradGrayWhite](0,0,0){40}%
+    \SphereThreeD[style=GradGrayWhite](0,0,0){30}%
+    \begin{psclip}{\PortionSphereThreeD[PortionSpherePHI=30,%
+         DeltaPHI=30,DeltaTHETA=30,linewidth=4\pslinewidth](0,0,0){30}}%
+      \SphereInverseThreeD[style=GradGrayWhite](0,0,0){30}%
+      \SphereThreeD[style=GradGrayWhite](0,0,0){20}%
+      \begin{psclip}{\PortionSphereThreeD[PortionSpherePHI=30,%
+           DeltaPHI=30,DeltaTHETA=30,linewidth=4\pslinewidth](0,0,0){20}}%
+        \SphereInverseThreeD[style=GradGrayWhite](0,0,0){20}%
+        \SphereThreeD[style=GradGrayWhite](0,0,0){10}%
+        \begin{psclip}{%
+          \PortionSphereThreeD[PortionSpherePHI=30,%
+              DeltaPHI=30,DeltaTHETA=30,linewidth=4\pslinewidth](0,0,0){10}}%
+          \SphereInverseThreeD[style=GradGrayWhite](0,0,0){10}%
+          \SphereThreeD[style=GradGrayWhite](0,0,0){5}%
+        \end{psclip}%
+      \end{psclip}%
+    \end{psclip}%
+  \end{psclip}%
+\end{pspicture}
+\caption{\label{Holeinasphere}A Hole in a sphere.}
+\end{figure}
+
+It is a rectangular hole whose the size are meridian and parallels
+arcs (figure~\ref{Holeinasphere}).
+
+We  define the part of the sphere setting its radius, the center
+of the sphere and the $\Delta\phi$ and $\Delta\theta$.
+\begin{verbatim}
+\PortionSphereThreeD[PortionSpherePHI=45,%
+              PortionSphereTHETA=0,%
+                       DeltaPHI=45,%
+                 DeltaTHETA=20](0,0,0){20}
+\end{verbatim}
+
+There are the parameters of the first hole. The radius is
+\texttt{20}.
+\begin{verbatim}
+{\psset{fillstyle=gradient,%
+           gradbegin=white,%
+              gradend=blue,%
+          gradmidpoint=0.2,%
+            linecolor=cyan,%
+            linewidth=0.1mm}
+\SphereThreeD(0,0,0){20}}%
+\begin{psclip}{%
+\PortionSphereThreeD[PortionSpherePHI=45,%
+    DeltaPHI=45,DeltaTHETA=20](0,0,0){20}}
+\SphereInverseThreeD[fillstyle=solid,%
+                 fillcolor=red,%
+                linecolor=blue](0,0,0){20}%
+\end{psclip}%
+\end{verbatim}
+
+This is the tricks to see the inner of the sphere.
+
+\verb+\SphereInverse+ define the hidden part of the sphere.
+
+
+\section{Drawing a cylinder}
+A cylinder is defined by the radius of its base and its height.
+The center of the base is set in the usual way, and
+\textsf{RotX,RotY,RotZ} make it rotate around the axes.
+
+\verb+\CylindreThreeD(x,y,z){radius}{hauteur}+
+
+\begin{figure}[!htb]
+\centering
+\begin{pspicture}(-3.5,-2)(3,4.5)
+\psset{THETA=5,PHI=40,Dobs=150,Decran=6.5,fillstyle=solid,linewidth=0.1mm}
+% plan horizontal
+{\psset{normaleLongitude=0, normaleLatitude=90}
+\FrameThreeD[fillstyle=solid,fillcolor=GrisClair](0,0,0)(-50,0)(50,50)
+\FrameThreeD[fillstyle=solid,fillcolor=GrisClair](0,0,0)(-50,0)(50,-50)
+\QuadrillageThreeD(0,0,0)(-50,-50)(50,50)}
+\multido{\iCY=-45+90}{2}{%
+    \CylindreThreeD(-45,\iCY,0){5}{50}
+    \DemiSphereThreeD(-45,\iCY,50){5}%
+}
+\CylindreThreeD(0,0,0){10}{15}
+\CylindreThreeD(0,0,15){20}{5}
+\DemiSphereThreeD[RotX=180](0,0,35){20}
+\SphereCreuseThreeD[RotX=180](0,0,35){20}
+{\psset{RotY=90,RotX=0,RotZ=30}
+\CylindreThreeD(15,15,5){5}{20}}
+\multido{\iCY=-45+90}{2}{%
+\CylindreThreeD(45,\iCY,0){5}{50}
+\DemiSphereThreeD(45,\iCY,50){5}}
+\end{pspicture}
+\caption{\label{cylinder}cylinders.}
+\end{figure}
+
+\begin{verbatim}
+\CylindreThreeD(0,0,-5){10}{15}}
+\psset{RotY=90}
+\CylindreThreeD(15,15,-5){5}{20}
+\end{verbatim}
+
+
+\section{Tetrahedron, cone and square pyramid}
+\subsection{square pyramid}
+\begin{verbatim}
+\psset{A=...,Hpyramide=...}
+\Pyramide
+\end{verbatim}
+
+See the examples of figures~(\ref{Pyramid})~(\ref{Obelisque}).
+
+\begin{figure}[!htb]
+\centering
+\psset{ColorFaceD=GrayD,ColorFaceA=GrayA,%
+    ColorFaceB=GrayB,ColorFaceC=GrayC,ColorFaceE=GrayE}
+\psframebox[fillstyle=solid,fillcolor=GrayB,framesep=0pt]{%
+\begin{pspicture}*(-3,-4)(3,4)
+\psset{THETA=-70,PHI=60,Dobs=200,Decran=15}
+\DecorSable
+\psset{RotZ=45,fillstyle=solid,linecolor=black,A=9}
+\PyramideThreeD(5,35,0){10}
+\psset{A=10}
+\PyramideThreeD(0,0,0){13}
+\psset{A=7}
+\PyramideThreeD(10,-35,0){8.7}
+\end{pspicture}}
+\caption{\label{Pyramid}Pyramids of Egypt.}
+\end{figure}
+
+
+\begin{figure}[!htb]
+\centering
+\psframebox[fillstyle=solid,fillcolor=GrayB,framesep=0pt]{%
+    \begin{pspicture}*(-2.5,-2)(2.5,5.5)
+    \psset{THETA=30,PHI=30,Dobs=400,Decran=12}
+    \DecorSable
+    \CubeThreeD[A=15,B=15,C=15](0,0,15)%
+    \psset{A=10,fillstyle=solid}
+    \PyramideThreeD[fracHeight=0.8](0,0,30){150}%
+    \psset{A=2}
+    \PyramideThreeD(0,0,150){5}%
+    \end{pspicture}%
+}
+\caption{\label{Obelisque}Obelisk of Egypt.}
+\end{figure}
+
+
+\subsection{Cone}
+\begin{verbatim}
+\ConeThreeD[fracHeight=...]
+           (x,y,z){radius}{Height}
+\end{verbatim}
+by default \verb+fracHeight=1+ : figure~\ref{Cone}.
+
+\begin{figure}[!htb]
+\centering
+\psframebox[fillstyle=solid,fillcolor=GrayB,framesep=0pt]{%
+\begin{pspicture}*(-3,-5)(3,4)
+\psset{THETA=30,PHI=40,Dobs=200,Decran=12,fillstyle=solid,%
+    fillcolor=GrisClair,linewidth=0.25\pslinewidth}
+\DecorSable
+\CylindreThreeD(0,0,0){10}{50}
+\ConeThreeD[fillcolor=GrayB](0,0,50){10}{10}
+\CylindreThreeD[RotY=90,RotZ=150](40,20,10){10}{50}
+\ConeThreeD[fracHeight=0.5](20,-20,0){10}{10}
+\CylindreThreeD(20,-20,5){5}{50}
+\ConeThreeD[fracHeight=0.5](50,50,0){10}{10}
+\CylindreThreeD(50,50,5){5}{50}
+\end{pspicture}}
+\caption{\label{Cone}Cones and cylinders.}
+\end{figure}
+
+\section{Points and lines}
+The command allowing to mark points and thus to draw lines
+and polygons can be used of two manners, either with the Cartesian coordinates
+ \begin{verbatim}
+\pNodeThreeD(x,y,z){name}
+\end{verbatim}
+ or with the spherical coordinates :
+\begin{verbatim}
+\pNodeThreeD(radius;longitude;latitude)%
+            {name of the point}
+\end{verbatim}
+
+For example \verb+\pNodeThreeD(25,-25,25){A}+, the point $A(25,25,25)$ places.
+Points being positioned, just to write \verb+\psline(A)(B)+, to draw the segment $AB$.
+
+ On the figure~\ref {points}, one drew a cube with its diagonals.
+\begin{figure}[!htb]
+\centering
+\psset{unit=1cm}
+ \psset{THETA=70,PHI=30,Dobs=150,Decran=10}
+ \begin{pspicture}(-3,-3)(3,4)
+  \AxesThreeD[linecolor=red,linestyle=dashed](50,60,50)
+  \pNodeThreeD(25,-25,25){A}
+  \pNodeThreeD(25,25,25){B}
+  \pNodeThreeD(25,25,-25){C}
+  \pNodeThreeD(25,-25,-25){D}
+  \pNodeThreeD(-25,-25,25){E}
+  \pNodeThreeD(-25,25,25){F}
+  \pNodeThreeD(-25,25,-25){G}
+  \pNodeThreeD(-25,-25,-25){H}
+  \pspolygon(A)(B)(C)(D)
+  \pspolygon(E)(F)(G)(H)
+  \psline(A)(E)
+  \psline(B)(F)
+  \psline(C)(G)
+  \psline(D)(H)
+  \psset{linestyle=dashed}
+  \psline(A)(G)
+  \psline(B)(H)
+  \psline(C)(E)
+  \psline(D)(F)
+% routine page 49 in "présentation de PSTricks"
+% D.Girou "cahier 16 Gutengerg"
+    \newcounter{lettre}
+    \multido{\i=1+1}{8}{%
+        \setcounter{lettre}{\i}
+        \psdot[linecolor=red](\Alph{lettre})
+        \uput[90](\Alph{lettre}){\Alph{lettre}}
+    }
+\end{pspicture}
+\caption{\label{points}Points and lines.}
+\end{figure}
+
+
+\section{Circles}
+A circle is defined by a vector normal for its plan by  $(\theta,\varphi)$, with the following parameters for example:
+\begin{verbatim}
+normaleLongitude=60,normaleLatitude=90
+\end{verbatim}
+The coordinates of his centre as well as his radius.
+\begin{verbatim}
+\CircleThreeD(x,y,z){radius}
+\end{verbatim}
+
+The circles of the figure~\ref{circles}, were drawn with the following
+commands:
+
+\begin{figure}[!htb]
+\centering
+\psframebox{%
+    \begin{pspicture}(-2.5,-3.5)(3.5,1.5)
+    \psset{THETA=50,PHI=50,Dobs=250,Decran=10}
+    \multido{\iX=-70+10}{15}{%
+        \pNodeThreeD(\iX,0,0){X1}
+        \pNodeThreeD(\iX,50,0){X2}
+        \psline(X1)(X2)
+    }
+    \multido{\iY=0+10}{6}{%
+        \pNodeThreeD(-70,\iY,0){Y1}
+        \pNodeThreeD(70,\iY,0){Y2}
+        \psline(Y1)(Y2)%
+    }
+    \psset{normaleLongitude=0,normaleLatitude=90}
+    \multido{\iXorigine=-65+10}{14}{%
+        \multido{\iYorigine=5+10}{5}{%
+            \CircleThreeD[linecolor=red](\iXorigine,\iYorigine,0){5}%
+        }%
+    }
+    \end{pspicture}%
+}
+\caption{\label{circles}circles.}
+\end{figure}
+
+\begin{verbatim}
+\psset{normaleLongitude=0,%
+        normaleLatitude=90}
+\multido{\iXorigine=-65+10}{14}{%
+    \multido{\iYorigine=5+10}{5}{%
+        \CircleThreeD[linecolor=red]%
+            (\iXorigine,\iYorigine,0){5}}}
+\end{verbatim}
+
+\section{The macros and the options}
+\subsection{The colors of the cube, the pyramid and tetraedre}
+
+The predefined colors for the different sides of a cube are
+always set in the \verb+rgb+ mode :
+\begin{verbatim}
+CubeColorFaceOne=1 1 0,%
+CubeColorFaceTwo=0.9 0.9 0,%
+CubeColorFaceThree=0.8 0.8 0,%
+CubeColorFaceFour=0.7 0.7 0,%
+CubeColorFaceFive=0.65 0.65 0,%
+CubeColorFaceSix=0.75 0.75 0
+\end{verbatim}
+
+The colors for the pyramid and the tetraedre are taken from the predefined ones:
+\begin{verbatim}
+ColorFaceD=cyan,
+ColorFaceA=magenta,
+ColorFaceB=red,
+ColorFaceC=blue,
+ColorFaceE=yellow
+\end{verbatim}
+
+They can be changed in the usual way with the \verb+\psset+ macro.
+
+
+\subsection{Common parameters}
+\verb+RotX=<value>, RotY=<value>, RotZ=<value>+
+
+The predefined value is zero, means no rotation.
+
+\subsection{Cube}
+The following command places a parallelepiped with a length of $a=40$, $b=20$ and $c=10$ units
+and it is placed with its center at the point $x=25$, $y=25$ and $z=25$
+
+\begin{verbatim}
+\CubeThreeD[A=20,B=10,C=5](25,25,25)
+\end{verbatim}
+
+\begin{figure}[!htb]
+\centering
+\begin{pspicture}(-3,-3)(3,3.5)
+\psset{PHI=30,THETA=45,Dobs=200}
+\PlansOXYZ\AxesThreeD(55)
+\FrameThreeD[normaleLongitude=0,%
+             normaleLatitude=90,%
+             fillstyle=vlines,hatchsep=0.4mm](25,25,0)(-10,-15)(10,15)
+\FrameThreeD[normaleLongitude=0,%
+             normaleLatitude=0,%
+             fillstyle=vlines,hatchsep=0.4mm](0,25,25)(-10,-5)(10,5)
+\FrameThreeD[normaleLongitude=90,%
+             normaleLatitude=0,%
+             fillstyle=vlines,hatchsep=0.4mm](25,0,25)(-15,-5)(15,5)
+\CubeThreeD[A=15,B=10,C=5](25,25,25)%
+\end{pspicture}
+\caption{\label{Prisme}Parallelepiped}
+\end{figure}
+
+In other words: the length of the sides is \verb+2A,2B,2C+ (see figure~\ref{Prisme}).
+
+For rotations, let us consider the result of a rotation around one of the axes, while knowing that it is possible to combine them.  The corresponding rotation of projection on the horizontal level is obtained with the parameter: \verb+normaleLongitude=<degrees>+ (figure~\ref{PrismeRotZ}).
+
+\begin{figure}[!htb]
+\centering
+\begin{pspicture}(-3,-3)(3,3.5)
+\psset{PHI=30,THETA=45,Dobs=200,RotZ=60}
+\PlansOXYZ\AxesThreeD(55)
+% la projection sur le plan Oxy
+\FrameThreeD[normaleLongitude=60,%
+             normaleLatitude=90,%
+             fillstyle=vlines,hatchsep=0.4mm](25,25,0)(-10,-15)(10,15)
+\CubeThreeD[A=15,B=10,C=5](25,25,25)%
+\end{pspicture}
+\caption{\label{PrismeRotZ}The same parallelepiped rotated with \texttt{RotZ=60}.}
+\end{figure}
+
+There is no difference to a die, except that all sides have the same length.
+
+
+\begin{figure}[!htb]
+\centering
+\begin{pspicture}(-3,-3)(3,3.5)
+\psset{PHI=30,THETA=45,Dobs=200,RotZ=60,,RotX=90}
+\PlansOXYZ\AxesThreeD(55)
+% la projection sur le plan Oxy
+\FrameThreeD[normaleLongitude=60,%
+             normaleLatitude=90,%
+             fillstyle=vlines,hatchsep=0.4mm](25,25,0)(-5,-15)(5,15)
+\CubeThreeD[A=15,B=10,C=5](25,25,25)%
+\end{pspicture}
+\caption{\label{PrismeRotXRotZ}The same parallelepiped, rotated with the values \texttt{RotX=90,RotZ=60}}
+\end{figure}
+
+
+\subsection{Cylinder and circle}
+In addition to the already quoted optional parameters the cylinder  requires the obligatory parameters:
+\begin{verbatim}
+\CylindreThreeD[...](x,y,z){radius}{height}
+\end{verbatim}
+
+Projection on the horizontal level is obtained with the following values:
+
+\begin{verbatim}
+\CircleThreeD[normaleLongitude=0,%
+             normaleLatitude=90,%
+             fillstyle=vlines,%
+             hatchsep=0.4mm](30,30,0){10}
+\end{verbatim}
+
+The circle macro needs the following parameters:
+
+\begin{verbatim}
+\CircleThreeD[...](x,y,z){radius}
+\end{verbatim}
+
+Figure~\ref{CylindreDemo} shows an example of the above macros.
+
+\begin{figure}[!ht]
+\centering
+\begin{pspicture}(-3,-3)(3,3.5)
+\psset{PHI=30,THETA=45,Dobs=200}
+\PlansOXYZ\AxesThreeD(55)
+% la projection sur le plan Oxy
+\CircleThreeD[normaleLongitude=0,%
+             normaleLatitude=90,%
+             fillstyle=vlines,%
+             hatchsep=0.4mm](30,30,0){10}
+\CylindreThreeD[fillstyle=solid,fillcolor=yellow,%
+   linewidth=0.1mm](30,30,20){10}{30}%
+\end{pspicture}
+\caption{\label{CylindreDemo}A cylinder with a radius of $10$ units and a
+    height of $50$ units
+    with its base center at \texttt{(30,30,20)}.%
+}
+\end{figure}
+
+
+\section{See the interior of a cube}
+The following option makes it possible to visualize the interior of the box, the result is seen in the figure~\ref{Cube inside} :
+
+\begin{verbatim}
+\DieThreeD(0,0,0)%
+\begin{psclip}{%
+\FrameThreeD[normaleLongitude=0,%
+             normaleLatitude=90]%
+			 (0,0,10)(-10,-10)(10,10)}%
+\DieThreeD[CubeInside=true](0,0,0)%
+\end{psclip}%
+\end{verbatim}
+
+\begin{figure}
+\centering
+\begin{pspicture}(-2,-2)(2,3.5)
+  \psset{A=10,B=10,C=10,PHI=60,THETA=-60}
+  \DieThreeD(0,0,0)%
+  \begin{psclip}{%
+    \FrameThreeD[normaleLongitude=0,%
+       normaleLatitude=90](0,0,10)(-10,-10)(10,10)}%
+    \DieThreeD[CubeInside=true](0,0,0)%
+  \end{psclip}%
+  \FrameThreeD[normaleLongitude=0,%
+    normaleLatitude=90,linewidth=1mm](0,0,10)(-10,-10)(10,10)%
+\end{pspicture}
+\caption{\label{Cube inside}An empty box.}
+\end{figure}
+
+
+
+\end{document}

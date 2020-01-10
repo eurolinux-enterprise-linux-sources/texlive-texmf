@@ -1,0 +1,444 @@
+\documentclass[a4paper,fleqn,11pt]{article}
+\usepackage[T1]{fontenc} % use T1 fonts
+\usepackage{graphicx}    % graphic inclusion commands
+\usepackage{url}         % internet addresses
+\newcommand*{\orgurl}{}
+\let\orgurl=\url  % save original url command in orgurl
+\usepackage{html}        % make compilable for latex2html
+                         % hint by Heiko Oberdiek, oberdiek@ruf.uni-freiburg.de
+\usepackage{hyperref}    % hyper references
+\usepackage{thumbpdf}    % pdf thumbnails
+
+% setup for pdf file format
+\hypersetup{%
+  pdftitle={Using TrueType fonts with \TeX\ via Postscript Type\,1 format},
+  pdfsubject={Using TrueType fonts with \TeX\ via Postscript Type\,1 format},
+  pdfkeywords={truetype, pdftex, pdflatex, dvips, type1, postscript,
+    font, tex, latex},
+  pdfauthor={Harald Harders (mailto:h.harders@tu-bs.de)},
+  pdfcreator={\LaTeX},
+  pdfproducer={pdf\LaTeX},
+  bookmarksopen=true,
+  bookmarksnumbered=true,
+  pdfstartview={FitH 1000},
+%  pdfview={Fit H 1000}
+}
+% use color links only in pdf file (because ps file does not have
+% active links)
+\makeatletter
+\ifx\pdftexversion\undefined
+\else
+  \hypersetup{colorlinks=true}
+\fi
+%\@ifundefined{pdfoutput}{}{\hypersetup{colorlinks=true}}
+\makeatother
+
+% one command for references in both pdf and html output
+\latexhtml{%
+  \newcommand{\hypref}[2]{\href{#2}{\texttt{#1}}}
+}{%
+  \newcommand{\hypref}[2]{\htmladdnormallink{\texttt{#1}}{#2}}
+}
+%\newcommand{\hypref}[2]{\latexhtml{\href{#2}{\texttt{#1}}}
+%  {\htmladdnormallink{\texttt{#1}}{#2}}}
+
+% data for the title page
+\title{Using TrueType fonts with \TeX\ via Postscript Type\,1 format}
+\author{Harald Harders 
+  (\hypref{\orgurl{h.harders@tu-bs.de}}{mailto:h.harders@tu-bs.de})}
+\date{2003-10-31}
+
+% -----------------------------------------------------------------------
+\begin{document}
+% -----------------------------------------------------------------------
+
+% titlepage
+\maketitle
+
+\begin{abstract}
+\noindent This document describes how I have managed to use TrueType
+fonts with te\TeX\ 1.0 under SuSE Linux 6.2.\footnote{The updmap
+  section has been updated to te\TeX\ 2.0.} The way described in
+``Using TrueType fonts with \TeX\ (\LaTeX) and pdf\TeX\ (pdf\LaTeX)''
+\cite{rakityansky} did work with MiK\TeX, but I did not manage to use
+the fonts with te\TeX. 
+
+Strictly speaking this document doesn't describe how to use TrueType
+fonts with te\TeX\ but how to convert TrueType fonts to PostScript
+Type\,1 format which can be used with \TeX.
+
+The shown shell commands are unix style. 
+Similar commands should also work under Windows.
+Please try yourself to find the according commands.
+
+If I have made any errors or if you have a suggestion please mail it
+to me.
+
+\latexhtml{%
+  This document can be downloaded from
+  \url{ftp://ftp.dante.de/tex-archive/info/TrueType/}
+  (PDF and html available).%
+}{%
+  A \hypref{PDF version%
+    }{ftp://ftp.dante.de/tex-archive/info/TrueType/ttf-tetex.pdf}
+  is also available.%
+}
+\end{abstract}
+
+\tableofcontents
+
+% the document itself
+\section{Disclaimer}
+
+This document is provides as is.
+I will not guarantee that the described conversion works and that it
+doesn't course any damage.
+I also will not give any support for problems doing the conversion.
+Please refer to the newsgroups, e.g., \orgurl{comp.text.tex} or
+\orgurl{de.comp.text.tex}.
+My email address is given to give feedback (suggestions, error
+reports), not for support.
+
+I don't know if the shown conversion violates any copyrights.
+
+
+
+\section{Preparing the conversion}
+
+As an example I will show how to convert the font ``VAG Rounded BT'' which
+is part of Microsoft Windows 98 (\verb|tt0756m_.TTF|).
+
+First copy the fonts you want to convert into a temporary directory
+(e.g., a Windows disk is mounted on /dos/c):
+\begin{quote}
+\verb|$ mkdir ~/ttf|\\ %$
+% The comment in the line above is a workaround for the corrupted 
+% xemacs syntax highlightning which does not recognize that the $ sign 
+% is within the argument of the \verb command.
+\verb|$ cp /dos/c/windows/fonts/tt0756m_.TTF ~/ttf|  %$
+\end{quote}
+Then rename the files to a name conforming the fontname scheme by K.~Berry
+\cite{berry1999a}. In this case the supplier is ``Bitstream'' (Filename
+\verb|b*******.ttf|)\footnote{You can find this out by viewing the
+  file with less.}. The Shortcut for the typeface is ``vr'' (Filename
+\verb|*vr*****.ttf|) taken from \cite{berry1999a}. The weight is
+``regular'' (Filename \verb|***r****.ttf|). The variant is omitted
+because itself and the width are normal. The encoding is set to ``8a''
+which means Adobe standard encoding\footnote{Maybe the TrueType font
+  is in Windows encoding, but the approach using ``8a'' worked fine,
+  so I won't change it.} (Filename \verb|****8a**.ttf|). Because the
+width is standard and the font is linearly scaled, these parts of the
+filename are omitted. Finally the filename results in \verb|bvrr8a.ttf|. Move
+the original file to this filename: 
+\begin{quote}
+\verb|$ mv tt0756m_.TTF bvrr8a.ttf| %$
+\end{quote}
+A more detailed description on the naming conventions can be found in
+\cite{berry1999a}. 
+
+\section{Generating the Postscript Type\,1 fonts}
+
+To convert the TrueType font to Postscript Type\,1 format I used the program
+\verb|ttf2pt1| by Andrew Weeks et~al.
+(\url{http://ttf2pt1.sourceforge.net/}). Generate the font files
+\verb|bvrr8a.afm|, \verb|bvrr8a.pfa|, and \verb|bvrr8a.pfb| by using
+these commands: 
+\begin{quote}
+\verb|$ ttf2pt1 -a -e bvrr8a.ttf bvrr8a|\\
+\verb|$ ttf2pt1 -a -b bvrr8a.ttf bvrr8a|
+\end{quote}
+The switch \verb|-a| switches the conversion of some ligatures
+(e.g., fi) on (thanks to Hume Smith for that hint).
+In one of the last lines of the output the fontname is noted:
+\begin{quote}
+\verb|FontName VAGRoundedBT_Regular|
+\end{quote}
+Note the name on a sheet of paper---You will need it later again.
+
+The script
+\hypref{ttf2type1}{ftp://ftp.dante.de/tex-archive/info/TrueType/ttf2type1}
+does these conversion automaticaly for all files with 
+the extension \verb|ttf| in the present working directory. To get the
+font names you should start it as follows:
+\begin{quote}
+\verb_$ ./ttf2type1 2>&1 | grep FontName_ %$
+\end{quote}
+
+\section{Generating the \TeX\ related font files}
+
+Use ``fontinst'' by Alan Jeffrey and Rowland McDonnell
+(\url{ftp://ftp.tex.ac.uk/tex-archive/fonts/utilities/fontinst}) to
+generate the files that \TeX\ needs to use the fonts:
+\begin{quote}
+\verb|$ tex fontinst.sty|\\
+\verb|* \latinfamily{bvr}{} \bye| %$
+\end{quote}
+If you use fonts with different variants you have to append the letter of
+the variant to the family name of the font (e.g., VAGRoundedBT\_Condensed
+would be bvrc).
+This automatic conversion only works if you are using a text font and
+if you have used file names according to the fontname scheme by
+K.~Berry~\cite{berry1999a}.
+Otherwise, you will get some nearly empty \verb|.fd| files and nothing
+more.
+
+Now use pltotf on every file with the extension \verb|.pl| and
+vptovf on all files with the extension \verb|.vpl|:
+\begin{quote}
+\verb|$ for a in *.pl; do pltotf $a; done|\\
+\verb|$ for a in *.vpl; do vptovf $a; done| 
+\end{quote}
+Now you may delete all files that are not used anymore:
+\begin{quote}
+\verb|$ rm *.pl *.vpl *.mtx| %$
+\end{quote}
+The manual of the fontinst package includes a better description.
+
+\section{Move the files to the right places}
+
+Now all files have to be moved to a position where \TeX\ can find them. I
+suggest to put them in the \verb|TEXMFLOCAL| tree. 
+One possibility to get its location is to view the file \verb|texmf.cnf|.
+You can locate it by using \verb|kpsewhich|:
+\begin{quote}
+\verb|$ kpsewhich texmf.cnf| %$
+\end{quote}
+e.g., on SuSE~6.2 and te\TeX~1.0 \verb|texmf.cnf| is located in the directory
+\verb|/etc/texmf/|.
+Another possibility to get \verb|TEXMFLOCAL| is to use \verb|kpsexpand|:
+\begin{quote}
+\verb|$ kpsexpand '$TEXMFLOCAL'|
+\end{quote}
+On my computer the \verb|TEXMFLOCAL| tree starts at
+\verb|/usr/local/teTeX/share/texmf.local|. The \verb|TEXMFMAIN| tree starts at
+\verb|/usr/local/teTeX/share/texmf|.
+In order to have less work I set the shell variable \verb|TMF| to the
+local \TeX\ tree by typing:
+\begin{quote}
+\verb|$ export TMF=`kpsexpand '$TEXMFLOCAL'`|%$
+\end{quote}
+
+
+The files of each file type are installed in an own directory tree
+which has this structure:
+\begin{quote}
+\verb|$TMF/fonts/|<extension>\verb|/|<%
+supplier>\verb|/|<fontname>\verb|/|
+\end{quote}
+In this case:
+\begin{quote}
+\verb|$TMF/fonts/|<extension>\verb|/bitstream/vagrounded/|
+\end{quote}
+The extensions are: \verb|tfm|, \verb|vf|, \verb|pfa|, 
+\verb|afm|, and \verb|ttf|. 
+The extension \verb|pfb| is an exception, its files have to be copied
+to the subdirectory \dots\verb|/type1/|\dots.
+Copy the files by typing:
+\begin{quote}
+\verb|$ for a in tfm vf pfa afm ttf; do|\\ %$
+\verb|> mkdirhier $TMF/fonts/$a/bitstream/vagrounded;|\\
+\verb|> mv *.$a $TMF/fonts/$a/bitstream/vagrounded;|\\ %$
+\verb|> done|\\
+\verb|$ mkdirhier $TMF/fonts/type1/bitstream/vagrounded;|\\ %$
+\verb|$ mv *.pfb $TMF/fonts/type1/bitstream/vagrounded;|\\ %$
+\end{quote}
+You do not really need to copy the \verb|ttf| and \verb|pfa| files
+into the directory because \TeX\ does not use them. 
+I just did it to save them at a special place where I surely find
+them, if I need them for other purposes later.
+
+Move the \verb|*.fd| files to the directory
+\verb|$TMF/tex/latex/psnfss/|: %$
+\begin{quote}
+\verb|$ mkdirhier $TMF/tex/latex/psnfss|\\
+\verb|$ mv *.fd $TMF/tex/latex/psnfss|\\
+\end{quote}
+
+\section{Make dvips find the new font}\label{sec:mapping}
+
+There are at least two possibilities to make dvips find the new font. 
+The first has a simple installation but it' usage is a little bit more
+complicated and it does not enable xdvi to use the font. The second
+possibility has a more complicated installation
+and may leed to problems when updating \LaTeX\ later. But it enables
+xdvi to use the new fonts.
+
+\subsection{Use an additional map file}
+
+Create the file
+\hypref{\$TMF/dvips/vagrounded/config.vagrounded}
+{ftp://ftp.dante.de/tex-archive/info/TrueType/config.vagrounded} 
+with these contents:
+\begin{quote}
+\verb|o|\\
+\verb|p +vagrounded.map|
+\end{quote}
+Create the file \hypref{\$TMF/dvips/vagrounded/vagrounded.map}
+{ftp://ftp.dante.de/tex-archive/info/TrueType/vagrounded.map} 
+with these contents (\emph{Each font definition is in one single
+  line.} So in this example each line starts with \verb|bvr| and ends
+with \verb|<bvrr8a.pfb|. \latex{The $\backslash$ just shows that the
+  line is continued in the next one; it does not appear in the file itself.}):
+\begin{quote}
+\verb|bvrr8r VAGRoundedBT_Regular|\latex{ $\backslash$\\}%
+\verb|     "TeXBase1Encoding ReEncodeFont" <8r.enc <bvrr8a.pfb|\\
+\verb|bvrro8r VAGRoundedBT_Regular|\latex{ $\backslash$\\}%
+\verb|     "0.167 SlantFont TeXBase1Encoding ReEncodeFont"|\latex{ $\backslash$\\}%
+\verb|     <8r.enc <bvrr8a.pfb|
+\end{quote}%
+
+The first item is the filename of the TrueType font with ``8r'' instead of
+``8a''. The second item is the font name you held in mind,
+hopefully. The next items are the same all times. The last one is the
+filename of the TrueType font with the extension \verb|.pfb|.
+Don't use the tabulator character in the mapping file because this
+causes trouble with the \verb|updmap| tool generating the map file for 
+pdf\LaTeX. Use one single space instead.
+
+In the second line the slanted shape of the font is defined. 
+The fontinst package generates slanted, italic and small capital
+shapes of the font automatically if no special font file is available.
+To use the generated slanted shape the second line is necessary.
+
+Additional font effects can be reached by using afm2tfm. Type 
+\begin{quote}
+\verb|$ info afm2tfm| %$
+\end{quote}
+and go to the section ``Special font effects'' (This was a hint of
+Thomas Henlich (\hypref{\orgurl{henlich@mmers1.mw.tu-dresden.de}}
+{mailto:henlich@mmers1.mw.tu-dresden.de})).
+
+Finally type
+\begin{quote}
+\verb|$ texhash| %$
+\end{quote}
+to update the \TeX\ file database.
+
+
+\subsection{Append data to the global map file}
+
+This technique was suggested by Nguy{\^e}n-Dai Quý
+(\hypref{\orgurl{daiquy.nguyen@ulg.ac.be}}
+{mailto:daiquy.nguyen@ulg.ac.be}) \cite{quy2000a}.
+There are different possibilities to append the map lines to the
+global map file.
+Here, only the simplest (and best) possibility is described.
+It works with all relativley recent te\TeX\ versions.
+
+Before you can do it the \TeX\ file database has to be updated if that
+has not been done, yet:
+\begin{quote}
+\verb|$ texhash| %$
+\end{quote}
+
+Then, just type
+\begin{quote}
+\verb|$ updmap --enable Map vagrounded.map| %$
+\end{quote}
+If you have generated more than one map file you have to repeat that
+line for each map file.
+It is not possible to enable multiple map files in one call of
+\texttt{updmap}.
+
+When you install a new version of te\TeX\ probably the added map
+entries get lost.
+Then you have to repeat the \texttt{updmap} calls again.
+
+
+\section{Usage of the new font}
+
+To use the new font you simple have to insert
+\begin{quote}
+\verb|\renewcommand{\rmdefault}{bvr}\rmfamily|
+\end{quote}
+into you \TeX\ sourcecode. For example \hypref{sample.tex}
+{ftp://ftp.dante.de/tex-archive/info/TrueType/sample.tex}
+\begin{quote}
+\verb|\documentclass{article}|\\
+\verb|\begin{document}|\\
+\verb|\renewcommand{\rmdefault}{bvr}\rmfamily|\\
+\verb|\noindent Hello, I am VAG Rounded BT|\\
+\verb|{\slshape Hello, I am VAG Rounded BT slanted}\\|\\
+\verb|{\scshape Hello, I am VAG Rounded BT small capitals}\\|\\
+\verb|\end{document}|
+\end{quote}
+It is more elegant to create an new style file that switches to your
+new font. 
+The style file \hypref{vagrounded.sty}
+{ftp://ftp.dante.de/tex-archive/info/TrueType/vagrounded.sty} is an
+example how this can be done.
+\begin{quote}
+\verb|\ProvidesPackage{vagrounded}|\\
+\verb|[2000/05/12 VAG-Rounded font as default sf font]|\\
+\verb|%%|\\
+\verb|\renewcommand{\sfdefault}{bvr}|\\
+\verb|%%|\\
+\verb|\AtEndDocument{\PackageWarningNoLine{vagrounded.sty}%|\\
+\verb|  {Ensure to use dvips with the option -Pvagrounded}}|\\
+\verb|%%|\\
+\verb|\endinput|
+\end{quote}
+%The \verb|\AtEndDocument| command is only necessary if you don't
+%include the map entries in the file \verb|psfonts.map|.
+
+If you have not included the mapping entries to the file
+\verb|psfonts.map| (section~\ref{sec:mapping}) you also have to tell
+dvips that it should use the font: 
+\begin{quote}
+\verb|$ latex sample|\\
+\verb|$ dvips -Pvagrounded sample|
+\end{quote}
+This should produce the PostScript file
+\hypref{sample.ps}{ftp://ftp.dante.de/tex-archive/info/TrueType/sample.ps} 
+which looks like figure~\ref{fig:beispiel}.
+%
+\begin{figure}[h!tbp]
+\centering
+\includegraphics{sample_eps}
+\caption{Sample of the font VAGRounded~BT}
+\label{fig:beispiel}
+\end{figure}
+
+\appendix
+
+\section{To do}
+
+Nguy{\^e}n-Dai Quý has complained that the fontnames contain the
+underscore (\verb|_|) instead of the minus (\verb|-|).
+I have not been able to find out whether this causes problems using
+the fonts. 
+But I also know that nobody uses fonts with an underscore in the name.
+So I should find out whether the underscores may cause problems e.g., 
+when including eps files which use these fonts (e.g., from Adobe
+Illustrator).
+
+
+\section{Links}
+
+Nguy{\^e}n-Dai Qu\'y has written a script that does all or most of the
+conversion automatically \cite{quy2000a}. 
+It is available from
+\url{http://iris.ltas.ulg.ac.be/viettug/contrib/q/}. 
+This script also replaces the underscores by minuses in the
+fontnames.
+
+Hume Smith has developed a method that does not include the Type\,1
+fonts into the postscript file but tells ghostscript to use the
+TrueType fonts directly \cite{smith2001a}.
+He says that this approach avoids some problems with some fonts. 
+But these files are not portable anymore because they do not contain
+the used fonts.
+His description is available from
+\url{http://geocities.com/kwantus/ttf.html}.
+
+\section{\refname}
+%\addcontentsline{toc}{section}{\protect\numberline{\space}\refname}
+\def\section*#1{}
+\bibliographystyle{alpha}
+\bibliography{fonts}
+
+%\listoffigures
+%\listoftables
+% -----------------------------------------------------------------------
+\end{document}
+% -----------------------------------------------------------------------

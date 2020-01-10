@@ -1,0 +1,163 @@
+% ======================================================================
+% splitindex.tex
+% Copyright (c) Markus Kohm, 2002
+%
+% $Id: splitindex.tex,v 1.2 2002/11/03 16:17:41 mjk Exp $
+%
+% This file is part of the SplitIndex package
+%
+% This file can be redistributed and/or modified under the conditions
+% of the LaTeX Project Public License, either version 1.2 of this
+% license or (at your option) any later version.
+% The latest version of this license is in
+%       http://www.latex-project.org/lppl.txt
+% and version 1.2 or later is part of all distributions of LaTeX
+% version 1999/12/01 or later.
+%
+% You are not allowed to redistribute this file without all the
+% other files of the SplitIndex package
+% ======================================================================
+
+% Set newlinechar
+\newlinechar`\^^J
+
+% Tell program information
+\message{splitindex.tex 0.1^^J%
+  Copyright (c) 2002 Markus Kohm <kohm@gmx.de>^^J^^J}
+
+% Change \catcode of At to be a letter
+\catcode`\@11\relax
+
+% New end processing command (one of these should do the job)
+\def\endprocessing{%
+  \csname @@end\endcsname
+  \csname end\endcsname
+  \csname endinput\endcsname
+}
+
+% Check out, if we are using LaTeX or plainTeX:
+\let\@earlyend\relax
+\def\@tempa{LaTeX2e}
+\expandafter\ifx\csname fmtname\endcsname\@tempa
+\else
+  \def\@tempa{plain}
+  \expandafter\ifx\csname fmtname\endcsname\@tempa
+    \def\newwrite{\alloc@7\write\chardef\sixt@@n}% not longer \outer
+    \chardef\@inputcheck=0\relax
+  \else
+    \message{Unkown format \csname fmtname\endcsname^^J
+      You have to use plainTeX or LaTeX2e to run
+      splitindex.tex!^^J}
+    \let\@earlyend\endprocessing
+  \fi
+\fi
+\@earlyend
+
+% Is \idx defined to the name of the raw index file?
+\expandafter\ifx\csname idx\endcsname\relax
+% no it isn't
+  \message{Enter the name of the idx file to be processed: }%
+  \advance\endlinechar\@M
+  \read\m@ne to\idx
+  \advance\endlinechar-\@M
+\fi
+
+% Sorry to late for log file
+\def\setjobname#1.idx#2\\{\def\jobname{#1}}
+\expandafter\setjobname\idx.idx\\
+
+\let\@earlyend\relax
+\openin\@inputcheck\idx %
+\ifeof\@inputcheck
+  \ifx\jobname\idx
+    \openin\@inputcheck\jobname.idx %
+    \ifeof\@inputcheck
+      \message{Error: Neither file `\idx' nor file `\jobname.idx' found!^^J}%
+      \let\@earlyend\endprocessing
+    \else
+      \xdef\idx{\jobname.idx}%
+    \fi
+  \else
+    \message{Error: File `\idx' not found!^^J}%
+    \let\@earlyend\endprocessing
+  \fi
+\fi
+\@earlyend
+
+\message{Read from file: \idx^^J%
+  Write to files: \jobname-*.idx^^J}
+
+% We are ready to do the processing
+
+% First we have to do the tricky splitting of the input line.
+% We do not allow lines which don't start with \indexentry.
+% We do not support other index file definitions but with an
+% optional argument of \indexentry.
+% We need some catcode changes to read and split the line. So
+% we do this part of the processing at a group.
+\newtoks\verbatim@line
+\begingroup
+\catcode`\^^M\active
+
+\begingroup
+\catcode`\|=0
+\catcode`\\=12
+|gdef|splitidxline\indexentry#1{%
+  |if #1[%
+    |expandafter|@splitidxline%
+  |else%
+    |expandafter |@splitidxline |expandafter i|expandafter d%
+    |expandafter x|expandafter ]|expandafter#1%
+  |fi%
+}
+|endgroup
+
+\gdef\@splitidxline#1]#2^^M{%
+  \idxwrite{#1}{\string\indexentry#2}%
+}
+
+\gdef\processidxline{%\message{\the\verbatim@line}%
+  \expandafter\splitidxline\verbatim@line^^M
+}
+\endgroup
+
+% Now, we can do the main job: writing to the index files
+\def\idxwrite#1#2{%
+  \expandafter\ifx\csname write@#1\endcsname\relax
+    % We need a new file
+     \message{New index file: \jobname-#1.idx^^J}%
+     \expandafter\newwrite\csname write@#1\endcsname
+     \immediate\openout\csname write@#1\endcsname \jobname-#1.idx %
+    % FixMe: Don't close by end TeX run but use \closeout
+  \fi
+  \immediate\write\csname write@#1\endcsname{#2}%
+}
+
+% Read the file verbatim and process the lines
+\newif\ifnoteof
+\newtoks\par@tok\par@tok{\par}
+\def\@makeother#1{\catcode`#112\relax}
+\def\processidxfile{
+  \immediate\openin\@inputcheck \idx %
+  \noteoftrue
+  \loop
+    \ifeof\@inputcheck \noteoffalse\fi
+  \ifnoteof
+    \begingroup
+      \let\do\@makeother\dospecials
+      \immediate\read\@inputcheck to \verbatim@line
+      \if\par@tok\verbatim@line\else
+        \processidxline
+      \fi
+    \endgroup
+  \repeat
+}
+
+\processidxfile
+
+% Trick to end processing in TeX and LaTeX
+\endprocessing
+%%% Local Variables: 
+%%% mode: tex
+%%% TeX-master: t
+%%% End: 

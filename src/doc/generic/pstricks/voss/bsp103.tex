@@ -1,0 +1,28 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp103.tex ---
+%% Autor           : Herbert Voss <voss@perce.de>
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{pspicture}(-0.5\linewidth,-4)(0.5\linewidth,4)
+  \begin{psclip}{\psellipse[linecolor=blue,doubleline=true](.5\linewidth,4)}
+    \rput(0,0){\Huge\red\sf%
+       \parbox{\linewidth}{%
+,,\texttt{PSTricks} -- mehr als nur ein alter Hut``{}, war ein Vortrag auf der DANTE Tagung
+in Darmstadt betitelt. Er sollte den Teilnehmern vor Augen führen, dass
+\texttt{PSTricks}, als eines der ersten für Plain \TeX{} entwickelten Pakete nichts an seiner
+Aktualität und vor allem Professionalität verloren hat. Die Qualität der Grafikausgabe,
+die mit \texttt{PSTricks} erreicht werden kann, sucht sicherlich ihresgleichen. Dabei darf
+nicht vergessen werden, dass alles seine Grenzen hat, so auch \texttt{PSTricks} mit seinen
+vielfältigen Paketen, denn die Grafiken müssen komplett in \TeX- und somit in 
+       }}
+  \end{psclip}
+\end{pspicture}
+
+
+\end{document}

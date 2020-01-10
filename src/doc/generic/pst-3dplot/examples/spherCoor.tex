@@ -1,0 +1,32 @@
+\documentclass[]{article}
+\usepackage{pstricks}
+\usepackage{pst-3dplot}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\begin{center}
+\begin{pspicture}(-4.8,-1.5)(4.8,3.5)
+\psset{unit=5cm,drawCoor,beginAngle=90,endAngle=180,linestyle=dotted}
+\def\oA{\pstThreeDLine[linecolor=blue,linewidth=3pt,arrows=c-> ](0,0,0)(1,60,70)}
+\def\oB{\pstThreeDLine[linecolor=red,linewidth=3pt,arrows=c->](0,0,0)(1,10,50)}
+\def\oAB{\pstThreeDEllipse[beginAngle=58,endAngle=90](0,0,0)(1,140,40)(1,10,50)}
+\pstThreeDCoor[drawing=true, linewidth=1pt,linecolor=black,linestyle=solid,%
+  xMin=0,xMax=1.1, yMin=0,yMax=1.1, zMin=0,zMax=1.1]
+\pstThreeDEllipse(0,0,0)(-1,0,0)(0,1,0)
+\pstThreeDEllipse(0,0,0)(-1,0,0)(0,0,1)
+\pstThreeDEllipse[beginAngle=0,endAngle=90](0,0,0)(0,0,1)(0,1,0)
+\psset{SphericalCoor,linestyle=solid}
+\pstThreeDDot[dotstyle=none](1,10,50)
+\pstThreeDDot[dotstyle=none](1,60,70)
+\pscustom[fillstyle=crosshatch,hatchcolor=yellow,linestyle=none]{\oB\oAB\oA}
+\oA \oB \oAB
+\pstThreeDPut[origin=lb](1,60,70){$\vec\Omega_1$}
+\pstThreeDPut[origin=rb](1,10,50){$\vec\Omega_2 \,$}
+\pstThreeDPut[origin=lb](1,10,65){$\gamma_{12}$}
+\end{pspicture}
+\end{center}
+
+\end{document}
+

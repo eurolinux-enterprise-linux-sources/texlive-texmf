@@ -1,0 +1,40 @@
+\listfiles
+\documentclass{article}
+\usepackage{pstricks,multido}
+
+\definecolorseries{testA}{rgb}{last}{blue}{yellow}
+\resetcolorseries[300]{testA}%  defines the series with 200 colors
+\definecolorseries{testC}{cmyk}{last}{white}[cmyk]{1,0,0,0}
+\resetcolorseries[11]{testC}%  cyan series with 10 colors
+\definecolorseries{testM}{cmyk}{last}{white}[cmyk]{0,1,0,0}
+\resetcolorseries[11]{testM}%  magenta series with 10 colors
+\definecolorseries{testY}{cmyk}{last}{white}[cmyk]{0,0,1,0}
+\resetcolorseries[11]{testY}%  yellow series with 10 colors
+\definecolorseries{testK}{cmyk}{last}{white}[cmyk]{0,0,0,1}
+\resetcolorseries[11]{testK}%  black series with 10 colors
+
+\parindent=0pt
+\pagestyle{empty}
+
+\begin{document}
+
+\psset{unit=1bp,linewidth=1.2pt}
+\begin{pspicture}(300,50)
+  \multido{\nC=1+1}{300}{%
+    \psline[linecolor={testA!![\nC]}](\nC,0)(\nC,50)}
+\end{pspicture}
+
+\clearpage
+\vspace{5mm}
+\setlength{\fboxsep}{2mm}
+\makebox[20mm][l]{cyan (C):}%
+\multido{\nColr=0+1}{10}{\colorbox{testC!![\nColr]}{.\nColr}}\colorbox{testC!![10]}{1}\\
+\makebox[20mm][l]{magenta (M):}%
+\multido{\nColr=0+1}{10}{\colorbox{testM!![\nColr]}{.\nColr}}\colorbox{testM!![10]}{1}\\
+\makebox[20mm][l]{yellow (Y):}%
+\multido{\nColr=0+1}{10}{\colorbox{testY!![\nColr]}{.\nColr}}\colorbox{testY!![10]}{1}\\
+\makebox[20mm][l]{black (K):}%
+\multido{\nColr=0+1}{10}{\colorbox{testK!![\nColr]}{.\nColr}}\colorbox{testK!![10]}{1}
+
+    
+\end{document}

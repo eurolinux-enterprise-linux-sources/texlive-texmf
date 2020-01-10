@@ -1,0 +1,125 @@
+% +--------------------------------------------------+
+% | Typeset this file to get the documentation.      |
+% +--------------------------------------------------+
+%
+%% Copyright (C) 1998-2004, 2006 Javier Bezos
+%% All Rights Reserved
+%% http://www.texytipografia.com
+%%
+%% This work may be distributed and/or modified under the conditions
+%% of the LaTeX Project Public License, either version 1.3 of this
+%% license or (at your option) any later version.  The latest version
+%% of this license is in
+%%     http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2003/12/01 or later.
+%%
+%% This work has the LPPL maintenance status "maintained".
+%%
+%% This Current Maintainer of this work is Javier Bezos.
+%%
+%% This work consists of the files esindex.tex and esindex.sty.
+
+\documentclass{article}
+\usepackage[spanish,activeacute]{babel}
+\spanishdatedel
+\usepackage[cp1252]{inputenc}
+
+\title{Paquete \textsf{esindex}\footnote{Este
+     archivo est\'a actualmente en la versi\'on 1.2
+     con fecha 12/05/2006.
+     Esta copia del manual se compuso el~\today.}}
+
+ \author{Javier Bezos\footnote{Para comentarios y sugerencias: 
+\texttt{http://www.texytipografia.com}.}}
+   
+\raggedright
+\parskip=1ex
+
+\date{12/05/2006}
+
+\begin{document}
+	
+\maketitle
+
+This package defines a single command \verb|\esindex| which
+easies writing Spanish index entries:
+\begin{verbatim}
+\esindex{cañón}
+\end{verbatim}
+is equivalent to
+\begin{verbatim}
+\index{can^^ffon@cañón}
+\end{verbatim}
+Since it is an especifically Spanish tool, the documentation
+is in Spanish.
+
+\vspace*{1pc}
+
+Este paquete ha sido dise'nado para facilitar la escritura
+de 'indices correctamente alfabetizados en castellano. Su 'unica orden es
+\verb|\esindex| que convierte a una forma adecuada su argumento.
+As'i por ejemplo,
+\begin{verbatim}
+\esindex{cañón}
+\end{verbatim}
+equivale a
+\begin{verbatim}
+\index{can^^ffon@cañón}
+\end{verbatim}
+No es necesario usar \textsf{babel} salvo, l'ogicamente, si los acentos
+est'an escritos en forma de abreviaciones (\verb|'a|, \verb|'e|, etc.)
+en lugar de con los caracteres reales.  En este 'ultimo caso, el paquete
+utiliza ciertas 'ordenes internas de \textsf{babel} por lo que no
+puedo garantizar su funcionamiento correcto con versiones distintas a
+las 3.6 a 3.8.  En caso de que \textsf{esindex} sea incompatible con
+futuras versiones de \textsf{babel} intentar'e adaptarlo en el menor
+tiempo posible.
+
+Salvo el car'acter \verb|actual| (normalmente \verb|@|) se pueden usar
+todos los caracteres especiales de \textit{MakeIndex}.  Se pueden usar
+convenciones diferentes a las normales, pero en este caso hacen falta
+ajustes adicionales en caso de que los modificados sean \verb|actual|,
+\verb|encap|, \verb|level| o \verb|quote|.  En ese caso basta con
+indicar los caracteres que hay que usar como opciones de paquete.  Por
+ejemplo, si para \verb|quote| decidimos usar \verb|$| en nuestro
+archivo \verb|.ist| particular, tendr'iamos que llamar al paquete del
+siguiente modo:
+\begin{verbatim}
+\usepackage[quote=$]{esindex}
+\end{verbatim}
+
+Es importante observar que, a diferencia de la opci'on para alem'an de
+\textit{MakeIndex}, el uso de \verb|"| en abreviaciones como \verb|"u|
+es completamente leg'itimo, ya que el paquete reconoce tal
+combinaci'on y la trata aparte.  Lo mismo vale para \verb|'| o
+\verb|~| en caso de que se usaran como car'acter especial.  Es decir
+\begin{verbatim}
+\esindex{{"!`}Cig"ue'nas{"!}|textbf}
+\end{verbatim}
+equivale a
+\begin{verbatim}
+\index{{"!`}Ciguen^^ffas{"!}@{"!`}Cig\"ue\~nas{"!}|textbf}
+\end{verbatim}
+
+Sin embargo, el uso del car'acter \verb|quote|
+ante \verb|encap| o \verb|level| no
+se detecta a menos que el grupo est'e encerrado entre llaves.
+Por ejemplo, en lugar de \verb/\esindex{Pleca: "|}/ debe escribirse
+\verb/\esindex{Pleca: {"|}}/. (En realidad en este caso podr'ia
+haberse usado \verb|\index|. Es tan s'olo un ejemplo.)
+
+Aunque el hecho de que \verb|@| no se pueda usar en \verb|\esindex|
+hace que todav'ia algunas entradas se tengan que hacer <<a mano>>,
+la mayor parte del trabajo se ve considerablemente simplificado.
+
+Finalmente, hay que se'nalar que con este paquete no se crea en el 
+'indice una entrada propia para la palabras que empiezan por e'ne,
+sino que tan s'olo se a'naden al final de la ene. En el rar'isimo
+caso de que hubiera palabras que empiezan por e'ne habria que
+modificar el archivo \verb|.ind| a mano.
+
+La versión 1.2 corrige la supresión incorrecta de acentos en los
+primeros niveles si había más de uno.
+
+\end{document}

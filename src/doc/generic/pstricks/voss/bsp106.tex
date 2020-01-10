@@ -1,0 +1,28 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp106.tex ---
+%% Autor           : Herbert Voss <voss@perce.de>
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\usepackage{multido}
+\usepackage{pst-plot}
+\usepackage{pstricks-add}
+
+\parindent=0pt
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{pspicture*}(-0.5\linewidth,-7.5)(0.5\linewidth,5)
+\psaxes[xyLabel=\footnotesize]{->}(0,0)(-0.5\linewidth,-7.5)(0.5\linewidth,5)
+\psset{plotpoints=200}
+\multido{\rA=1+1}{5}{
+  \psplot{-6}{-1}{x 4 mul \rA\space sub x dup mul div}
+}
+\multido{\rA=1+1}{5}{
+  \psplot{0.1}{6}{x 4 mul \rA\space sub x dup mul div}
+}
+\end{pspicture*}
+
+\end{document}

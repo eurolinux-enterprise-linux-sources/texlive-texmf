@@ -1,0 +1,38 @@
+\documentclass[11pt]{article}
+\usepackage{pstricks}
+\usepackage{pstricks-add}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+\bgroup
+\begin{pspicture}(2,5)
+  \circlenode{A}{A}%
+  \quad\circlenode{C}{C}%
+  \quad\circlenode{E}{E}
+  \quad\circlenode{G}{G}
+  \quad\circlenode{I}{I}
+  \rput(0,4){\circlenode{B}{B}}
+  \rput(1,4.5){\circlenode{D}{D}}
+  \rput(2,5){\circlenode{F}{F}}
+  \rput(3,4.5){\circlenode{H}{H}}
+  \rput(4,4){\circlenode{J}{J}}
+  \psset{arrowscale=2,linearc=0.2,%
+  linecolor=red,armA=0.5, angleA=90,angleB=-90}
+  \ncdiag[lineAngle=20]{->}{A}{B}
+  \ncput*[nrot=:U]{line I}
+  \ncdiag[lineAngle=20]{->}{C}{D}
+  \ncput*[nrot=:U]{line II}
+  \ncdiag[lineAngle=20]{->}{E}{F}
+  \ncput*[nrot=:U]{line III}
+  \ncdiag[lineAngle=20]{->}{G}{H}
+  \ncput*[nrot=:U]{line IV}
+  \ncdiag[lineAngle=20]{->}{I}{J}
+  \ncput*[nrot=:U]{line V}
+\end{pspicture}
+\egroup
+\end{center}
+
+\end{document}
+

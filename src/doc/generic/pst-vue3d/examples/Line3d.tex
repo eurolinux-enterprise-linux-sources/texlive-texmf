@@ -1,0 +1,66 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{pstricks}
+\usepackage{pst-vue3d}
+\usepackage{multido}
+\usepackage{geometry}
+%
+\begin{document}
+
+ \psset{unit=1cm}
+ \begin{pspicture}(-3,-3)(3,4)
+  \psset{THETA=70,PHI=30,Dobs=150,Decran=10}
+  \AxesThreeD[linecolor=red,linestyle=dashed](50,60,50)
+  \pNodeThreeD(25,-25,25){A}
+  \pNodeThreeD(25,25,25){B}
+  \pNodeThreeD(25,25,-25){C}
+  \pNodeThreeD(25,-25,-25){D}
+  \pNodeThreeD(-25,-25,25){E}
+  \pNodeThreeD(-25,25,25){F}
+  \pNodeThreeD(-25,25,-25){G}
+  \pNodeThreeD(-25,-25,-25){H}
+  \pspolygon(A)(B)(C)(D)
+  \pspolygon(E)(F)(G)(H)
+  \psline(A)(E)
+  \psline(B)(F)
+  \psline(C)(G)
+  \psline(D)(H)
+  \psset{linestyle=dashed}
+  \psline(A)(G)
+  \psline(B)(H)
+  \psline(C)(E)
+  \psline(D)(F)
+% routine page 49 in "présentation de PSTricks"
+% D.Girou "cahier 16 Gutengerg"
+  \newcounter{lettre}
+  \multido{\i=1+1}{8}{%
+    \setcounter{lettre}{\i}
+    \psdot[linecolor=red](\Alph{lettre})
+    \uput[90](\Alph{lettre}){\Alph{lettre}}
+  }
+\end{pspicture}
+
+
+
+    \begin{pspicture}(-2.5,-3.5)(3.5,1.5)
+    \psset{THETA=50,PHI=50,Dobs=250,Decran=10}
+    \multido{\iX=-70+10}{15}{%
+        \pNodeThreeD(\iX,0,0){X1}
+        \pNodeThreeD(\iX,50,0){X2}
+        \psline(X1)(X2)
+    }
+    \multido{\iY=0+10}{6}{%
+        \pNodeThreeD(-70,\iY,0){Y1}
+        \pNodeThreeD(70,\iY,0){Y2}
+        \psline(Y1)(Y2)%
+    }
+    \psset{normaleLongitude=0,normaleLatitude=90}
+    \multido{\iXorigine=-65+10}{14}{%
+        \multido{\iYorigine=5+10}{5}{%
+            \CircleThreeD[linecolor=red](\iXorigine,\iYorigine,0){5}%
+        }%
+    }
+    \end{pspicture}%
+
+
+
+\end{document}

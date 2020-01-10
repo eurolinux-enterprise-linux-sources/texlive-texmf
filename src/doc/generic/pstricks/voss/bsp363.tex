@@ -1,0 +1,32 @@
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\pagestyle{empty}
+\setlength\parindent{0pt}
+\begin{document}
+
+\begin{tabular}{p{3cm}|c|l}
+\texttt{p}--Spalte & \texttt{c}--Spalte & \texttt{l}--Spalte\\\hline
+ \makeatletter\@minipagetrue\makeatother
+\begin{enumerate}
+   \item Item 1
+   \item Item 2
+   \item Item 3
+\end{enumerate} 
+    
+  \texttt{enumerate}  &
+  \begin{pspicture}[shift=-2.1](1,2.5)(4,5)
+    \psline{<->}(1,2.5)(4,5)
+    \psline{<->}(4,2.5)(1,5)
+  \end{pspicture} &
+  \begin{minipage}[t]{3cm}
+    \raggedright
+    \begin{itemize}
+       \item Item 1
+       \item Item 2
+    \end{itemize}
+
+  \texttt{itemize}
+\end{minipage}
+\end{tabular}
+
+\end{document}

@@ -1,0 +1,87 @@
+%%% Testing:colours, borders and margins
+\documentclass{article}
+
+\usepackage{textpos}
+\usepackage{color}
+
+\setlength{\TPHorizModule}{20pt}
+\setlength{\TPVertModule}\TPHorizModule
+
+\setlength\parindent{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\definecolor{Blue}{rgb}{0.8,0.8,1.0}
+\definecolor{Borders}{rgb}{0.8,1.0,0.8}
+
+\begin{textblock}{4}(0,0)
+  \textblockcolour{Blue}
+  Blue
+\end{textblock}
+
+\begin{textblock}{8}(14,6)
+  \hrule width 8\TPHorizModule
+  \vskip1\TPVertModule
+  \hrule width 4\TPHorizModule
+  \vskip1\TPVertModule
+  \hrule width 2\TPHorizModule
+  \vskip1\TPVertModule
+  \hrule width 1\TPHorizModule
+\end{textblock}  
+
+\begin{textblock}{8}(4,2)
+  This package facilitates placing boxes at absolute positions on the
+  \LaTeX\ page.  There are several reasons why this might be useful, but
+  the main one (or at least my motivating one) is to help produce a
+  large-format conference poster.  
+
+  This package provides a single environment, which contains the text
+  (or graphics, or table, or whatever) which is to be placed on the
+  page, and which specifies where it is to be placed.
+\end{textblock}
+
+\TPshowboxestrue
+\textblockrulecolour{red}
+\setlength\TPboxrulesize{0.25\TPHorizModule}
+
+\TPMargin{0.5\TPHorizModule}
+
+\begin{textblock}{4}(0,8)
+  \textblockcolour{Blue}
+  Blue
+\end{textblock}
+
+\begin{textblock}{8}(4,10)
+  This package facilitates placing boxes at absolute positions on the
+  \LaTeX\ page.  There are several reasons why this might be useful, but
+  the main one (or at least my motivating one) is to help produce a
+  large-format conference poster.  
+
+  This package provides a single environment, which contains the text
+  which is to be placed on the
+  page, and which specifies where it is to be placed.
+\end{textblock}
+
+\TPMargin*{0.5\TPHorizModule}
+
+\begin{textblock}{4}(0,20)
+  \textblockcolour{Blue}
+  Blue
+\end{textblock}
+\tekstblokroolkulur{Borders}
+
+\begin{textblock}{8}(4,22)
+  This package facilitates placing boxes at absolute positions on the
+  \LaTeX\ page.  There are several reasons why this might be useful, but
+  the main one (or at least my motivating one) is to help produce a
+  large-format conference poster.  
+
+  This package provides a single environment, which contains the text
+  (or graphics, or table, or whatever) which is to be placed on the
+  page, and which specifies where it is to be placed.
+\end{textblock}
+
+
+\end{document}
+

@@ -1,0 +1,30 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{pstricks}
+\begin{document}
+\psset{unit=1cm,gridlabels=7pt}% default value
+\noindent\fboxsep=0pt
+L
+\hrulefill
+\fbox{\begin{pspicture}(-1,-1)(1,2)
+  \psgrid
+\end{pspicture}}%
+\hrulefill
+\fbox{\begin{pspicture}[shift=-1](-1,-1)(1,2)
+  \psgrid
+\end{pspicture}}%
+\hrulefill
+\fbox{\begin{pspicture}[shift=-3cm](-1,-1)(1,2)
+  \psgrid
+\end{pspicture}}%
+\hrulefill
+\fbox{\begin{pspicture}[shift=1.5](-1,-1)(1,2)
+  \psgrid
+\end{pspicture}}%
+\hrulefill
+\raisebox{0.5\height}{\fbox{\begin{pspicture}(-1,-1)(1,2)
+  \psgrid
+\end{pspicture}}}%
+\hrulefill
+R
+\end{document}

@@ -1,0 +1,21 @@
+\documentclass{article}
+\usepackage{pstricks}
+\usepackage{pst-char}
+\usepackage{pst-slpe}
+\usepackage{pst-blur}
+\usepackage{graphicx}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\DeclareFixedFont{\RM}{T1}{ptm}{b}{n}{4cm}
+\DeclareFixedFont{\Rm}{T1}{ptm}{m}{n}{2mm}
+\psset{shadow=true,blur=true,shadowsize=10pt,%
+     blurradius=5pt,fillstyle=slopes}
+\rotateleft{\pscharpath{\RM T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\@nik.de}}
+%
+%\pscharpath{\RM\reflectbox{T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\@nik}}
+
+\end{document}
+

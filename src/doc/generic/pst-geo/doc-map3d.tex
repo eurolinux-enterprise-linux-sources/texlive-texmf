@@ -1,0 +1,227 @@
+%-------------------------------------------------------------------
+%   world_map3d.tex    Janvier.05,2004 - rev 1.0  by  M. Luque, G. Matarazzo
+%-------------------------------------------------------------------
+\documentclass[a4paper,french]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{pstricks,pst-map3d,url,babel}
+%
+ \title{The \PstMapThreeDPackage{} package\\A PSTricks package for Geographical Projections}
+ \author{Manuel \textsc{Luque}
+         \mbox{\texttt{<Mluque5130@aol.com>}}\\
+         and\\
+         Giuseppe \textsc{Matarazzo} \mbox{\texttt{<joematara@hotmail.com>}}}
+ \date{Version 1.02\\ Mai 06, 2004\\
+       {\small Documentation revised November 11, 2005 by hv}
+}
+\newcommand{\PstMapThreeDPackage}{`\textsf{pst-map3d}'}
+\newcommand\Parameter[1]{\colorbox{black}{\textcolor{white}{#1}}}
+\psset{linewidth=0.2\pslinewidth,path=../data,level=4}
+\begin{document}
+ \maketitle
+ \begin{abstract}
+ Dans la continuité de \textsf{pst-map2d}, \textsf{pst-map3d}
+ traite de la représentation en trois dimensions
+ du globe terrestre avec plusieurs fonctionnalités qui rendent son
+ utilisation agréable (tout au moins nous l'espérons).
+ \end{abstract}
+ \tableofcontents
+ \section{Les données\label{datas}}
+GLOBE Binaries DECODING : World Public Domain Dbase :
+ F.Pospeschil, A.Rivera (1999)
+
+\url{ftp://ftp.blm.gov/pub/gis/wdbprg.zip}
+
+Elles ont \'et\'e converties sous forme de tableau PostScript, en
+degr\'es,
+gr\^ ace à un petit programme en pascal (de Giuseppe Matarazzo) qui
+fait partie de la distribution. Ce sont les mêmes données que
+celles du package \textsf{pst-map2d}.
+\section{Les paramètres et les options}
+\subsection{Les paramètres}
+\begin{itemize}
+\item \Parameter{PHI=49} : latitude du point de vue.
+\item \Parameter{THETA=0} : longitude du point de vue.
+\item \Parameter{Dobs=20} : distance de l'observateur par rapport au centre de la sphère.
+\item \Parameter{Decran=25} : distance de l'écran de projection par rapport à l'observateur.
+\item \Parameter{Radius=5} : rayon de la sphère.
+\item \Parameter{increment=10} : écart angulaire, en degrés, entre deux
+parallèles ou deux méridiens.
+\item \Parameter{RotX=0} : on fait tourner le globe terrestre autour de l'axe
+\textsf{Ox} et on recalcule les nouvelles coordonnées ;
+\item \Parameter{RotY=0} : on fait tourner le globe terrestre de l'axe
+\textsf{Oy} et on recalcule les nouvelles coordonnées ;
+\item \Parameter{RotZ=0} : on fait tourner le globe terrestre autour de l'axe
+\textsf{Oz} et on recalcule les nouvelles coordonnées.
+\end{itemize}
+$Oxyz$ est le repère ``\textit{absolu}'' dans lequel les coordonnées sont
+définies. Lorsque \Parameter{RotX=0,RotY=0,RotZ=0}, $Oz$ coïncide avec l'axe des
+pôles, le plan $Oxy$ est celui de l'équateur et l'axe $Ox$ correspond à
+la longitude 0.
+
+Les valeurs indiquées sont les valeurs par défaut. L'image sera d'autant
+plus grande que la distance de l'écran par rapport à l'observateur sera
+grande. Les valeurs des distances sont en \textsf{cm}.
+\subsection{Les options}
+\begin{itemize}
+\item  \Parameter{MapFillColor=0.99 0.95 0.7 } : permet de choisir la couleur de remplissage des continents,
+ en mode RGB.
+\item  \Parameter{maillageColor=0.5 0.5 0.5 } : permet de choisir la couleur du canevas en mode RGB.
+\item \Parameter{level=1} : niveau de détail élevé (valeur activée par défaut).
+\item \Parameter{level=2} : niveau de détail moyen, la mappemonde est dessinée très rapidement .
+\item \Parameter{city=true} : les capitales et les villes importantes sont placées.
+\item \Parameter{capital=true} : seules les capitales sont indiquées.
+\item \Parameter{maillage=false} : les parallèles et méridiens ne sont pas tracés.
+\end{itemize}
+
+\clearpage
+
+\section{Divers exemples}
+\psset{level=2}
+\subsection{La mappemonde dans sa totalité}
+\subsubsection{Sans les villes}
+\begin{verbatim}
+\psframebox[fillstyle=solid,fillcolor=black]{
+\begin{pspicture}(-7,-7)(7,7)
+  \WorldMapThreeD[PHI=30,THETA=0]%
+\end{pspicture}}
+\end{verbatim}
+\psframebox[fillstyle=solid,fillcolor=black]{
+\begin{pspicture}(-7,-7)(7,7)
+  \WorldMapThreeD[PHI=30,THETA=0,maillageColor= 0 0 0]%
+\end{pspicture}}
+
+
+\clearpage
+
+\subsubsection{Avec les villes}
+On voit ici l'effet de rotation du paramètre \verb+RotX=-60+
+\begin{verbatim}
+\psframebox[fillstyle=solid,fillcolor=black]{
+\begin{pspicture}(-7,-7)(7,7)
+  \WorldMapThreeD[PHI=50,THETA=0,city=true,RotX=-60]%
+\end{pspicture}}
+\end{verbatim}
+\psframebox[fillstyle=solid,fillcolor=black]{
+\begin{pspicture}(-7,-7)(7,7)
+  \WorldMapThreeD[PHI=50,THETA=0,city=true,RotX=-60]%
+\end{pspicture}}
+
+\clearpage
+
+\subsection{Le choix du point de vue}
+Si l'on fait abstraction des paramètres \verb+RotX+, \verb+RotY+
+et \verb+RotZ+, le point de vue est déterminé par \verb+THETA+ et
+\verb+PHI+, c'est-à-dire par la latitude et la longitude. Il faut
+ensuite choisir la distance du point de vue \verb+Dobs+ et la position de
+l'écran de projection \verb+Decran+.
+
+Par exemple une vue du Pôle Nord sera obtenue avec :
+\begin{verbatim}
+\psframebox[fillstyle=solid,fillcolor=black]{
+\begin{pspicture}(-7,-7)(7,7)
+\WorldMapThreeD[PHI=90,THETA=-50]
+\end{pspicture}}
+\end{verbatim}
+
+\psframebox[fillstyle=solid,fillcolor=black]{
+\begin{pspicture}(-7,-7)(7,7)
+\WorldMapThreeD[PHI=90,THETA=-50]
+\end{pspicture}}
+
+\clearpage
+
+Par exemple une vue au niveau de l'équateur sera obtenue avec :
+\begin{verbatim}
+\begin{pspicture}(-5,-5)(5,5)
+\WorldMapThreeD[PHI=0,THETA=100,city=true]
+\end{pspicture}
+\end{verbatim}
+
+\begin{pspicture}(-7,-7)(7,7)
+\WorldMapThreeD[PHI=0,THETA=100,city=true]
+\end{pspicture}
+
+\clearpage
+
+Voici une vue du continent asiatique
+\begin{verbatim}
+\psframebox[fillstyle=solid,fillcolor=black]{
+\begin{pspicture}(-7,-7)(7,7)
+\WorldMapThreeD[PHI=50,THETA=90,maillage=false,city=true]
+\end{pspicture}}
+\end{verbatim}
+\psframebox[fillstyle=solid,fillcolor=black]{
+\begin{pspicture}(-7,-7)(7,7)
+\WorldMapThreeD[PHI=50,THETA=90,maillage=false,city=true]
+\end{pspicture}}
+
+\clearpage
+\section{Zoom et animations}
+\subsection{Zoom}
+Pour faire un zoom sur une partie de la mappemonde, il suffit de
+rapprocher l'observateur de la sphère (pas trop cela crée des
+distorsions) ou bien d'éloigner l'écran de projection. On passera
+au \Parameter{level=1}.
+\begin{verbatim}
+\begin{center}
+\psframebox[fillstyle=solid,fillcolor=black]{%
+\begin{pspicture}*(-7,-4)(7,4)
+\WorldMapThreeD[PHI=48,THETA=30,city=true,increment=5,Decran=48,level=1]%
+\end{pspicture}
+\end{center}
+\end{verbatim}
+\begin{center}
+\psframebox[fillstyle=solid,fillcolor=black]{%
+\begin{pspicture}*(-7,-4)(7,4)
+\WorldMapThreeD[PHI=48,THETA=30,city=true,increment=5,Decran=48,level=1]%
+\end{pspicture}}
+\end{center}
+
+\clearpage
+
+
+\subsection{Animations}
+Pour faire tourner le globe autour de l'axe des pôles, on fera
+varier \verb+THETA+ dans une boucle \verb+\multido+. On utilisera
+l'une des techniques d'animation déjà présentées, par exemple sur
+:
+
+\url{http://tug.org/mailman/htdig/pstricks/2002/000697.html}
+
+\url{http://tug.org/mailman/htdig/pstricks/2002/000698.html}
+
+\url{http://melusine.eu.org/syracuse/scripts/PST-anim/}
+\begin{verbatim}
+\begin{center}
+\hbox{\hspace{-2cm}
+\multido{\iTheta=0+10}{18}{%
+\psframebox[fillstyle=solid,fillcolor=black]{%
+\begin{pspicture}*(-7,-4)(7,4)
+\WorldMapThreeD[PHI=48,THETA=\iTheta,city=true,increment=5,Decran=48,level=1]%
+\end{pspicture}}}
+}
+\end{center}
+\end{verbatim}
+On pourra créer une animation consistant en un survol du globe en
+faisant varier \verb+THETA+ et \verb+PHI+ ainsi qu'éventuellement
+l'altitude de l'observateur.
+\section{Téléchargement des fichiers}
+Ce sont les mêmes fichiers de données que \verb+pst-map2d+ (une
+partie de \texttt{wdb.zip}) : \url{http://melusine.eu.org/syracuse/mluque/mappemonde/}
+
+ Si vous
+n'avez pas lu le fichier \verb+A LIRE+ de la documentation de \verb+pst-map2d+, la compilation a du mal se
+passer. Il faut en effet indiquer le chemin des données dans la
+variable \verb+path+. Cette variable contient le chemin des
+données sur mon disque dur :
+
+\verb+path=C:/mappemonde/wdb+
+
+Il faut donc avant le \verb+\begin{document}+, indiquer celui qui
+correspond à votre configuration avec une commande du type :
+
+\verb+\psset{path=C:/mappemonde/wdb}+
+
+ ou bien le modifier
+directement dans le fichier \verb+pst-map3d.tex+.
+\end{document}

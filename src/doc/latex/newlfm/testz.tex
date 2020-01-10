@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{ifpdf}
+
+\begin{document}
+\newsavebox{\Lpalmb}%
+\savebox{\Lpalmb}{\fbox{\parbox[t]{1.3in}%
+{\includegraphics[scale=.115]{palmb}}}}%
+\newcommand{\addrz}{\\ \rule{1.25in}{2pt} \\ 25 Signal Hill Blvd \\Belleville, IL 62223}%
+\newcommand{\addrzq}{}%
+\newsavebox{\Lpalmd}%
+\ifpdf
+\savebox{\Lpalmd}{\hspace{1pt}\\\parbox[t][2.55in][t]{1.70in}%
+{\hspace*{.75in}\vspace*{.65in}
+\includegraphics[scale=.25,viewport=225 600 400 800]{palm}\\
+\vspace*{.4in}\addrz}}%
+\else
+\savebox{\Lpalmd}{\hspace{.1in}\fbox{\parbox[t][2.2in][t]{2.85in}%
+{\vspace{.2in}\includegraphics[scale=.2]{palm}\addrz}}}%
+\fi
+\newsavebox{\Lpalme}%
+\ifpdf
+\savebox{\Lpalme}{\parbox[t][1in][t]{2in}%
+{\includegraphics[scale=.1,viewport=135 624 360 700]{palm}\vspace{.5in} \\ 
+\rule{2in}{2pt} \\ 
+25 Signal Hill Blvd}
+}
+\else
+\savebox{\Lpalme}{\parbox[t]{2in}%
+{\includegraphics[scale=.1]{palm} \\ 
+\rule{2in}{2pt} \\ 
+25 Signal Hill Blvd}
+}
+\fi
+
+\usebox{\Lpalmd}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "d"
+%%% End: 

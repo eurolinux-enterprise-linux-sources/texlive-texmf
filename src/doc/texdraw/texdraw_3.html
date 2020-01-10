@@ -1,0 +1,369 @@
+<HTML>
+<HEAD>
+<!-- Created by texi2html 1.56k from texdraw.texi on 10 March 2004 -->
+
+<TITLE>TeXdraw - 3. Drawing Segments and Scaling</TITLE>
+</HEAD>
+<BODY>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_2.html">previous</A>, <A HREF="texdraw_4.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+<P><HR><P>
+
+
+<H1><A NAME="SEC13" HREF="texdraw_toc.html#TOC13">3. Drawing Segments and Scaling</A></H1>
+
+<P>
+TeXdraw provides individually scaled segments which can be used to
+create relocatable drawing modules.
+
+
+
+<UL>
+<LI><A HREF="texdraw_3.html#SEC14">Drawing segments</A>
+<LI><A HREF="texdraw_3.html#SEC15">Drawing paths</A>
+<LI><A HREF="texdraw_3.html#SEC16">Saving positions</A>
+<LI><A HREF="texdraw_3.html#SEC17">Scaling coordinates</A>
+<LI><A HREF="texdraw_3.html#SEC18">Drawing size</A>
+<LI><A HREF="texdraw_3.html#SEC19">Initial current position</A>
+</UL>
+
+
+
+<H2><A NAME="SEC14" HREF="texdraw_toc.html#TOC14">3.1 Drawing segments</A></H2>
+<P>
+<A NAME="IDX72"></A>
+<A NAME="IDX73"></A>
+
+
+<P>
+A TeXdraw drawing segment allows for local modifications of
+parameters and relative positioning.  A TeXdraw segment is delimited
+by a <CODE>\bsegment</CODE> command and an <CODE>\esegment</CODE> command.  Inside
+the segment, the initial current position is <CODE>(0 0)</CODE>.  Any changes
+to parameters such as the gray level and the line width, remain local to
+the segment.  Segments are implemented in TeX using a
+<CODE>\begingroup</CODE> and <CODE>\endgroup</CODE>.  Segments can be nested.
+
+
+<DL COMPACT>
+
+<DT><CODE>\bsegment</CODE>
+<DD>
+<A NAME="IDX74"></A>
+ 
+Start a drawing segment.  The coordinate system is shifted such that the
+current position corresponds to the coordinate <CODE>(0 0)</CODE>.  Changes to
+scaling, position and line parameters stay local to the drawing segment.
+<A NAME="IDX75"></A>
+<DT><CODE>\esegment</CODE>
+<DD>
+End a drawing segment.  The current position in effect before the
+corresponding <CODE>\bsegment</CODE> command is restored.  The scaling and
+line parameter values revert to those in effect before the corresponding
+<CODE>\bsegment</CODE> command was invoked.
+</DL>
+
+
+
+<H2><A NAME="SEC15" HREF="texdraw_toc.html#TOC15">3.2 Drawing paths</A></H2>
+<P>
+<A NAME="IDX76"></A>
+<A NAME="IDX77"></A>
+<A NAME="IDX78"></A>
+Certain subtle interactions occur between drawing segments and fill
+operations.  In PostScript, lines are drawn by first defining a path,
+then later stroking the path to draw the line.  In TeXdraw, this
+stroking occurs when the line is terminated, say by a <CODE>\move</CODE>
+command.  PostScript paths are interrupted by, but continue after a
+drawing segment.  This means that a path started before a segment may
+not be stroked (drawn) until after the segment ends.  Consider the
+following example.
+
+<PRE>
+\move (0 0)
+\lvec (1 1)
+\bsegment
+  \move (-0.25 -0.25)
+  \fcir f:0.8 r:0.5
+\esegment
+\move (0 0)
+</PRE>
+
+<P>
+A PostScript path is started at <CODE>(0 0)</CODE> and continues with a line
+to <CODE>(1 1)</CODE>.  This path is interrupted by the segment.  The filled
+circle is drawn next.  After the segment, the path continues and is not
+stroked until the <CODE>\move (0 0)</CODE> command after the end of the
+segment.  This means that the line appears on top of the filled region.
+
+
+<P>
+If the fill operation is to cover the line, the path must be stroked
+before the fill operation.  From TeXdraw, the move commands
+<CODE>\move</CODE> and <CODE>\rmove</CODE>, and the end TeXdraw command
+<CODE>\etexdraw</CODE> terminate a path and cause it to be stroked.  Within a
+segment, the end segment command <CODE>\esegment</CODE> also terminates and
+strokes a path.  In the example above, the line can be stroked by
+inserting a move command (such as a <CODE>\rmove (0 0)</CODE> which does not
+affect the position), before the start of the segment.
+
+
+
+
+<H2><A NAME="SEC16" HREF="texdraw_toc.html#TOC16">3.3 Saving positions</A></H2>
+<P>
+<A NAME="IDX79"></A>
+<A NAME="IDX80"></A>
+<A NAME="IDX81"></A>
+<A NAME="IDX82"></A>
+
+
+<P>
+The <CODE>\savecurrpos</CODE> command saves the current position.  The saved
+position is an absolute position, not one relative to a segment.  The
+position saving mechanism is global; the position can be saved within a
+nested segment and then used outside of the segment.  The <VAR>x</VAR> and
+<VAR>y</VAR> coordinates of the position are saved separately as named
+coordinates.  The names are of the form <CODE>*<VAR>name</VAR></CODE>, with the
+leading <CODE>*</CODE> being obligatory.  A companion command,
+<CODE>\savepos</CODE>, saves a given coordinate (relative to the current
+segment) as an absolute symbolic position.
+
+
+<DL COMPACT>
+
+<DT><CODE>\savecurrpos (*<VAR>px</VAR> *<VAR>py</VAR>)</CODE>
+<DD>
+<A NAME="IDX83"></A>
+ 
+Save the current position as the absolute position referenced by
+<CODE>(*<VAR>px</VAR> *<VAR>py</VAR>)</CODE>.
+<A NAME="IDX84"></A>
+<DT><CODE>\savepos (<VAR>x</VAR> <VAR>y</VAR>)(*<VAR>px</VAR> *<VAR>py</VAR>)</CODE>
+<DD>
+Save the coordinate position <CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE> as the absolute
+position referenced by <CODE>(*<VAR>px</VAR> *<VAR>py</VAR>)</CODE>.  The coordinate
+<CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE> is interpreted in the normal fashion as a
+coordinate relative to the current segment, using the current scaling
+factors and drawing unit.
+</DL>
+
+<P>
+The symbolic names used to specify a saved position can consist of any
+characters that are not special to TeX, but must start with a
+<CODE>*</CODE> character.  The symbolic names can be used as the <VAR>x</VAR>
+and/or <VAR>y</VAR> coordinate in any command that needs a coordinate.
+Symbolic coordinates are not normally used with relative motion commands
+such as <CODE>\rlvec</CODE> or <CODE>\rmove</CODE>.  If used with relative motion,
+the corresponding displacement is equal to the symbolic coordinate
+value.
+
+
+<P>
+On exit from a segment, the position and graphics state on entry is
+restored.  Any changes to line types, scaling and position are
+discarded.  However, it is sometimes useful alter the position on exit
+from a segment.  The <CODE>\savepos</CODE> command allows for the saving of a
+position within the segment.  This position can be restored after the
+<CODE>\esegment</CODE> with a <CODE>\move</CODE> command using the saved symbolic
+position.  This approach can be used to build modules which operate in a
+manner analogous to the basic relative motion line vector commands.
+
+
+<P>
+The following example defines a macro which draws a box 0.75 inches wide
+by 0.5 inches high containing centered text.  On leaving the macro the
+position will be set at a point on the righthand side of the box.
+
+<PRE>
+\def\tbox #1{\bsegment
+               \lvec (0 +0.25)    \lvec (0.75 +0.25)
+               \lvec (0.75 -0.25) \lvec (0 -0.25) \lvec (0 0)
+               \textref h:C v:C \htext (0.375 0){#1}
+               \savepos (0.75 0)(*ex *ey)
+             \esegment
+             \move (*ex *ey)}
+</PRE>
+
+<P>
+With this definition, we can treat <CODE>\tbox</CODE> in the same way as the
+basic vector commands, stringing them together to form a block diagram
+as in this example.
+
+<PRE>
+\centertexdraw{
+  \ravec (1 0) \tbox{$H(z)$} \ravec (1 0)
+}
+</PRE>
+
+
+
+<H2><A NAME="SEC17" HREF="texdraw_toc.html#TOC17">3.4 Scaling coordinates</A></H2>
+<P>
+<A NAME="IDX85"></A>
+<A NAME="IDX86"></A>
+<A NAME="IDX87"></A>
+<A NAME="IDX88"></A>
+
+
+<P>
+There are two scale factors available, the unit scale factor and the
+segment scale factor.  The overall scale factor is the product of these
+two.  There are absolute and relative versions of commands to change
+these scale factors.
+
+
+<P>
+The unit scale factor is normally used to affect global scale changes.
+Changes to the unit scale factor remains local to a segment, but
+propagate to inferior segments.  The default value is unity.
+
+
+<P>
+The segment scale factor is used for local scale changes.  It remains
+local to a segment.  The segment scale factor is reset to unity on entry
+into each segment.  This means that changes to the segment scale factor
+do not propagate to inferior segments.
+
+
+<DL COMPACT>
+
+<DT><CODE>\setunitscale <VAR>scale</VAR></CODE>
+<DD>
+<A NAME="IDX89"></A>
+ 
+Set the unit scaling to <VAR>scale</VAR>.  The argument <VAR>scale</VAR> is a real
+number which is used to scale coordinate values.  The overall scaling
+factor is the product of the unit scale factor and the segment scale
+factor.
+<A NAME="IDX90"></A>
+<DT><CODE>\relunitscale <VAR>value</VAR></CODE>
+<DD>
+Adjust the unit scale factor by multiplying by <VAR>value</VAR>.  This has
+the effect of multiplying the overall scale factor by the same factor.
+The overall scaling factor is the product of the unit scale factor and
+the segment scale factor.
+<A NAME="IDX91"></A>
+<DT><CODE>\setsegscale <VAR>scale</VAR></CODE>
+<DD>
+Set the segment scale factor.  The argument <VAR>scale</VAR> is a real number
+which is used to scale coordinate values.  The overall scale factor is
+the product of the unit scale factor and the segment scale factor.
+<A NAME="IDX92"></A>
+<DT><CODE>\relsegscale <VAR>value</VAR></CODE>
+<DD>
+Adjust the segment scale factor by multiplying by <VAR>value</VAR>.  This has
+the effect of multiplying the current overall scale factor by the same
+factor.  The overall scaling factor is the product of the unit scale
+factor and the segment scale factor.
+</DL>
+
+<P>
+In addition to the unit scale factor and the segment scale factor, the
+scaling can be controlled by the choice of drawing units with the
+command <CODE>\drawdim</CODE> (see section <A HREF="texdraw_2.html#SEC7">2.4 Coordinate specification</A>).
+
+
+<DL COMPACT>
+
+<DT><CODE>\drawdim cm \setunitscale 2.54</CODE>
+<DD>
+Set the units to centimetres scaled by 2.54.  Together these commands
+are effectively the same as <CODE>\drawdim in</CODE>.
+</DL>
+
+<P>
+The segment scale can be used to allow scale changes in segments so that
+values are in more convenient units.  For example suppose dimensions in
+a segment are multiples of one third of an inch.  The segment scale can
+be set once to make 1 drawing unit equal 0.3333 inches.  From that point
+on, coordinates can be specified with integer values.
+
+
+<P>
+The following example defines a macro to draw a rectangular box which is
+twice as wide as it is high.  The width is specified as an argument.
+
+<PRE>
+\def\mybox #1{\bsegment
+                \setsegscale #1
+                \lvec (0 +0.25) \lvec (1 +0.25) \lvec (1 -0.25)
+                \lvec (0 -0.25) \lvec (0 0)
+              \esegment}
+</PRE>
+
+
+
+<H2><A NAME="SEC18" HREF="texdraw_toc.html#TOC18">3.5 Drawing size</A></H2>
+<P>
+<A NAME="IDX93"></A>
+
+
+<P>
+The effective size of the drawing is determined by the maximum
+excursions of the coordinates supplied to TeXdraw commands.  The
+minimum and maximum scaled <VAR>x</VAR> and <VAR>y</VAR> coordinates are tallied.
+Note that <CODE>\move</CODE> commands contribute to the determination of the
+calculated size of the drawing, even though they do not generate visible
+lines.  The circle and ellipse commands add a compensation for the radii
+of circles and ellipses.  The final TeXdraw drawing is placed in a
+TeX box with lower lefthand corner corresponding to
+<CODE>(</CODE><VAR>x</VAR>-min <VAR>y</VAR>-min<CODE>)</CODE> and upper righthand corner at
+<CODE>(</CODE><VAR>x</VAR>-max <VAR>y</VAR>-max<CODE>)</CODE>.
+
+
+<P>
+Text generated by <CODE>\htext</CODE>, <CODE>\vtext</CODE> or <CODE>\rtext</CODE> can
+spill outside the box as determined above.  Only the text reference
+point is guaranteed to be in the drawing box.  Arcs can also spill
+outside the drawing box.  Note also that the widths of lines, and the
+sizes of arrowheads do not affect the size of the drawing.  The
+calculated size of the drawing will never be larger than the actual size
+of the drawing.  In extreme cases in which text or lines extend far
+outside the drawing, extra <CODE>\move</CODE> commands should be used to
+establish the size of the drawing so that the TeXdraw box includes
+all of the drawing.
+
+
+<P>
+TeXdraw provides the <CODE>\drawbb</CODE> command to draw a box which
+indicates the effective size of the drawing.  Whenever <CODE>\drawbb</CODE> is
+invoked, a ruled box is drawn around the drawing as it has been sized up
+to that point.  Normally <CODE>\drawbb</CODE> is invoked just before the end
+of a drawing to indicate the effective size of the final drawing.
+
+
+<DL COMPACT>
+
+<DT><CODE>\drawbb</CODE>
+<DD>
+<A NAME="IDX94"></A>
+ 
+Draw a ruled box around the effective size of a drawing produced by
+TeXdraw commands.
+</DL>
+
+
+
+<H2><A NAME="SEC19" HREF="texdraw_toc.html#TOC19">3.6 Initial current position</A></H2>
+<P>
+<A NAME="IDX95"></A>
+<A NAME="IDX96"></A>
+
+
+<P>
+The first operation in a drawing should be a move to establish the
+current position.  The current position can be established explicitly
+through a <CODE>\move</CODE> command or a text positioning command such as
+<CODE>\htext</CODE> with a coordinate.  However, if an attempt is made to use
+a drawing command which needs a current position and none has been
+established, TeXdraw implicitly sets the initial current position to
+<CODE>(0 0)</CODE>.  The size of the TeXdraw figure is normally determined
+from the sequence of coordinates specified, but will include the
+implicit initial position in case another initial position has not been
+explicitly specified.
+
+
+<P><HR><P>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_2.html">previous</A>, <A HREF="texdraw_4.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage{pst-node}
+\usepackage{pstricks-add}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{pspicture}(10,7)
+  \psgrid[subgriddiv=0,griddots=10,gridcolor=gray,gridlabels=7pt]
+  \psset{linewidth=1mm,radius=0.5}
+  \Cnode(4,3){A}
+  \Cnode(6,2){B}
+  \Cnode(4,6){C}
+  \Cnode(3,0){D}
+  \SpecialCoor
+  \psline[linestyle=dashed,linewidth=0.1pt](A)(B)(C)(D)(B)
+  \psline[linestyle=dashed,linewidth=0.1pt](C)(A)(D)
+  \psline[linestyle=dashed,linewidth=0.1pt](0,2)(10,2)
+  \psline[linestyle=dashed,linewidth=0.1pt](0,3)(10,3)
+  \psline[linestyle=dashed,linewidth=0.1pt](0,5)(10,0)
+  \psline(A)(B)
+  \psline[linecolor=red](C)([Xnodesep=4]A)
+  \psline[linecolor=green](C)([nodesep=4]A)
+  \psline[linecolor=cyan](C)([Xnodesep=3]{A}B)
+  \psline[linecolor=blue](C)([Ynodesep=3]{A}B)
+  \psline[linecolor=magenta](C)([Ynodesep=3]{B}A)
+  \psline[linecolor=yellow](C)([Xnodesep=3]{B}A)
+  \psline{->}([Xnodesep=4]{A}B)([Ynodesep=5]{D}C)
+\end{pspicture}
+
+\end{document}

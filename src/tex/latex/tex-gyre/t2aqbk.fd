@@ -1,0 +1,20 @@
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Bonum.txt
+% and README-TeX-Gyre-Bonum.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+\ProvidesFile{t2aqbk.fd}[2006/11/01 v1.0 font definition file for T2A/qbk]
+
+\DeclareFontFamily{T2A}{qbk}{}
+\DeclareFontShape{T2A}{qbk}{b}{n}{<->t2a-qbkb}{}
+\DeclareFontShape{T2A}{qbk}{b}{it}{<->t2a-qbkbi}{}
+\DeclareFontShape{T2A}{qbk}{m}{n}{<->t2a-qbkr}{}
+\DeclareFontShape{T2A}{qbk}{m}{it}{<->t2a-qbkri}{}
+\DeclareFontShape{T2A}{qbk}{bx}{n}{<->ssub * qbk/b/n}{}
+\DeclareFontShape{T2A}{qbk}{bx}{it}{<->ssub * qbk/b/it}{}
+\DeclareFontShape{T2A}{qbk}{bx}{sc}{<->ssub * qbk/b/sc}{}
+\DeclareFontShape{T2A}{qbk}{bx}{scit}{<->ssub * qbk/b/scit}{}
+\endinput
+% End of t2aqbk

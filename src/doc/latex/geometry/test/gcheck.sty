@@ -1,0 +1,49 @@
+\usepackage{calc}
+
+\newif\ifcheckpass
+\checkpasstrue
+
+\def\checkresults{%
+  \ifcheckpass
+    \typeout{---^^JTest (\jobname): success.^^J---}
+  \else
+    \typeout{---^^JTest (\jobname): FAILED.\@spaces Check \jobname.log.^^J---}
+  \fi
+}
+
+\def\dcheck#1#2{%
+  \setlength\@tempdima{#2}%
+  \setlength\@tempdimb{#2}%
+  \addtolength\@tempdimb{-#1}%
+  \@tempcnta=\z@
+  \ifdim\@tempdimb > -0.01pt
+    \ifdim\@tempdimb < 0.01pt
+      \@tempcnta=\@ne
+      \wlog{OK: #1= \the#1 (diff=\the\@tempdimb).}
+    \fi
+  \fi
+  \ifnum\@tempcnta=\z@
+    \checkpassfalse
+    \immediate\typeout{NG: #1= \the#1 (expected=\the\@tempdima).}
+  \fi}
+
+\def\ccheck#1#2{%
+  \edef\@@tempa{#2}
+  \@tempcnta=\@@tempa
+  \advance\@tempcnta-#1\relax
+  \ifnum\@tempcnta=\z@
+    \wlog{OK: #1= \the#1 (diff=\the\@tempcnta).}
+  \else
+    \checkpassfalse
+    \immediate\typeout{NG: #1= \the#1 (expected=\@@tempa).}
+  \fi}
+
+\def\nompstring{\renewcommand\mynote\relax}
+
+\newcommand\mynote{\marginpar%
+[\raggedright\rule{\marginparwidth}{.7pt}\\A left side note.]%
+{\raggedright\rule{\marginparwidth}{.7pt}\\A side note.}}%
+\def\fox{A quick brown fox jumps over the lazy dog. }
+\def\fivefoxes{\fox\fox\fox\fox\fox}
+\def\manyfoxes{\fivefoxes\mynote\fivefoxes\par\fivefoxes\fivefoxes\par}
+% \let\mynote\relax % removes marginal notes.

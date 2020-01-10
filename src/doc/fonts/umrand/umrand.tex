@@ -1,0 +1,191 @@
+\documentstyle[german,umrand,stamm,struts,verbatim,bsp]{article}
+
+\Nr{9a}
+\Thema{Anleitung zu UMRAND.STY}
+
+\def\C{\char'}
+\font\UA=umranda
+\font\UB=umrandb at 20pt
+
+\def\make{%
+    \begin{flushleft}
+        \begin{minipage}[c]{0.58\linewidth}
+            \verbatiminput{\bspname}
+        \end{minipage}
+        \hfill\vrule\hfill
+        \begin{minipage}[c]{0.38\linewidth}
+            \input{\bspname}
+        \end{minipage}
+    \end{flushleft}}
+
+\begin{document}
+{\bf Als Nachtrag hier eine kleine Anleitung zu UMRAND.STY:}\\[3mm]
+Notwendige Dateien:
+\[ \begin{tabular}{|l|l|}
+   \hline
+   \oustrut Datei & Bedeutung \\ \hline\hline
+   \ostrut umranda.mf & 1.\,Font \\
+           umrandb.mf & 2.\,Font \\
+   \ustrut umrand.mf  & MF-Makros \\ \hline
+   \ostrut umrand.sty & \TeX-Makros
+   \ustrut \\ \hline
+   \end{tabular} \]
+Achtung! Die Fonts funktionieren zur Zeit (Version 1.2) nur bei
+Ausgabeger"aten mit gleicher horizontaler und vertikaler Auf"|l"osung!
+Vielleicht "andert sich das irgendwann.
+
+\verb|umrand.sty| dient zum Zeichnen von Umrandungen. Grunds"atzlich wird die
+Gr"o"se des Rahmens von dessen Inhalt (und den Rahmenzeichen) bestimmt. Sie
+wird automatisch berechnet. Die allgemeine Form des Aufrufs sieht so aus:
+\begin{verbatim}
+\RandBox {...}
+         font {...}
+         [...]
+         (...)         (...[...]...)         (...)
+         (...[...]...)               (...[...]...)
+         (...)         (...[...]...)         (...)
+\end{verbatim}
+Der erste Parameter ist der Inhalt, der in eine \verb|\hbox| gesetzt wird. Mit
+dem Wort \verb|font| eingeleitet wird ein Parameter, der den Font f"ur den
+Rahmen ausw"ahlt. In den eckigen Klammern \verb|[...]| steht eine L"angenangabe,
+die den Abstand der einzelnen Zeichen voneinander angibt. Mit den folgenden
+sechs runden Klammern wird die Struktur definiert. Hier k"onnen Zeichen des
+Rahmen-Fonts eingetragen werden. Die Zeichenfolgen, die in den eckigen
+Klammern hier stehen, werden sooft wiederholt wie notwendig, um die
+Rahmengr"o"se zu erzeugen. Zeichen in Folgen werden durch \verb|\\| voneinander
+getrennt. Die runden Klammern bilden in ihrer Reihenfolge die Rahmenteile:
+\begin{itemize}
+\item linke obere Ecke
+\item oberer Rand
+\item rechte obere Ecke
+\item linker Rand
+\item rechter Rand
+\item linke untere Ecke
+\item unterer Rand
+\item rechte untere Ecke
+\end{itemize}
+Beispiele:
+\begin{verbatim}
+(G\\H[I\\K]L)
+\end{verbatim}
+hei"st: Setze G und H, dann I und K abwechselnd, bis die Rahmengr"o"se
+erreicht ist, dann setze L.
+\begin{verbatim}
+([A\\B]A)
+\end{verbatim}
+hei"st: A und B abwechselnd, am Schlu"s ein A.
+
+Wenn man die Fonts aus \verb|umranda.mf| und \verb|umrandb.mf| benutzt,
+geht man normalerweise von einer Fonttabelle (\verb|testfont.tex|
+benutzen) aus. Hier sind die Zeichen oktal beziffert. Setzt man zum
+Beispiel \verb|\def\C{\char'}|, \verb|\font\UA=umranda at 20pt| und
+\verb|\font\UB=umrandb at 20pt| in seine Datei, so kann man die Fonts
+folgenderma"sen ansprechen:
+\begin{bsp}
+\RandBox {Testinhalt} font {\UA} [-0.3em]
+         (\C113)  ([\C65]) (\C113)
+         ([\C67])          ([\C67])
+         (\C113)  ([\C65]) (\C113)
+\end{bsp}
+\make
+Die Ecken bestehen aus dem Zeichen Oktal\,113, die waagerechten Kanten aus
+Oktal\,65, die senkrechten aus Oktal\,67.
+
+Jetzt ein Beispiel mit wechselnden Zeichen:
+\begin{bsp}
+\RandBox {Eine Wiese}
+         font {\UA} [0pt]
+         () ([\C75\\\C77]\C75) ()
+         (\C76[\C100\\\C76])
+         ([\C100\\\C76]\C100)
+         () (\C77[\C75\\\C77]) ()
+\end{bsp}
+\make
+
+Bei den Linienfonts (\verb|umrandb.mf|) mu"s man auf die Lage der Elemente
+achten. Linienelemente an unterschiedlichen Positionen sind auch
+unterschiedliche Zeichen. Hier gibt es aber die nach dem Beispiel
+beschriebene Kurzform.
+\begin{bsp}
+\RandBox {Ein Test}
+         font {\UB} [0pt]
+         (\C5) ([\C1]) (\C4)
+         ([\C2]) ([\C0])
+         (\C6) ([\C3]) (\C7)
+\end{bsp}
+\make
+
+Als Kurzform kann man jeweils das erste Zeichen der Eckenteile und der
+Linienteile angeben:
+\begin{bsp}
+\LinienBox {Ein Test}
+           font {\UB}
+           ecken 4 linien 0
+\end{bsp}
+\make
+
+Hier noch eine Zusammenstellung anderer Umrandungen:
+\begin{flushleft}
+\def\TAB#1{Mit\begin{tabular}[t]{l}#1\end{tabular}}
+\LinienBox {\TAB{ecken 10\\linien 0}} font {\UB} ecken 10 linien 0
+\LinienBox {\TAB{ecken 14\\linien 0}} font {\UB} ecken 14 linien 0
+\LinienBox {\TAB{ecken 20\\linien 0}} font {\UB} ecken 20 linien 0
+\LinienBox {\TAB{ecken 24\\linien 0}} font {\UB} ecken 24 linien 0
+\LinienBox {\TAB{ecken 30\\linien 0}} font {\UB} ecken 30 linien 0
+\LinienBox {\TAB{ecken 34\\linien 0}} font {\UB} ecken 34 linien 0
+\LinienBox {\TAB{ecken 40\\linien 0}} font {\UB} ecken 40 linien 0
+\LinienBox {\TAB{ecken 44\\linien 0}} font {\UB} ecken 44 linien 0
+\LinienBox {\TAB{ecken 50\\linien 0}} font {\UB} ecken 50 linien 0
+\LinienBox {\TAB{ecken 54\\linien 0}} font {\UB} ecken 54 linien 0
+\LinienBox {\TAB{ecken 60\\linien 0}} font {\UB} ecken 60 linien 0
+\LinienBox {\TAB{ecken 64\\linien 0}} font {\UB} ecken 64 linien 0
+\LinienBox {\TAB{ecken 70\\linien 0}} font {\UB} ecken 70 linien 0
+\LinienBox {\TAB{ecken 74\\linien 0}} font {\UB} ecken 74 linien 0
+\LinienBox {\TAB{ecken 104\\linien 100}} font {\UB} ecken 104 linien 100
+\LinienBox {\TAB{ecken 110\\linien 100}} font {\UB} ecken 110 linien 100
+\LinienBox {\TAB{ecken 114\\linien 100}} font {\UB} ecken 114 linien 100
+\LinienBox {\TAB{ecken 120\\linien 100}} font {\UB} ecken 120 linien 100
+\LinienBox {\TAB{ecken 124\\linien 100}} font {\UB} ecken 124 linien 100
+\LinienBox {\TAB{ecken 130\\linien 100}} font {\UB} ecken 130 linien 100
+\LinienBox {\TAB{ecken 134\\linien 100}} font {\UB} ecken 134 linien 100
+\LinienBox {\TAB{ecken 140\\linien 100}} font {\UB} ecken 140 linien 100
+\LinienBox {\TAB{ecken 144\\linien 100}} font {\UB} ecken 144 linien 100
+\end{flushleft}
+
+Ein Meander-Rand ist mit dem folgenden Befehl zu erzeugen:
+\begin{bsp}
+\MeanderBox {Ein Meander-Rand} at 20pt
+\end{bsp}
+\make
+
+Einfache R"ander, die nur aus einem einzigen Zeichen bestehen, erh"alt man
+auf die folgende Weise:
+\begin{bsp}
+\EinfachRand {Inhalt}
+             font {\Large}
+			 char {$\ast$} [0.1em]
+\end{bsp}
+\make
+Hierbei sieht man auch, da"s Zeichen aus beliebigen Fonts f"ur die Rahmen
+benutzt werden k"onnen. Problematisch wird es dann, wenn sie
+unterschiedliche Breiten/H"ohen haben.
+
+\[ \MeanderBox {Weitere Beispiele findet man in
+               {\tt ob1.tex} und {\tt ob2.tex}} at 10pt \]
+
+Eine Font-Tabelle liefert die \TeX-Datei \verb|testfont.tex|. Man ruft sie
+unter {\sc Plain}-\TeX\ auf (z.\,B. \verb|tex &plain testfont|). Als Font
+gibt man bei der Frage \verb|umranda at 20pt| oder etwas "ahnliches an.
+Wenn der \verb|*| erscheint, tippt man \verb|\table| ein, beim n"achsten
+\verb|*| schreibt man \verb|\end|. Nun mu"s nur noch \verb|testfont.dvi|
+gedruckt werden.
+
+Falls der Druckertreiber eine Einstellung von |maxdrift| erlaubt, sollte
+diese auf Null gesetzt werden. Sonst kann es vorkommen, da"s
+Linienanschl"usse nicht 100\,\%ig stimmen.
+
+\input{umrand1}
+\input{umrand2}
+\input{umrand3}
+\end{document}
+

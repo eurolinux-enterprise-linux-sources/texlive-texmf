@@ -1,0 +1,23 @@
+\documentclass[12pt]{article} % voss_at_pstricks.de (2004-06-03)
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{pst-tree}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\psset{linewidth=1.5pt,linecolor=green}
+\pstree{\Tcircle[linecolor=black]{P}}{%
+  \Tdot[linecolor=black]~[tnpos=l]{\shortstack{Do\\Nothing}}
+  {\psset{linecolor=red}\Tdot[linecolor=black]~[tnpos=r]{\kern1em\shortstack{Sue\\No Offer\\Pursue Suit}}}
+  {\psset{linecolor=red}\Tdot[linecolor=black]~[tnpos=r]{\shortstack{Sue\\No Offer\\Drop Suit}}}
+  \pstree{\Tcircle[linecolor=black]{D}_{\shortstack{Sue\\Offer\\Settlement}}}{%
+    \pstree{{\psset{linecolor=red}\Tcircle[linecolor=black]{P}^{Reject}}}{%
+      \Tdot[linecolor=black]^{Pursue}%
+      {\psset{linecolor=red}\Tdot[linecolor=black]_{Drop Suit}}}%
+    \Tdot[linecolor=black]_{Accept}%
+  }%
+}%
+
+\end{document}

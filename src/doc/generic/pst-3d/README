@@ -1,0 +1,26 @@
+%% Package `pst-3d.tex'
+%%
+%% Timothy Van Zandt <tvz@nwu.edu> (tvz)
+%% Herbert Voss <voss@pstricks.de> (hv)
+%%
+%% September 08, 2005
+%%
+%%   `pst-3d' is a PSTricks package for tilting and other pseudo-3D tricks
+%%            It is a basic macro for all other 3D related packages
+%%
+%%
+%%
+
+To install the package run
+latex pst-3d.ins
+
+and install the generated packages in a directory, which is in
+the search path of TeX 
+
+This version of pst-3d uses the extended version of the keyval 
+package. So be sure that you 
+- have installed xkeyval with the special pst-xkey.tex
+  (CTAN: tex-archive/macros/latex/contrib/xkeyval/)
+- do not load another package after pst-3d, which loads
+  the old keyval.sty or pst-key.tex
+

@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage{pstricks}
+\usepackage{pst-plot}
+
+\parindent=0pt
+\pagestyle{empty}
+\begin{document}
+
+\begin{center}
+\psset{xunit=0.03cm,yunit=1.5cm}
+\begin{pspicture}(0,-2.5)(420,2.5)
+\psaxes[Dx=30]{->}(0,0)(0,-2.25)(400,2.25)
+\uput[-90](400,0){$\alpha$}\uput[180](0,2.2){$f(\alpha)$}
+\psplot[linewidth=2pt,linecolor=green,linestyle=dotted]{0}{390}{x sin}
+\psplot[linewidth=1pt,linecolor=blue,linestyle=dashed]{0}{390}{x 2 mul 30 sub sin neg}
+\psplot[linewidth=1pt,linecolor=red]{0}{390}{x 2 mul 30 sub sin neg x sin add}
+\end{pspicture}
+\end{center}
+
+\end{document}

@@ -1,0 +1,67 @@
+%^^A This file is just a~driver. To learn how to use it, read the README
+%^^A or the documentation in .pdf
+%
+% \ChangesStart{vNo}{1000/0/0}
+% \chschange{vNo}{06/9/30}{27}
+% \chschange{vNo}{06/10/12}{28}
+% \chschange{vNo}{06/10/27}{35}
+% \chschange{?}{06/12/1}{40}
+%
+% \CodeUsgIndex*{outeroff} \CodeUsgIndex*{mwrep}
+\documentclass[outeroff,mwrep]{gmdocc}
+%^^A\OnlyDescription
+%^^A\usepackage{graphics}
+\twocoltoc
+\title{The \pk{gmdoc} Package\\ i.e., \pk{gmdoc.sty} and
+  \pk{gmdocc.cls}}
+\author{Grzegorz `Natror' Murzynowski}
+\date{Warszawa, 2006}
+\begin{document}
+\maketitle
+\setcounter{page}{2}% \pk{hyperref} cries if it sees two pages
+% numbered~1.
+\tableofcontents
+\DoIndex\maketitle
+\DocInclude{gmdoc}
+%^^A~.sty
+\DocInclude{gmdocc}
+\SelfInclude{\def\CommonEntryCmd{UsgEntry}%\label{UsgHack}
+  % \label{SelfIncludeUsg}
+  \filediv[\file{gmdocDoc.tex}, The Driver
+  File]{\file{gmdocDoc.tex}, \gmhypertarget{The Driver} File}%
+  \label{Driver}}
+
+% For your convenience I~decided to add the documentations of the
+% three auxiliary packages:
+\skipgmlonely[\stanza The remarks about installation and compiling
+  of the documentation are analogous to those in the chapter
+  \pk{gmdoc.sty} and therefore ommitted.\stanza]
+\DocInclude{gmutils} 
+\DocInclude{gmiflink} 
+\DocInclude{gmverb}
+\typeout{%
+  Produce change log with^^J%
+  makeindex -r -s gmglo.ist -o \jobnamewoe.gls \jobnamewoe.glo^^J
+  (gmglo.ist should be put into some texmf/makeindex directory.)^^J}
+\PrintChanges
+\typeout{%
+  Produce index with^^J%
+  makeindex -r \jobnamewoe^^J}
+ \PrintIndex
+\end{document}
+% MakeIndex shell commands:
+  makeindex -r gmdocDoc
+  makeindex -r -s gmglo.ist -o gmdocDoc.gls gmdocDoc.glo
+% (\pk{gmglo.ist} should be put into some \pk{texmf/makeindex}
+% directory.) 
+
+%^^A(
+% And ``That's all, folks'' ;-)\,.
+% \NoEOF
+
+% The following is just my GNU Emacs stuff. 
+%
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

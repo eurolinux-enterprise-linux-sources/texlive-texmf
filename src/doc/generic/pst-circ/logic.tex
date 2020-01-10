@@ -1,0 +1,436 @@
+\section{Flip Flops}
+
+The syntax for all logical base circuits is
+\begin{verbatim}
+logic[<options>](<originX,originY>){Label}
+\end{verbatim}
+
+\noindent where the options and the origin are optional. If they are missing,
+then the default options, described in the next section and the default
+origin $(0,0)$ is used. The origin specifies the lower left corner
+of the logical circuit.
+
+\begin{verbatim}
+logic{Demo}
+logic[logicType=and]{Demo}
+logic(0,0){Demo}
+logic[logicType=and](0,0){Demo}
+\end{verbatim}
+
+The above four ,,different`` calls of the \verb|logic| macro give the
+same output, because they are equivalent. 
+
+\subsection{The Options}
+
+\begin{description}
+\item[\HLTTc{logicShowNode} (boolean):] (\emph{default:~false})
+\item[\HLTTc{logicShowDot} (boolean):] (\emph{default:~false})
+\item[\HLTTc{logicNodestyle} (command):] (\emph{default:~\textbackslash footnotesize})
+\item[\HLTTc{logicSymbolstyle} (command):] (\emph{default:~\textbackslash large})
+\item[\HLTTc{logicSymbolpos} (value):] (\emph{default:~0.5})
+\item[\HLTTc{logicLabelstyle} (command):] (\emph{default:~\textbackslash small})
+\item[\HLTTc{logicType} (string):] (\emph{default:~and})
+\item[\HLTTc{logicChangeLR} (boolean):] (\emph{default:~false})
+\item[\HLTTc{logicWidth} (length):] (\emph{default:~1.5})
+\item[\HLTTc{logicHeight} (length):] (\emph{default:~2.5})
+\item[\HLTTc{logicWireLength} (length):] (\emph{default:~0.5})
+\item[\HLTTc{logicNInput} (number):] (\emph{default:~2})
+\item[\HLTTc{logicJInput} (number):] (\emph{default:~2})
+\item[\HLTTc{logicKInput} (number):] (\emph{default:~2})
+\end{description}
+
+\subsection{Basic Logical Circuits}
+At least the basic objects require a unique label name, otherwise it is
+not sure, that all nodes will work well. The label may contain any
+alphanumerical character and most of all symbols. But it is save
+using only combinations of letters and digits. For example:
+\begin{verbatim}
+And0
+a0
+a123
+12
+NOT123a
+\end{verbatim}
+
+\verb|A_1| is not a good choice, the underscore may causes some
+problems.
+
+\subsubsection{And}
+
+\psset{subgriddiv=0,griddots=5,gridlabels=7pt}
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-1,0)(3,3)
+  \psgrid
+  \logic{AND1}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[/HLCBWz&logicChangeLR"=true]{AND2}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](4,6)
+  \begin{pspicture}(-0.5,0)(4,5)
+  \psgrid
+  \logic[/HLCBWz&logicShowNode"=true,%
+     /HLCBWz&logicWidth"=2,%
+     /HLCBWz&logicHeight"=4,%
+     /HLCBWz&logicNInput"=6,%
+     logicChangeLR=true](1,1){AND3}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\subsubsection{NotAnd}
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[logicType=/HLCBWz&nand",%
+     logicShowNode=true]{NAND1}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[logicType=nand,%
+     logicChangeLR=true]{NAND2}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](4,6)
+  \begin{pspicture}(4,5)
+  \psgrid
+  \logic[logicType=nand,%
+     logicShowNode=true,%
+     logicWidth=2,%
+     logicHeight=4,%
+     /HLCBWz&logicNInput"=6,%
+     logicChangeLR=true](1,1){NAND3}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\subsubsection{Or}
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[logicType=/HLCBWz&or",%
+     logicShowNode=true]{OR1}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[logicType=or,%
+     logicChangeLR=true]{OR2}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](4,6)
+  \begin{pspicture}(4,5)
+  \psgrid
+  \logic[logicType=or,%
+     logicShowNode=true,%
+     logicWidth=2,%
+     logicHeight=4,%
+     logicNInput=6,%
+     logicChangeLR=true](1,1){OR3}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\subsubsection{Not Or}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[logicType=/HLCBWz&nor",%
+     logicShowNode=true]{NOR1}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[logicType=nor,%
+     logicChangeLR=true]{NOR2}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](4,6)
+  \begin{pspicture}(4,5)
+  \psgrid
+  \logic[logicType=nor,%
+     logicShowNode=true,%
+     logicWidth=2,%
+     logicHeight=4,%
+     logicNInput=6,%
+     logicChangeLR=true](1,1){NOR3}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+\subsubsection{Not}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[logicType=/HLCBWz&not",%
+     logicShowNode=true]{NOT1}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[logicType=not,%
+     logicChangeLR=true]{NOT2}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](4,6)
+  \begin{pspicture}(4,5)
+  \psgrid
+  \logic[logicType=not,%
+     logicShowNode=true,%
+     logicWidth=2,%
+     logicHeight=4,%
+     logicChangeLR=true](1,1){NOT3}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\subsubsection{Exclusive OR}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[logicType=/HLCBWz&exor",%
+     logicShowNode=true]{ExOR1}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[logicType=exor,%
+     logicChangeLR=true]{ExOR2}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](4,6)
+  \begin{pspicture}(4,5)
+  \psgrid
+  \logic[logicType=exor,%
+     logicShowNode=true,%
+     logicNInput=6,%
+     logicWidth=2,%
+     logicHeight=4,%
+     logicChangeLR=true](1,1){ExOR3}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+
+\subsubsection{Exclusive NOR}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[logicType=/HLCBWz&exnor",%
+     logicShowNode=true]{ExNOR1}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,3)
+  \logic[logicType=exnor,%
+     logicChangeLR=true]{ExNOR2}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](4,6)
+  \begin{pspicture}(4,5)
+  \psgrid
+  \logic[logicType=exnor,%
+     logicShowNode=true,%
+     logicNInput=6,%
+     logicWidth=2,%
+     logicHeight=4,%
+     logicChangeLR=true](1,1){ExNOR3}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+\subsection{RS Flip Flop}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,4.5)
+  \begin{pspicture}(-1,-1)(3,3)
+  \logic[logicShowNode=true,%
+     logicType=/HLCBWz&RS"]{RS1}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,4.5)
+  \begin{pspicture}(-1,-1)(3,3)
+  \logic[logicShowNode=true,%
+     logicType=RS,%
+     logicChangeLR=true]{RS2}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+\subsection{D Flip Flop}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,4.5)
+  \begin{pspicture}(-1,-1)(3,3)
+  \logic[logicShowNode=true,%
+     logicType=/HLCBWz&D"]{D1}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,4.5)
+  \begin{pspicture}(-1,-1)(3,3)
+  \logic[logicShowNode=true,%
+     logicType=D,%
+     logicChangeLR=true]{D2}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+
+\subsection{JK Flip Flop}
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,4.5)
+  \begin{pspicture}(-1,-1)(3,3)
+  \logic[logicShowNode=true,%
+     logicType=/HLCBWz&JK",%
+     /HLCBWz&logicKInput"=2,%
+     /HLCBWz&logicJInput"=2]{JK1}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](3,4.5)
+  \begin{pspicture}(-1,-1)(3,3)
+  \logic[logicShowNode=true,%
+     logicType=JK,%
+     logicKInput=2, logicJInput=4,%
+     logicChangeLR=true]{JK2}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\subsection{Other Options}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,3)
+  \begin{pspicture}(-0.5,0)(3,2.5)
+  \logic[/HLCBWz&logicShowDot"=true]{A0}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](4,3)
+  \begin{pspicture}(-1,0)(3,2.5)
+  \logic[/HLCBWz&logicWireLength"=1,%
+     logicShowDot=true]{A1}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\bigskip
+The unit of \verb|logicWireLength| is the same than the actual one for pstricks, set by
+the \verb|unit| option.
+
+\subsection{The Node Names}
+Every logic circuit is defined with its name, which should be a unique one.
+If we have the following NAND circuit, then \verb|pst-circ| defines the nodes
+\begin{verbatim}
+NAND11, NAND12, NAND13, NAND14, NAND1Q
+\end{verbatim}
+
+\noindent If there exists an inverted output, like for alle Flip Flops,
+then the negated one gets the appendix \verb|neg| to the node name. For 
+example:
+\begin{verbatim}
+NAND1Q, NAND1Qneg
+\end{verbatim}
+
+\begin{PSideBySideExample}[xrightmargin=3cm](3,3.5)
+  \begin{pspicture}(-0.5,0)(2.5,3)
+  \logic[/HLCBWz&logicShowNode"=true,%
+      /HLCBWz&logicLabelstyle"=\footnotesize,%
+      /HLCBWz&logicType"=nand,%
+      /HLCBWz&logicNInput"=4]{NAND1}
+  \multido{\n=1+1}{4}{%
+     \pscircle*[linecolor=red](NAND1\n){2pt}%
+  }
+  \pscircle*[linecolor=blue](NAND1Q){2pt}
+  \end{pspicture}
+\end{PSideBySideExample}
+
+\vspace{0.5cm}
+Now it is possible to draw a line from the output to the input 
+
+\begin{verbatim}
+\ncbar[angleA=0,angleB=180]{<Node A>}{<Node B>}
+\end{verbatim}
+
+It may be easier to print a grid since the drawing phase and then comment it out if
+all is finished.
+
+\bigskip
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,3.5)
+  \begin{pspicture}(-1,-1)(2.5,3)
+  \logic[/HLCBWz&logicShowNode"=true,%
+      logicLabelstyle=\footnotesize,%
+      logicType=nand,%
+      /HLCBWz&logicWireLength"=1,%
+      /HLCBWz&logicNInput"=4]{NAND1}
+      \pnode(-0.5,0|NAND11){tempA}
+      \pnode(2,0|NAND1Q){tempB}
+  \end{pspicture}
+  \ncbar[angleA=-90,angleB=0,arm=0.75,%
+      arrows=*-*, dotsize=0.15]{tempA}{tempB}
+\end{PSideBySideExample}
+
+\subsection{Examples}
+
+\begin{CenterExample}
+   \begin{pspicture}(-1,0)(5,5)
+     \psgrid
+     \psset{logicType=nor, logicLabelstyle=\normalsize,%
+          logicWidth=1, logicHeight=1.5, dotsize=0.15}
+     \logic(1.5,0){nor1}
+     \logic(1.5,3){nor2}
+     \psline(nor2Q)(4,0|nor2Q)
+     \uput[0](4,0|nor2Q){$Q$}
+     \psline(nor1Q)(4,0|nor1Q)
+     \uput[0](4,0|nor1Q){$\overline{Q}$}
+     \psline{*-}(3.50,0|nor2Q)(3.5,2.5)(1.5,2.5)
+         (0.5,1.75)(0.5,0|nor12)(nor12)
+     \psline{*-}(3.50,0|nor1Q)(3.5,2)(1.5,2)
+         (0.5,2.5)(0.5,0|nor21)(nor21)
+     \psline(0,0|nor11)(nor11)\uput[180](0,0|nor11){R}
+     \psline(0,0|nor22)(nor22)\uput[180](0,0|nor22){S}
+   \end{pspicture}
+\end{CenterExample}
+
+\bigskip
+\begin{CenterExample}
+  \begin{pspicture}(-4,0)(5,7)
+     \psgrid
+     \psset{logicWidth=1, logicHeight=2, dotsize=0.15}
+     \logic[logicWireLength=0](-2,0){A0}
+     \logic[logicWireLength=0](-2,5){A1}
+     \ncbar[angleA=-180,angleB=-180,arm=0.5]{A11}{A02}
+     \psline[dotsize=0.15]{-*}(-3.5,3.5)(-2.5,3.5)
+     \uput[180](-3.5,3.5){$T$}
+     \psline(-3.5,0.5)(A01)\uput[180](-3.5,0.5){$S$}
+     \psline(-3.5,6.5)(A12)\uput[180](-3.5,6.5){$R$}
+     \psset{logicType=nor, logicLabelstyle=\normalsize}
+     \logic(1,0.5){nor1}
+     \logic(1,4.5){nor2}
+     \psline(nor2Q)(4,0|nor2Q)
+     \uput[0](4,0|nor2Q){$Q$}
+     \psline(nor1Q)(4,0|nor1Q)
+     \uput[0](4,0|nor1Q){$\overline{Q}$}
+     \psline{*-}(3,0|nor2Q)(3,4)(1,4)(0,3)(0,0|nor12)(nor12)
+     \psline{*-}(3,0|nor1Q)(3,3)(1,3)(0,4)(0,0|nor21)(nor21)
+     \psline(A0Q)(nor11)
+     \psline(A1Q)(nor22)
+  \end{pspicture}
+\end{CenterExample}
+
+\end{document}

@@ -1,0 +1,21 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp317.tex ---
+%% Autor           : Herbert Voss <voss@perce.de>
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper]{article}
+\usepackage{pstricks,pst-blur,pst-char}
+\usepackage[dvips,landscape]{geometry}
+\pagestyle{empty}
+
+\begin{document}
+
+\DeclareFixedFont{\RM}{T1}{ptm}{b}{n}{4cm}
+\psset{shadow=true,blur=true,shadowsize=10pt,blurradius=5pt}
+\parbox{\linewidth}{
+  \pscharpath{\RM Graphics}\\
+  \pscharpath{\RM with}\\[20pt]
+  \pscharpath{\RM PSTricks}%
+}
+
+\end{document}

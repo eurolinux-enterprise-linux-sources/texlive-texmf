@@ -1,0 +1,121 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                               %
+%  beispiel.tex                                                                 %
+%                                                                               %
+%  Oesterreichische Schulschrift 1995 (Austrian School Writing Letters 1995)    %
+%  Version 18. Mai 2001                                                         %
+%                                                                               %
+%  Design by Gerhard A. Bachmaier                                               %
+%                                                                               %
+%  Email:      gerhard.bachmaier@uni-graz.at                                    %
+%                                                                               %
+%  You're free to use or copy this file as long as you leave this               %
+%  header intact and don't change the contents.                                 %
+%                                                                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper]{article}
+\usepackage{oesch}
+\usepackage{german}
+\begin{document}
+
+Diese METAFONT-Files erzeugen einen Font, der die "Osterreichische Schulschrift 
+von 1995 darstellt. Es gibt ihn in den Gr"o"sen 10pt und 20 pt:
+
+\noindent\textoesch{"osterreichische Schulschrift 1995} 
+
+\noindent\textoeschb{"osterreichische Schulschrift} 
+
+Die "Osterreichische Schulschrift unterscheidet sich in vielen Details von der deutschen
+Schreibschrift; so muss man z.B. nach F, H und Z am Mittelstrich weiter schreiben.
+
+\noindent\textoesch{Ferdinand, Haus, Zug}
+
+Der Font beinhaltet alle Buchstaben inklusive scharfes s, Ziffern, ein paar typografische
+Zeichen .,;:()!? deutsche Anf"uhrungszeichen und Querstriche. Es gibt nur den Umlaut-Akzent.
+Damit sollten deutsche und englische Texte m"oglich sein.
+
+\noindent\textoesch{ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz "s}
+
+\noindent\textoesch{0123456789.,;:()!?\gsqon a\gsqoff\gqon a\gqoff-- ---\textvisiblespace}
+
+Zus"atzlich existieren einige Buchstabenvarianten f"ur Ligaturen. Es sollte im Normalfall
+{\bf nicht} notwendig sein, eine explizit aufzurufen, da die im Font definierten Ligaturen
+die Arbeit verrichten.
+
+Der Font ist auf Basis der neuen T1-Encoding konzipiert und verarbeitet auch Ligaturen
+mit Umlauten problemlos. Alle Umlaute (inklusive \verb+\"e+ und \verb+\"i+) sind 
+als eigene Zeichen vorhanden.
+
+Umlaute kann man auf 3 Arten eingeben:
+
+.) (sicherer Weg) z.B. \verb+\"a+ funktioniert garantiert.
+
+.) z.B. \verb+"a+ (ohne $\backslash$) geht auch ohne Package \textsc{german} innerhalb 
+der Text-Umgebung, weil die German-Ligaturen \verb+"a,"o,"u,"A,"O,"U,"s,"`,"``,"'+ und 
+\verb+"''+ als Fontligaturen enthalten sind.
+Hat man auch Umlaute im normalen Font, kann man das Package \textsc{german} verwenden und erh"alt
+in beiden Umgebungen die richtigen Umlaute. Nur die Anf"uhrungszeichen in der 
+Text-Umgebung muss man als \verb+\gsqon/\gsqoff+ bzw. \verb+\gqon/\gqoff+ aufrufen, da 
+\textsc{german}
+einen OT1-Font(!) voraussetzt, und die entsprechenden Zeichen nicht findet.
+
+.) Windows-Umlaute ä,ö,ü,Ä,Ö und Ü werden in der Text-Umgebung auch korrekt wiedergegeben,
+nur ß (scharfes s) funktioniert nicht. In normalem Font (Computer Modern) funktioniert diese Variante 
+nicht (vgl. diese Zeilen ).
+
+Die meisten speziellen Zeichen kann man extra aufrufen:
+
+\begin{tabular}{p{30mm}p{15mm}p{55mm}}
+\verb+\i \j+ & \textoesch{\i\ \j} &  i bzw. j ohne Punkt\\
+\verb+\ii \jj+  & \textoesch{\ii\ \jj} &   
+  i bzw. j ohne Punkt (Variante f"ur Kombination mit FHZ) \\
+\verb+\ae \oe \ue+ & \textoesch{\ae\ \oe\ \ue} &   f"ur Umlaute in Kombination mit FHZ\\
+\verb+\B \D \I \N \O \Oe+ \verb+\P \S \T \V \W+ & \textoesch{\B\ \D\ \I\ \N\ \O\ \Oe\ \P\ \S\ 
+\T\ \V\ \W} & Grossbuchstaben mit einem kleinen Anfangsstrich\\
+\verb+\r \x+ & \textoesch{\r\ \x} &         spezielle Zeichen am Anfang eines Wortes
+(vgl. \textoesch{\noboundary r \noboundary x})\\
+\verb+\s+ &\textoesch{\s} &      Schluss-s (s hat einen kleinen Fortsetzungsstrich
+\textoesch{s\noboundary})\\
+\verb+\Fe \He \Ze \Pf+ & \textoesch{\Fe\ \He\ \Ze\ \Pf} & Ligaturen    
+\end{tabular}
+
+\newpage
+Dateien:
+
+\begin{tabular}{ll}
+\verb+oesch.sty+   & Package oesch\\
+\verb+oe.def+      & Encoding oe \\
+\verb+oesch.mf+    & Metafontsteuerdatei f"ur 10pt Schrift\\
+\verb+oeschb.mf+   & Metafontsteuerdatei f"ur 20pt Schrift\\
+\verb+oesch_m.mf+  & Metafont-Hauptdatei \\
+\verb+lig.mf+      & Ligaturtabellen zum Font\\
+\verb+readme.txt+  & \verb+liesmich.txt+ auf Englisch\\
+\verb+liesmich.txt+ &     Beispiel (Text)\\
+\verb+beispiel.tex+ &      Beispiel (\TeX), dieser Text\\
+\verb+example.tex+  &     \verb+beispiel.tex+ auf Englisch
+\end{tabular}
+
+\bigskip
+
+Installation:
+
+\verb+oesch.sty+ und \verb+oe.def+ in ein Verzeichnis stellen, wo \LaTeX\ sie findet z.B. 
+\verb+TeX/LaTex/misc+.
+
+\verb+*.mf+ in ein Verzeichnis stellen, wo MetaFont sie findet z.B. 
+\verb+fonts/source/public/misc.+.
+
+
+Verwendung:
+
+Bei nur kurzen Beispielen Aufruf "uber \verb+\textoesch{Text}+. Lange Texte sollte man
+mit \verb+\oeschfamily+ bzw. \verb+\oeschbfamily+ schreiben. 
+Ich empfehle weiters 
+\verb+\renewcommand{\baselinestretch}{1.4}+ zu verwenden.
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                                 %
+%  End of File                                                                    %
+%                                                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

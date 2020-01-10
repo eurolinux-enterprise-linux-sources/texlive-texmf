@@ -1,0 +1,10 @@
+\documentclass{article}
+\usepackage{german}
+\newlength{\breite}
+\newcommand{\textbox}[2][xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]%
+   {\settowidth{\breite}{#1}\framebox[\breite]{#2}}
+\begin{document}
+\noindent
+\textbox{ohne optionales Argument}\\
+\textbox[mit optionalem Argument]{mit opt. Argument}
+\end{document}

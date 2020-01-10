@@ -1,0 +1,11 @@
+Dieses Verzeichnis enthaelt die Loesungen fuer die Uebungen 5.1 bis 5.21 in
+jeweils eigenen Files ueb5-n.tex mit n = 1 bis 21. Soweit Files mit den Namen
+ueb5-nx.tex mit x=a, b, ... auftreten, enthalten sie Alternativen oder 
+Ergaenzungen zu der Ubung ueb5-n.tex.
+
+Das Verzeichnis math.tex Enthaelt die Loesungen fuer die Uebungen 5.1 und 5.2
+in einem File, wie im Kapitel 5 fuer die Loesungsbereitstellung der
+mathematischen vorgeschlagen. Der Anwender moege sich, falls er diese 
+Speichertechnik bevorzugt, die Textruempfe aus den Files ueb5-n.tex entsprechend
+dem Anfangsvorschlag aus math.tex in dieses File kumulativ einkopieren, um
+alle Loesungen aus Kapitel 5 in einem File zur LaTeX-Bearbeitung anzubieten.

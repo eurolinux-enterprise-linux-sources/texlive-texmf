@@ -1,0 +1,100 @@
+\originalTeX
+% stolen from testfont.tex
+\tracinglostchars=0
+\tolerance=1000
+\raggedbottom
+\parindent=0pt
+\newlinechar=`@
+\hyphenpenalty=200
+\doublehyphendemerits=30000
+\newcount\m \newcount\n \newcount\p \newdimen\dim
+\chardef\other=12
+\def\today{\ifcase\month\or
+  January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or December\fi
+  \space\number\day, \number\year}
+\def\hours{\n=\time \divide\n 60
+  \m=-\n \multiply\m 60 \advance\m \time
+  \twodigits\n\twodigits\m}
+\def\twodigits#1{\ifnum #1<10 0\fi \number#1}
+\def\setbaselineskip{\setbox0=\hbox{\n=0
+\loop\char\n \ifnum \n<255 \advance\n 1 \repeat}
+\baselineskip=6pt \advance\baselineskip\ht0 \advance\baselineskip\dp0 }
+\def\setchar#1{{\escapechar-1\message{\string#1 character = }%
+  \def\do##1{\catcode`##1=\other}\dospecials
+  \read-1 to\next
+  \expandafter\finsetchar\next\next#1}}
+\def\finsetchar#1#2\next#3{\global\chardef#3=`#1
+  \ifnum #3=`\# \global\chardef#3=#2 \fi}
+\def\promptthree{\setchar\background
+  \setchar\starting \setchar\ending}
+\def\init#1{%\message{@Name of the font to test = }
+ % \read-1 to\fontname
+  \def\fontname{#1}
+  \font\testfont=\fontname
+  \leftline{\sevenrm Test of \fontname\unskip\ on \today\ at \hours}
+  \medskip
+  \testfont \setbaselineskip
+  \ifdim\fontdimen6\testfont<10pt \rightskip=0pt plus 20pt
+  \else\rightskip=0pt plus 2em \fi
+  \spaceskip=\fontdimen2\testfont % space between words (\raggedright)
+  \xspaceskip=\fontdimen2\testfont \advance\xspaceskip by\fontdimen7\testfont
+  %\message{Now type a test command (\string\help\space for help):}
+ }
+\def\oct#1{\hbox{\rm\'{}\kern-.2em\it#1\/\kern.05em}} % octal constant
+\def\hex#1{\hbox{\rm\H{}\tt#1}} % hexadecimal constant
+\def\setdigs#1"#2{\gdef\h{#2}% \h=hex prefix; \0\1=corresponding octal
+ \m=\n \divide\m by 64 \xdef\0{\the\m}%
+ \multiply\m by-64 \advance\m by\n \divide\m by 8 \xdef\1{\the\m}}
+\def\testrow{\setbox0=\hbox{\penalty 1\def\\{\char"\h}%
+ \\0\\1\\2\\3\\4\\5\\6\\7\\8\\9\\A\\B\\C\\D\\E\\F%
+ \global\p=\lastpenalty}} % \p=1 if none of the characters exist
+\def\oddline{\cr
+  \noalign{\nointerlineskip}
+  \multispan{19}\hrulefill&
+  \setbox0=\hbox{\lower 2.3pt\hbox{\hex{\h x}}}\smash{\box0}\cr
+  \noalign{\nointerlineskip}}
+\newif\ifskipping
+\def\evenline{\loop\skippingfalse
+ \ifnum\n<256 \m=\n \divide\m 16 \chardef\next=\m
+ \expandafter\setdigs\meaning\next \testrow
+ \ifnum\p=1 \skippingtrue \fi\fi
+ \ifskipping \global\advance\n 16 \repeat
+ \ifnum\n=256 \let\next=\endchart\else\let\next=\morechart\fi
+ \next}
+\def\morechart{\cr\noalign{\hrule\penalty5000}
+ \chartline \oddline \m=\1 \advance\m 1 \xdef\1{\the\m}
+ \chartline \evenline}
+\def\chartline{&\oct{\0\1x}&&\:&&\:&&\:&&\:&&\:&&\:&&\:&&\:&&}
+\def\chartstrut{\lower4.5pt\vbox to14pt{}}
+\def\table{$$\global\n=0
+  \halign to\hsize\bgroup
+    \chartstrut##\tabskip0pt plus10pt&
+    &\hfil##\hfil&\vrule##\cr
+    \lower6.5pt\null
+    &&&\oct0&&\oct1&&\oct2&&\oct3&&\oct4&&\oct5&&\oct6&&\oct7&\evenline}
+\def\endchart{\cr\noalign{\hrule}
+  \raise11.5pt\null&&&\hex 8&&\hex 9&&\hex A&&\hex B&
+  &\hex C&&\hex D&&\hex E&&\hex F&\cr\egroup$$\par}
+\def\:{\setbox0=\hbox{\char\n}%
+  \ifdim\ht0>7.5pt\reposition
+  \else\ifdim\dp0>2.5pt\reposition\fi\fi
+  \box0\global\advance\n 1 }
+\def\reposition{\setbox0=\vbox{\kern2pt\box0}\dim=\dp0
+  \advance\dim 2pt \dp0=\dim}
+\def\centerlargechars{
+  \def\reposition{\setbox0=\hbox{$\vcenter{\kern2pt\box0\kern2pt}$}}}
+%
+\newpage
+\ifx\selectfont\undefined
+  \font\sevenrm=cmr7
+ \else
+  \def\sevenrm{\fontfamily{cmr}\fontshape{n}\fontseries{m}\fontsize{7}{7pt}\selectfont}
+\fi
+\pagestyle{empty}
+\init{umranda at 20pt}
+\table
+\newpage
+\init{umrandb at 20pt}
+\table
+\endinput

@@ -1,0 +1,20 @@
+#!/bin/sh
+# In this script "$@" stands for the set of arguments passed to the
+# script, as expanded by the UNIX shell; these arguments are passed,
+# without further expansion, to `makefont'.  For examply, typing
+#
+# makeall boo
+#
+# to the UNIX shell has the same effect as typing
+#
+# makefont grreg10 boo
+# makefont grreg8 boo
+# makefont grbld10 boo
+# makefont grtt10 boo
+#
+#
+     
+makefont grreg10 "$@"
+makefont grreg8 "$@"
+makefont grbld10 "$@"
+makefont grtt10 "$@"

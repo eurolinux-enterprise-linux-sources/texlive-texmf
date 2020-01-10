@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage{german}
+\setlength{\textwidth}{130mm}
+\begin{document}
+
+% Erste Loesung
+\footnotesize\noindent
+\begin{minipage}[b]{92.50mm}
+\parbox[t]{40mm}{Die erste Zeile dieser 4~cm brei\-ten Minipage oder Parbox
+stimmt mit der ersten Zeile der nebenstehenden Minipage oder Parbox "uberein.}
+\hfill
+\parbox[t]{50mm}{Diese 5~cm breite Minipage oder Parbox ist mit der ersten
+Zeile auf die erste Zeile der links nebenstehenden Struktur und mit der
+letzten Zeile auf die letzte Zeile der rechts stehenden Struktur ausgerichtet.
+Die naheliegende "Uber\-legung von drei nebeneinander stehenden Absatzboxen
+mit den Positio"-nierungsparametern {\tt t}, {\tt t}, {\tt b} f"uhrt zu
+einem falschen Ergebnis. Warum?}\\[-3pt] \mbox{}
+\end{minipage}\hfill
+\parbox[b]{35mm}{Die L"osung liegt in der Einschachtelung von zwei der drei
+Strukturen in jeweils eine umgebende Minipage und deren Ausrichtung auf die
+verbleibende dritte Struktur.} 
+
+% Zweite Loesung
+\vspace{10mm}\noindent
+\parbox[t]{40mm}{Die erste Zeile dieser 4~cm brei\-ten Minipage oder Parbox
+stimmt mit der ersten Zeile der nebenstehenden Minipage oder Parbox "uberein.}
+\hfill
+\begin{minipage}[t]{87.5mm}\mbox{}\\[-6pt]
+\parbox[b]{50mm}{Diese 5~cm breite Minipage oder Parbox ist mit der ersten
+Zeile auf die erste Zeile der links nebenstehenden Struktur und mit der
+letzten Zeile auf die letzte Zeile der rechts stehenden Struktur ausgerichtet.
+Die naheliegende "Uber\-legung von drei nebeneinander stehenden Absatzboxen
+mit den Positio"-nierungsparametern {\tt t}, {\tt t}, {\tt b} f"uhrt zu
+einem falschen Ergebnis. Warum?}
+\hfill
+\parbox[b]{35mm}{Die L"osung liegt in der Einschachtelung von zwei der drei
+Strukturen in jeweils eine umgebende Minipage und deren Ausrichtung auf die
+verbleibende dritte Struktur.} 
+\end{minipage}
+\end{document}

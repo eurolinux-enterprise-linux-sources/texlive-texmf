@@ -1,0 +1,156 @@
+\documentclass[a4paper,KOMA,landscape]{powersem}
+
+\usepackage[stmo,button,display]{ifmslide}
+
+%% user definitions
+\newcommand{\ticket}{{\code{ticket.sty}}}
+\newcommand{\bs}{{\mtt\\}}
+
+\hypersetup{pdfauthor={Thomas Emmel}}
+\hypersetup{pdftitle={ticket manual}}
+\hypersetup{pdfsubject={ticket.sty}}
+
+\IfFileExists{cmtt.sty}{\usepackage{cmtt}}{}
+
+\usepackage{verbatim}
+\usepackage{amssymb}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\slidepagestyle{panel}
+\panelposition{bottom}
+\pageTransitionDissolve
+\sffamily
+
+\orgname{TU Darmstadt -- Institute of Mechanics -- AG4}
+
+\title{\begin{minipage}[t]{0.98\textwidth}\begin{center}
+      {\mdseries \ticket{} v0.3c October 10, 2000}\\[1ex]
+      Making labels, visting cards, pins with \LaTeX\\
+      A short introduction
+    \end{center}\end{minipage}}
+
+\author{\scalebox{1}[1.3]{Thomas Emmel}}
+
+\address{\href{mailto:emmel@mechanik.tu-darmstadt.de}%
+  {emmel@mechanik.tu-darmstadt.de}}
+\orgurl{http://coulomb.mechanik.tu-darmstadt.de/}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}
+  \maketitle
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\slidepagestyle{empty}
+\panelposition{outsidebottom}
+\hidebackground
+\pageTransitionReplace
+\centerslidesfalse
+\begin{slide}
+  \section{A short introduction}
+  \ticket{} provides an easy to handle interface to produce 
+  visiting cards, labels for your files, stickers, pins and
+  other stuff for your office, conferences etc.\\[2ex]
+  All you need is a definition of your \lq{}ticket\rq{} included in
+  a ticket definition file (\code{.tdf}),\\
+  $\rightarrowtail$ see \hyperlink{tdf}{ticket definition file}\\
+  and the two commands \code{\bs{}ticketdefault} and \code{\bs{}ticket}.\\
+  $\rightarrowtail$ see \hyperlink{ticket}{how to fill your ticket}\\[2ex]
+  What you get is shown in some examples:\\
+  $\rightarrowtail$ \href{ex_file.pdf}{\code{ex\_file}} back labels for your files...\\
+  $\rightarrowtail$ \href{ex_pin.pdf}{\code{ex\_pin}}  pins for a conference...\\
+  $\rightarrowtail$ \href{ex_vcard.pdf}{\code{ex\_vcard}} visiting-cards...\\
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}
+  \section{ticket definition file}\hypertarget{tdf}{}
+A sample ticket definition (\code{lz1680.tdf}) for a product of the german company 
+\lq{}LEITZ\rq{} is:
+\begin{center}
+  \begin{minipage}[t]{0.5\textwidth}
+    {\scriptsize
+\begin{verbatim}
+%%
+%% ticket for "Leitz 1680" 
+%% pre-cutted label for wide files
+%%
+\unitlength=1mm
+
+%% tested for an HP5SiMX, adjust it for your printer
+\hoffset=-16.2mm
+\voffset=-6.6mm
+
+\ticketNumbers{1}{4}
+
+\ticketSize{189}{56.5}     % in unitlength
+\ticketDistance{0}{9.8}    % in unitlength
+\end{verbatim}
+      }
+    \end{minipage}
+\end{center}
+The meaning of \code{\bs{}unitlength} is obvious, \code{\bs{}hoffset} and 
+\code{\bs{}voffset} are used to adjust the output.
+\code{\bs{}ticketNumbers\{n$_x$\}\{n$_y$\}} are the number of the tickets
+on the sheet in horizontal and vertical direction.
+\code{\bs{}ticketSize\{width\}\{height\}} is the size of one ticket and
+\code{\bs{}ticketDistance\{dist$_x$\}\{dist$_y$\}} are existing distances
+between the tickets.
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}
+  \section{missing ticket definition file}
+If you like to test a new ticket definition or there is no need to 
+provide such a file \ticket{} assumes default values which can be
+redefined in your file.\\
+Simply call \ticket{} without any ticket definition:\\
+\code{\bs{}usepackage[other options]\{ticket\}}
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}
+  \section{how to fill your ticket}\hypertarget{ticket}{}
+  \ticket{} opens a picture-environment for all tickets. You can put things 
+  in this picture with \code{\bs{}ticketdefault} and \code{\bs{}ticket}.
+  Both commands have one argument.\\
+  \code{\bs{}ticketdefault} is used to put a default background to your 
+  ticket, which will not changed for all tickets. 
+  You have to \code{\bs{}renewcommand} \code{\bs{}ticketdefault} every time
+  you change this background:\\[-5ex]
+  \begin{center}
+    \begin{minipage}[t]{.5\textwidth}
+      {\scriptsize
+\begin{verbatim}
+\renewcommand{\ticketdefault}{%
+    \put(100, 5){\includegraphics[width=35mm]{ifmlogoc}}%
+    \put(100,50){\begin{rotate}{180}\Huge ...\end{rotate}}%
+    }
+\end{verbatim}
+        \normalsize
+        }
+    \end{minipage}
+  \end{center}
+  \code{\bs{}ticket} is used to provide the content which will be changed
+  for the individual tickets. The simplest way to do that is to define a new 
+  command like this:
+  \begin{center}
+    \begin{minipage}[t]{0.5\textwidth}
+      {\scriptsize
+\begin{verbatim}
+\newcommand{\myticket}[3]{\ticket{%
+    \put(  0, 5){#1}%
+    \put( 20,20){{\bfseries\large#2}\\#3}%
+    }}
+\end{verbatim}
+        }
+    \end{minipage}
+  \end{center}
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}
+  \section{special commands}
+You can add additional pagebreaks with \code{\bs{}newpage\bs{}ticketreset}. This clears the ticket-buffers and sets the corresponding values to initial values.\\
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

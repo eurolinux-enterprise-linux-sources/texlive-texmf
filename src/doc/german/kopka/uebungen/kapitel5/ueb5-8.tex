@@ -1,0 +1,11 @@
+\documentclass{article}
+\usepackage{german}
+\setlength{\textwidth}{135mm}
+\begin{document}
+\noindent
+Die Gammafunktion $\Gamma(x)$ ist definiert als:
+\[ \Gamma(x)\equiv\lim_{n\to\infty}\prod_{\nu=0}^{n-1}\frac{n!n^{x-1}}{x+\nu}
+	    = \lim_{n\to\infty}\frac{n!n^{x-1}}{x(x+1)(x+2)\cdots(x+n-1)}
+	    \equiv\int_0^\infty e^{-t}t^{x-1}\,dt \]
+Die Integraldefinition gilt nur f"ur $x>0$ (2.\ Eulersches Integral).
+\end{document}

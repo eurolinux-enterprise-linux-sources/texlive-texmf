@@ -1,0 +1,19 @@
+\documentclass{article}
+\RequirePackage{pstricks}
+\RequirePackage{pstricks-add}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\begin{pspicture}(-5,-5)(5,5)
+\psset{linewidth=1mm,polarplot=true,plotpoints=5000}%
+\psplot[linecolor=PineGreen,fillstyle=solid,fillcolor=BlueGreen]{0}{360}{%
+  x 2 mul cos 2 mul abs 9 mul sqrt}
+\psaxes[labelsep=.75mm,arrowlength=1.75,ticksize=2pt,linewidth=0.17mm]%
+  {->}(0,0)(-5,-5)(5,5)%
+\uput[-90](5,0){$x$}
+\rput[0](0,5){$y$}
+\end{pspicture}
+
+\end{document}

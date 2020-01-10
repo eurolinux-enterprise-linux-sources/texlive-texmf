@@ -1,0 +1,239 @@
+%%
+%% This is file `delex.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% deleq.dtx  (with options: `exempelkod')
+%% 
+%% 
+%% Copyright (c) 1994-97 by Mats Dahlgren <matsd@homenet.se>.
+%% All rights reserved.  See the file `deleq.ins' for information
+%% on how you may (re-)distribute the `deleq' package files.
+%% 
+\documentclass[11pt]{article} %%% add `leqno' if you want left-aligned
+\usepackage{deleq}            %%% equation numbers and `fleqn' to
+\oddsidemargin=0.5cm          %%% flush the equations left.
+\evensidemargin=0.5cm
+\topmargin=-5mm
+\textheight=23.5cm
+\textwidth=15.5cm
+\begin{document}
+  \begin{center}
+  \Large Welcome to the \textsf{deleq} package!
+  \end{center}
+
+  This is a short document to demonstrate the use of the
+  \textsf{deleq} package and its commands.  It uses \deleqver .
+  \textsf{deleq} was written by Mats Dahlgren
+  (\texttt{matsd@physchem.kth.se}).  Suggestions for
+  improvements and bug reports are most welcome, see the
+  documentation.  \textsf{deleq} is fully compatible with the
+  \texttt{leqno} option and most of the \texttt{fleqn} option.
+
+  We start this demonstration by a simple and well-known
+  equation to get the equation number counter going:
+  \begin{equation}
+    \sin^2\alpha + \cos^2\alpha = 1
+  \end{equation}
+  The first example will be to make use of the
+  \texttt{deqn} environment to get a partially numbered
+  equation:
+  \begin{deqn}
+    \sin (-\alpha) = - \sin \alpha
+  \end{deqn}
+  This equation has its cosine companion, here written in
+  the \texttt{ddeqn} environment:
+  \begin{ddeqn}
+    \cos (-\alpha) = \cos \alpha
+  \end{ddeqn}
+  Not so exciting, so far. :--)
+
+  In the next example we introduce the \texttt{deqarr}
+  environment for writing equations:
+  \begin{deqarr}
+    \sin ( \alpha + \beta ) & =
+      & \sin \alpha \cos \beta + \sin \beta \cos \alpha \\
+    \sin ( \alpha - \beta ) & =
+      & \sin \alpha \cos \beta - \sin \beta \cos \alpha
+    \label{Demo1}
+  \end{deqarr}
+  where we also have put in the label \texttt{Demo1} in
+  the second equation. Next, notice how the environment
+  \texttt{ddeqar} uses the same main equation number as
+  the previous equations:
+  \begin{ddeqar}
+    \cos ( \alpha + \beta ) & =
+      & \cos \alpha \cos \beta - \sin \alpha \sin \beta
+      \arrlabel{Demo2} \\
+    \cos ( \alpha - \beta ) & =
+      & \cos \alpha \cos \beta + \sin \alpha \sin \beta
+  \end{ddeqar}
+  In the first of these equations, an \verb+\arrlabel+ command
+  with the label \texttt{Demo2} is included.
+  Now, we will make another \texttt{eqnarray}-like
+  structure, again in the \texttt{ddeqar} environment:
+  \begin{ddeqar}
+    \sin 2\alpha & =
+      & 2 \sin \alpha \cos \alpha \heqno \label{Demo3} \\
+    \cos 2\alpha & =
+      & \cos ^2 \alpha - \sin ^2 \alpha \nydeqno \\
+  \rem{or}
+      & = & 2\cos ^2 \alpha - 1
+  \end{ddeqar}
+  This example shows the use of \verb$\heqno$ in the first
+  equation, which produces an ordinary equation number.
+  The first equation is also labelled, with the label
+  \texttt{Demo3}.  The next equation's number was produced
+  by the command \verb$\nydeqno$.  Also, notice the use of
+  \verb+\rem{or}+, which results in the text ``or'' without
+  changing the alignment.  To illustrate the use of
+  \verb+\arrlabel{Demo2}+ above, we here make a reference to it:
+  \ldots{} in equations \ref{Demo2} \ldots which was
+  created by typing
+  `\verb+\ldots{} in equations \ref{Demo2} \ldots+'.
+
+  To step the equation number counter, we want the
+  following equations typeset in ordinary
+  \texttt{eqnarray} environment:
+  \begin{eqnarray}
+    \tan ^2 \alpha & =
+      & \frac{\sin ^2 \alpha}{\cos ^2 \alpha} \label{Demo4} \\
+    \tan \alpha & =
+      & \frac{\sin \alpha}{\cos \alpha}
+  \end{eqnarray}
+  The upper equation was given the label \texttt{Demo4}.
+
+  Now one of the ``recycling'' commands is to be
+  demonstrated.  First of all, let's make an ordinary
+  reference to equation~\ref{Demo3}, and then ``recycle'' it:
+  $$ \sin 2\alpha = 2 \sin \alpha \cos \alpha \reqno{Demo3} $$
+  This was obtained with \verb#$$ ... $$# with the command
+  \verb#\reqno{Demo3}# at the end.  Also partially
+  numbered equations can be recycled with the
+  \verb#\reqno{FOO}# command, as with
+  equation~\ref{Demo1}:
+  $$ \sin ( \alpha - \beta ) = \sin \alpha \cos \beta -
+    \sin \beta \cos \alpha \reqno{Demo1} $$
+  (However, the use of \verb#\rndeqno{FOO}# and
+  \verb#\rdeqno{FOO}# will produce strange results with
+  two (different) partial equation numbers if \texttt{FOO}
+  refers to a partially numbered equation.)
+
+  The next equation was written with \verb#$$ ... $$# and
+  a \verb#\deleqno# command at the end:
+  $$ \tan 2\alpha = \frac{2\tan \alpha}{1 - \tan ^2 \alpha} \deleqno $$
+  Notice how the main equation number counter is still the
+  same, despite that we now are outside of the
+  \texttt{ddeqar} environment. Also, notice how the use of
+  \verb#\reqno# above did not affect the equation number
+  counter. The following equation is also set within
+  \verb#$$ ... $$#, but it uses the command
+  \verb#\nydeleqno# to produce an equation number with a
+  new main number:
+  $$ \sin ^2 \alpha = 1 - \cos ^2 \alpha \nydeleqno $$
+
+  Now we will elaborate a little on \verb#\rndeqno{FOO}#
+  and \verb#\rdeqno{FOO}#. Let us use
+  equation~\ref{Demo4}, and see what happens if we use the
+  \verb#\rndeqno{FOO}# command:
+  $$ \tan ^2 \alpha = \frac{\sin ^2 \alpha}
+    {\cos ^2 \alpha} \rndeqno{Demo4} $$
+  which we rewrite:
+  $$ \tan ^2 \alpha = \frac{\sin ^2 \alpha}
+    {1 - \sin ^2 \alpha} \rdeqno{Demo4}  \label{Demo5} $$
+  with \verb#\rdeqno{Demo4}# at the end.  This is great
+  fun, so why not one more:
+  \begin{deqrarr}
+  \tan ^2 \alpha = \frac{1 - \cos ^2 \alpha}
+    {\cos ^2 \alpha} \ddeqreqno[-\jotbaseline]{Demo4}
+  \nonumber
+  \end{deqrarr}
+  Also, the middle form of equation~\ref{Demo4} got a
+  label, \texttt{Demo5}.  In the last example, the construct\\
+  \verb+  \ddeqreqno[-\jotbaseline]{Demo4}   \nonumber+\\ in a
+  \texttt{deqrarr} environment is used, to obtain
+  \texttt{fleqn} compatibility.
+
+  There is still one equation to write.  This time we
+  again use the \texttt{deqarr} environment:
+  \begin{deqarr}
+  \cot \alpha & = & \frac{\cos \alpha}{\sin \alpha} \\
+  \where
+    & = & \frac{1}{\tan \alpha}
+  \end{deqarr}
+  This example also shows the use of the \verb+\where+
+  command, which is a special case of the \verb+\rem+ command.
+  Now, the interesting thing of referring to the recycled
+  equations is ahead. If one writes \verb#\ref{Demo5}#,
+  this is what \LaTeX\ will return:~\ref{Demo5}.  That is
+  not too instructive, since the partial equation numbers
+  are quite common in this document.  To make the complete
+  reference, use \verb#\ref{Demo4}\ref{Demo5}#.  The
+  reference~\ref{Demo4}\ref{Demo5} is much more
+  comprehensible, right? (If you get bad line-breaks at
+  such references, put them in an \verb#\mbox{...}#.)
+
+  Now we will show the use of the commands to recycle equation
+  numbers in \verb+eqnarray+-like structures.  These commands
+  are \verb+\eqreqno{FOO}+, \verb+\deqreqno{FOO}+, and
+  \verb+\ddeqreqno{FOO}+.  We start by repeating equation
+  \ref{Demo1} in an \verb+deqrarr+ environment:
+  \begin{deqrarr}
+    \sin ( \alpha - \beta ) & =
+      & \sin \alpha \cos \beta - \sin \beta \cos \alpha
+      \eqreqno{Demo1}
+    \sin 2\alpha & = & 2 \sin\alpha \cos\alpha
+  \end{deqrarr}
+  The second equation here shows how the alignment of the
+  equations is preserved.  Next, we can use the equation
+  \ref{Demo3} for some variations:
+  \begin{deqrarr}
+    \sin 2\alpha & = & 2 \sin\alpha \cos\alpha
+      \deqreqno{Demo3}
+    \sin 4\alpha & = & 2 \sin 2\alpha \cos 2\alpha \\
+      & = & 2\left( 2\sin\alpha \cos\alpha
+        \left( \cos^2 \alpha - \sin^2 \alpha\right)\right)
+        \ddeqreqno{Demo3}
+      & = & 4\left(\sin\alpha \cos\alpha
+        \left( \cos^2 \alpha - \sin^2 \alpha\right)\right)
+        \ddeqreqno[-\jotbaseline]{Demo3}
+  \end{deqrarr}
+  The features used here are \verb+\deqreqno{Demo3}+
+  on the first line, \verb+\ddeqreqno{Demo3}+ on the
+  second line, and \verb+\deqreqno[-\jotbaseline]{Demo3}+
+  on the third.  Note how the inclusion of
+  \verb+[-\jotbaseline]+ on the third line prevents
+  \LaTeX{} from inserting an extra blank line.  The
+  second line ends with `\verb+\\+', and has thus no
+  equation number at all.
+
+  The last part shows how you may use \verb+\eqreqno+ and its
+  relatives in \verb+deqarr+ environment:
+  \begin{deqarr}
+    \sin\alpha & = & \sin\alpha \cos 0 + \sin 0 \cos\alpha \\
+    \sin 2\alpha & = & 2 \sin\alpha \cos\alpha \eqreqno{Demo3}
+    \sin 3\alpha & = & \sin 2\alpha \cos\alpha +
+      \sin\alpha \cos 2\alpha \\
+    \sin 4\alpha & = & 2 \sin 2\alpha \cos 2\alpha \\
+    \sin 5\alpha & = & \sin 3\alpha \cos 2\alpha +
+      \sin 2\alpha \cos 3\alpha \ddeqreqno{Demo3}
+    \sin 6\alpha & = & 2 \sin 3\alpha \cos 3\alpha
+  \end{deqarr}
+  The interesting part here is an `\verb+\eqreqno{Demo3}+' at
+  the end of the second line and a `\verb+\ddeqreqno{Demo3}+' at
+  the end of the fifth line.  Notice how the partial
+  equation number counter in unaffected by the enetering of
+  the \verb+deqarr+ environment.
+
+  Finally, the $\mathcal{END}$!  If you want your
+  equation numbers left-aligned, just specify the \texttt{leqno}
+  option for the \texttt{documentclass} you are using.  It
+  should work!  If you have any suggestions, corrections
+  or contributions, please contact me. Enjoy \LaTeX !
+
+  {\itshape mats d.}
+\end{document}
+\endinput
+%%
+%% End of file `delex.tex'.

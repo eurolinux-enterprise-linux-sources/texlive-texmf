@@ -1,0 +1,326 @@
+\documentclass[30pt,landscape,footrule]{foils}
+\usepackage[english,german]{babel}  % language support for german/english
+\usepackage[latin1]{inputenc}       % allow Latin1 characters
+\usepackage{ifvtex}
+\usepackage{ifpdf}
+% If we use vtex, we are likely to create pdf...
+\ifvtexpdf\pdftrue\fi
+\ifpdf
+\usepackage{pause}               % loads also color.sty
+\usepackage{background}
+\usepackage{graphicx}            % for including graphics
+\usepackage{geometry}
+\usepackage{hyperref}
+\ifvtex\relax
+\else
+%%\pdfcompresslevel=0
+\DeclareGraphicsRule{*}{mps}{*}{}
+\fi
+\else
+\usepackage[dvipdfm]{pause}      % loads also color.sty
+\usepackage[dvipdfm]{background}
+\usepackage[dvips]{graphicx}
+\usepackage[dvips]{geometry}
+\usepackage[dvipdfm]{hyperref}
+\fi
+\usepackage{tabularx}
+\usepackage{pp4link}
+\usepackage{mpmulti}
+\usepackage{amssymb}
+
+\geometry{headsep=3ex,hscale=0.9}
+\hypersetup{pdftitle={pp4extensions},
+  pdfsubject={More extensions to PPower4},
+  pdfauthor={Klaus Guntermann, FG Systemprogrammierung, TU Darmstadt
+  <guntermann@iti.informatik.tu-darmstadt.de>},
+  pdfkeywords={acrobat, ppower4},
+  pdfpagemode={FullScreen},
+  colorlinks={true},
+  linkcolor={red}
+  }
+
+\begin{document}
+\parindent 0mm\raggedright
+%% Inserting this pauselevel into the Logo we will have the logo appear
+%% immediately. But we still need a \pause at the end of the page,
+%% otherwise the last page material will also come out first.
+%% In highlighted sections we need to keep the link colored for all
+%% levels, so better give a wide range for its appearance.
+%% Watch your step!
+\MyLogo{\pauselevel{highlight =1 :12}PPower4 more extensions demo / \today \qquad
+    \Acrobatmenu{FirstPage}{back to start}\quad}
+
+\foilhead{Contents}
+
+You can go ahead through the complete file or jump to
+any of the example pages with the following links.
+
+{\small
+\toplink{tablesone}{Table builds} \qquad
+\toplink{filltable}{Filling tables} \qquad
+\toplink{buildtable}{Building tables by column} \qquad
+\toplink{moretables}{More filled tables} \qquad
+\toplink{backward}{Forward and/or backward} \qquad
+\toplink{tour}{Taking a tour} \qquad
+\toplink{highitems}{Highlighting itemized lists} \qquad
+\toplink{list}{Going through a list} \qquad
+\toplink{morehigh}{More highlighting effects} \qquad
+\toplink{morelist}{Still more list effects} \qquad
+\toplink{picture}{Including pictures}\par
+}
+
+%% We start it easy. Just build a table line by line.
+%% Well not THAT easy. We do not really want only line by line
+%% building, after all.
+%% To build entries field by field we have to split also
+%% the following \hline into 3 \cline commands to be able to
+%% insert \pause commands in between. And, it works!
+%% Make the last two lines build bottom up counting down the steps
+%% after advancing enough steps (keep in mind, that the preceding
+%% \pause has advanced by one already; but it would not really pose
+%% a problem, if you advance too much: levels without new parts
+%% will be omitted, when the pages are built, so it will cost you only
+%% some processing time).
+\foilhead{Table builds}
+\toptarget{tablesone}
+\begin{center}
+  \begin{tabular}{|l|l|l|}
+    \hline
+    Building & your & table\\\hline\noalign{\pause}
+    line& by& line,\\\hline\noalign{\pause}
+    entry &\pause by &\pause entry,\\\noalign{\pause\pauselevel{=-3}}
+    \cline{1-1}\noalign{\pause}\cline{2-2}\noalign{\pause}\cline{3-3}
+    \noalign{\pause\pauselevel{=+1 -1}}
+    from & the & bottom\\\noalign{\pause}\hline
+    growing & up, & too. \\\hline
+  \end{tabular}\pause
+\end{center}
+\vfill
+\pauselevel{=+3 +1}
+{\small Did you notice, that we have a footer from the very beginning
+  and not only, when the page is complete?
+  \par}
+\pause
+
+%% Now let a table build column by colum, just inserting the \pause
+%% commands into the specification line.
+%% Advance for each column content and reset level to 1 for each
+%% vertical line. Easy, isn't it?
+\foilhead{Filling tables}
+\toptarget{filltable}
+\newcommand\plone{\pause\pauselevel{=1}}
+\begin{center}
+  \begin{tabular}{|>{\pause}l<{\plone}|>{\pause\pauselevel{=+1}}l<{\plone}|>{\pause\pauselevel{=+2}}l<{\plone}|}
+    \hline
+    Fill & then & finally,\\\hline
+    the & the & also\\\hline
+    first & second, & the \\\hline
+    column, & and & third. \\\hline
+  \end{tabular}\pause
+\end{center}
+
+%% Next we build a similar table, but want it  to appear column by
+%% column, including the border lines.
+%% The first column will appear immediately. The second and third will
+%% have their \pause created through the tabular pattern.
+%% The hardest part is again, to break the vertical lines.
+%% We define a special command for that, which resets the level
+%% for the number of columns and then places the pieces in the
+%% same steps as the column entries are built. Finally we must reset
+%% the level counter for the next line of entries. And that's it.
+\foilhead{Building tables by column}
+\toptarget{buildtable}
+\newcommand\buildline{\noalign{\pause\pauselevel{=-3}}
+  \cline{1-1}\noalign{\pause}\cline{2-2}\noalign{\pause}\cline{3-3}
+  \noalign{\pause\pauselevel{=-3}}}
+\begin{center}\pause
+  \pauselevel{=+2}% increment for first decrement by 3 in \buildline
+  \begin{tabular}{|l|>{\pause}l|>{\pause}l|}
+    \buildline
+    Show & then & finally,\\\buildline
+    the & the & also\\\buildline
+    first & second, & the \\\buildline
+    column, & and & third. \\\buildline
+  \end{tabular}%\pause
+\end{center}
+
+%% Now try this selecting "random" builds. Actually we must reset the
+%% level for each vertical line and the \hrules by setting the level
+%% after each entry through the specification line. Because the \pause
+%% is also inserted magically, we need to specify only, when what
+%% item should appear. Let's color the items to make the text at least
+%% somewhat "readable".
+%% As a special effect let one item vanish...
+\foilhead{More filled tables}
+\toptarget{moretables}
+\begin{center}
+ \begin{tabular}{|>{\pause}l<{\plone}|>{\pause}l<{\plone}|>{\pause}l<{\plone}|}
+    \hline
+    \pauselevel{=2}\textcolor{blue}{Fill} &
+        \pauselevel{=5}\textcolor{magenta}{leave} &
+           \pauselevel{=3 :5}\textcolor{red}{at}\\\hline
+    \pauselevel{=5}\textcolor{magenta}{some} &
+       \pauselevel{=2}\textcolor{blue}{the} &
+           \pauselevel{=6}\textcolor{yellow}{well,}\\\hline
+    \pauselevel{=4}\textcolor{red}{random} &
+        \pauselevel{=6}\textcolor{yellow}{almost} &
+            \pauselevel{=5}\textcolor{magenta}{empty} \\\hline
+    \pauselevel{=6}\textcolor{yellow}{empty} &
+        \pauselevel{=4}\textcolor{red}{positions} &
+            \pauselevel{=2}\textcolor{blue}{table} \\\hline
+  \end{tabular}\pause
+\end{center}
+\pauselevel{=7}
+{\small Did you notice, that the element in the upper right corner has
+vanished?
+\par}
+\pause
+
+%% Now for something, which was impossible before:
+%% write backwards. With just one specification and a lot of \pause
+\foilhead{Forward and/or backward}
+\toptarget{backward}
+Writing \pause{}sentences \pause{}word \pause{}by \pause{}word \pause{}has
+\pause{}always \pause{}been \pause{}possible \pause{}with \pause{}PPower4.
+\pause\pauselevel{=-1 -1}%
+But \pause{}now \pause{}you \pause{}can, \pause{}if \pause{}you \pause{}need
+\pause{}that, \pause{}also \pause{}write \pause{}backwards.\pause
+
+%% This example was inspired by Wilfried Pascher asking for it,
+%% when ppower4 could not yet do this...
+\foilhead{Taking a tour}
+\toptarget{tour}
+\begin{center}
+  \begin{tabular}[c]{r}
+    \pause \pauselevel{=3 :8}\rlap{2}% appear and vanish
+    \pause \pauselevel{=9}8 \\       % replacement after vanishing
+    \pause \pauselevel{=1 : 7}\rlap{1}% the same at
+    \pause \pauselevel{= 8}7          % different levels
+  \end{tabular}%
+  \begin{tabular}[c]{c}
+    \pause \pauselevel{=4}3 \\
+    \pause \pauselevel{=2}$\circlearrowright$ \\
+    \pause \pauselevel{=7}6
+  \end{tabular}%
+  \begin{tabular}[c]{l}
+    \pause \pauselevel{=5}4 \\
+    \pause 5 % this gets level 6 by incrementing automatically
+  \end{tabular}\pause
+\end{center}
+
+
+%% It is rather easy to highlight a normal itemized list.
+%% We just need to specify our color mapping and proceed as usually,
+%% selecting the proper color.
+\foilhead{Highlighting itemized lists}
+\toptarget{highitems}
+\definecolor{dimmed}{gray}{0.4}
+\pausecolors{magenta}{dimmed}{magenta}
+{\color{magenta}
+\begin{itemize}
+\item This is an important topic.\pause
+\item But only, until the next appears.\pause
+\item And both are less important, when the third item is here.\\
+  And of course we can highlight
+  also long items now.
+\end{itemize}
+\pause}
+
+%% Also going through a list is as easy. We use the same color setup
+%% as above and switch to highlight mode.
+\foilhead{Going through a list}
+\toptarget{list}
+{\color{magenta}\pausehighlight
+\begin{itemize}
+\item You can also walk through a list,\pause
+\item which is visible from the very beginning,\pause
+\item and highlights the item, that is currently most important.
+\end{itemize}
+\pause}
+
+%% Now we want to show some extras. Keep a highlighted item standing
+%% out longer and let something else appear, although we normally
+%% show everything from the beginning. Still using \pausehighlight.
+\foilhead{More highlighting effects\pause}
+\toptarget{morehigh}
+{\color{magenta}
+\begin{itemize}
+\item We start this highlighted and keep it for a while.
+  \pauselevel{=1 :2}\pause
+\item To show the effects we need more items.\pauselevel{=2}\pause
+\item Still more text. \pause
+\item And the final text on this slide. \pause Something to appear is
+  here.\pauselevel{=2, build =3 :3}%appear highlighted and vanish later
+\end{itemize}
+\pause}
+
+%% Back to builing up item lists. Now highlight items longer.
+%% And have them stand out again later.
+\foilhead{Still more list effects}
+\toptarget{morelist}
+{\color{magenta}\pausebuild
+\begin{itemize}
+\item Hi! \pause Again this starts highlighted here. \pauselevel{=1 :2}\pause
+  And we want to come back to this later.\pauselevel{highlight
+    =1,=2,highlight =3 :4}\pause% highlight it most of the time.
+\item Sorry for these boring items.\pauselevel{=2}\pause
+\item But somehow we must fill this slide.\pause
+\item And we got it.
+\end{itemize}
+\pause}
+
+%% In this section we use a figure created by xfig and exported to
+%% MetaPost with multiple frames. In this section we use another color
+%% mapping.
+%%
+\foilhead{Including pictures}
+\toptarget{picture}
+\pausecolorreset
+\pausecolors{red}{black}{red}
+%% this part should be seen completely from the very beginning
+%% and we wish to highlight the current action.
+\null\vskip-2\baselineskip\leavevmode
+\begin{minipage}{0.5\textwidth}
+\small
+\def\pointer{\mathord{-\mkern-1.5\thickmuskip >}}
+$\textbf{void}\ \textbf{dlink}{::}\textit{append}(\ \textbf{dlink}\ {*}p\ )
+\ \{$
+  \pause\pauselevel{highlight =+1}\\
+\null\qquad{\color{red}$p\pointer{}\textit{suc}=\textit{suc};$\pause
+  \pauselevel{highlight}\\
+\null\qquad$p\pointer{}\textit{pre}=\textbf{this};$\pause
+  \pauselevel{highlight}\\
+\null\qquad$suc\pointer{}\textit{pre}=p;$\pause\pauselevel{highlight}\\
+\null\qquad$suc=p;$}\pause\pauselevel{=1}\\
+$\}$
+\end{minipage}\hfill
+\begin{minipage}{0.42\textwidth}\raggedright
+\small We can also highlight pieces of program code and
+present a corresponding illustration, which shows the
+resulting changes in a data structure.
+\end{minipage}
+\pause
+%\null\vskip-1.5\baselineskip\leavevmode
+\newcount\pausecount
+\pausecount=0
+\def\mypause{\ifcase\pausecount\pauselevel{=-1 :+2}\or\pauselevel{=-1 :+3}\or
+  \pauselevel{=-1}\else\relax\fi\pause\advance\pausecount1\relax}
+\multiinclude[pause=\mypause,graphics={scale=1.5}]{example}
+\pause
+
+\foilhead{Thanks for having a look}
+\pausecolorreset
+
+The features demonstrated here can be created with \verb|pdflatex|,
+\verb|vtex| and the combination of \verb|latex| and \verb|dvipdfm|
+using the post processor PPower4.
+\\
+If you would like to check this out, see the
+\href{http://www-sp.iti.informatik.tu-darmstadt.de/software/ppower4/}{homepage}
+of PPower4. Please send comments concerning features and the documentation.
+I would appreciate also suggestions for more examples.\\
+Thank you for your cooperation!
+
+
+\end{document}
+

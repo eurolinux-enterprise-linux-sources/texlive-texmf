@@ -1,0 +1,13 @@
+#!/bin/bash
+
+for a in *.ttf
+do
+    echo $a
+    b=`echo $a | sed s/[.]ttf//`
+    echo $b
+
+    echo FontName $b:
+    ttf2pt1 -a -e $a $b
+    ttf2pt1 -a -b $a $b
+
+done

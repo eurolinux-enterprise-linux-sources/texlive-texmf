@@ -1,0 +1,179 @@
+% $Id: xifthen.tex,v 1.1.1.1 2006/03/25 01:24:34 noirel Exp $
+\documentclass{article}
+
+\usepackage{etex}
+\usepackage{xifthen}
+\usepackage[ascii]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[warn]{textcomp}
+\usepackage{fourier}
+  \renewcommand*{\sfdefault}{lmss}
+  \renewcommand*{\ttdefault}{lmtt}
+  \renewcommand*{\textcompsubstdefault}{lmr}
+\usepackage{microtype}
+\usepackage{typetex}
+\usepackage[babel]{csquotes}
+\usepackage[british]{babel}
+
+\makeatletter
+\newenvironment*{texdescription}{%
+  \list{}{%
+    \labelwidth\z@
+    \itemindent-\leftmargin
+    \itemsep = 0pt
+    \def \makelabel ##1{\hspace{\labelsep}\normalfont\tex{##1}}%
+  }%
+}{%
+  \endlist
+}
+\makeatother
+
+\newcommand*{\pack}{\textsf}
+\newcommand*{\true}{\emph{true}}
+\newcommand*{\false}{\emph{false}}
+
+\newtest \sillytest [2]{%
+  \cnttest{(#1)*(#2)}>{100}%
+  \AND
+  \cnttest{((#1)+(#2))*2}<{60}%
+}
+
+\texsetup {%
+  meta-left-char = {\textlangle},
+  meta-right-char = {\textrangle}
+}
+
+\title  {The \pack{xifthen} package}
+\author {Josselin Noirel}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  This package implements new commands to go within the first argument of
+  \cmd{ifthenelse} to test whether a string is void or not, if a command
+  is defined or equivalent to another.  It includes also the possibility
+  to make use of the complex expressions introduced by the
+  package~\pack{calc}, together with the ability of defining new commands
+  to handle complex tests.  This package requires the \eTeX{} features.
+\end{abstract}
+
+\section{General syntax}
+
+The general syntax is inherited of that of the package~\pack{ifthen}:
+%
+\begin{displaytex}
+  \cmdsyntax[3]{ifthenelse}{test expression}{true code}{false code}
+\end{displaytex}
+%
+Evaluates the \meta{test expression} and executes \meta{true code} if the
+test turns out to be true and \meta{false code} otherwise.  \pack{ifthen}
+provides the following tests:
+%
+\begin{texdescription}
+\item [\meta{value $1$} = \meta{value $2$}]
+\item [\meta{value $1$} < \meta{value $2$}]
+\item [\meta{value $1$} > \meta{value $2$}]
+      Simple tests on integer comparisons.
+
+\item [{\cmdsyntax[1]{isodd}{number}}]
+      Is \meta{number} odd?
+
+\item [\cmd{isundefined}\meta{command}]
+      Id \meta{command} undefined?
+
+\item [{\cmdsyntax[2]{equal}{string $1$}{string $2$}}]
+      Are \meta{string $1$} and \meta{string $2$} equivalent (after
+      expansion)?
+
+\item [{\cmdsyntax[1]{boolean}{boolean}}]
+      Does the boolean \meta{boolean} hold the value \true{} or \false{}?
+
+\item [{\cmd[1]{lengthtest}{\meta{dimen $1$} = \meta{dimen $2$}}}]
+\item [{\cmd[1]{lengthtest}{\meta{dimen $1$} < \meta{dimen $2$}}}]
+\item [{\cmd[1]{lengthtest}{\meta{dimen $1$} > \meta{dimen $2$}}}]
+      Simple dimension comparisons.
+
+\item [\cmd{(}\dots\cmd{)}]
+      Parenthesis.
+
+\item [\cmd{AND}]
+\item [\cmd{OR}]
+\item [\cmd{NOT}]
+      Conjunction, disjunction, negation.
+\end{texdescription}
+
+\section{New tests}
+
+\begin{displaytex}
+  \cmdsyntax[1]{isnamedefined}{command name}
+\end{displaytex}
+%
+Returns \true{} if the command \cmd{\meta{command name}} is defined.
+
+\begin{displaytex}
+  \cmdsyntax[1]{isempty}{content}
+\end{displaytex}
+%
+Returns \true{} is \meta{content} is empty (in the sense used by
+\pack{ifmtarg} which is used internally).  It is essentially equivalent to
+\tex{\cmd[2]{equal}{\meta{content}}{}} except that the argument of
+\cmd{isempty} isn't expanded and therefore isn't affected by fragile
+commands.
+
+\begin{displaytex}
+  \cmdsyntax[2]{isequivalentto}{command~$1$}{command~$2$}
+\end{displaytex}
+%
+Corresponds to the \cmd{ifx} test: it returns \true{} when the two
+commands are exactly equivalent (same definition, same number of
+arguments, etc., otherwise \false{} is returned.
+
+\begin{displaytex}
+  \cmd{cnttest}\marg{counter expression $1$}\meta{comparison}%
+               \marg{counter expression $2$}
+\end{displaytex}
+%
+Compares the two counter expressions (having the usual syntax of the
+package \pack{calc}) and returns the value of the test.  The comparison
+can be one of the following characters \tex{<}, \tex{>},~and~\tex{=}.
+
+\begin{displaytex}
+  \cmd{dimtest}\marg{dimen expression $1$}\meta{comparison}%
+               \marg{dimen expression $2$}
+\end{displaytex}
+%
+Compares the two dimension expressions (having the usual syntax of the
+package \pack{calc}) and returns the value of the test.  The comparison
+can be one of the following characters \tex{<}, \tex{>},~and~\tex{=}.
+
+\section{Defining new complex test commands}
+
+\begin{displaytex}
+  \cmdsyntax[3]{newtest}{command}[$n$]{test expression}
+\end{displaytex}
+%
+Defines a command named \meta{command} taking $n$~arguments (no optional
+argument is allowed) consisting of the test as specified by \meta{test
+  expression} that can be used in the argument of \cmd{ifthenelse}.  For
+instance, if we want to test whether a rectangle having dimensions
+$l$~and~$L$ meets the two following conditions: $S = l \times L > 100$
+and~$P = 2 (l +\nobreak L) < 60$:
+%
+\begin{displaytex}
+\cmd{newtest}\{\cmd{sillytest}\}[2]\{\%\newline
+\ \ \cmd{cnttest}\{(\#1)*(\#2)\}>\{100\}\%\newline
+\ \ \cmd{AND}\newline
+\ \ \cmd{cnttest}\{((\#1)+(\#2))*2\}<\{60\}\%\newline
+\}
+\end{displaytex}
+%
+Then \tex{\cmd{ifthenelse}\{\cmd{sillytest}\{14\}\{7\}\}\{TRUE\}\{FALSE\}}
+returns \ifthenelse{\sillytest{14}{7}}{TRUE}{FALSE} because $14\times 7 =
+98$ and $2\times (14 +\nobreak 7) = 42$, while
+\tex{\cmd{ifthenelse}\{\cmd{sillytest}\{11\}\{11\}\}\{TRUE\}\allowbreak
+  \{FALSE\}} returns \ifthenelse{\sillytest{11}{11}}{TRUE}{FALSE} because
+$11 \times 11 = 121$ and $2\times (11 +\nobreak 11) = 44$.
+
+\end{document}

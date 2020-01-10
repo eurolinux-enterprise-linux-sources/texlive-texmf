@@ -1,0 +1,27 @@
+\documentclass[nochanges,outeroff]{gmdocc}
+\twocoltoc
+\begin{document}
+\DocInput{gmutils.sty}%e:/texmf/tex/latex/gm/
+%^^A~a~test {\tt>\expandafter\string\twelvespace<>\expandafter\xiistring\twelvespace<}
+%^^A\show\tableofcontents
+%^^A\makeatletter
+%^^A\show\@starttoc
+\thispagestyle{empty}
+\typeout{%
+  Produce index with^^J%
+  makeindex -r \jobnamewoe^^J}
+\end{document}
+
+
+% And for the future, when the changes' history is nonempty
+\typeout{%
+  Produce change log with^^J%
+  makeindex -r -s gmglo.ist -o \jobnamewoe.gls \jobnamewoe.glo^^J
+  (gmglo.ist should be put into some texmf/makeindex directory.)^^J}
+
+% The following is just my GNU Emacs stuff. 
+%
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

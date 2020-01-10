@@ -1,0 +1,24 @@
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Pagella.txt
+% and README-TeX-Gyre-Pagella.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+\ProvidesFile{t1qpl.fd}[2006/11/01 v1.0 font definition file for T1/qpl]
+
+\DeclareFontFamily{T1}{qpl}{}
+\DeclareFontShape{T1}{qpl}{b}{sc}{<->ec-qplb-sc}{}
+\DeclareFontShape{T1}{qpl}{b}{n}{<->ec-qplb}{}
+\DeclareFontShape{T1}{qpl}{b}{scit}{<->ec-qplbi-sc}{}
+\DeclareFontShape{T1}{qpl}{b}{it}{<->ec-qplbi}{}
+\DeclareFontShape{T1}{qpl}{m}{sc}{<->ec-qplr-sc}{}
+\DeclareFontShape{T1}{qpl}{m}{n}{<->ec-qplr}{}
+\DeclareFontShape{T1}{qpl}{m}{scit}{<->ec-qplri-sc}{}
+\DeclareFontShape{T1}{qpl}{m}{it}{<->ec-qplri}{}
+\DeclareFontShape{T1}{qpl}{bx}{n}{<->ssub * qpl/b/n}{}
+\DeclareFontShape{T1}{qpl}{bx}{it}{<->ssub * qpl/b/it}{}
+\DeclareFontShape{T1}{qpl}{bx}{sc}{<->ssub * qpl/b/sc}{}
+\DeclareFontShape{T1}{qpl}{bx}{scit}{<->ssub * qpl/b/scit}{}
+\endinput
+% End of t1qpl

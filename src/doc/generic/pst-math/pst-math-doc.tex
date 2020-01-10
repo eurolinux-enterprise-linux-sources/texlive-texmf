@@ -1,0 +1,415 @@
+\documentclass[fleqn,10pt]{article}
+
+\usepackage{multicol}
+\usepackage[a4paper,margin=1.5cm,includeheadfoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage[baw,pstricks]{fvrb-ex}
+\usepackage{pst-infixplot,pst-math}
+\usepackage{amsmath,amssymb}
+\usepackage{pstcol}
+\makeatletter
+
+\renewcommand{\Begin@Example}{%
+\parindent=0pt
+\multiply\topsep by 2 \VerbatimEnvironment
+\begin{VerbatimOut}[codes={\catcode`\£=12\catcode`\/=12\catcode`\&=12%
+                           \catcode`\"=12}]{\jobname.tmp}}
+
+\renewcommand{\Below@Example}[1]{%
+\VerbatimInput[gobble=0,commentchar=£,commandchars=/&",numbersep=3pt]%
+              {\jobname.tmp}
+\catcode`\£=9\relax%
+\NoHighlight@Attributes % To suppress possible highlighting
+\ifFvrbEx@Grid\vspace{5pt}\fi
+#1%
+\ifFvrbEx@Grid\vspace{5pt}\fi
+\par}
+
+\renewcommand{\SideBySide@Example}[1]{%
+\@tempdimb=\FV@XRightMargin \advance\@tempdimb -5mm
+\begin{minipage}[c]{\@tempdimb}
+  \fvset{xrightmargin=0pt}
+  \catcode`\£=9\relax%
+  \NoHighlight@Attributes % To suppress possible highlighting
+  #1
+\end{minipage}%
+\@tempdimb=\textwidth \advance\@tempdimb -\FV@XRightMargin \advance\@tempdimb 5mm
+\begin{minipage}[c]{\@tempdimb}
+  \VerbatimInput[gobble=0,commentchar=£,commandchars=/&",numbersep=3pt,
+                 xleftmargin=5mm,xrightmargin=0pt]{\jobname.tmp}
+\end{minipage}}
+
+% The \NoHighlight@Attributes from `hbaw' and `hcolors' packages
+% must be modified too
+\def\NoHighlight@Attributes{%
+\catcode`\/=0\relax%
+\catcode`\&=1\relax%
+\catcode`\"=2\relax%
+\def\HLa##1{##1}%
+\def\HLb##1{##1}%
+\def\HLc##1{##1}%
+\def\HLd##1{##1}%
+\def\HLe##1{##1}%
+\def\HLf##1{##1}%
+\def\HLBFa##1{##1}%
+\def\HLBFb##1{##1}%
+\def\HLBFc##1{##1}%
+\def\HLBFd##1{##1}%
+\def\HLBFe##1{##1}%
+\def\HLBFf##1{##1}%
+\def\HLITa##1{##1}%
+\def\HLITb##1{##1}%
+\def\HLITc##1{##1}%
+\def\HLITd##1{##1}%
+\def\HLITe##1{##1}%
+\def\HLITf##1{##1}%
+\def\HLCBBa##1{##1}%
+\def\HLCBBb##1{##1}%
+\def\HLCBBc##1{##1}%
+\def\HLCBBd##1{##1}%
+\def\HLCBBe##1{##1}%
+\def\HLCBBf##1{##1}%
+\def\HLCBBz##1{##1}%
+\def\HLCBWa##1{##1}%
+\def\HLCBWb##1{##1}%
+\def\HLCBWc##1{##1}%
+\def\HLCBWd##1{##1}%
+\def\HLCBWe##1{##1}%
+\def\HLCBWf##1{##1}%
+\def\HLCBWz##1{##1}%
+}
+
+\makeatother
+
+\fvset{numbers=none,frame=single,labelposition=topline,gobble=4}
+
+\DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
+
+\newcommand{\MathPackage}{\textbf{`pst-math'}}
+
+\lhead{\MathPackage}\rhead{A PSTricks package for enhancing mathematical operators in PSTricks}
+\pagestyle{fancy}
+
+\psset{subgriddiv=1,griddots=10}%
+\showgrid
+
+\makeatletter
+
+\def\DefOfOperator{\@ifstar{\DefOfOperator@}{\DefOfOperator@@}}
+
+\def\DefOfOperator@#1#2#3#4{{\operator@font#1}:\left\{\begin{array}{ccc} #2&\to&#3\\
+x&\mapsto&#4\end{array}\right.}
+
+\def\DefOfOperator@@#1#2#3{{\operator@font#1}:\left\{\begin{array}{ccc} #2&\to&#3\\
+x&\mapsto&{\operator@font#1}(x)\end{array}\right.}
+
+\makeatother
+
+\begin{document}
+
+\title{\MathPackage\\ A PSTricks package for enhancing mathematical operators in PSTricks\\ \normalsize ver. 0.2}
+\author{Christophe \textsc{Jorssen} \texttt{<christophe.jorssen@libre.fr.invalid>}\\ \footnotesize `libre' is the french word for `free'}
+\date{04/07/14}
+\maketitle
+
+\setlength{\columnseprule}{0.6pt}
+\begin{multicols}{2}
+{\parskip 0pt \tableofcontents}
+\end{multicols}
+
+\section{Trigonometry}
+
+\MathPackage{} introduces natural trigonometric postscript operators COS, SIN and TAN defined by
+\[\DefOfOperator{cos}{\mathbb R}{[-1,1]}\]
+\[\DefOfOperator{sin}{\mathbb R}{[-1,1]}\]
+\[\DefOfOperator{tan}{\mathbb R\backslash\{k\frac{\pi}2,k\in\mathbb Z\}}{\mathbb R}\]
+where $x$ is in \emph{radians}. TAN does \emph{not} produce PS error\footnote{TAN is defined with
+Div PSTricks operator rather than with div PS operator.} when $x=k\frac{pi}{2}$.
+\begin{center}
+\begin{tabular}{c|c|c|c}
+  \textbf{Stack} & \textbf{Operator} & \textbf{Result} & \textbf{Description} \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{COS}} & \textsf{\textsl{real}} & Return cosine of
+  \textsf{\textsl{num}} radians \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{SIN}} & \textsf{\textsl{real}} & Return sine of
+  \textsf{\textsl{num}} radians \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{TAN}} & \textsf{\textsl{real}} & Return tangent of
+  \textsf{\textsl{num}} radians
+\end{tabular}
+\end{center}
+
+\begin{SideBySideExample}[xrightmargin=10.5cm]
+    \begin{pspicture}*(-5,-2)(5,2)
+    \SpecialCoor % For label positionning
+    \psaxes[labels=y,Dx=/HLCBWz&\pstPI2"]{->}%
+        (0,0)(-5,-2)(5,2)
+    \uput[-90](!/HLCBWz&PI" 0){$\pi$}
+    \uput[-90](!/HLCBWz&PI" neg 0){$-\pi$}
+    \uput[-90](!/HLCBWz&PI" 2 div 0){$\frac{\pi}2$}
+    \uput[-90](!/HLCBWz&PI" 2 div neg 0)%
+        {$-\frac{\pi}2$}
+    \psplot[linecolor=blue]{-5}{5}{x /HLCBWz&COS"}
+    \psplot[linecolor=red]{-5}{5}{x /HLCBWz&SIN"}
+    \psplot[linecolor=green]{-5}{5}{x /HLCBWz&TAN"}
+    \end{pspicture}
+\end{SideBySideExample}
+
+\MathPackage{} introduces natural trigonometric postscript operators ACOS, ASIN and ATAN defined by
+\[\DefOfOperator{acos}{[-1,1]}{[0,\pi]}\]
+\[\DefOfOperator{asin}{[-1,1]}{[-\frac{\pi}2,\frac{\pi}2]}\]
+\[\DefOfOperator{atan}{\mathbb R}{]-\frac{\pi}2,\frac{\pi}2[}\]
+
+\begin{center}
+\begin{tabular}{c|c|c|c}
+  \textbf{Stack} & \textbf{Operator} & \textbf{Result} & \textbf{Description} \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{ACOS}} & \textsf{\textsl{angle}} & Return arccosine of
+  \textsf{\textsl{num}} in radians \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{ASIN}} & \textsf{\textsl{angle}} & Return arcsine of
+  \textsf{\textsl{num}} in radians \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{ATAN}} & \textsf{\textsl{angle}} & Return arctangent of
+  \textsf{\textsl{num}} in radians \\
+\end{tabular}
+\end{center}
+
+\textbf{Important :} ATAN is \emph{not} defined as PS operator atan. ATAN needs only \emph{one}
+argument on the stack.
+
+\begin{SideBySideExample}[xrightmargin=10.5cm]
+    \begin{pspicture}(-5,-2)(5,4)
+    \SpecialCoor % For label positionning
+    \psaxes[labels=x,Dy=/HLCBWz&\pstPI2"]{->}%
+        (0,0)(-5,-2)(5,4)
+    \uput[0](!0 /HLCBWz&PI"){$\pi$}
+    \uput[0](!0 /HLCBWz&PI" 2 div){$\frac{\pi}2$}
+    \uput[0](!0 /HLCBWz&PI" 2 div neg)%
+        {$-\frac{\pi}2$}
+    \psplot[linecolor=blue]{-1}{1}%
+        {x /HLCBWz&ACOS"}
+    \psplot[linecolor=red]{-1}{1}%
+        {x /HLCBWz&ASIN"}
+    \psplot[linecolor=green]{-5}{5}%
+        {x /HLCBWz&ATAN"}
+    \end{pspicture}
+\end{SideBySideExample}
+
+\section{Hyperbolic trigonometry}
+
+\MathPackage{} introduces hyperbolic trigonometric postscript operators COSH, SINH and TANH defined
+by
+\[\DefOfOperator{cosh}{\mathbb R}{[1,+\infty[}\]
+\[\DefOfOperator{sinh}{\mathbb R}{\mathbb R}\]
+\[\DefOfOperator{tanh}{\mathbb R}{]-1,1[}\]
+\begin{center}
+\begin{tabular}{c|c|c|c}
+  \textbf{Stack} & \textbf{Operator} & \textbf{Result} & \textbf{Description} \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{COSH}} & \textsf{\textsl{real}} & Return hyperbolic cosine of
+  \textsf{\textsl{num}} \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{SINH}} & \textsf{\textsl{real}} & Return hyperbolic sine of
+  \textsf{\textsl{num}} \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{TANH}} & \textsf{\textsl{real}} & Return hyperbolic tangent of
+  \textsf{\textsl{num}}
+\end{tabular}
+\end{center}
+
+\begin{SideBySideExample}[xrightmargin=10.5cm]
+    \begin{pspicture}*(-5,-5)(5,5)
+    \psaxes{->}(0,0)(-5,-5)(5,5)
+    \psplot[linecolor=blue]{-5}{5}{x /HLCBWz&COSH"}
+    \psplot[linecolor=red]{-5}{5}{x /HLCBWz&SINH"}
+    \psplot[linecolor=green]{-5}{5}{x /HLCBWz&TANH"}
+    \end{pspicture}
+\end{SideBySideExample}
+
+\MathPackage{} introduces reciprocal hyperbolic trigonometric postscript operators ACOSH, ASINH and
+ATANH defined by
+\[\DefOfOperator{acosh}{[1,+\infty[}{\mathbb R}\]
+\[\DefOfOperator{asinh}{\mathbb R}{\mathbb R}\]
+\[\DefOfOperator{atanh}{]-1,1[}{\mathbb R}\]
+\begin{center}
+\begin{tabular}{c|c|c|c}
+  \textbf{Stack} & \textbf{Operator} & \textbf{Result} & \textbf{Description} \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{ACOSH}} & \textsf{\textsl{real}} & Return reciprocal hyperbolic cosine of
+  \textsf{\textsl{num}} \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{ASINH}} & \textsf{\textsl{real}} & Return reciprocal hyperbolic sine of
+  \textsf{\textsl{num}} \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{ATANH}} & \textsf{\textsl{real}} & Return reciprocal hyperbolic tangent of
+  \textsf{\textsl{num}}
+\end{tabular}
+\end{center}
+
+\begin{SideBySideExample}[xrightmargin=10.5cm]
+    \begin{pspicture}(-5,-4)(5,4)
+    \psaxes{->}(0,0)(-5,-4)(5,4)
+    \psplot[linecolor=blue]{1}{5}%
+        {x /HLCBWz&ACOSH"}
+    \psplot[linecolor=red]{-5}{5}%
+        {x /HLCBWz&ASINH"}
+    \psplot[linecolor=green]{-.999}{.999}%
+        {x /HLCBWz&ATANH"}
+    \end{pspicture}
+\end{SideBySideExample}
+
+\section{Other operators}
+
+\MathPackage{} introduces postscript operator EXP defined by
+\[\DefOfOperator{exp}{\mathbb R}{\mathbb R}\]
+\begin{center}
+\begin{tabular}{c|c|c|c}
+  \textbf{Stack} & \textbf{Operator} & \textbf{Result} & \textbf{Description} \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{EXP}} & \textsf{\textsl{real}} & Return exponential of
+  \textsf{\textsl{num}}
+\end{tabular}
+\end{center}
+
+\begin{SideBySideExample}[xrightmargin=10.5cm]
+    \begin{pspicture}*(-5,-1)(5,5)
+    \psaxes{->}(0,0)(-5,-0.5)(5,5)
+    \psplot[linecolor=blue,
+        plotpoints=1000]{-5}{5}{x /HLCBWz&EXP"}
+    \end{pspicture}
+\end{SideBySideExample}
+
+\MathPackage{} introduces postscript operator GAUSS defined by
+\[\DefOfOperator*{gauss}{\mathbb R}{\mathbb R}{\displaystyle\frac{1}{\sqrt{2\pi\sigma^2}}\exp-\frac{(x-\overline x)^2}{2\sigma^2}}\]
+\begin{center}
+\begin{tabular}{c|c|c|c}
+  \textbf{Stack} & \textbf{Operator} & \textbf{Result} & \textbf{Description} \\
+    \hline
+  \textsf{\textsl{num}${}_1$} \textsf{\textsl{num}${}_2$} \textsf{\textsl{num}${}_3$} &
+  \textsf{\textbf{GAUSS}} & \textsf{\textsl{real}} & \parbox{4cm}{Return gaussian
+  of \textsf{\textsl{num}${}_1$} with mean \textsf{\textsl{num}${}_2$} and standart deviation \textsf{\textsl{num}${}_3$}}
+\end{tabular}
+\end{center}
+
+\begin{SideBySideExample}[xrightmargin=10.5cm]
+    \psset{yunit=5}
+    \begin{pspicture}(-5,-.1)(5,1.1)
+    \psaxes{->}(0,0)(-5,-.1)(5,1.1)
+    \psplot[linecolor=blue,
+        plotpoints=1000]%
+        {-5}{5}{x 2 2 /HLCBWz&GAUSS"}
+    \psplot[linecolor=red,
+        plotpoints=1000]%
+        {-5}{5}{x 0 .5 /HLCBWz&GAUSS"}
+    \end{pspicture}
+\end{SideBySideExample}
+
+\MathPackage{} introduces postscript operator SINC defined by
+\[\DefOfOperator*{sinc}{\mathbb R}{\mathbb R}{\displaystyle\frac{\sin x}x}\]
+\begin{center}
+\begin{tabular}{c|c|c|c}
+  \textbf{Stack} & \textbf{Operator} & \textbf{Result} & \textbf{Description} \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{SINC}} & \textsf{\textsl{real}} & Return cardinal sine of
+  \textsf{\textsl{num}} radians
+\end{tabular}
+\end{center}
+
+\begin{SideBySideExample}[xrightmargin=10.5cm]
+    \psset{xunit=.25,yunit=3}
+    \begin{pspicture}(-20,-.5)(20,1.5)
+    \SpecialCoor % For label positionning
+    \psaxes[labels=y,Dx=/HLCBWz&\pstPI1"]{->}%
+        (0,0)(-20,-.5)(20,1.5)
+    \uput[-90](!/HLCBWz&PI" 0){$\pi$}
+    \uput[-90](!/HLCBWz&PI" neg 0){$-\pi$}
+    \psplot[linecolor=blue,
+        plotpoints=1000]{-20}{20}{x /HLCBWz&SINC"}
+    \end{pspicture}
+\end{SideBySideExample}
+
+\MathPackage{} introduces postscript operator GAMMALN defined by
+\[\DefOfOperator*{\ln\Gamma}{]0,+\infty[}{\mathbb R}{\ln\displaystyle\int_0^t t^{x-1}\mathrm e^{-t}\,\mathrm d t}\]
+\begin{center}
+\begin{tabular}{c|c|c|c}
+  \textbf{Stack} & \textbf{Operator} & \textbf{Result} & \textbf{Description} \\
+    \hline
+  \textsf{\textsl{num}} & \textsf{\textbf{GAMMALN}} & \textsf{\textsl{real}} & Return logarithm of
+  $\Gamma$ function of \textsf{\textsl{num}}
+\end{tabular}
+\end{center}
+
+\begin{SideBySideExample}[xrightmargin=10.5cm]
+    \begin{pspicture}(-.5,-.5)(6,6)
+    \psaxes{->}(0,0)(-.5,-.5)(6,6)
+    \psplot[linecolor=blue,
+        plotpoints=1000]{.1}{6}{x /HLCBWz&GAMMALN"}
+    \end{pspicture}
+\end{SideBySideExample}
+
+\begin{SideBySideExample}[xrightmargin=10.5cm]
+    \psset{xunit=.25,yunit=3}
+    \begin{pspicture}(-20,-.5)(20,1.5)
+    \psaxes[Dx=5,Dy=.5]{->}%
+        (0,0)(-20,-.5)(20,1.5)
+    \psplot[linecolor=blue,
+        plotpoints=1000]{-20}{20}%
+        {x /HLCBWz&BESSEL_J0"}
+    \psplot[linecolor=red,
+        plotpoints=1000]{-20}{20}%
+        {x /HLCBWz&BESSEL_J1"}
+    \end{pspicture}
+\end{SideBySideExample}
+
+\begin{SideBySideExample}[xrightmargin=10.5cm]
+    \psset{xunit=.5,yunit=3}
+    \begin{pspicture}*(-1.5,-.75)(19,1.5)
+    \psaxes[Dx=5,Dy=.5]{->}%
+        (0,0)(-1,-.75)(19,1.5)
+    \psplot[linecolor=blue,
+        plotpoints=1000]{0.0001}{20}%
+        {x /HLCBWz&BESSEL_Y0"}
+    \psplot[linecolor=red,
+        plotpoints=1000]{0.0001}{20}%
+        {x /HLCBWz&BESSEL_Y1"}
+    %    \psplot[linecolor=green,
+    %        plotpoints=1000]{0.0001}{20}%
+    %        {x 2 /HLCBWz&BESSEL_Yn"}
+    \end{pspicture}
+\end{SideBySideExample}
+
+\section{\texttt{Infix-RPN} and \texttt{pst-infixplot} support}
+
+You can now use the operators defined in \MathPackage{} with the infix notation, using the
+\texttt{infix-RPN} package. The packages must be read in the fellowing order:
+
+\begin{Verbatim}[label={\LaTeX{} preamble}]
+    \usepackage{infix-RPN,pst-math}
+\end{Verbatim}
+
+If you want to use \MathPackage{} with \texttt{pst-infixplot}, then read the packages in the
+fellowing order:
+
+\begin{Verbatim}[label={\LaTeX{} preamble}]
+    \usepackage{pst-infixplot,pst-math}
+\end{Verbatim}
+
+\begin{SideBySideExample}[xrightmargin=10.5cm]
+    \psset{xunit=.5,yunit=3}
+    \begin{pspicture}*(-1.5,-.75)(19,1.5)
+    \psaxes[Dx=5,Dy=.5]{->}%
+        (0,0)(-1,-.75)(19,1.5)
+    \psPlot[linecolor=red,
+      plotpoints=1000]{0.0001}{20}%
+      {BESSEL_Y0(x)-BESSEL_Y1(x)}
+    \end{pspicture}
+\end{SideBySideExample}
+
+\section{Credits}
+
+Many thanks to Jacques L'helgoualc'h and Herbert Voss.
+
+
+\end{document}

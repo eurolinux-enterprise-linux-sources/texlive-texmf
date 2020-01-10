@@ -1,0 +1,47 @@
+%%
+%% This is file `bcfaq.bbl',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% barcodes.dtx  (with options: `bcfaqbbl')
+%% As this is a generated file, you may perhaps not want to edit it.
+%% This file belongs to the barcode package.
+%% It may be of no great use without the rest of the barcode package.
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+\begin{thebibliography}{Sau92}
+
+\bibitem[Ol{\v{s}}94]{bc:ean}
+Peter Ol{\v{s}}ak.
+\newblock The ean barcodes by {\TeX}.
+\newblock {\em TUGboat}, 15(4):459--464, 1994.
+
+\bibitem[Sau92]{bc:sauter}
+John Sauter.
+\newblock Postnet codes using metafont.
+\newblock {\em TUGboat}, 13(4):472--476, 1992.
+
+\bibitem[Vul91]{bc:vulis}
+Dimitri Vulis.
+\newblock {\TeX} and envelopes.
+\newblock {\em TUGboat}, 12(2):279--284, 1991.
+
+\end{thebibliography}
+\endinput
+%%
+%% End of file `bcfaq.bbl'.

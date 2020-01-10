@@ -1,0 +1,1956 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{pstricks}
+\usepackage{pst-grad}
+\usepackage{showexpl}
+\lstset{wide=true}
+\usepackage{pst-3dplot}
+\let\myFV\fileversion
+\usepackage{url}
+\usepackage[bottom]{footmisc}
+\usepackage{fancyhdr}
+\usepackage{abstract}
+\usepackage{calc}
+\usepackage{comment}
+\usepackage{prettyref}
+\usepackage[scaled=0.8]{luximono}
+\pagestyle{fancy}
+\usepackage{url}
+\usepackage{longtable}
+\def\UrlFont{\small\ttfamily}
+\makeatletter
+\def\verbatim@font{\small\normalfont\ttfamily}
+\makeatother
+\def\Lcs#1{{\ttfamily\textbackslash #1}}
+\lfoot{\small\ttfamily\jobname.tex}
+\cfoot{}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\let\myPart\part
+\renewcommand{\part}[1]{\clearpage\myPart{#1}}
+\newcommand{\PS}{PostScript}
+\newcommand\CMD[1]{\texttt{\textbackslash#1}}
+\newcommand\verbI[1]{\small\texttt{#1}}
+\psset{subgriddiv=0,gridlabels=7pt,gridcolor=black!15}
+\usepackage[pdfauthor={Herbert Voss},pdftitle={3D Plots},linktocpage,colorlinks]{hyperref}
+%
+\begin{document}
+\author{Herbert Voß\thanks{voss@perce.de}}
+\date{\today}
+\title{3D plots: PST-3dplot v\myFV\\Documentation}
+
+\maketitle%
+\begin{abstract}
+The well known \verbI{pstricks} package offers excellent macros to insert more or less complex 
+graphics into a document. \verbI{pstricks} itself is the base for several other additional packages, 
+which are mostly named \verbI{pst-xxxx}, like \verbI{pst-3dplot}.
+
+There exist several packages for plotting three dimensional graphical objects. \verbI{pst-3dplot} 
+is similiar to the \verbI{pst-plot} package for two dimensional objects and mathematical functions.
+
+This version uses the extended keyval package \verb+xkeyval+, so be sure that you have installed
+this package together with the spcecial one \verb+pst-xkey+ for PSTricks. The \verb+xkeyval+
+package is available at \href{ftp://ftp.dante.de/pub/tex/macros/latex/contrib/xkeyval/}{CTAN:/macros/latex/contrib/xkeyval/}.
+It is also important that after \verb+pst-3dplot+ no package is loaded, which uses the old keyval interface.
+\vspace*{2cm}
+\end{abstract}%
+
+\tableofcontents
+
+\clearpage
+\section{The Parallel projection}
+
+Figure \ref{Abb0-1} shows a point $P(x,y,z)$ in a three dimensional coordinate system ($x,y,z$) 
+with a transformation into $P^*(x^*,y^*)$, the Point in the two dimensional system ($x_E,y_E$).
+
+\begin{figure}[htb]
+\centering
+\unitlength1cm
+\begin{picture}(10,9)
+\thicklines
+\put(0,8){\makebox(0,0)[l]{$\alpha$: horizontal rotating angle}}
+\put(0,7.5){\makebox(0,0)[l]{$\beta$: vertikal rotating angle}}
+%
+\put(5.25,9){\makebox(0,0){z}}
+\put(5,0){\vector(0,1){9}}
+\put(6,5.5){\vector(-2,-1){5.5}}
+\put(9.5,3){\makebox(0,0){y}}
+\put(4,5.5){\vector(+2,-1){5.5}}
+\put(0.5,3){\makebox(0,0){x}}
+\thinlines
+\put(0,5){\vector(+1,0){10}}
+\put(5,5.02){\line(+1,0){1}}
+\put(10,4.5){\makebox(0,0){$x_E$}}
+\put(5.25,8.5){\makebox(0,0){$y_E$}} 
+\put(5.3,4.5){\makebox(0,0){$\alpha$}}
+\put(2.6,3.6){\makebox(0,0){$\alpha$}}
+%
+\put(2,3.5){\line(+2,-1){5}}
+\put(9,3){\line(-2,-1){3.5}}
+\put(6,1.5){\line(0,1){5}}
+\put(6,6.5){\circle*{0.2}}
+\put(6.2,6.7){\makebox(0,0)[l]{$P(x,y,z)$}}
+\put(6.2,6.3){\makebox(0,0)[l]{$P^*(x^*,y^*)$}}
+\put(6.2,5.3){\makebox(0,0)[l]{$x^*$}}
+%
+\put(5,3){\line(+1,0){4}}
+\put(7,2.7){\makebox(0,0){$y\cdot\sin\alpha$}}
+\put(2,3.5){\line(+1,0){3}}
+\put(3.5,3.2){\makebox(0,0){$x\cdot\cos\alpha$}}
+\thicklines
+\put(5,1.5){\line(+1,0){1}}
+\put(5,1.52){\line(+1,0){1}}
+\thinlines
+\put(4.2,4.8){\makebox(0,0){$\alpha$}}
+\thicklines
+\put(5.03,5){\line(0,-1){2}}
+\put(5.1,4){\makebox(0,0)[l]{$y\cdot\cos\alpha$}}
+\put(4.97,5){\line(0,-1){1.5}}
+\put(4.9,4.2){\makebox(0,0)[r]{$x\cdot\sin\alpha$}} 
+\thinlines
+\put(5.5,0.5){\vector(0,+1){1}}
+\put(5.5,0.5){\line(1,0){0.5}}
+\put(6.2,0.5){\makebox(0,0)[l]{$y\cdot\sin\alpha-x\cdot\cos\alpha$}}
+%\put(4.5,3.25){\vector(1,0){0.5}}
+%\put(4.5,3.25){\line(-1,-2){1}}
+%\put(3.5,1.25){\line(-1,0){0.5}}
+\put(4.9,1.5){\makebox(0,0)[r]{$y\cdot\cos\alpha+x\cdot\sin\alpha$}}
+\end{picture}%
+\caption{Lengths in a three dimensional System}
+\label{Abb0-1}
+\end{figure}
+
+
+The angle  $\alpha$  is the horizontal rotation with positive values for anti clockwise rotations 
+of the 3D coordinates. The angle $\beta$  is the vertical rotation (orthogonal to the paper plane). 
+In figure \ref{Abb0-2} we have $\alpha=\beta=0$. The y-axis comes perpendicular out of the paper 
+plane. Figure \ref{Abb0-3} shows the same for another  angle with a view from the side, where the 
+x-axis shows into the paper plane and the angle $\beta$ is greater than $0$ degrees.
+
+\begin{figure}[htb]
+\centering
+\unitlength1cm
+\begin{picture}(2,2.5)
+\thicklines
+\put(2.2,2){\makebox(0,0){$z$}}
+\put(2,0.5){\vector(0,1){2}}
+\put(2,0.5){\vector(-1,0){2}}
+\put(0.5,0.7){\makebox(0,0){$x$}}
+\put(2,0.5){\circle*{0.2}}
+\put(2,0.5){\circle{0.5}}
+\put(2.3,0.7){\makebox(0,0)[l]{$y$}}
+\end{picture}
+\caption{Coordinate System for $\alpha=\beta=0$ ($y$-axis comes out of the paper plane)}\label{Abb0-2}
+\end{figure}
+
+
+The two dimensional x coordinate  $x^*$ is the difference of the two horizontal lengths
+$y\cdot\sin\alpha$ und $x\cdot\cos\alpha$ (figure \ref{Abb0-1}):
+\begin{equation}
+x^{*}=-x\cdot\cos\alpha+y\cdot\sin\alpha
+\end{equation}
+
+
+The z-coordinate is unimportant, because the rotation comes out of the paper plane, so we have 
+only a different $y^*$ value for the two dimensional coordinate but no other $x^*$ value. 
+The $\beta$ angle is well seen in figure  \ref{Abb0-3} which derives from figure \ref{Abb0-2}, 
+if the coordinate system is rotated by $90°$ horizontally to the left and vertically by $\beta$ 
+also to the left.
+
+\begin{figure}[htbp]
+\unitlength1cm
+\centering
+\begin{picture}(1,3)
+\thicklines
+\put(1.5,2.9){\makebox(0,0){z}}
+\put(2,1){\vector(-1,2){1}}
+\put(2,1){\vector(-2,-1){2}}
+\put(0,0.3){\makebox(0,0){y}}
+\put(2,1){\circle{0.5}}
+\put(1.8,0.8){\line(1,1){0.4}}
+\put(1.8,1.2){\line(1,-1){0.4}}
+\put(2.3,1.2){\makebox(0,0)[l]{x}}
+\thinlines
+\put(2,1){\line(-1,0){2}}
+\put(2,1){\line(0,1){2}}
+\put(1.7,2){\makebox(0,0){$\beta$}}
+\put(1.3,0.8){\makebox(0,0){$\beta$}}
+\put(2,2.5){\line(-1,0){0.75}}
+\put(2.2,2.5){\makebox(0,0)[l]{$z*_1=z\cdot\cos\beta$}}
+\put(1,1){\line(0,-1){0.5}}
+\put(1.3,0.5){\makebox(0,0)[l]{$y\cdot\cos\alpha+x\cdot\sin\alpha$}}
+\put(0.9,0.7){\makebox(0,0)[r]{$-(y\cdot\cos\alpha+x\cdot\sin\alpha)\cdot\sin\beta$}}
+\end{picture} 
+\caption{Coordinate System for $\alpha=0$ and $\beta>0$ ($x$-axis goes into the paper plane)}\label{Abb0-3}
+\end{figure}
+
+
+The value of the perpendicular projected z coordinate is $z^{*}=z\cdot cos\beta$. With figure  \ref{Abb0-3} we see, that the point $P(x,y,z)$ runs on an elliptical curve when $\beta$ is constant and $\alpha$ changes continues. The vertical alteration of $P$ id the difefrence of the two {}``perpendicular'' lines  $y\cdot\cos\alpha$ and $x\cdot\sin\alpha$.
+These lines are rotated by the angle  $\beta$, so we have them to multiply with  $\sin\beta$ to 
+get the vertical part. We get the following transformation equations:
+
+\begin{equation}
+\begin{array}{lll}
+  x_{E} & = & -x\cos\alpha+y\sin\alpha\\
+  y_{E} & = & -(x\sin\alpha+y\cos\alpha)\cdot\sin\beta+z\cos\beta
+\end{array}
+\end{equation}
+
+\noindent or written in matrix form:
+{\footnotesize\addtolength{\arraycolsep}{-2pt}
+\begin{equation}
+\begin{pmatrix}x_E\\y_E\end{pmatrix}=
+  \begin{pmatrix}
+    -\cos\alpha & \sin\alpha & 0\\
+    -\sin\alpha\sin\beta & -\cos\alpha\sin\beta & \cos\beta
+  \end{pmatrix}\cdot
+\begin{pmatrix}x\\y\\z\end{pmatrix}
+\end{equation}%
+\addtolength{\arraycolsep}{2pt}%
+}
+
+All following figures show a grid, which has only the sense to make things clearer.
+
+\section{Options}
+All options which are set with \verb|psset| are global and all which are passed with the optional 
+argument of a macro are local for this macro. This is an important fact for setting the angles 
+\verb|Alpha| and \verb|Beta|. Mostly all macro need these values, this is the reason why they 
+should be set with \verb|psset| and not part of an optional argument.
+
+\section{Coordinates}
+\verb+pst-3dplot+ accepts cartesian or spherical coordinates. In both cases there
+must be three parameters: \verb+(x,y,z)+ or alternatively ($r$,$\phi$,$\theta$),
+where $r$ is the radius, $phi$ the longitude angle and $\theta$ the lattitude angle.
+For the spherical coordinates set the option \verb+SphericalCoor=true+. Spherical coordinates
+are possible for all macros where three dimensional coordinates are expected, except
+for the plotting functions (math functions and data records). Maybe that this is also interesting
+for someone, then let me know.
+
+
+\section{Coordinate axes}
+
+The syntax for drawing the coordinate axes is
+{\footnotesize\begin{verbatim}
+\pstThreeDCoor[<options>]
+\end{verbatim}}
+
+The only special option is \verb/drawing=true|false/, which enables the drawing of the
+coordinate axes. The default is true. In nearly all cases the \verb|\pstThreeDCoor| macro
+must be part of any drawing to initialize the 3d-system. If \verb+drawing+ is set to \verb+false+, then all ticklines options are also disabled.
+
+Without any options we get the default view with the in table~\ref{tab:coor}
+listed options with the predefined values.
+
+{
+\ttfamily
+\begin{longtable}{lll}
+\caption{All new parameters for \texttt{pst-plot}\label{tab:coor}}\\[-5pt]
+\textrm{Name}         & \textrm{Type}  & \textrm{Default}\\\hline
+\endfirsthead
+\textrm{Name}         & \textrm{Type}  & \textrm{Default}\\\hline
+\endhead
+Alpha            & <angle>  & 45\\
+Beta             & <angle>  & 30\\
+xMin             & <value> & -1\\ %ok
+xMax             & <value> & 4\\ %ok
+yMin             & <value> & -1\\ %ok
+yMax             & <value> & 4\\ %ok
+zMin             & <value> & -1\\ %ok
+zMax             & <value> & 4\\ %ok
+nameX            & <string> &  \$x\$\\
+spotX            & <angle>  & 180\\
+nameY            & <string> &  \$y\$\\
+spotY            & <angle>  & 0\\
+nameZ            & <string> &  \$z\$\\
+spotZ            & <angle>  & 90\\
+IIIDticks        & false|true & false\\
+Dx               & <value>  & 1\\
+Dy               & <value>  & 1\\
+Dz               & <value>  & 1\\
+IIIDxTicksPlane  & xy|xz|yz & xy\\
+IIIDyTicksPlane  & xy|xz|yz & yz\\
+IIIDzTicksPlane  & xy|xz|yz & yz\\
+IIIDticksize     & <value>  & 0.1\\
+IIIDxticksep     & <value>  & -0.4\\
+IIIDyticksep     & <value>  & -0.2\\
+IIIDzticksep     & <value>  & 0.2\\
+RotX             & <angle>  & 0\\
+RotY             & <angle>  & 0\\
+RotZ             & <angle>  & 0\\
+RotSequence	 & xyz|xzy|yxz|yzx|zxy|zyx & xyz\\
+\end{longtable}
+}
+
+
+
+\begin{LTXexample}[width=6cm]
+\begin{pspicture}(-3,-2.5)(3,4.25)\psgrid
+  \pstThreeDCoor
+\end{pspicture}
+\end{LTXexample}
+
+There are no restrictions for the angles and the max and min values for the axes; all \verb|pstricks| 
+options are possible as well. The following example changes the color and the width of the axes.
+
+\medskip
+\noindent\fbox{\parbox{\columnwidth-2\fboxsep}{The angles \verbI{Alpha} and \verbI{Beta} are 
+important to all macros and should always be set with  \verbI{psset} to make them global to all 
+other macros. Otherwise they are only local inside the macro to which they are passed.}}
+
+\medskip
+\verb+Alpha+ ist the horizontal and \verb+Beta+ the vertical rotation angle of the
+Cartesian coordinate system. 
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-1.25)(1,2.25)\psgrid
+  \pstThreeDCoor[%
+    linewidth=1.5pt,linecolor=blue,%
+    xMin=-1,xMax=2,
+    yMin=-1,yMax=2,%
+    zMin=-1,zMax=2,%
+    Alpha=-60,Beta=30]
+\end{pspicture}
+\end{LTXexample}
+
+
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-2)(2,2)\psgrid
+  \pstThreeDCoor[xMin=-2,xMax=2,yMin=-2,yMax=2,%
+     zMin=-2,zMax=2]
+\end{pspicture}
+\end{LTXexample}
+
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-2)(2,2)\psgrid
+  \pstThreeDCoor[xMin=-2,xMax=2,yMin=-2,yMax=2,zMin=-2,zMax=2,%
+     Alpha=30,Beta=60]
+\end{pspicture}
+\end{LTXexample}
+
+
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-2)(2,2)\psgrid
+  \pstThreeDCoor[xMin=-2,xMax=2,yMin=-2,yMax=2,zMin=-2,zMax=2,%
+    Alpha=30,Beta=-60]
+\end{pspicture}
+\end{LTXexample}
+
+
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-2)(2,2)\psgrid
+  \pstThreeDCoor[
+    xMin=-2,xMax=2,yMin=-2,yMax=2,%
+    zMin=-2,zMax=2,Alpha=90,Beta=60]
+\end{pspicture}
+\end{LTXexample}
+
+
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-2)(2,2)\psgrid
+  \pstThreeDCoor[linewidth=1.5pt,%
+     xMin=-1,xMax=2,yMin=-1,yMax=2,%
+     zMin=-1,zMax=2,Alpha=40,Beta=0]
+\end{pspicture}
+\end{LTXexample}
+
+
+
+\subsection{Ticks}
+With the option \verb+IIIDticks+ the axes get ticks and labels. There are several options to place the labels in right plane to get an optimal view.  The view of the ticklabels can be changed by redefining the macro
+
+\begin{verbatim}
+\def\psxyzlabel#1{\bgroup\footnotesize\textsf{#1}\egroup}
+\end{verbatim}
+
+
+
+\psset{unit=1.25,gridlabels=0pt}
+\begin{LTXexample}[width=7.25cm]
+\begin{pspicture}(-3,-2.5)(3,4)
+  \psgrid
+  \pstThreeDCoor[IIIDticks]%
+  \pstThreeDPut(3,0,3){\Huge default}
+\end{pspicture}
+\end{LTXexample}
+
+\begin{LTXexample}[width=7.25cm]
+\begin{pspicture}(-3,-2.5)(3,4)\psgrid
+  \pstThreeDCoor[linecolor=black,%
+     IIIDticks,xMin=-2,yMin=-2,zMin=-2]%
+\end{pspicture}
+\end{LTXexample}
+
+\begin{LTXexample}[width=7.25cm]
+\begin{pspicture}(-3,-2.5)(3,4)\psgrid
+  \pstThreeDCoor[linecolor=black,%
+     IIIDticks,IIIDzTicksPlane=xz,IIIDzticksep=-0.2,%
+     IIIDxTicksPlane=xz,,IIIDxticksep=-0.2,%
+     IIIDyTicksPlane=xy,,IIIDyticksep=0.2,%
+     Dx=2,Dy=1,Dz=0.25,Alpha=-135,Beta=-30]%
+\end{pspicture}
+\end{LTXexample}
+
+The following example shows a wrong placing of the labels, the planes should be changed. 
+
+\begin{LTXexample}[width=7.25cm]
+\psset{Alpha=-60,Beta=60}
+\begin{pspicture}(-4,-2.25)(1,3)
+  \psgrid
+  \pstThreeDCoor[linecolor=black,%
+      IIIDticks,Dx=2,Dy=1,Dz=0.25]%
+\end{pspicture}
+\end{LTXexample}
+
+\begin{LTXexample}[width=7.25cm]
+\begin{pspicture}(-3,-2.25)(2,3)
+  \psgrid
+  \psset{Alpha=30,Beta=30}
+  \pstThreeDCoor[linecolor=black,IIIDticks]
+  \pstThreeDDot[linecolor=red,drawCoor=true](1,0.5,0.5)% the center
+  \psset{linecolor=blue, linewidth=1.5pt}
+  \pstThreeDEllipse(1,0.5,0.5)(-0.5,1,0.5)(1,-0.5,-1)
+  \psset{beginAngle=0,endAngle=270,linecolor=green}
+  \pstThreeDDot[linecolor=red,drawCoor=true](2,1,2.5)% the center
+  \pstThreeDEllipse(2,1,2.5)(-0.5,0.5,0.5)(0.5,0.5,-1)
+\end{pspicture}
+\end{LTXexample}
+
+
+
+\section{Rotation}
+
+The coordinate system can be rotated independent from the given Alpha and Beta values. This makes it possible to place
+the axes in any direction and any order. There are the three options \verb+RotX+, \verb+RotY+, \verb+RotZ+ and an
+additional one for the rotating sequence, which can be any combination of the three letters \verb+xyz+.
+
+\begin{LTXexample}[pos=t]
+\begin{pspicture}(-6,-3)(6,3)
+  \multido{\iA=0+10}{18}{%
+    \pstThreeDCoor[RotZ=\iA,xMin=0,xMax=5,yMin=0,yMax=5,zMin=-1,zMax=3]%
+  }
+\end{pspicture}
+\end{LTXexample}
+
+\begin{LTXexample}[pos=t]
+\psset{unit=2,linewidth=1.5pt}
+\begin{pspicture}(-2,-1.5)(2,2.5)%
+  \pstThreeDCoor[xMin=0,xMax=2,yMin=0,yMax=2,zMin=0,zMax=2]%
+  \pstThreeDBox[RotX=90,RotY=90,RotZ=90,%
+    linecolor=red](0,0,0)(.5,0,0)(0,1,0)(0,0,1.5)
+  \pstThreeDBox[RotSequence=xzy,RotX=90,RotY=90,RotZ=90,%
+    linecolor=yellow](0,0,0)(.5,0,0)(0,1,0)(0,0,1.5)
+  \pstThreeDBox[RotSequence=zyx,RotX=90,RotY=90,RotZ=90,%
+    linecolor=green](0,0,0)(.5,0,0)(0,1,0)(0,0,1.5)
+  \pstThreeDBox[RotSequence=zxy,RotX=90,RotY=90,RotZ=90,%
+    linecolor=blue](0,0,0)(.5,0,0)(0,1,0)(0,0,1.5)
+  \pstThreeDBox[RotSequence=yxz,RotX=90,RotY=90,RotZ=90,%
+    linecolor=cyan](0,0,0)(.5,0,0)(0,1,0)(0,0,1.5)
+  \pstThreeDBox[RotSequence=yzx,RotX=90,RotY=90,RotZ=90,%
+    linecolor=magenta](0,0,0)(.5,0,0)(0,1,0)(0,0,1.5)
+  \pstThreeDBox[fillstyle=gradient,RotX=0](0,0,0)(.5,0,0)(0,1,0)(0,0,1.5)
+  \pstThreeDCoor[xMin=0,xMax=2,yMin=0,yMax=2,zMin=0,zMax=2]%
+\end{pspicture}%
+\end{LTXexample}
+
+\begin{LTXexample}[pos=t]
+\begin{pspicture}(-2,-1.5)(2,2.5)%
+  \pstThreeDCoor[xMin=0,xMax=2,yMin=0,yMax=2,zMin=0,zMax=2]%
+  \pstThreeDBox(0,0,0)(.5,0,0)(0,1,0)(0,0,1.5)
+  \pstThreeDBox[RotX=90,linecolor=red](0,0,0)(.5,0,0)(0,1,0)(0,0,1.5)
+  \pstThreeDBox[RotX=90,RotY=90,linecolor=green](0,0,0)(.5,0,0)(0,1,0)(0,0,1.5)
+  \pstThreeDBox[RotX=90,RotY=90,RotZ=90,linecolor=blue](0,0,0)(.5,0,0)(0,1,0)(0,0,1.5)
+\end{pspicture}%
+\end{LTXexample}
+
+
+
+
+\psset{unit=1cm,gridlabels=7pt}
+
+
+\section{Plane Grids}
+\begin{verbatim}
+\pstThreeDPlaneGrid[<options>](xMin,yMin)(xMax,yMax)
+\end{verbatim}
+
+There are three additional options
+\begin{description}
+\item[planeGrid] can be one of the following values: \verb+xy, xz, yz+. Default is \verb+xy+.
+\item[subticks] Number of ticks. Default is \verb+10+.\footnote{This options is also defined
+in the package \texttt{pstricks-add}, so it is nessecary to to set this option
+locally or with the family option of \texttt{pst-xkey}} 
+\item[planeGridOffset] a length for the shift of the grid. Default is \verb+0+.
+\end{description}
+
+This macro is a special one for the coordinate system to show the units, but can
+be used in any way. \verb+subticks+ defines the number of ticklines for both axes and
+\verb+xsubticks+ and \verb+ysubticks+ for each one.
+
+\begin{LTXexample}[pos=t]
+\begin{pspicture}(-5,-5)(5,6.5)
+  \pstThreeDCoor[xMin=0,yMin=0,zMin=0,xMax=7,yMax=7,zMax=7,linewidth=2pt]
+  \psset{linewidth=0.1pt,linecolor=lightgray}
+  \pstThreeDPlaneGrid(0,0)(7,7)
+  \pstThreeDPlaneGrid[planeGrid=xz](0,0)(7,7)
+  \pstThreeDPlaneGrid[planeGrid=yz](0,0)(7,7)
+\end{pspicture}
+\end{LTXexample}
+
+\begin{LTXexample}[pos=t]
+\begin{pspicture}(-1,-2)(10,10)
+  \psset{Beta=20,Alpha=160,subticks=7}
+  \pstThreeDCoor[xMin=0,yMin=0,zMin=0,xMax=7,yMax=7,zMax=7,linewidth=1pt]
+  \psset{linewidth=0.1pt,linecolor=gray}
+  \pstThreeDPlaneGrid(0,0)(7,7)
+  \pstThreeDPlaneGrid[planeGrid=xz,planeGridOffset=7](0,0)(7,7)
+  \pstThreeDPlaneGrid[planeGrid=yz](0,0)(7,7)
+  \pscustom[linewidth=0.1pt,fillstyle=gradient,gradbegin=gray,gradmidpoint=0.5,plotstyle=curve]{
+    \psset{xPlotpoints=200,yPlotpoints=1}
+    \psplotThreeD(0,7)(0,0){%
+       x dup mul y dup mul 2 mul add x 6 mul sub y 4 mul sub 3 add 10 div }
+    \psset{xPlotpoints=1,yPlotpoints=200,drawStyle=yLines}
+    \psplotThreeD(7,7)(0,7){%
+       x dup mul y dup mul 2 mul add x 6 mul sub y 4 mul sub 3 add 10 div }
+    \psset{xPlotpoints=200,yPlotpoints=1,drawStyle=xLines}
+    \psplotThreeD(7,0)(7,7){%
+       x dup mul y dup mul 2 mul add x 6 mul sub y 4 mul sub 3 add 10 div }
+    \psset{xPlotpoints=1,yPlotpoints=200,drawStyle=yLines}
+    \psplotThreeD(0,0)(7,0){%
+       x dup mul y dup mul 2 mul add x 6 mul sub y 4 mul sub 3 add 10 div }
+  }
+  \pstThreeDPlaneGrid[planeGrid=yz,planeGridOffset=7](0,0)(7,7)
+\end{pspicture}
+\end{LTXexample}
+
+
+\begin{LTXexample}[pos=t]
+\begin{pspicture}(-6,-2)(4,7)
+  \psset{Beta=10,Alpha=30,subticks=7}
+  \pstThreeDCoor[xMin=0,yMin=0,zMin=0,xMax=7,yMax=7,zMax=7,linewidth=1.5pt]
+  \psset{linewidth=0.1pt,linecolor=gray}
+  \pstThreeDPlaneGrid(0,0)(7,7)
+  \pstThreeDPlaneGrid[planeGrid=xz](0,0)(7,7)
+  \pstThreeDPlaneGrid[planeGrid=yz](0,0)(7,7)
+  \pscustom[linewidth=0.1pt,fillstyle=gradient,gradbegin=gray,gradend=white,gradmidpoint=0.5,plotstyle=curve]{
+    \psset{xPlotpoints=200,yPlotpoints=1}
+    \psplotThreeD(0,7)(0,0){%
+       x dup mul y dup mul 2 mul add x 6 mul sub y 4 mul sub 3 add 10 div }
+    \psset{xPlotpoints=1,yPlotpoints=200,drawStyle=yLines}
+    \psplotThreeD(7,7)(0,7){%
+       x dup mul y dup mul 2 mul add x 6 mul sub y 4 mul sub 3 add 10 div }
+    \psset{xPlotpoints=200,yPlotpoints=1,drawStyle=xLines}
+    \psplotThreeD(7,0)(7,7){%
+       x dup mul y dup mul 2 mul add x 6 mul sub y 4 mul sub 3 add 10 div }
+    \psset{xPlotpoints=1,yPlotpoints=200,drawStyle=yLines}
+    \psplotThreeD(0,0)(7,0){%
+       x dup mul y dup mul 2 mul add x 6 mul sub y 4 mul sub 3 add 10 div }
+  }
+  \pstThreeDPlaneGrid[planeGrid=xz,planeGridOffset=7](0,0)(7,7)
+  \pstThreeDPlaneGrid[planeGrid=yz,planeGridOffset=7](0,0)(7,7)
+\end{pspicture}
+\end{LTXexample}
+
+\medskip
+The equation for the examples is 
+\[
+f(x,y)=\frac{x^2+2y^2-6x-4y+3}{10}
+\]
+
+\section{Put}
+There exists a special option for the put macros: 
+\begin{verbatim}
+origin=lt|lB|lb|t|c|B|b|rt|rB|rb
+\end{verbatim}
+for the placing of the text or other objects. 
+
+\fboxsep0pt
+\newcommand\Gobble[1]{}
+\newsavebox{\FrBox}
+\savebox{\FrBox}{\Huge\fbox{Rotating}}
+\unitlength1pt
+\begin{center}
+\newcommand{\Hoehe}{\ht\FrBox\Gobble}
+\newcommand{\Breite}{\wd\FrBox\Gobble}
+\newcommand{\Tiefe}{\dp\FrBox\Gobble}
+\newlength{\totalHeight}
+\setlength{\totalHeight}{\ht\FrBox}
+\addtolength{\totalHeight}{\dp\FrBox}
+\newcommand{\tHoehe}{\totalHeight\Gobble}
+\begin{picture}(1.7\Breite,\Hoehe)
+	\put(,\Hoehe){\textcolor{red}{\circle*{3}}}
+%	\put(0.5\Breite ,\Hoehe){\textcolor{red}{\circle*{3}}}
+	\put(\Breite,\Hoehe){\textcolor{red}{\circle*{3}}}
+	% center
+%	\put(0,0.5\Hoehe){\textcolor{red}{\circle*{3}}}%
+	\put(0.5\Breite,0.5\Hoehe){\textcolor{red}{\circle*{3}}}%
+%	\put(\Breite,0.5\Hoehe){\textcolor{red}{\circle*{3}}}%
+	% Baseline
+	\put(0,0){\textcolor{red}{\circle*{3}}}%
+%	\put(0.5\Breite,0){\textcolor{red}{\circle*{3}}}%
+	\put(\Breite,0){\textcolor{red}{\circle*{3}}}%
+	% bottom
+	\put(0,-\Tiefe){\textcolor{red}{\circle*{3}}}%
+%	\put(0.5\Breite,-\Tiefe){\textcolor{red}{\circle*{3}}}%
+	\put(\Breite,-\Tiefe){\textcolor{red}{\circle*{3}}}%
+	% labels
+	\put(0,1.2\Hoehe){l}
+	\put(0.5\Breite,1.2\Hoehe){c}
+	\put(\Breite,1.2\Hoehe){r}
+	\put(1.05\Breite,0.9\Hoehe){t}
+	\put(1.05\Breite,0.4\Hoehe){c}
+	\put(1.15\Breite,-1){\textbf{B}aseline}
+	\put(1.05\Breite,-1.2\Tiefe){b}
+	\put(0,0){\usebox{\FrBox}}%
+\end{picture}
+\end{center}
+
+
+This works only well for the \verb|\pstThreeDPut| macro. The default is \verb|c| and for the \verb|pstPlanePut| the left baseline \verb|lB|.
+ 
+\subsection{\texttt{pstThreeDPut}}
+The syntax is similiar to the \verb|\rput| macro:
+{\footnotesize\begin{verbatim}
+\pstThreeDPut[options](x,y,z){<any stuff>}
+\end{verbatim}} 
+
+\begin{LTXexample}[width=3.25cm]
+\begin{pspicture}(-2,-1.25)(1,2.25)
+  \psgrid
+  \psset{Alpha=-60,Beta=30}
+  \pstThreeDCoor[linecolor=blue,%
+     xMin=-1,xMax=2,yMin=-1,yMax=2,zMin=-1,zMax=2]
+  \pstThreeDPut(1,0.5,1.25){pst-3dplot}
+  \pstThreeDDot[drawCoor=true](1,0.5,1.25)
+\end{pspicture}
+\end{LTXexample}
+
+
+\medskip
+Internally the \verb|\pstThreeDPut| macro defines the two dimensional node \verb|temp@pstNode| and then uses the default \verb|\rput| macro from \verb|pstricks|. In fact of the perspective view od the coordinate system, the 3D dot must not be seen as the center of the printed stuff.
+
+\subsection[\texttt{pstPlanePut}]{\texttt{pstPlanePut}\protect\footnote{Thanks to Torsten Suhling}}
+The syntax of the \verb|pstPlanePut| is
+% -------------------------------------------
+% ### Aenderung 
+% - raus: -----------------------------------
+% \begin{verbatim}
+% \pstPlanePut[plane=<2D plane>](x,y,z){Object}
+% \end{verbatim}
+% 
+% Possible values for the two dimensional plane are \verb| xy xz yz |. If this optional parameter is missing then \verb|plane=xy| is set. The first letter marks the positive direction for the width and the second for the height.
+% - rein: -----------------------------------
+\begin{verbatim}
+\pstPlanePut[plane=<2D plane>,planecorr=<Correction of plane's alignment>](x,y,z){Object}
+\end{verbatim}
+
+We have two parameters, \verb|plane| and \verb|planecorr|; both are optional.  Let's start with the first parameter, \verb|plane|. 
+Possible values for the two dimensional plane are \verb| xy xz yz |. If this parameter is missing then \verb|plane=xy| is set. The first letter marks the positive direction for the width and the second for the height.
+% - ende ------------------------------------------------
+
+The object can be of any type, in most cases it will be some kind of text. The reference point for the object is the left side and vertically centered, often abbreviated as \verb|lB|. The following examples show for all three planes the same textbox.
+ 
+
+\begin{LTXexample}[width=7.25cm]
+\begin{pspicture}(-4,-4)(3,4)
+  \psgrid
+  \psset{Alpha=30}
+  \pstThreeDCoor[xMin=-4,yMin=-4,zMin=-4]
+  \pstPlanePut[plane=xy](0,0,-3){\fbox{\Huge\red xy plane}}
+  \pstPlanePut[plane=xy](0,0,0){\fbox{\Huge\red xy plane}}
+  \pstPlanePut[plane=xy](0,0,3){\fbox{\Huge\red xy plane}}
+\end{pspicture}
+\end{LTXexample}
+
+\begin{LTXexample}[width=7.25cm]
+\begin{pspicture}(-5,-3)(2,3)
+  \psgrid
+  \pstThreeDCoor[xMin=2,yMin=-4,zMin=-3,zMax=2]
+  \pstPlanePut[plane=xz](0,-3,0){\fbox{\Huge\green\textbf{xz plane}}}
+  \pstPlanePut[plane=xz](0,0,0){\fbox{\Huge\green\textbf{xz plane}}}
+  \pstPlanePut[plane=xz](0,3,0){\fbox{\Huge\green\textbf{xz plane}}}
+\end{pspicture}
+\end{LTXexample}
+
+
+\begin{LTXexample}[width=7.25cm]
+\begin{pspicture}(-2,-4)(6,2)
+  \psgrid
+  \pstThreeDCoor[xMin=-4,yMin=-4,zMin=-4,xMax=2,zMax=2]
+  \pstPlanePut[plane=yz](-3,0,0){\fbox{\Huge\blue\textbf{yz plane}}}
+  \pstPlanePut[plane=yz](0,0,0){\fbox{\Huge\blue\textbf{yz plane}}}
+  \pstPlanePut[plane=yz](3,0,0){\fbox{\Huge\blue\textbf{yz plane}}}
+\end{pspicture}
+\end{LTXexample}
+
+
+\bigskip
+The following examples use the \verb|origin| option to show that there are still some problems with the xy-plane. 
+% ----------------------------------------------------------------------
+% Einfuegung Erlaeuterug examplee und Abbildungen 
+% - raus: --------------------------------------------------------------
+% 
+% \begin{LTXexample}[width=6.25cm]
+% \begin{pspicture}(-3,-2)(3,4)\psgrid
+%   \psset{origin=lb}
+%   \pstThreeDCoor
+%   \pstThreeDDot[drawCoor=true,linecolor=red](-1,-1,2)
+%   \pstPlanePut[plane=xy](-1,-1,2){\fbox{\Huge\red\textbf{XY}}}
+%   \pstThreeDDot[drawCoor=true,linecolor=green](1,3.5,1)
+%   \pstPlanePut[plane=xz](1,3.5,1){\fbox{\Huge\green\textbf{XZ}}}
+%   \pstThreeDDot[drawCoor=true,linecolor=blue](-2,1,3)
+%   \pstPlanePut[plane=yz](-2,1,3){\fbox{\Huge\blue\textbf{YZ}}}
+% \end{pspicture}
+% \end{LTXexample}
+% % 
+% - rein: --------------------------------------------------------------
+The second parameter is \verb|planecorr|.  As first the values:
+
+\begin{description}
+  \item[\texttt{off}]~Former and default behaviour; nothing will be changed.
+  This value is set, when parameter is missing.
+  \item[\texttt{normal}]~Default correction, planes will be rotated to be readable.
+  \item[\texttt{xyrot}]~Additionaly correction for $xy$ plane; bottom line of
+  letters will be set parallel to the $y$-axis. 
+\end{description}
+
+What kind off correction is ment?  In the plots above labels for the $xy$ plane and the $xz$ plane are mirrored.  This is not a bug, it's \dots mathematics. 
+
+\verb|\pstPlanePut| puts the labels on the plane of it's value.  That means, \verb|plane=xy| puts the label on the $xy$ plane, so that the $x$ marks the positive direction for the width, the $y$ for the height and the label {\small{XY plane}} on the top side of plane. If you see the label mirrored, you just look from the bottom side of plane. \dots{}
+
+If you want to keep the labels readable for every view, i.\,e.\ for every value of \verb|Alpha| and \verb|Beta|, you should set the value of the parameter \verb|planecorr| to \verb|normal|; just like in next example:
+
+\medskip
+\begin{LTXexample}[width=6cm]
+\begin{pspicture}(-3,-2)(3,4)\psgrid
+  \psset{origin=lb}
+  \pstThreeDCoor[xMax=3.2,yMax=3.2,zMax=4]
+  \pstThreeDDot[drawCoor=true,linecolor=red](1,-1,2)
+  \pstPlanePut[plane=xy,planecorr=normal](1,-1,2)
+	{\fbox{\Huge\red\textbf{XY}}}
+  \pstThreeDDot[drawCoor=true,linecolor=green](1,3,1)
+  \pstPlanePut[plane=xz,planecorr=normal](1,3,1)
+	{\fbox{\Huge\green\textbf{XZ}}}
+  \pstThreeDDot[drawCoor=true,linecolor=blue](-1.5,0.5,3)
+  \pstPlanePut[plane=yz,planecorr=normal](-1.5,0.5,3)
+	{\fbox{\Huge\blue\textbf{YZ}}}
+\end{pspicture}
+\end{LTXexample}
+
+\medskip
+But, why we have a third value \verb|xyrot| of \verb|planecorr|?
+If there isn't an symmetrical view, -- just like in this example -- it
+could be usefull to rotate the label for $xy$-plane, so that body line of
+letters is parallel to the $y$ axis.  It's done by setting
+\verb|planecorr=xyrot|\,:
+
+
+\medskip
+\begin{LTXexample}[width=6cm]
+\begin{pspicture}(-2,-2)(4,4)\psgrid
+  \psset{origin=lb}
+  \psset{Alpha=69.3,Beta=19.43}
+  \pstThreeDCoor[xMax=4,yMax=4,zMax=4]
+  \pstThreeDDot[drawCoor=true,linecolor=red](1,-1,2)
+  \pstPlanePut[plane=xy,planecorr=xyrot](1,-1,2)
+	{\fbox{\Huge\red\textbf{XY}}}
+  \pstThreeDDot[drawCoor=true,linecolor=green](1,3.5,1)
+  \pstPlanePut[plane=xz,planecorr=xyrot](1,3.5,1)
+	{\fbox{\Huge\green\textbf{XZ}}}
+  \pstThreeDDot[drawCoor=true,linecolor=blue](-2,1,3)
+  \pstPlanePut[plane=yz,planecorr=xyrot](-2,1,3)
+	{\fbox{\Huge\blue\textbf{YZ}}}
+\end{pspicture}
+\end{LTXexample}
+% --- ende ------------------------------------------------------------
+
+
+
+\psset{Alpha=45,xunit=1cm,yunit=1cm,xMin=-1,yMin=-1,zMin=-1}
+
+\section{Nodes}
+The syntax is
+\begin{verbatim}
+\pstThreeDNode(x,y,z){<node name>}
+\end{verbatim}
+
+This node is internally a two dimensional node, so it cannot be used as a replacement for the parameters \verb|(x,y,z)| of a 3D dot, which is possible with the \verb|\psline| macro from \verb|pst-plot|: \verb|\psline{A}{B}|, where \verb|A| and \verb|B| are two nodes. It is still on the to do list, that it may also be possible with \verb|pst-3dplot|. On the other hand it is no problem to define two 3D nodes \verb|C| and \verb|D| and then drawing a two dimensional line from \verb|C| to \verb|D|.
+
+\section{Dots}
+The syntax for a dot is
+\begin{verbatim}
+\pstThreeDDot[<options>](x,y,z)
+\end{verbatim}
+
+Dots can be drawn with dashed lines for the three coordinates, when the option \verb|drawCoor| is set to \verb|true|. It is also possible to draw an unseen dot
+with the option \verb|dotstyle=none|.\index{dotstyle} In this case the macro draws only the coordinates\index{coordinates}
+when the \verb|drawCoor| option is set to true.
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-2)(2,2)\psgrid
+  \pstThreeDCoor[xMin=-2,xMax=2,yMin=-2,yMax=2,zMin=-2,zMax=2]
+  \psset{dotstyle=*,dotscale=2,linecolor=red,drawCoor=true}
+  \pstThreeDDot(-1,1,1)
+  \pstThreeDDot(1.5,-1,-1)
+\end{pspicture}
+\end{LTXexample}
+
+In the following figure the coordinates of the dots are $(a,a,a)$ where a is $-2,-1,0,1,2$.
+
+
+\begin{LTXexample}[width=5.25cm]
+\begin{pspicture}(-3,-3.25)(2,3.25)\psgrid
+  \psset{Alpha=30,Beta=60,dotstyle=square*,dotsize=3pt,%
+    linecolor=blue,drawCoor=true}
+  \pstThreeDCoor[xMin=-3,xMax=3,yMin=-3,yMax=3,zMin=-3,zMax=3]
+  \multido{\n=-2+1}{5}{\pstThreeDDot(\n,\n,\n)}  
+\end{pspicture}
+\end{LTXexample}
+
+
+\section{Lines}
+The syntax for a three dimensional line is just like the same from \verb+\psline+
+{\footnotesize\begin{verbatim}
+\pstThreeDLine[<options>]{<arrow>}(x1,y1,z1)(...)(xn,yn,zn)
+\end{verbatim}}
+
+The option and arrow part are both optional and the number of points is only limited
+to the memory.
+All options for lines from \verb|pstricks| are possible, there are no special ones for a 3D line. There is no difference in drawing a line or a vector; the first one has an arrow of type "'\verb|-|"` and the second of "'\verb|->|"`.
+
+There is no special \verb+polygon+ macro, because you can get nearlx the same with
+\verb+\pstThreeDLine+.
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-2.25)(2,2.25)\psgrid
+  \pstThreeDCoor[xMin=-2,xMax=2,yMin=-2,yMax=2,zMin=-2,zMax=2]
+  \psset{dotstyle=*,linecolor=red,drawCoor=true}
+  \pstThreeDDot(-1,1,0.5)
+  \pstThreeDDot(1.5,-1,-1)
+  \pstThreeDLine[linewidth=3pt,linecolor=blue,arrows=->]%
+    (-1,1,0.5)(1.5,-1,-1)
+\end{pspicture}
+\end{LTXexample}
+
+
+
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-2.25)(2,2.25)\psgrid
+  \pstThreeDCoor[xMin=-2,xMax=2,yMin=-2,yMax=2,zMin=-2,zMax=2]
+  \psset{dotstyle=*,linecolor=red,drawCoor=true}
+  \pstThreeDDot(-1,1,1)
+  \pstThreeDDot(1.5,-1,-1)
+  \pstThreeDLine[linewidth=3pt,linecolor=blue](-1,1,1)(1.5,-1,-1)
+\end{pspicture}
+\end{LTXexample}
+
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-2.25)(2,2.25)\psgrid
+  \psset{Alpha=30,Beta=60,dotstyle=pentagon*,dotsize=5pt,%
+    linecolor=red,drawCoor=true}
+  \pstThreeDCoor[xMin=-2,xMax=2,yMin=-2,yMax=2,zMin=-2,zMax=2]
+  \pstThreeDDot(-1,1,1)
+  \pstThreeDDot(1.5,-1,-1)
+  \pstThreeDLine[linewidth=3pt,linecolor=blue](-1,1,1)(1.5,-1,-1)
+\end{pspicture}
+\end{LTXexample}
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-2.25)(2,2.25)\psgrid
+  \psset{Alpha=30,Beta=-60}
+  \pstThreeDCoor[xMin=-2,xMax=2,yMin=-2,yMax=2,zMin=-2,zMax=2]
+  \pstThreeDDot[dotstyle=square,linecolor=blue,drawCoor=true](-1,1,1)
+  \pstThreeDDot[drawCoor=true](1.5,-1,-1)
+  \pstThreeDLine[linewidth=3pt,linecolor=blue](-1,1,1)(1.5,-1,-1)
+\end{pspicture}
+\end{LTXexample}
+
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-2.25)(2,2.25)\psgrid
+  \psset{Alpha=30,Beta=-60}
+  \pstThreeDCoor[xMin=-2,xMax=2,yMin=-2,yMax=2,zMin=-2,zMax=2]
+  \pstThreeDDot[dotstyle=square,linecolor=blue,drawCoor=true](-1,1,1)
+  \pstThreeDDot[drawCoor=true](1.5,-1,-1)
+  \pstThreeDLine[linewidth=3pt,arrowscale=1.5,%
+    linecolor=magenta,linearc=0.5]{<->}(-1,1,1)(1.5,2,-1)(1.5,-1,-1)
+\end{pspicture}
+\end{LTXexample}
+
+\begin{LTXexample}[pos=t]
+\begin{pspicture}(-3,-2)(4,5)\label{lines}
+  \pstThreeDCoor[xMin=-3,xMax=3,yMin=-1,yMax=4,zMin=-1,zMax=3]
+  \multido{\iA=1+1,\iB=60+-10}{5}{%
+    \ifcase\iA\or\psset{linecolor=red}\or\psset{linecolor=green}
+      \or\psset{linecolor=blue}\or\psset{linecolor=cyan}
+      \or\psset{linecolor=magenta}
+    \fi
+    \pstThreeDLine[SphericalCoor=true,linewidth=3pt]%
+      (\iA,0,\iB)(\iA,30,\iB)(\iA,60,\iB)(\iA,90,\iB)(\iA,120,\iB)(\iA,150,\iB)%
+      (\iA,180,\iB)(\iA,210,\iB)(\iA,240,\iB)(\iA,270,\iB)(\iA,300,\iB)%
+      (\iA,330,\iB)(\iA,360,\iB)%
+  }
+  \multido{\iA=0+30}{12}{%
+    \pstThreeDLine[SphericalCoor=true,linestyle=dashed]%
+       (0,0,0)(1,\iA,60)(2,\iA,50)(3,\iA,40)(4,\iA,30)(5,\iA,20)}
+\end{pspicture}
+\end{LTXexample}
+
+
+\section{Triangles}
+A triangle is given with its three points:
+\begin{verbatim}
+\pstThreeDTriangle[<options>](P1)(P2)(P3)
+\end{verbatim}
+
+When the option \verb|fillstyle| is set to another value than \verb|none| the triangle is filled with the active color or with the one which is set with the option \verb|fillcolor|.
+
+\begin{LTXexample}[width=6.25cm]
+\begin{pspicture}(-3,-4.25)(3,3.25)\psgrid
+  \pstThreeDCoor[xMin=-4,xMax=4,yMin=-3,yMax=5,zMin=-4,zMax=3]
+  \pstThreeDTriangle[fillcolor=yellow,fillstyle=solid,%
+    linecolor=blue,linewidth=1.5pt](5,1,2)(3,4,-1)(-1,-2,2)
+  \pstThreeDTriangle[drawCoor=true,linecolor=black,%
+    linewidth=2pt](3,1,-2)(1,4,-1)(-2,2,0)
+\end{pspicture}
+\end{LTXexample}
+
+Especially for triangles the option \verb|linejoin| is important. The default value is $1$, which gives rounded edges. 
+
+\begin{figure}[htb]
+\centering
+\psset{linewidth=0.2}
+\begin{pspicture}(3,2.25)\psgrid
+	\psline(0,0)(1,2)(2,0)(3,2)
+\end{pspicture}%
+\hspace{0.4cm}%
+\begin{pspicture}(4,2.25)\psgrid
+  \pscustom{\code{1 setlinejoin}\psline(0,0)(1,2)(2,0)(3,2)(4,0)}
+\end{pspicture}%
+\hspace{0.4cm}%
+\begin{pspicture}(3,2.25)\psgrid
+  \pscustom{\code{2 setlinejoin}\psline(0,0)(1,2)(2,0)(3,2)}
+\end{pspicture}
+\caption{The meaning of the option \texttt{linejoin=0|1|2} for drawing lines}
+\end{figure} 
+
+
+\section{Squares}
+The syntax for a 3D square is:
+\begin{verbatim}
+\pstThreeDSquare(<vector o>)(<vector u>)(<vector v>)
+\end{verbatim}
+
+\begin{LTXexample}[width=5cm]
+\begin{pspicture}(-1,-1)(4,3)\psgrid
+  \pstThreeDCoor[xMin=-3,xMax=1,yMin=-1,yMax=2,zMin=-1,zMax=3]
+  \psset{arrows=->,arrowsize=0.2,linecolor=blue,linewidth=1.5pt}
+  \pstThreeDLine[linecolor=green](0,0,0)(-2,2,3)\uput[45](1.5,1){$\vec{o}$}
+  \pstThreeDLine(-2,2,3)(2,2,3)\uput[0](3,2){$\vec{u}$}
+  \pstThreeDLine(-2,2,3)(-2,3,3)\uput[180](1,2){$\vec{v}$}
+\end{pspicture}
+\end{LTXexample}
+
+\medskip
+Squares are nothing else than a polygon with the starting point $P_o$ given with the origin vector $\vec{o}$ and the two direction vectors $\vec{u}$ and $\vec{v}$, which build the sides of the square.
+
+
+\begin{LTXexample}[width=7.25cm]
+\begin{pspicture}(-3,-2)(4,3)\psgrid
+  \pstThreeDCoor[xMin=-3,xMax=3,yMin=-1,yMax=4,zMin=-1,zMax=3]
+  {\psset{fillcolor=blue,fillstyle=solid,drawCoor=true,dotstyle=*}
+   \pstThreeDSquare(-2,2,3)(4,0,0)(0,1,0)}
+\end{pspicture}
+\end{LTXexample}
+
+
+\section{Boxes}
+A box is a special case of a square and has the syntax
+
+\begin{verbatim}
+\pstThreeDBox[<options>](<vector o>(<vector u>)(<vector v>)(<vector w>)
+\end{verbatim}
+
+
+These are the origin vector $\vec{o}$ and three direction vectors $\vec{u}$, $\vec{v}$ and $\vec{w}$, which are for example shown in the following figure.
+
+
+\begin{LTXexample}[width=5.25cm]
+\begin{pspicture}(-2,-1.25)(3,4.25)\psgrid
+  \psset{Alpha=30,Beta=30}
+  \pstThreeDCoor[xMin=-3,xMax=1,yMin=-1,yMax=2,zMin=-1,zMax=4]
+  \pstThreeDDot[drawCoor=true](-1,1,2)
+  \psset{arrows=->,arrowsize=0.2}
+  \pstThreeDLine[linecolor=green](0,0,0)(-1,1,2)
+  \uput[0](0.5,0.5){$\vec{o}$}
+  \uput[0](0.9,2.25){$\vec{u}$}
+  \uput[90](0.5,1.25){$\vec{v}$}
+  \uput[45](2,1.){$\vec{w}$}
+  \pstThreeDLine[linecolor=blue](-1,1,2)(-1,1,4)
+  \pstThreeDLine[linecolor=blue](-1,1,2)(1,1,2)
+  \pstThreeDLine[linecolor=blue](-1,1,2)(-1,2,2)
+\end{pspicture}
+\end{LTXexample}
+
+\begin{LTXexample}[width=5.25cm]
+\begin{pspicture}(-2,-1.25)(3,4.25)\psgrid
+  \psset{Alpha=30,Beta=30}
+  \pstThreeDCoor[xMin=-3,xMax=1,yMin=-1,yMax=2,zMin=-1,zMax=4]
+  \pstThreeDBox(-1,1,2)(0,0,2)(2,0,0)(0,1,0)
+  \pstThreeDDot[drawCoor=true](-1,1,2)
+\end{pspicture}
+\end{LTXexample}
+
+
+
+\section{Ellipses and circles}
+
+The equation for a two dimensional ellipse (figure \ref{fig:ellipse})is:
+\begin{equation}
+e:\frac{\left(x-x_{M}\right)^{2}}{a^{2}}+\frac{\left(y-y_{M}\right)^{2}}{b^{2}}=1
+\label{gl.600}
+\end{equation}
+
+\begin{figure}[htb]
+\centering
+\begin{pspicture*}(-3,-1.5)(3,1.5)
+  \psset{unit=0.75cm}
+  \psline{->}(-3.5,0)(3.5,0)
+  \rput(3.3,-0.3){x}\psline{->}(0,-2.5)(0,2.5)\rput(-0.3,2.3){y}
+  \pscircle(-2,0){0.1}\pscircle(2,0){0.1}
+  \psline[linestyle=dotted,linewidth=0.5pt](-2,0)(0,2)(2,0)
+  \rput(-1.4,1){a}\rput(1.4,1){a}
+  \psline[linewidth=0.5pt,linearc=.25]%
+ 	(-3,0)(-3,-0.25)(-1.5,-0.25)%
+	(-1.5,-0.4)(-1.5,-0.25)(0,-0.25)(0,0)
+  \rput(-1.5,-0.7){a}
+  \psline[linewidth=0.5pt,linearc=.25]%
+		(0,2)(0.2,2)(0.2,1)(0.4,1)(0.2,1)(0.2,0)(0,0)
+	\rput(0.7,1){b}
+	\psellipse[linewidth=2pt](3,2)
+	\rput(-.4,-.4){M}\rput(2,-.4){$F_2$}
+	\rput(-2.2,0.4){$F_1$}
+	\rput(1,.2){e}\rput(-1,.2){e}
+	\rput(-1,-1){$r_1$}\rput(1.7,-1){$r_2$}
+	\psline[linestyle=dotted,linewidth=1pt]{->}(-2,0)(1,-1.8)
+	\psline[linestyle=dotted,linewidth=1pt]{<-}(1,-1.8)(2,0)
+\end{pspicture*}
+\caption{Definition of an Ellipse}\label{fig:ellipse}
+\end{figure}
+
+
+
+$\left(x_m;y_m\right)$ is the center,  $a$
+and $b$ the semi major and semi minor axes 
+respectively and $e$ the excentricity. For $a=b=1$ in equation~\ref{gl.600} we get the one for the circle, 
+which is nothing else than a special ellipse. 
+The equation written in the parameterform is
+
+\begin{equation}\label{gl601}
+\begin{split}
+	x = a\cdot\cos\alpha\\
+	y = b\cdot\sin\alpha
+\end{split}
+\end{equation}
+
+or the same with vectors to get an ellipse in a 3D system:
+\begin{align}\label{gl.6}
+	e:\vec{x} &=\vec{m}+\cos\alpha\cdot\vec{u}+\sin\alpha\cdot\vec{v}\qquad 0\leq\alpha\leq360	
+\end{align}
+
+where $\vec{m}$ is the center,  $\vec{u}$ and $\vec{v}$ the directions vectors which are 
+perpendicular to each other. 
+
+
+\subsection{Options}
+In addition to all possible options from \verb|pst-plot| there are two special 
+options to allow drawing of an arc (with predefined values for a full ellipse/circle):
+%
+\begin{verbatim}
+beginAngle=0
+endAngle=360
+\end{verbatim}
+
+Ellipses and circles are drawn with the in section~\ref{subsec:parametricplotThreeD} described 
+\verb|parametricplotThreeD| macro with a default setting of $50$ points for a full ellipse/circle.
+
+\subsection{Ellipse}
+It is very difficult to see in a 3D coordinate system the difference of an ellipse and a circle. Depending to the view point an ellipse maybe seen as a circle and vice versa. The syntax of the ellipse macro is:
+\begin{verbatim}
+\pstThreeDEllipse[<option>](cx,cy,cz)(ux,uy,uz)(vx,vy,vz)
+\end{verbatim}
+
+where \verb|c| is for center and \verb|u| and \verb|v| for the two direction vectors. 
+The order of these two vectors is important for the drawing if it
+is a left or right turn. It follows the right hand rule: flap the first vector $\vec{u}$ on the 
+shortest way into the second one  $\vec{u}$, then you'll get the positive rotating.
+
+
+\begin{LTXexample}[pos=t]
+\begin{pspicture}(-3,-2)(3,3)
+  \pstThreeDCoor[IIIDticks]
+  \psset{arrowscale=2,arrows=->}
+  \pstThreeDLine(0,0,0)(3,0,0)\pstThreeDLine(0,0,0)(0,3,0)\pstThreeDLine(0,0,0)(0,0,3)
+  \psset{linecolor=blue,linewidth=1.5pt,beginAngle=0,endAngle=90}
+  \pstThreeDEllipse(0,0,0)(3,0,0)(0,3,0) \pstThreeDEllipse(0,0,0)(0,0,3)(3,0,0)
+  \pstThreeDEllipse(0,0,0)(0,3,0)(0,0,3)
+\end{pspicture}\hspace{2em}
+\begin{pspicture}(-3,-2)(3,3)
+  \pstThreeDCoor[IIIDticks]
+  \psset{arrowscale=2,arrows=->}
+  \pstThreeDLine(0,0,0)(3,0,0)\pstThreeDLine(0,0,0)(0,3,0)\pstThreeDLine(0,0,0)(0,0,3)
+  \psset{linecolor=blue,linewidth=1.5pt,beginAngle=0,endAngle=90}
+  \pstThreeDEllipse(0,0,0)(0,3,0)(3,0,0) \pstThreeDEllipse(0,0,0)(3,0,0)(0,0,3)
+  \pstThreeDEllipse(0,0,0)(0,0,3)(0,3,0)
+\end{pspicture}
+\end{LTXexample}
+
+
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-2.25)(2,2.25)\psgrid
+  \pstThreeDCoor[xMax=2,yMax=2,zMax=2]
+  \pstThreeDDot[linecolor=red,drawCoor=true](1,0.5,0.5)
+  \psset{linecolor=blue, linewidth=1.5pt}
+  \pstThreeDEllipse(1,0.5,0.5)(-0.5,1,0.5)(1,-0.5,-1)
+  \psset{beginAngle=0,endAngle=270,linecolor=green}
+  \pstThreeDEllipse(1,0.5,0.5)(-0.5,0.5,0.5)(0.5,0.5,-1)
+  \pstThreeDEllipse[RotZ=45,linecolor=red](1,0.5,0.5)(-0.5,0.5,0.5)(0.5,0.5,-1)
+\end{pspicture}
+\end{LTXexample}
+
+
+\subsection{Circle}
+
+The circle is a special case of an ellipse (equ.~\ref{gl.6}) with the vectors
+$\vec{u}$ and $\vec{v}$  which are perpendicular 
+to each other: $\left|\vec{u}\right|=\left|\vec{v}\right|=r$.
+with
+$\vec{u}\cdot\vec{v}=\vec{0}$
+
+The macro \verb|\pstThreeDCircle| is nothing else than a synonym for \verb|\pstThreeDEllipse|. 
+In the following example the circle is drawn with only $20$  plotpoints and the option \verb|showpoints=true|. 
+
+\begin{LTXexample}[width=4.25cm]
+\begin{pspicture}(-2,-1.25)(2,2.25)\psgrid
+  \pstThreeDCoor[xMax=2,yMax=2,zMax=2,linecolor=black]
+  \psset{linecolor=red,linewidth=2pt,plotpoints=20,showpoints=true}
+  \pstThreeDCircle(1.6,+0.6,1.7)(0.8,0.4,0.8)(0.8,-0.8,-0.4)
+  \pstThreeDDot[drawCoor=true,linecolor=blue](1.6,+0.6,1.7)
+  \pstThreeDCircle[RotY=15,linecolor=blue](1.6,+0.6,1.7)(0.8,0.4,0.8)(0.8,-0.8,-0.4)
+  \pstThreeDDot[RotY=15,drawCoor=true,linecolor=blue](1.6,+0.6,1.7)
+\end{pspicture}
+\end{LTXexample}
+
+
+\begin{center}
+\bgroup
+\makebox[\linewidth]{%
+\def\radius{4 }\def\PhiI{20 }\def\PhiII{50 }
+%
+\def\RadIs{\radius \PhiI sin mul}
+\def\RadIc{\radius \PhiI cos mul}
+\def\RadIIs{\radius \PhiII sin mul}
+\def\RadIIc{\radius \PhiII cos mul}
+\begin{pspicture}(-4,-4)(4,5)
+  \psset{Alpha=45,Beta=30,linestyle=dashed}
+  \pstThreeDCoor[linestyle=solid,xMin=-5,xMax=5,yMax=5,zMax=5,IIIDticks]
+  \pstThreeDEllipse[linecolor=red](0,0,0)(0,\radius,0)(0,0,\radius)
+  \pstThreeDEllipse(\RadIs,0,0)(0,\RadIc,0)(0,0,\RadIc)
+  \pstThreeDEllipse(\RadIIs,0,0)(0,\RadIIc,0)(0,0,\RadIIc)
+%
+  \pstThreeDEllipse[linestyle=dotted,SphericalCoor](0,0,0)(\radius,90,\PhiI)(\radius,0,0)
+  \pstThreeDEllipse[SphericalCoor,
+	beginAngle=-90,endAngle=90](0,0,0)(\radius,90,\PhiI)(\radius,0,0)
+  \pstThreeDEllipse[linestyle=dotted,SphericalCoor](0,0,0)(\radius,90,\PhiII)(\radius,0,0)
+  \pstThreeDEllipse[SphericalCoor,
+	beginAngle=-90,endAngle=90](0,0,0)(\radius,90,\PhiII)(\radius,0,0)
+%
+  \psset{linecolor=blue,arrows=->,arrowscale=2,linewidth=1.5pt,linestyle=solid}
+    \pstThreeDEllipse[SphericalCoor,beginAngle=\PhiI,endAngle=\PhiII]%
+	(0,0,0)(\radius,90,\PhiII)(\radius,0,0)
+    \pstThreeDEllipse[beginAngle=\PhiII,endAngle=\PhiI](\RadIIs,0,0)(0,\RadIIc,0)(0,0,\RadIIc)
+    \pstThreeDEllipse[SphericalCoor,beginAngle=\PhiII,endAngle=\PhiI]%
+	(0,0,0)(\radius,90,\PhiI)(\radius,0,0)
+    \pstThreeDEllipse[beginAngle=\PhiI,endAngle=\PhiII](\RadIs,0,0)(0,\RadIc,0)(0,0,\RadIc)
+\end{pspicture}
+\begin{pspicture}(-4,-4)(4,5)
+  \psset{Alpha=45,Beta=30,linestyle=dashed}
+  \pstThreeDCoor[linestyle=solid,xMin=-5,xMax=5,yMax=5,zMax=5,IIIDticks]
+  \pstThreeDEllipse[linecolor=red](0,0,0)(0,\radius,0)(0,0,\radius)
+  \pstThreeDEllipse(\RadIs,0,0)(0,\RadIc,0)(0,0,\RadIc)
+  \pstThreeDEllipse(\RadIIs,0,0)(0,\RadIIc,0)(0,0,\RadIIc)
+%
+  \pstThreeDEllipse[linestyle=dotted,SphericalCoor](0,0,0)(\radius,90,\PhiI)(\radius,0,0)
+  \pstThreeDEllipse[SphericalCoor,
+	beginAngle=-90,endAngle=90](0,0,0)(\radius,90,\PhiI)(\radius,0,0)
+  \pstThreeDEllipse[linestyle=dotted,SphericalCoor](0,0,0)(\radius,90,\PhiII)(\radius,0,0)
+  \pstThreeDEllipse[SphericalCoor,
+	beginAngle=-90,endAngle=90](0,0,0)(\radius,90,\PhiII)(\radius,0,0)
+%
+  \pscustom[fillstyle=solid,fillcolor=blue]{
+    \pstThreeDEllipse[SphericalCoor,beginAngle=\PhiI,endAngle=\PhiII]%
+	(0,0,0)(\radius,90,\PhiII)(\radius,0,0)
+    \pstThreeDEllipse[beginAngle=\PhiII,endAngle=\PhiI](\RadIIs,0,0)(0,\RadIIc,0)(0,0,\RadIIc)
+    \pstThreeDEllipse[SphericalCoor,beginAngle=\PhiII,endAngle=\PhiI]%
+	(0,0,0)(\radius,90,\PhiI)(\radius,0,0)
+    \pstThreeDEllipse[beginAngle=\PhiI,endAngle=\PhiII](\RadIs,0,0)(0,\RadIc,0)(0,0,\RadIc)
+  }
+\end{pspicture}
+}
+\egroup
+\end{center}
+
+\begin{lstlisting}
+\def\radius{4 }\def\PhiI{20 }\def\PhiII{50 }
+%
+\def\RadIs{\radius \PhiI sin mul}
+\def\RadIc{\radius \PhiI cos mul}
+\def\RadIIs{\radius \PhiII sin mul}
+\def\RadIIc{\radius \PhiII cos mul}
+\begin{pspicture}(-4,-4)(4,5)
+  \psset{Alpha=45,Beta=30,linestyle=dashed}
+  \pstThreeDCoor[linestyle=solid,xMin=-5,xMax=5,yMax=5,zMax=5,IIIDticks]
+  \pstThreeDEllipse[linecolor=red](0,0,0)(0,\radius,0)(0,0,\radius)
+  \pstThreeDEllipse(\RadIs,0,0)(0,\RadIc,0)(0,0,\RadIc)
+  \pstThreeDEllipse(\RadIIs,0,0)(0,\RadIIc,0)(0,0,\RadIIc)
+%
+  \pstThreeDEllipse[linestyle=dotted,SphericalCoor](0,0,0)(\radius,90,\PhiI)(\radius,0,0)
+  \pstThreeDEllipse[SphericalCoor,
+	beginAngle=-90,endAngle=90](0,0,0)(\radius,90,\PhiI)(\radius,0,0)
+  \pstThreeDEllipse[linestyle=dotted,SphericalCoor](0,0,0)(\radius,90,\PhiII)(\radius,0,0)
+  \pstThreeDEllipse[SphericalCoor,
+	beginAngle=-90,endAngle=90](0,0,0)(\radius,90,\PhiII)(\radius,0,0)
+%
+  \psset{linecolor=blue,arrows=->,arrowscale=2,linewidth=1.5pt,linestyle=solid}
+    \pstThreeDEllipse[SphericalCoor,beginAngle=\PhiI,endAngle=\PhiII]%
+	(0,0,0)(\radius,90,\PhiII)(\radius,0,0)
+    \pstThreeDEllipse[beginAngle=\PhiII,endAngle=\PhiI](\RadIIs,0,0)(0,\RadIIc,0)(0,0,\RadIIc)
+    \pstThreeDEllipse[SphericalCoor,beginAngle=\PhiII,endAngle=\PhiI]%
+	(0,0,0)(\radius,90,\PhiI)(\radius,0,0)
+    \pstThreeDEllipse[beginAngle=\PhiI,endAngle=\PhiII](\RadIs,0,0)(0,\RadIc,0)(0,0,\RadIc)
+\end{pspicture}
+\begin{pspicture}(-4,-4)(4,5)
+
+[ ... ]
+
+  \pstThreeDEllipse[linestyle=dotted,SphericalCoor](0,0,0)(\radius,90,\PhiI)(\radius,0,0)
+  \pstThreeDEllipse[SphericalCoor,
+	beginAngle=-90,endAngle=90](0,0,0)(\radius,90,\PhiI)(\radius,0,0)
+  \pstThreeDEllipse[linestyle=dotted,SphericalCoor](0,0,0)(\radius,90,\PhiII)(\radius,0,0)
+  \pstThreeDEllipse[SphericalCoor,
+	beginAngle=-90,endAngle=90](0,0,0)(\radius,90,\PhiII)(\radius,0,0)
+%
+  \pscustom[fillstyle=solid,fillcolor=blue]{
+    \pstThreeDEllipse[SphericalCoor,beginAngle=\PhiI,endAngle=\PhiII]%
+	(0,0,0)(\radius,90,\PhiII)(\radius,0,0)
+    \pstThreeDEllipse[beginAngle=\PhiII,endAngle=\PhiI](\RadIIs,0,0)(0,\RadIIc,0)(0,0,\RadIIc)
+    \pstThreeDEllipse[SphericalCoor,beginAngle=\PhiII,endAngle=\PhiI]%
+	(0,0,0)(\radius,90,\PhiI)(\radius,0,0)
+    \pstThreeDEllipse[beginAngle=\PhiI,endAngle=\PhiII](\RadIs,0,0)(0,\RadIc,0)(0,0,\RadIc)
+  }
+\end{pspicture}
+\end{lstlisting}
+
+% ---------------------------------------------------------------------------------------
+\subsection{\CMD{pstParaboloid}}
+% ---------------------------------------------------------------------------------------
+The syntax is 
+ 
+\begin{verbatim}
+\pstParaboloid[Parameter]{height}{radius}
+\end{verbatim}
+ 
+\verb+height+ and \verb+radius+ depend to each other, it is the radius of the circle
+at the height. By default the paraboloid is placed in the origin of coordinate system, but
+with \verb+\pstThreeDput+ it can be placed anywhere. The possible options are listed in 
+table~\ref{tab:paraboloid}.
+The segment color must be set as a cmyk color \verb|SegmentColor={[cmyk]{c,m,y,k}}| in parenthesis,
+otherwise \verb|xcolor| cannot read the values. A white color is given by \verb|SegmentColor={[cmyk]{0,0,0,0}}|.
+
+\begin{table}[htb]
+\centering
+\caption{Options for the \Lcs{pstParaboloid}  macro}\label{tab:paraboloid}
+\smallskip
+\begin{tabular}{l|l}
+\textbf{Option name} & \textbf{value}\\\hline
+\verb|SegmentColor| & cmyk color for the segments (0.2,0.6,1,0)\\
+\verb|showInside|  & show inside  (true)\\
+\verb|increment|  & number for the segments (10)
+\end{tabular}
+\end{table}
+
+
+
+% x=radius/sqrt(h)*V*cos(V)
+% y=radius/sqrt(h)*V*sin(V)
+% z=radius/sqrt(h)*V*V
+\begin{LTXexample}[width=4cm]
+\begin{pspicture}(-2,-1)(2,5)
+\pstThreeDCoor[xMax=2,yMax=2,zMin=0,zMax=6,IIIDticks]%
+\pstParaboloid{5}{1}% Höhe 5 und Radius 1
+\end{pspicture}
+\end{LTXexample}
+
+\begin{LTXexample}[pos=t]
+\begin{pspicture}(-.5\linewidth,-1)(.5\linewidth,7.5)
+\pstParaboloid[showInside=false,SegmentColor={[cmyk]{0.8,0.1,.11,0}}]{4}{5}%
+\pstThreeDCoor[xMax=3,yMax=3,zMax=7.5,IIIDticks]
+\end{pspicture}
+\end{LTXexample}
+
+
+\section{Spheres}\label{sec:spheres}
+
+\begin{LTXexample}[width=6.25cm]
+\begin{pspicture}(-4,-2.25)(2,4.25)\psgrid
+  \pstThreeDCoor[xMin=-3,yMax=2]
+  \pstThreeDSphere(1,-1,2){2}
+  \pstThreeDDot[dotstyle=x,linecolor=red,drawCoor=true](1,-1,2)
+\end{pspicture}
+\end{LTXexample}
+
+\begin{verbatim}
+\pstThreeDSphere[<options>](x,y,z){Radius}
+\end{verbatim}
+
+\verb|(x,y,z)| is the center of the sphere and possible options are listed in table~\ref{tab:sphereOptions}.
+The segment color must be set as a cmyk color \verb|SegmentColor={[cmyk]{c,m,y,k}}| in parenthesis,
+otherwise \verb|xcolor| cannot read the values. A white color is given by \verb|SegmentColor={[cmyk]{0,0,0,0}}|.
+
+\begin{table}[htb]
+\centering
+\caption{Options for the sphere macro}\label{tab:sphereOptions}
+\smallskip
+\begin{tabular}{l|l}
+\textbf{Option name} & \textbf{value}\\\hline
+\verb|SegmentColor| & cmyk color for the segments (0.2,0.6,1,0)\\
+\verb|increment|  & number for the segments (10)
+\end{tabular}
+\end{table}
+
+
+\begin{LTXexample}[width=6.25cm]
+\begin{pspicture}(-4,-2.25)(2,4.25)\psgrid
+  \pstThreeDCoor[xMin=-3,yMax=2]
+  \pstThreeDSphere[SegmentColor={[cmyk]{0,0,0,0}}](1,-1,2){2}
+  \pstThreeDDot[dotstyle=x,linecolor=red,drawCoor=true](1,-1,2)
+\end{pspicture}
+\end{LTXexample}
+
+
+
+
+
+\section{Mathematical functions}
+There are two macros for plotting mathematical functions, which work similiar to the one from \verb|pst-plot|.
+
+\subsection{Function $f(x,y)$}
+
+The macro for plotting functions does not have the same syntax as the one from \verb|pst-plot|\cite{dtk02.1:voss:mathematischen}, but it is used in the same way:
+
+\begin{verbatim}
+\psplotThreeD[<options>](xMin,xMax)(yMin,yMax){<the function>}
+\end{verbatim}
+
+The function has to be written in \PS{} code and the only valid variable names are  \verb|x| and \verb|y|, f.ex: \verb|{x dup mul y dup mul add sqrt}| for the math expression $\sqrt{x^2 + y^2}$. The macro has the same plotstyle options as \verb|psplot|, except the \verb|plotpoints|-option which is split into one for \verb|x| and one for \verb|y| (table \ref{tab:lineOptions}).
+
+\begin{table}[htb]
+\centering
+\caption{Options for the plot Macros}\label{tab:lineOptions}
+\smallskip
+\begin{tabular}{l|l}
+\textbf{Option name} & \textbf{value}\\\hline
+\verb|plotstyle| &
+	\verb|dots|\\
+&	\verb|line|\\
+&	\verb|polygon|\\
+&	\verb|curve|\\
+&	\verb|ecurve|\\
+&	\verb|ccurve|\\
+&	\verb|none| (default)\\
+\verb|showpoints|  & default is false\\
+\verb|xPlotpoints| & default is $25$\\
+\verb|yPlotpoints| & default is $25$\\
+\verb|drawStyle| & default is \verb|xLines|\\
+& \verb|yLines|\\
+& \verb|xyLines|\\
+& \verb|yxLines|\\
+\verb|hiddenLine|  & default is false
+\end{tabular}
+\end{table}
+
+The equation \ref{eq:3dfunc} is plotted with the following parameters and seen in figure \ref{fig:3dfunc}.
+
+\begin{align}\label{eq:3dfunc}
+z&=10\left(x^3+xy^4-\frac{x}{5}\right)e^{-\left(x^2+y^2\right)}+
+	e^{-\left((x-1.225)^2+y^2\right)}
+\end{align}
+
+
+The function is calculated within two loops:
+{\small\begin{verbatim}
+for (float y=yMin; y<yMax; y+=dy)
+    for (float x=xMin; x<xMax; x+=dx)
+         z=f(x,y);
+\end{verbatim}}
+
+It depends to the inner loop in which direction the curves are drawn. There are four possible
+values for the option \verb|drawStyle| :
+\begin{itemize}
+\item \verb|xLines| (default) Curves are drawn in x direction
+\item \verb|yLines| Curves are drawn in y direction
+\item \verb|xyLines| Curves are first drawn in x and then in y direction
+\item \verb|yxLines| Curves are first drawn in y and then in x direction
+\end{itemize}
+
+In fact of the inner loop it is only possible to get a closed curve in the defined direction. For lines in x direction less \verb|yPlotpoints| are no problem, in difference to \verb|xPlotpoints|, especially for the plotstyle options \verb|line| and \verb|dots|.
+
+Drawing three dimensional functions with curves which are transparent makes it difficult to see if a point is before or behind another one. \verb|\psplotThreeD| has an option \verb|hiddenLine| for a primitive hidden line mode, which only works when the y-intervall is defined in a way that $y_2>y_1$. Then every new curve is plotted over the forgoing one and filled with the color white. Figure  \ref{fig:3dfunc-hidden} is the same as figure \ref{fig:3dfunc}, only with the option \verb|hiddenLine=true|.
+
+\begin{lstlisting}
+\begin{pspicture}(-6,-4)(6,5)\psgrid
+  \psset{Beta=15}
+  \psplotThreeD[plotstyle=line,drawStyle=xLines,% is the default anyway
+    yPlotpoints=50,xPlotpoints=50,linewidth=1pt](-4,4)(-4,4){%
+    x 3 exp x y 4 exp mul add x 5 div sub 10 mul
+    2.729 x dup mul y dup mul add neg exp mul
+    2.729 x 1.225 sub dup mul y dup mul add neg exp add}
+  \pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+\end{pspicture}
+\end{lstlisting}
+
+
+\begin{figure*}
+\centering
+\begin{pspicture}(-6,-4)(6,5)\psgrid
+  \psset{Beta=15}
+	\psplotThreeD[%
+		plotstyle=curve,%
+		yPlotpoints=50,xPlotpoints=50,%
+		linewidth=0.5pt](-4,4)(-4,4){%
+		x 3 exp x y 4 exp mul add x 5 div sub 10 mul
+           2.729 x dup mul y dup mul add neg exp mul
+           2.729 x 1.225 sub dup mul y dup mul add neg exp add}
+	\pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+\end{pspicture}
+\caption{Plot of the equation \ref{eq:3dfunc}}\label{fig:3dfunc}
+\end{figure*}
+
+
+\begin{figure*}
+\centering
+\begin{pspicture}(-6,-4)(6,5)
+	\psgrid
+	\psset{Alpha=45,Beta=15}
+	\psplotThreeD[%
+		plotstyle=curve,%
+		yPlotpoints=50,xPlotpoints=50,%
+		linewidth=0.5pt,hiddenLine=true](-4,4)(-4,4){%
+		x 3 exp x y 4 exp mul add x 5 div sub 10 mul
+           2.729 x dup mul y dup mul add neg exp mul
+           2.729 x 1.225 sub dup mul y dup mul add neg exp add}
+	\pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+\end{pspicture}
+\caption{Plot of the equation \ref{eq:3dfunc} with the \texttt{hiddenLine=true} option}\label{fig:3dfunc-hidden}
+\end{figure*}
+
+
+
+\begin{figure*}
+\centering
+\begin{pspicture}(-6,-4)(6,5)
+	\psgrid
+	\psset{Alpha=45,Beta=15}
+	\psplotThreeD[%
+		plotstyle=line,%
+		drawStyle=yLines,%
+		yPlotpoints=50,xPlotpoints=50,%
+		linewidth=0.2pt](-4,4)(-4,4){%
+		x 3 exp x y 4 exp mul add x 5 div sub 10 mul
+           2.729 x dup mul y dup mul add neg exp mul
+           2.729 x 1.225 sub dup mul y dup mul add neg exp add}
+	\pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+\end{pspicture}
+\caption{Plot of the equation \ref{eq:3dfunc} with the \texttt{drawStyle=yLines} option}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\begin{pspicture}(-6,-4)(6,5)
+	\psgrid
+	\psset{Alpha=45,Beta=15}
+	\psplotThreeD[%
+		plotstyle=curve,%
+		drawStyle=yLines,%
+		hiddenLine=true,%
+		yPlotpoints=50,xPlotpoints=50,%
+		linewidth=0.2pt](-4,4)(-4,4){%
+		x 3 exp x y 4 exp mul add x 5 div sub 10 mul
+           2.729 x dup mul y dup mul add neg exp mul
+           2.729 x 1.225 sub dup mul y dup mul add neg exp add}
+	\pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+\end{pspicture}
+\caption{Plot of the equation \ref{eq:3dfunc} with the \texttt{drawStyle=yLines} and
+\texttt{hiddenLine=true} option}
+\end{figure*}
+
+
+
+
+\begin{figure*}
+\centering
+\begin{pspicture}(-6,-4)(6,5)
+	\psgrid
+	\psset{Alpha=45,Beta=15}
+	\psplotThreeD[%
+		plotstyle=line,%
+		drawStyle=xyLines,%
+		yPlotpoints=50,xPlotpoints=50,%
+		linewidth=0.2pt](-4,4)(-4,4){%
+		x 3 exp x y 4 exp mul add x 5 div sub 10 mul
+           2.729 x dup mul y dup mul add neg exp mul
+           2.729 x 1.225 sub dup mul y dup mul add neg exp add}
+	\pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+\end{pspicture}
+\caption{Plot of the equation \ref{eq:3dfunc} with the \texttt{drawStyle=xyLines} option}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\begin{pspicture}(-6,-4)(6,5)
+	\psgrid
+	\psset{Alpha=45,Beta=15}
+	\psplotThreeD[%
+		plotstyle=curve,%
+		drawStyle=xLines,%
+		hiddenLine=true,%
+		yPlotpoints=50,xPlotpoints=50,%
+		linewidth=0.2pt](-4,4)(-4,4){%
+		x 3 exp x y 4 exp mul add x 5 div sub 10 mul
+           2.729 x dup mul y dup mul add neg exp mul
+           2.729 x 1.225 sub dup mul y dup mul add neg exp add}
+	\pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+\end{pspicture}
+\caption{Plot of the equation \ref{eq:3dfunc} with the \texttt{drawStyle=xLines} and
+\texttt{hiddenLine=true} option}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\begin{pspicture}(-6,-4)(6,5)
+  \psgrid
+  \psset{Alpha=45,Beta=15}
+  \psplotThreeD[%
+    plotstyle=curve,%
+    drawStyle=yLines,%
+    fillstyle=gradient,%
+    yPlotpoints=50,xPlotpoints=50,%
+    linewidth=0.2pt](-4,4)(-4,4){%
+    x 3 exp x y 4 exp mul add x 5 div sub 10 mul
+    2.729 x dup mul y dup mul add neg exp mul
+    2.729 x 1.225 sub dup mul y dup mul add neg exp add}
+  \pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+\end{pspicture}
+\caption{Plot of the equation \ref{eq:3dfunc} with the \texttt{drawStyle=yLines} and
+\texttt{hiddenLine=true} option}
+\end{figure*}
+
+
+
+\subsection{Parametric Plots}\label{subsec:parametricplotThreeD}
+Parametric plots are only possible for  drawing curves or areas.  The syntax for this plot macro is:
+\begin{verbatim}
+\parametricplotThreeD(t1,t2)(u1,u2){<three parametric functions x y z}
+\end{verbatim}
+
+The only possible variables are \verb|t| and \verb|u| with \verb|t1,t2| and  \verb|u1,u2| as the range for the parameters.  The order for the functions is not important and \verb|u| may be optional when having only a three dimensional curve and not an area.
+\begin{align}
+\begin{array}{rl}
+	x & =f(t,u)\\
+	y & =f(t,u)\\
+	z & =f(t,u)
+\end{array}
+\end{align}
+To draw a spiral we have the parametric functions:
+\begin{align}
+\begin{array}{rl}
+	x & = r \cos t\\
+	y & = r \sin t\\
+	z & = t/600
+\end{array}
+\end{align}
+
+In the example the $t$ value is divided by $600$ for the \verb|z| coordinate, because we have the values for $t$ in degrees, here with a range of $0\mbox{°}\ldots 2160\mbox{°}$. Drawing a curve in a three dimensional coordinate system does only require one parameter, which has to be by default \verb|t|. In this case we do not need all parameters, so that one can write
+
+\begin{verbatim}
+\parametricplotThreeD(t1,t2){<three parametric functions x y z}
+\end{verbatim}
+
+which is the same as \verb|(0,0)| for the parameter \verb|u|.
+
+\begin{LTXexample}[width=6.75cm]
+\begin{pspicture}(-3.25,-2.25)(3.25,5.25)\psgrid
+  \parametricplotThreeD[xPlotpoints=200,linecolor=blue,%
+    linewidth=1.5pt,plotstyle=curve](0,2160){%
+    2.5 t cos mul 2.5 t sin mul t 600 div}
+  \pstThreeDCoor[zMax=5]
+\end{pspicture}
+\end{LTXexample}
+
+
+Instead of using the \verb|\pstThreeDSphere| macro (see section \ref{sec:spheres}) it is  also possible to use parametric functions for a sphere. The macro plots continous lines only for the \verb|t| parameter, so a sphere plotted with the longitudes need the parameter equations as
+\begin{align}
+\begin{array}{l}
+x = \cos t \cdot \sin u\\
+y = \cos t \cdot \cos u\\
+z = \sin t
+\end{array}
+\end{align}
+
+The same is possible for a sphere drawn with the latitudes:
+\begin{align}
+\begin{array}{l}
+x = \cos u \cdot \sin t\\
+y = \cos u \cdot \cos t\\
+z = \sin u
+\end{array}
+\end{align}
+
+and at last both together is also not a problem when having these parametric functions together in one \verb|pspicture| environment (see figure \ref{fig:paraSpheres}). 
+
+\begin{lstlisting}
+\begin{pspicture}(-1,-1)(1,1)\psgrid
+\parametricplotThreeD[plotstyle=curve,yPlotpoints=40](0,360)(0,360){%
+  t cos u sin mul t cos u cos mul t sin
+}
+\parametricplotThreeD[plotstyle=curve,yPlotpoints=40](0,360)(0,360){%
+  u cos t sin mul  u cos t cos mul u sin
+}
+\end{pspicture}
+\end{lstlisting}
+
+
+\begin{figure}[htb]
+{\psset{xunit=1.75cm,yunit=1.75cm}
+\begin{pspicture}(-1,-1)(1,1)
+\psgrid
+\setDefaults
+%\pstThreeDCoor[xMin=-1,xMax=1,yMin=-1,yMax=1,zMin=-1,zMax=1]
+\parametricplotThreeD[plotstyle=curve](0,360)(0,360){%
+	t cos u sin mul
+	t cos u cos mul
+	t sin
+}
+\end{pspicture}\hfill%
+\begin{pspicture}(-1,-1)(1,1)
+\psgrid
+%\pstThreeDCoor[xMin=-1,xMax=1,yMin=-1,yMax=1,zMin=-1,zMax=1]
+\parametricplotThreeD[plotstyle=curve](0,360)(0,360){%
+	u cos t sin mul
+	u cos t cos mul
+	u sin
+}
+\end{pspicture}}\hfill
+{\psset{xunit=2.5cm,yunit=2.5cm}
+\begin{pspicture}(-1,-1)(1,1)
+\psgrid
+\pstThreeDCoor[xMin=-1,xMax=1,yMin=-1,yMax=1,zMin=-1,zMax=1]
+\parametricplotThreeD[plotstyle=curve](0,360)(0,360){%
+	t cos u sin mul
+	t cos u cos mul
+	t sin
+}
+\parametricplotThreeD[plotstyle=curve](0,360)(0,360){%
+	u cos t sin mul
+	u cos t cos mul
+	u sin
+}
+\end{pspicture}}
+\caption{Different Views of the same Parametric Functions}\label{fig:paraSpheres} 
+\end{figure}
+
+
+
+\section{Plotting data files}
+There are the same conventions for data files which holds 3D coordinates, than for the 2D one. For example:
+\begin{verbatim}
+ 0.0000  1.0000  0.0000
+-0.4207  0.9972  0.0191
+....
+
+0.0000, 1.0000, 0.0000
+-0.4207, 0.9972, 0.0191
+....
+
+(0.0000,1.0000,0.0000)
+(-0.4207,0.9972,0.0191)
+....
+
+{0.0000,1.0000,0.0000}
+{-0.4207,0.9972,0.0191}
+....
+\end{verbatim}
+
+There are the same three plot functions:
+\begin{verbatim}
+\fileplotThreeD[<options>]{<datafile>}
+\dataplotThreeD[<options>]{<data object>}
+\listplotThreeD[<options>]{<data object>}
+\end{verbatim}
+
+The in the following examples used data file has 446 entries like 
+
+\begin{verbatim}
+6.26093349..., 2.55876582..., 8.131984...
+\end{verbatim}
+
+This may take some time on slow machines when using the \CMD{listplotThreeD} macro. The possible options for the lines are the ones from table \ref{tab:lineOptions}. 
+
+\subsection{\textbackslash\texttt{fileplotThreeD}}
+The syntax is very easy
+
+{\footnotesize\begin{verbatim}
+\fileplotThreeD[<options>]{<datafile>}
+\end{verbatim}}
+
+If the data file is not in the same directory than the document, insert the file name with the full path. Figure \ref{fig:fileplot} shows a file plot with the option \texttt{linestyle=line}.
+
+\begin{figure}[htb]
+\begin{LTXexample}[pos=t]
+\begin{pspicture}(-6,-3)(6,10)
+  \psset{xunit=0.5cm,yunit=0.75cm,Alpha=30,Beta=30}% the global parameters
+  \pstThreeDCoor[xMin=-10,xMax=10,yMin=-10,yMax=10,zMin=-2,zMax=10]
+  \fileplotThreeD[plotstyle=line]{data3D.Roessler}
+\end{pspicture}%
+\end{LTXexample}%
+\caption{Demonstration of \texttt{\textbackslash fileplotThreeD} with \texttt{Alpha=30} and \texttt{Beta=15}}\label{fig:fileplot}
+\end{figure}
+
+
+\subsection{\textbackslash\texttt{dataplotThreeD}}
+The syntax is 
+
+\begin{verbatim}
+\dataplotThreeD[<options>]{<data object>}
+\end{verbatim}
+
+In difference to the macro \CMD{fileplotThreeD} the \CMD{dataplotThreeD} cannot plot any external data without reading this with the macro \CMD{readdata} which reads external data and save it in a macro, f.ex.: \CMD{dataThreeD}.\cite{dtk02.2:jackson.voss:plot-funktionen}
+
+\begin{verbatim}
+\readdata{<data object>}{<datafile>}
+\end{verbatim}
+
+\readdata{\dataThreeD}{data3D.Roessler}
+\begin{figure}[htb]
+\begin{LTXexample}[width=8.5cm]
+\begin{pspicture}(-4.5,-3.5)(4,11)
+  \psset{xunit=0.5cm,yunit=0.75cm,Alpha=-30}
+  \pstThreeDCoor[xMin=-10,xMax=10,yMin=-10,yMax=10,zMin=-2,zMax=10]
+  \dataplotThreeD[plotstyle=line]{\dataThreeD}
+\end{pspicture}%
+\end{LTXexample}
+\caption{Demonstration of \texttt{\textbackslash dataplotThreeD} with \texttt{Alpha=-30} and \texttt{Beta=30}}\label{fig:fileplot}
+\end{figure}
+
+
+\subsection{\textbackslash\texttt{listplotThreeD}}
+The syntax is 
+\begin{verbatim}
+\listplotThreeD[<options>]{<data object>}
+\end{verbatim}
+
+\CMD{listplotThreeD} ist similiar to \CMD{dataplotThreeD}, so it cannot plot any external data in a direct way, too. But \CMD{readdata} reads external data and saves it in a macro, f.ex.: \CMD{dataThreeD}.\cite{dtk02.2:jackson.voss:plot-funktionen} \CMD{listplot} can handle some additional PostScript code, which can be appended to the data object, f.ex.:
+
+\readdata{\data}{data3D.Roessler}
+\newcommand{\dataThreeDDraft}{%
+  \data\space
+  gsave          % save grafic status
+  /Helvetica findfont 40 scalefont setfont
+  45 rotate      % rotate 45 degrees
+  0.9 setgray    % 1 ist white
+  -60 30 moveto (DRAFT) show
+  grestore
+}
+
+\begin{lstlisting}
+\dataread{\data}{data3D.Roessler}
+\newcommand{\dataThreeDDraft}{%
+  \data\space
+  gsave          % save grafic status
+  /Helvetica findfont 40 scalefont setfont
+  45 rotate      % rotate 45 degrees
+  0.9 setgray    % 1 ist white
+  -60 30 moveto (DRAFT) show
+  grestore
+}
+\end{lstlisting}
+
+\begin{figure}[htb]
+\begin{LTXexample}[pos=t]
+\begin{pspicture}(-5,-4)(5,4)
+  \psset{xunit=0.5cm,yunit=0.5cm,Alpha=0,Beta=90}
+  \pstThreeDCoor[xMin=-10,xMax=10,yMin=-10,yMax=7.5,zMin=-2,zMax=10]
+  \listplotThreeD[plotstyle=line]{\dataThreeDDraft}
+\end{pspicture}%
+\end{LTXexample}%
+\caption{Demonstration of \texttt{\textbackslash listplotThreeD} with a view from above (\texttt{Alpha=0} and \texttt{Beta=90}) and some additional PostScript code}\label{fig:listplot}
+\end{figure}
+
+Figure \ref{fig:listplot} shows what happens with this code. For another example see \cite{dtk02.1:voss:mathematischen}, where the macro \texttt{ScalePoints} is modified. This macro is in \texttt{pst-3dplot} called \texttt{ScalePointsThreeD}.
+
+\section{Utility macros}
+
+\subsection{Rotation of three dimensional coordinates}
+
+With the three optional arguments \verb+RotX RotY RotZ+ one can rotate a three dimensional
+point. This makes only sense when one wants to save the coordinates. In general it is more
+powerful to use directly the optional parameters \verb+RotX+, \verb+RotY+, \verb+RotZ+ for
+the plot macros. However, the macro syntax is
+%
+\begin{verbatim}
+\pstRotPOintIIID[RotX=...,RotY=...,RotZ=...](<x,y,z>)<\xVal><\yVal><\zVal>
+\end{verbatim}
+
+the \verb+\xVal \yVal \zVal+ hold the new rotated coordinates and must be defined by the user like \verb+\def\xVal{}+,
+where the name of the macro is not important.
+
+The rotation angles are all predefined to $0$ degrees.
+
+\begin{center}
+\def\xVal{}\def\yVal{}\def\zVal{}
+\begin{pspicture}(-6,-4)(6,5)
+  \pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+  \multido{\iA=0+10}{36}{\pstRotPointIIID[RotX=\iA](2,0,3){\xVal}{\yVal}{\zVal}
+    \pstThreeDDot[drawCoor=true](\xVal,\yVal,\zVal)
+  }
+\end{pspicture}
+
+\begin{pspicture}(-6,-4)(6,5)
+  \pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+  \multido{\iA=0+10}{36}{\pstRotPointIIID[RotY=\iA](2,0,3){\xVal}{\yVal}{\zVal}
+    \pstThreeDDot[drawCoor=true](\xVal,\yVal,\zVal)
+  }
+\end{pspicture}
+
+\begin{pspicture}(-6,-4)(6,5)
+  \pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+  \multido{\iA=0+10}{36}{\pstRotPointIIID[RotZ=\iA](2,0,3){\xVal}{\yVal}{\zVal}
+    \pstThreeDDot[drawCoor=true](\xVal,\yVal,\zVal)
+  }
+\end{pspicture}
+\end{center}
+
+\begin{lstlisting}
+\def\xVal{}\def\yVal{}\def\zVal{}
+\begin{pspicture}(-6,-4)(6,5)
+  \pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+  \multido{\iA=0+10}{36}{\pstRotPointIIID[RotX=\iA](2,0,3){\xVal}{\yVal}{\zVal}
+    \pstThreeDDot[drawCoor=true](\xVal,\yVal,\zVal)
+  }
+\end{pspicture}
+
+\begin{pspicture}(-6,-4)(6,5)
+  \pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+  \multido{\iA=0+10}{36}{\pstRotPointIIID[RotY=\iA](2,0,3){\xVal}{\yVal}{\zVal}
+    \pstThreeDDot[drawCoor=true](\xVal,\yVal,\zVal)
+  }
+\end{pspicture}
+
+\begin{pspicture}(-6,-4)(6,5)
+  \pstThreeDCoor[xMin=-1,xMax=5,yMin=-1,yMax=5,zMin=-1,zMax=5]
+  \multido{\iA=0+10}{36}{\pstRotPointIIID[RotZ=\iA](2,0,3){\xVal}{\yVal}{\zVal}
+    \pstThreeDDot[drawCoor=true](\xVal,\yVal,\zVal)
+  }
+\end{pspicture}
+\end{lstlisting}
+
+
+\subsection{Transformation of coordinates}
+To run the macros with more than 9 parameters \verb|pst-3dplot| uses
+the syntax \verb|(#1)| for a collection of three coordinates \verb|(#1,#2,#3)|.
+To handle these triple in PostScript the following macro is used, which converts
+the parameter \verb|#1| into a sequence of the three coordinates, dived by a space.
+The syntax is:
+%
+\begin{verbatim}
+\getThreeDCoor(<vector>)<\macro>
+\end{verbatim}
+
+\verb|\macro| holds the sequence of the three coordinates \verb|x y z|, divided by a space.
+
+\subsection{Adding two vectors}
+The syntax is
+\begin{verbatim}
+\pstaddThreeDVec(<vector A>)(<vector B>)\tempa\tempb\tempc
+\end{verbatim}
+
+\verb|\tempa\tempb\tempc| must be user or system defined macros, which holds the three
+coordinates of the vector $\vec{C}=\vec{A}+\vec{B}$.
+
+\subsection{Substract two vectors}
+The syntax is
+\begin{verbatim}
+\pstsubThreeDVec(<vector A>)(<vector B>)\tempa\tempb\tempc
+\end{verbatim}
+
+\verb|\tempa\tempb\tempc| must be user or system defined macros, which holds the three
+coordinates of the vector $\vec{C}=\vec{A}-\vec{B}$.
+
+
+
+\section{PDF output}
+
+\verb|pst-3dplot| is based on the popular \verb|pstricks| package and writes pure \PS code\cite{PostScript}, so it is not possible to run \TeX{} files  with pdf\LaTeX{} when there are pstricks macros in the document. If you still need a PDF output use one of the following possibilities:
+\begin{itemize}
+\item package \verb|pdftricks.sty|\cite{pdftricks}
+\item the for Linux free available program VTeX/Lnx\footnote{\url{http://www.micropress-inc.com/linux/}}
+\item build the PDF with \verb|ps2pdf| (\verb|dvi|$\rightarrow$\verb|ps|$\rightarrow$\verb|pdf|)
+\item use the \verb|ps4pdf| package.\footnote{\url{http://www.perce.de/LaTeX/ps4pdf/}}
+\end{itemize}
+
+If you need package \verb|graphicx.sty| load it before any \verb|pstricks| package. You do not need to load \verb|pstricks.sty|, it will be done by \verb|pst-3dplot| by default.
+
+\section{FAQ}
+\begin{itemize}
+\item The labels for the axis are not right placed in the preview.
+
+Be sure that you view your output with a dvi viewer which can show PostScript code, like
+kdvi but not xdvi. It is better to run \verb|dvips| and then view the ps-file with \verb|gv|.
+\item The three axes have a wrong intersection point.
+
+Be sure that you have the ''newest`` \verb|pst-node.tex| file
+\begin{verbatim}
+\def\fileversion{97 patch 11}
+\def\filedate{2000/11/09}
+\end{verbatim}
+and the ''newest`` \verb|pst-plot.tex|
+\begin{verbatim}
+\def\fileversion{97 patch 2}
+\def\filedate{1999/12/12}
+\end{verbatim}
+
+\item Using \verb+amsmath+ and \verb+\hat+ or other accents as label for the axes gives an
+error. In this case save prevent expanding with e.g.: \verb+\psset{nameX=$\noexpand\hat{x}$}+.
+\end{itemize}
+
+
+\section{Credits}
+Bruce Burlton | Christophe Jorssen | Chris Kuklewicz | Thorsten Suhling
+
+
+\bibliographystyle{plain}
+\bibliography{pst-3dplot}
+
+\end{document}

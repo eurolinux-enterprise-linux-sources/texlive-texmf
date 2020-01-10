@@ -1,0 +1,14 @@
+Die Files mit den Grundnamen ueb3_nx mit x=a, b, ... enthalten
+Loesungsbeispiele fuer diejenigen Uebungsaufgaben, die entsprechend den
+Aufgabenstellungen aus mehreren Teilen bestehen, wobei sich die Namensangabe
+ueb3_n auf die jeweilige Gesamtaufgabe n aus Kapitel 3 des Buches bezieht.
+Diese Files k"onnen jeweils mit LaTeX bearbeitet werden und liefern deren
+eigenstaendige Loesungen.
+
+Die Files ueb3.tex und ueb3_1a.tex sind identisch und enthalten den
+Loesungsvorschlag fuer den ersten Teil der Uebung 3.1. Der Textinhalt von
+ueb3.tex koennte dazu genutzt werden, um die sich erweiternden Aufgaben
+des Kapitel 3 unter diesem File nacheinander aufzunehemen und unter diesem
+Namen einheitlich mit LaTeX zu bearbeiten, wie es bereits mit dem letzten
+Abschnitt aus readme_2 fuer das dortige Kapitel und dessen drei Aufgaben
+empfohlen wurde.

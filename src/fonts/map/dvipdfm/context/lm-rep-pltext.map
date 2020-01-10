@@ -1,0 +1,65 @@
+
+
+plb10 lm-rep-plrm lmb10
+plbx10 lm-rep-plrm lmbx10
+plbx12 lm-rep-plrm lmbx12
+plbx5 lm-rep-plrm lmbx5
+plbx6 lm-rep-plrm lmbx6
+plbx7 lm-rep-plrm lmbx7
+plbx8 lm-rep-plrm lmbx8
+plbx9 lm-rep-plrm lmbx9
+plbxsl10 lm-rep-plrm lmbxo10
+plbxti10 lm-rep-plit lmbxi10
+plcsc10 lm-rep-plsc lmcsc10
+pldunh10 lm-rep-plrm lmdunh10
+plinch lm-rep-plin lmssbx10
+plitt10 lm-rep-plitt lmtti10
+plr10 lm-rep-plrm lmr10
+plr12 lm-rep-plrm lmr12
+plr17 lm-rep-plrm lmr17
+plr5 lm-rep-plsc lmr5
+plr6 lm-rep-plrm lmr6
+plr7 lm-rep-plrm lmr7
+plr8 lm-rep-plrm lmr8
+plr9 lm-rep-plrm lmr9
+plsl10 lm-rep-plrm lmro10
+plsl12 lm-rep-plrm lmro12
+plsl8 lm-rep-plrm lmro8
+plsl9 lm-rep-plrm lmro9
+plsltt10 lm-rep-pltt lmtto10
+plss10 lm-rep-plrm lmss10
+plss12 lm-rep-plrm lmss12
+plss17 lm-rep-plrm lmss17
+plss8 lm-rep-plrm lmss8
+plss9 lm-rep-plrm lmss9
+plssbi10 lm-rep-plrm lmssbo10
+plssbx10 lm-rep-plrm lmssbx10
+plssdc10 lm-rep-plrm lmssdc10
+plssi10 lm-rep-plrm lmsso10
+plssi12 lm-rep-plrm lmsso12
+plssi17 lm-rep-plrm lmsso17
+plssi8 lm-rep-plrm lmsso8
+plssi9 lm-rep-plrm lmsso9
+plssq8 lm-rep-plrm lmssq8
+plssqi8 lm-rep-plrm lmssqo8
+pltcsc10 lm-rep-pltt lmtcsc10
+plti10 lm-rep-plit lmri10
+plti12 lm-rep-plit lmri12
+plti7 lm-rep-plit lmri7
+plti8 lm-rep-plit lmri8
+plti9 lm-rep-plit lmri9
+pltt10 lm-rep-pltt lmtt10
+pltt12 lm-rep-pltt lmtt12
+pltt8 lm-rep-pltt lmtt8
+pltt9 lm-rep-pltt lmtt9
+plu10 lm-rep-plit lmu10
+plvtt10 lm-rep-plrm lmvtt10
+% This file belongs to the Latin Modern package. The work is released under
+% the GUST Font License. See the MANIFEST.txt and README.eng files
+% for the details. For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+% Prepared by Thomas Esser and Staszek Wawrykiewicz (May 14, 2005).
+% Touched by Bogus\l{}aw Jackowski (April 13, 2006).
+% Support for PL (Polish) text fonts in Type1 format:
+% map lines which replace the new pltext.map (or parts of an old pl.map).

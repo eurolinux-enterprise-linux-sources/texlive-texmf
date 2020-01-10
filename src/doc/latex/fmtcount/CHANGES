@@ -1,0 +1,17 @@
+fmtcount package versions:
+
+Version 1.06: fixed language-related bug
+
+Version 1.05: fixed bug in \padzeroes
+
+Version 1.04: provided \FCordinal to avoid clashes with the memoir class.
+
+Version 1.03: Minor bug fixes (concerning fmtcount.cfg and the effect of \padzeroes).
+
+Version 1.02: Added multilingual support
+
+Version 1.01: Added support for LaTeX2HTML
+
+Version 1.0: separated counter related code from 
+datetime.
+

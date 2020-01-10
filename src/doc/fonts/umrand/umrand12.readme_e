@@ -1,0 +1,72 @@
+               We are finished! After a lot of trouble
+
+                              UMRAND.STY
+
+                            and the fonts
+
+                       UMRANDA.MF + UMRANDB.MF
+
+                             version 1.2
+
+are ready for use! This is the first officially distributed version.
+With UMRAND.STY you can typeset fancy frames in TeX. This can by done
+with \fbox too? Well no one of this type:
+
+                    *+++*+++*+++*+++*+++*+++*+++*
+                    +                           +
+                    +      TeX & METAFONT       +
+                    *            for            *
+                    +         President!        +
+                    +                           +
+                    *+++*+++*+++*+++*+++*+++*+++*
+
+Instead of + and * there are line elements, meander, fishes, snakes,
+flowers, curls and many others in our fonts. The framesize is
+automatically computed in respect of the frame's contents. Many
+combinations of frame elements are possible.
+
+One restriction we had to made: The fonts only work on devices with
+equal x- and y-resolution. With 180x360dpi you will run into
+problems. A little comfort: You should try. You may be able to use
+some of the chars in our fonts. We don't know, whether that will
+change in the future.
+
+PS: Here you see, what we are doing at our ``table reserved for
+    regular guests'' (Langenscheid dictionary, "`Stammtisch"' in
+    German) in Wuppertal, Germany.
+
+We, that are in this case:
+
+      Andreas H"orstemeier                 Andreas Schrell
+      Oberlinweg 7              and        Windh"ovel 2
+      D-58675 Hemer                        D-42279 Wuppertal
+
+           E-MAIL: Andreas.Schrell @ FernUni-Hagen.de
+
+Oh yes, you will find the files named
+
+      umrand12.zip       umrand12.readme_g       umrand12.readme_e
+
+in Stuttgart:       ftp.uni-stuttgart.de
+in Aston:           ftp.tex.ac.uk
+in Texas:           ftp.shsu.edu
+in the directory:   tex-archive/macros/generic/umrand
+
+Included are PK-fonts at 101 dpi (screen)
+                         300 dpi (Atari-laser SLM)
+                         300 dpi (HP-Laser/DeskJet).
+
+We hope other Servers will obtain it from there. The package may be
+freely distributed, as always you are not allowed to change the
+files. Bug reports and further hints please to one of the adresses
+above.
+
+        oooooooooooooooooooooooooooooooooooooooooooooooooooo
+        o                                                  o
+        o  Especially we will be happy if all TeXnicians,  o
+        o  who like our fonts and use them, would send us  o
+        o  a POSTCARD of their home town!                  o
+        o                                                  o
+        oooooooooooooooooooooooooooooooooooooooooooooooooooo
+
+A lot of fun and best wishes from Andreas & Andreas

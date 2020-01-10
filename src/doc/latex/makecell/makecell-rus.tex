@@ -1,0 +1,716 @@
+% \iffalse
+%
+%    makecell.dtx - tabular column heads and multilined cells.
+%    Russian documentation.
+%    (c) 2005--2006 Olga Lapko (Lapko.O@g23.relcom.ru)
+%
+%    This program is provided under the terms of the
+%    LaTeX Project Public License distributed from CTAN
+%    archives in directory macros/latex/base/lppl.txt.
+%
+%<*driver>
+\ProvidesFile{makecell-rus.tex}
+\documentclass{ltxdoc}
+
+\usepackage{mathtext}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,russian]{babel}
+
+\usepackage{makecell}
+\IfFileExists{rotating.sty}{\usepackage{rotating}}{}
+\IfFileExists{footmisc.sty}{\usepackage[perpage]{footmisc}}{}
+\IfFileExists{multirow.sty}{\usepackage{multirow}}{}
+\IfFileExists{hyperref.sty}{\usepackage[unicode]{hyperref}}{}
+\IfFileExists{hypcap.sty}{\usepackage{hypcap}}{}
+\IfFileExists{caption.sty}
+  {\usepackage[font=small,labelfont=bf,labelsep=period]{caption}[2004/11/28]
+  \IfFileExists{floatrow.sty}
+  {\usepackage[font=small,style=plaintop,captionskip=5pt]{floatrow}}
+  {}}{}
+\makeatletter
+\@ifundefined{ttabbox}{\let\ttabbox\relax}{}
+\makeatother
+\usepackage{tabularx}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\makeatletter
+\@beginparpenalty10000
+\widowpenalty10000
+\clubpenalty10000
+\makeatother
+\providecommand*{\file}[1]{\texttt{#1}}
+\providecommand*{\pkg}[1]{\textsf{#1}}
+\providecommand*{\cls}[1]{\textsf{#1}}
+\providecommand*{\env}[1]{\texttt{#1}}
+\begin{document}
+  \DocInput{makecell-rus.tex}
+  \PrintChanges
+\end{document}
+%</driver>
+% \fi
+%
+% \GetFileInfo{makecell-rus.tex}
+%
+% \title{Пакет \textsf{makecell}}
+%   \author{%
+%   Ольга Лапко\\
+%   {\tt Lapko.O@g23.relcom.ru} }
+%   \date{2006/06/28}
+%   \maketitle
+%   \begin{abstract}
+%   Данный пакет помогает создать единое оформление для таблиц во всём
+%   документе. Команда |\thead|, использующая окружение одноколоночной
+%   таблицы, позволяет создать единообразное оформление для заголовков
+%   табличных колонок в документе. Ещё одна команда, |\makecell|,
+%   предлагается для создания многострочных ячеек в таблицах.
+%
+%   Также предлагается: \quad 1)\nobreak\enskip макрокоманда |\makegapedcells|,
+%   которая изменяет вертикальные отбивки вокруг табличных ячеек, аналогично
+%   пакету \pkg{tabls}, но использует пакет \pkg{array}. (Макрокоманда
+%   |\makegapedcells| переопределяет макрокоманду |\@classz| этого пакета.
+%   Макрокоманда |\nomakegapedcells| отменяет переопределение.); \quad
+%   2)\nobreak\enskip макрокоманды |\multirowhead|  и |\multirowcell|,
+%   использующие макрокоманду |\multirow| из пакета \pkg{multirow}.%
+%  \smallskip
+%
+%   \end{abstract}
+%
+% \section{Табличные ячейки и заголовки колонок}
+%
+% \subsection{Основные команды}
+%
+% \DescribeMacro{\makecell}
+% Макрокоманда создаёт окружение одноколоночной таблицы с предопределёнными общими
+% параметрами выключки, интерлиньяжа и вертикальных отбивок вокруг
+% (см. разд.~\ref{sec:sets}). Её удобно использовать для
+% многострочных ячеек. Дополнительный аргумент команды позволяет
+% изменить выключку таблицы.
+% \begin{quote}
+% |\makecell|\oarg{vertical or/and horizontal alignment}\marg{cell text}
+% \end{quote}
+% Для вертикальной выключки используются обозначения \texttt{t}, \texttt{b},
+% или \texttt{c} "--- эти буквы используются в дополнительном аргументе окружений
+% \env{tabular} или \texttt{array}. Для горизонтальной выключки вы можете
+% использовать обозначения \texttt{r}, \texttt{l}, или \texttt{c}, или более
+% сложные: |{p{3cm}}|. Поскольку данный пакет загружает пакет \pkg{array}, вы
+% можете использовать и такие определения выключки: |{>{\parindent1cm}p{3cm}}|.
+%\begin{verbatim}
+%\begin{tabular}{|c|c|}
+%\hline
+%Cell text & 28--31\\
+%\hline
+%\makecell{Multilined \\ cell text} & 28--31\\
+%\hline
+%\makecell[l]{Left aligned \\ cell text} & 37--43\\
+%\hline
+%\makecell*[r]{Right aligned \\ cell text} & 37--43\\
+%\hline
+%\makecell[b]{Bottom aligned \\ cell text} & 52--58\\
+%\hline
+%\makecell*[{{p{3cm}}}]{Cell long text with predefined width} & 52--58\\
+%\hline
+%\makecell[{{>{\parindent1em}p{3cm}}}]{Cell long...} & 52--58\\
+%\hline
+%\end{tabular}
+%\end{verbatim}
+% \begin{table}[h]
+% \ttabbox
+% {\caption{Пример многострочных ячеек}\label{tab:cells}}%
+% {\begin{tabular}{|c|c|}
+% \hline
+% Cell text & 28--31\\
+% \hline
+% \makecell{Multilined \\ cell text} & 28--31\\
+% \hline
+% \makecell[l]{Left aligned \\ cell text} & 37--43\\
+% \hline
+% \makecell*[r]{Right aligned \\ cell text} & 37--43\\
+% \hline
+% \makecell[b]{Bottom aligned \\ cell text} & 52--58\\
+% \hline
+% \makecell*[{{p{3cm}}}]{Cell long text with predefined width} & 52--58\\
+% \hline
+% \makecell[{{>{\parindent1em}p{3cm}}}]{Cell long text with predefined width} &
+%   52--58\\
+% \hline
+% \end{tabular}}
+% \end{table}
+%
+% |*|-форма команды, |\makecell*|, создаёт вертикальные отбивки равные |\jot|.
+%
+% \emph{Замечание}. При определении выключки колонки типа |{p{3cm}}| в
+% дополнительном аргументе, нужно соблюдать следующие правила:
+% \quad 1)\nobreak\enskip если есть
+% обозначение вертикальной выключки, взять выключку колонки в группу:
+% |[c{p{3cm}}]|; \quad
+% 2)\nobreak\enskip если его нет, взять выключку
+% колонки в двойную группу "--- |[{{p{3cm}}}]| или добавить пустую группу
+% "--- |[{}{p{3cm}}]|.
+% Будьте внимательны с вертикальной выключкой ячейки при задании выключки
+% колонки в виде абзаца:
+% например, нужно использовать |{b{3cm}}| для выключки по нижней линии
+% (и |{m{3cm}}| для выключки по средней линии).
+%
+% \DescribeMacro{\thead}
+% Макрокоманда создаёт окружение одноколоночной таблицы для заголовков колонок
+% с предопределёнными
+% общими параметрами выключки и интерлиньяжа (см.~табл.~\ref{tab:thead}).
+% Эта макрокоманда использует общие установки для заголовков колонок: шрифт,
+% выключку, интерлиньяж, вертикальные отбивки вокруг (см. разд.~\ref{sec:tsets}).
+%\begin{verbatim}
+%\renewcommand\theadset{\def\arraystretch{.85}}%
+%\begin{tabular}{|l|c|}
+%\hline
+%\thead{First column head}&
+%  \thead{Second \\multlined \\ column head}\\
+%\hline
+%Left column text & 28--31\\
+%\hline
+%\end{tabular}
+%\end{verbatim}
+% \begin{table}[h]
+% \ttabbox
+% {\caption{Пример заголовков колонок}\label{tab:thead}}
+% {\renewcommand\theadset{\def\arraystretch{.85}}
+% \begin{tabular}{|l|c|}
+% \hline
+% \thead{First column head}&
+%   \thead{Second \\multlined \\ column head}\\
+% \hline
+% Long left column text & 28--31\\
+% \hline
+% \end{tabular}}
+% \end{table}
+%
+% |*|-форма команды, |\thead*|, создаёт вертикальные отбивки равные|\jot|.
+%
+% \DescribeMacro{\rothead}
+% Создаёт заголовки колонок, развёрнутые на 90$^\circ$ против часовой стрелки.
+% Макрокоманда использует те же установки шрифта и интерлиньяжа как и предыдущая,
+% но выключка колонки изменена на |p{\rotheadsize}| с выравниванием вправо
+% (|\raggedright|): в результате левый край строк заголовка оказывается
+% на одной базовой линии.
+%
+% \DescribeMacro{\rotheadsize}
+% Данный параметр определяет ширину колонки для развёрнутых вертикально заголовков.
+% Его можно определить как:
+% \begin{quote}
+% |\setlength\rotheadsize{3cm}|
+% \end{quote}
+% или
+% \begin{quote}
+% |\settowidth\rotheadsize{\theadfont |\meta{Widest head text}|}|
+% \end{quote}
+% как сделано в следующем примере (табл.~\ref{tab:rotheads}):
+% \begin{table}[b]
+% \ttabbox
+% {\caption{Пример заголовков колонок, развёрнутых вертикально}\label{tab:rotheads}}%
+% {\settowidth\rotheadsize{\theadfont Second multilined}%^^A
+% \begin{tabular}{l|l}
+% \hline
+% \thead{First column head}&
+%   \rothead{Second multilined \\ column head}\\
+% \hline
+% Long left column text & 28--31\\
+% \hline
+% \end{tabular}}
+% \end{table}%
+%\begin{verbatim}
+%\settowidth\rotheadsize{\theadfont Second multilined}
+%\begin{tabular}{|l|c|}
+%\hline
+%\thead{First column head}&
+%  \rotthead{Second multilined \\ column head}\\
+%\hline
+%Left column text & 28--31\\
+%\hline
+%\end{tabular}
+%\end{verbatim}
+%
+% \subsection{Установки для табличных ячеек}\label{sec:sets}
+%
+% В данном разделе приведены команды, которые задают оформление
+% многострочных ячеек, заданных командой |\makecell|.
+% Команда |\cellset| используется также командой |\thead|.
+%
+% \DescribeMacro{\cellset}
+% Установки интерлиньяжа для табличных ячеек. Здесь можно использовать следующие
+% команды:
+% \begin{quote}
+% |\renewcommand\cellset{\renewcommand\arraytretch{1}%|\\
+% |    \setlength\extrarowheight{0pt}}|
+% \end{quote}
+% как определено в данном пакете.
+% Данные установки используются как командой |\makecell| так и командой |\thead|
+% (|\rothead|).
+%
+% \DescribeMacro{\cellalign}
+% Выключка по умолчанию для табличных ячеек. Пакет предлагает вертикальную и
+% горизонтальную выключку по центру, определённую следующим образом:
+% \begin{quote}
+% |\renewcommand\cellalign{cc}|
+% \end{quote}
+%
+% \DescribeMacro{\cellgape}
+% Определяет вертикальные отбивки вокруг ячейки (|\makecell|), используя,
+% если нужно, команду |\gape|. Она определена как:
+% \begin{quote}
+% |\renewcommand\cellgape{}|
+% \end{quote}
+% Можно определить макрокоманду как
+% \begin{quote}
+% |\renewcommand\cellgape{\Gape[1pt]}|
+% \end{quote}
+% или
+% \begin{quote}
+% |\renewcommand\cellgape{\gape[t]}|
+% \end{quote}
+% (См. также разд.~\ref{sec:gape} о команде |\gape|.)
+%
+% \DescribeMacro{\cellrotangle}
+% Угол поворота для развёрнутых ячеек и заголовков колонок.
+% По умолчанию задан угол 90 (против часовой стрелки).
+%
+% \subsection{Установки для заголовков колонок}\label{sec:tsets}
+%
+% В данном разделе приведены команды, которые позволяют настроить оформление заголовков
+% табличных колонок, заданных командой |\thead| (|\rothead|).
+%
+% \DescribeMacro{\theadfont}
+% Задаёт шрифт для заголовков колонок. Может быть задан меньший кегель
+% \begin{quote}
+% |\renewcommand\theadfont{\foonotesize}|
+% \end{quote}
+% как определено в данном пакете (здесь учитывается, что задана
+% команда \verb|\small| для шрифта самой таблицы).
+% Следующий пример задаёт курсивное начертание
+% \begin{quote}
+% |\renewcommand\theadfont{\itshape}|
+% \end{quote}
+%
+% \DescribeMacro{\theadset}
+% Установки интерлиньяжа для заголовков колонок. Здесь можно использовать следующие
+% команды:
+% \begin{quote}
+% |\renewcommand\theadset{\renewcommand\arraytretch{1}%|\\
+% |    \setlength\extrarowheight{0pt}}|
+% \end{quote}
+%
+% \DescribeMacro{\theadalign}
+% Выключка по умолчанию для заголовков колонок. Здесь также задана выключка по центру:
+% \begin{quote}
+% |\renewcommand\theadalign{cc}|
+% \end{quote}
+%
+% \DescribeMacro{\theadgape}
+% Определяет вертикальные отбивки вокруг заголовка колонки (|\makecell|), используя,
+% если нужно, команду |\gape|. Определена как:
+% \begin{quote}
+% |\renewcommand\theadgape{\gape}|
+% \end{quote}
+%
+% \DescribeMacro{\rotheadgape}
+% То же самое для вертикальных заголовков. По умолчанию отсутствует:
+% \begin{quote}
+% |\renewcommand\rotheadgape{}|
+% \end{quote}
+%
+% \section{Изменение высоты и глубины боксов}\label{sec:gape}
+%
+% Иногда заголовки табличных колонок, табличные ячейки или элементы текста требуют
+% коррекции высоты/глубины. Макрокоманда |\raisebox| может помочь,
+% но использование её в подобных ситуациях, особенно в математике, довольно громоздко.
+% Данный пакет предлагает макрокоманду |\gape|, которая используется аналогично
+% команде |\smash|. Макрокоманда |\gape| позволяет изменить высоту и/или глубину бокса
+% на необходимую величину.
+%
+% \DescribeMacro{\gape}
+% Первая макрокоманда изменяет бокс на величину |\jot| (обычно 3\,pt). Она задаётся
+% дополнительным и обязательным аргументами, как и команда |\smash|,
+% (пере)определённая пакетом \pkg{amsmath}. Дополнительный аргумент задаёт
+% изменение только высоты (\texttt{t}) или только глубины
+% (\texttt{b}). Обязательный включает собственно текст.
+%   \begin{quote}
+%   |\gape|\oarg{\texttt{t} or \texttt{b}}\marg{text}
+%   \end{quote}
+% Примеры использования:
+% \begin{quote}
+% \noindent
+% \vbox{\halign{#\cr
+% \noalign{\hrule}
+% \gape{\cmd{\gape}\texttt{\{text\}}}\cr
+% \noalign{\hrule}
+% \crcr}}\qquad
+% \vbox{\halign{#\cr
+% \noalign{\hrule}
+% \gape[t]{\cmd{\gape}\texttt{[t]\{text\}}}\cr
+% \noalign{\hrule\vskip\jot}
+% \crcr}}\qquad
+% \vbox{\halign{#\cr
+% \noalign{\hrule}
+% \gape[b]{\cmd{\gape}\texttt{[b]\{text\}}}\cr
+% \noalign{\hrule}
+% \crcr}}
+% \end{quote}
+%
+% \DescribeMacro{\Gape}
+% Другой вариант изменения высоты/глубины. Данная макрокоманда позволяет сделать
+% корректировку отдельно для высоты и глубины бокса:
+%   \begin{quote}
+%   |\Gape|\oarg{height corr}\oarg{depth corr}\marg{text}
+%   \end{quote}
+%
+% Если отсутствуют оба необязательных аргумента, команда |\Gape| работает аналогично
+% |\gape|\marg{text}, другими словами, использует для корректировки высоты и глубины
+% величину |\jot|.
+%
+% Если присутствует только один необязательный аргумент, команда |\Gape| использует
+% его значение для корректировки высоты и глубины бокса.
+% \begin{quote}
+% \noindent
+% \vbox{\halign{#\cr
+% \noalign{\hrule}
+% \Gape{\cmd{\Gape}\texttt{\{text\}}}\cr
+% \noalign{\hrule}
+% \crcr}}\texttt{\phantom{xxxxx}}\qquad
+% \vbox{\halign{#\cr
+% \noalign{\hrule}
+% \Gape[\jot]{\cmd{\Gape}\texttt{[\cmd{\jot}]\{text\}}}\cr
+% \noalign{\hrule}
+% \crcr}}\\[2ex]
+% \vbox{\halign{#\cr
+% \noalign{\hrule}
+% \Gape[6pt]{\cmd{\Gape}\texttt{[6pt]\{text\}}}\cr
+% \noalign{\hrule}
+% \crcr}}\qquad
+% \vbox{\halign{#\cr
+% \noalign{\hrule}
+% \Gape[6pt][-2pt]{\cmd{\Gape}\texttt{[6pt][-2pt]\{text\}}}\cr
+% \noalign{\hrule\vskip8pt}
+% \crcr}}
+% \end{quote}
+%
+% \DescribeMacro{\bottopstrut}
+% \DescribeMacro{\topstrut}
+% \DescribeMacro{\botstrut}
+%  Эти три команды изменяют стандартную команду |\strut| на величину |\jot|:
+%     |\bottopstrut| изменяет и высоту и глубину;
+%     |\topstrut| изменяет только высоту;
+%     |\botstrut| изменяет только глубину.
+%  Эти команды можно использовать, например, в первом и последнем рядах таблицы.
+%
+%  \emph{Замечание}. Если
+%  вы используете пакет \pkg{bigstrut}, обратите внимание, что эти три команды
+%  дублируют \cmd{\bigstrut}, \cmd{\bigstrut[t]}, и \cmd{\bigstrut[b]} соответственно.
+%  Обратите также внимание что величина, изменяющая \cmd{\strut} в команде
+%  \cmd{\topstrut} и других равна \cmd{\jot}, а команда
+%  \cmd{\bigstrut} и использует специальную величину \cmd{\bigstrutjot}.
+%
+% \section{Как изменить вертикальные отбивки во всей таблице}\label{sec:beta}
+%
+% Данный раздел описывает макрокоманды, которые пытаются эмулировать
+% одну из возможностей пакета \pkg{tabls}:
+% создание необходимых отбивок вокруг ячеек таблицы.
+%
+% \DescribeMacro{\setcellgapes}
+% Определяет параметры для вертикальных отбивок. Команда похожа на команду |\gape*|
+% без аргумента \marg{text}:
+% \begin{quote}
+% |\setcellgapes|\oarg{\texttt{t} or \texttt{b}}\marg{value}
+% \end{quote}
+% Примеры таблиц, приведённые ниже используют следующие установки:
+% \begin{quote}
+% |\setcellgapes{5pt}|
+% \end{quote}
+% Вы можете также ввести отрицательные значения. Данную макрокоманду можно поместить
+% в преамбуле документа как общие установки.
+%
+% \DescribeMacro{\makegapedcells}
+% \DescribeMacro{\nomakegapedcells}
+% Первая макрокоманда включает создание вертикальных отбивок. Вторая отменяет первую.
+%
+% Макрокоманда \cmd{\makegapedcells} временно переопределяет макрокоманду
+% |\@classz| из пакета \pkg{array}, поэтому используйте её осто\-рожно.
+% Вводите команду |\makegapedcells| внутри группы или внутри окружения
+% (см.~табл.~\ref{tab:gaped}):
+%\begin{verbatim}
+%\begin{table}[h]
+%\makegapedcells
+%...
+%\end{table}
+%\end{verbatim}
+% \setcellgapes{5pt}
+% \begin{table}
+% \makegapedcells
+% \ttabbox
+% {\caption{Пример многострочных ячеек с дополнительными вертикальными отбивками}%^^A
+%  \label{tab:gaped}}%
+% {\begin{tabular}{|c|c|}
+% \hline
+% Cell text & 28--31\\
+% \hline
+% \makecell{Multilined \\ cell text} & 28--31\\
+% \hline
+% \makecell[l]{Left aligned \\ cell text} & 37--43\\
+% \hline
+% \makecell*[r]{Right aligned \\ cell text} & 37--43\\
+% \hline
+% \makecell[b]{Bottom aligned \\ cell text} & 52--58\\
+% \hline
+% \makecell*[{{p{3cm}}}]{Cell long text with predefined width} & 52--58\\
+% \hline
+% \makecell[{{>{\parindent1em}p{3cm}}}]{Cell long text with predefined width} &
+%  52--58\\
+% \hline
+% \end{tabular}}
+% \end{table}
+%
+% Обратите внимание, что отбивка заданная в |\setcellgapes| и отбивки, которые
+% создаёт макрокоманда |\gape| (|\Gape|) в командах ячеек (обычно в |\thead|
+% или в |\makecell*|) суммируются.
+%
+% \section{Заголовки колонок и ячейки, занимающие несколько рядов}
+%
+% Следующие примеры показывают использование макрокоманд, использующих команду
+% |\multirow| из пакета \pkg{multirow}.\nopagebreak
+%
+% В начале краткое повторение значений аргументов макрокоманды |\multirow|:
+% \begin{quote}
+% |\multirow|\marg{nrow}\oarg{njot}\marg{width}\oarg{vmove}\marg{contents}
+% \end{quote}
+% \marg{nrow} задаёт число рядов (то есть строк текста);
+% \oarg{njot} обычно используется если вы используете пакет \pkg{bigstrut}: делает
+%       дополнительную настройку вертикального положения (см. пояснения в пакете
+%       \pkg{mutirow});
+% \marg{width} определяет ширину включённого текста, знак |*| используется
+%       для указания, что используется натуральная ширина включённого текста;
+% \oarg{vmove} величина, используемая для тонкой настройки: текст может быть
+%       поднят (или опущен, если \meta{vmove} отрицательна) на эту величину;
+% \marg{contents} <<многорядный>> текст.\smallskip\pagebreak[3]
+%
+% \DescribeMacro{\multirowcell}
+% \DescribeMacro{\multirowthead}
+% Эти две команды используют следующие аргументы (пример использует команду
+% |\multirowcell|):
+% \begin{quote}
+% |\multirowcell|\marg{nrow}\oarg{vmove}\oarg{v or/and h alignment}\marg{contents}
+% \end{quote}
+% в этих макрокомандах опущены аргументы \oarg{njot} и \marg{width}.
+% Вместо дополнительного аргумента \oarg{njot} для вертикальной настройки
+% используется дополнительный аргумент \oarg{vmove}.
+% В качестве аргумента \marg{width} макрокоманды |\multirowcell| и |\multirowthead|
+% используют натуральную величину включённого текста (то есть используется
+% аргумент |*|).
+%
+% Первый пример (табл.~\ref{tab:mrowI}) с <<многорядными>> заголовками
+% табличных колонок и ячейками:
+%\begin{verbatim}
+%\renewcommand\theadset{\def\arraystretch{.85}}%
+%\begin{tabular}{|l|c|c|}
+% \multirowthead{4}{First ...}&
+% \multicolumn{2}{c|}{\thead{Multicolumn head}}\\
+% \cline{2-3}
+%   & \thead{Second ...} & \thead{Third ...}\\
+% \hline
+% Cell text & A &\multirowcell{3}{28--31}\\
+% \cline{1-2}
+% \makecell{Multilined\\Cell text} & B& \\
+% \hline
+% \makecell[l]{Left ...} & C & \multirowcell{4}[1ex][l]{37--43}\\
+% \cline{1-2}
+% \makecell[r]{Right ...} & D & \\
+% \hline
+% \makecell[b]{Bottom ...} & E & \multirowcell{5}[1ex][r]{37--43\\52--58}\\
+% \cline{1-2}
+% \makecell[{{p{5cm}}}]{Cell ...} & F & \\
+% \cline{1-2}
+% \makecell[{{>{\parindent1em}p{5cm}}}]{Cell ...} & G & \\
+% \hline
+% \end{tabular}
+%\end{verbatim}
+%
+% \begin{table}
+%\renewcommand\theadset{\def\arraystretch{.85}}%
+% \ttabbox
+% {\caption{Пример <<многорядных>> ячеек}\label{tab:mrowI}}%
+% {\begin{tabular}{|l|c|c|}
+% \hline
+% \multirowthead{4}{First Column head}&
+% \multicolumn{2}{c|}{\thead{Multicolumn head}}\\
+% \cline{2-3}
+%  & \thead{Second \\multlined \\ column head} &
+%   \thead{Third \\ column head}\\
+% \hline
+% Cell text & A &\multirowcell{3}{28--31}\\
+% \cline{1-2}
+% \makecell{Multilined\\Cell text} & B& \\
+% \hline
+% \makecell[l]{Left aligned\\ cell text} & C & \multirowcell{4}[1ex][l]{37--43}\\
+% \cline{1-2}
+% \makecell[r]{Right aligned\\ cell text} & D & \\
+% \hline
+% \makecell[b]{Bottom aligned\\ cell text} & E &
+%  \multirowcell{5}[1ex][r]{37--43\\52--58}\\
+% \cline{1-2}
+% \makecell[{{p{5cm}}}]{Cell long long long long text with predefined width} & F & \\
+% \cline{1-2}
+% \makecell[{{>{\parindent1em}p{5cm}}}]{Cell long long long long text with
+%   predefined width} & G & \\
+% \hline
+% \end{tabular}}
+% \end{table}
+%
+% Второй пример (табл.~\ref{tab:mrowII}) с <<многорядными>> заголовками колонок
+% и ячейками использует команду |\makegapedcells|. Команда |\theadgape| ничего
+% не делает:
+%\begin{verbatim}
+%\makegapedcells
+%\renewcommand\theadset{\def\arraystretch{.85}}%
+%\renewcommand\theadgape{}
+%...
+%\end{verbatim}
+% \begin{table}\makegapedcells
+%\renewcommand\theadset{\def\arraystretch{.85}}%
+%\renewcommand\theadgape{}
+% \ttabbox
+% {\caption{Пример <<многорядных>> ячеек с дополнительными вертикальными
+%    отбивками}\label{tab:mrowII}}%
+% {\begin{tabular}{|l|c|c|}
+% \hline
+% \multirowthead{4}{First Column head}&
+% \multicolumn{2}{c|}{\thead{Multicolumn head}}\\
+% \cline{2-3}
+%  & \thead{Second \\multlined \\ column head} &
+%   \thead{Third \\ column head}\\
+% \hline
+% Cell text & A &\multirowcell{4}{28--31}\\
+% \cline{1-2}
+% \makecell{Multilined \\Cell text} & B& \\
+% \hline
+% \makecell[l]{Left aligned \\ cell text} & C & \multirowcell{4}[0ex][l]{37--43}\\
+% \cline{1-2}
+% \makecell[r]{Right aligned \\ cell text} & D & \\
+% \hline
+% \makecell[b]{Bottom aligned \\ cell text} & E &
+%   \multirowcell{6}[0ex][r]{37--43\\52--58}\\
+% \cline{1-2}
+% \makecell[{{p{5cm}}}]{Cell long long long long text with predefined width} & F & \\
+% \cline{1-2}
+% \makecell[{{>{\parindent1em}p{5cm}}}]{Cell long long long long text
+%   with predefined width} & G & \\
+% \hline
+% \end{tabular}}
+% \end{table}
+% \bigskip
+%
+% Последний пример (табл.~\ref{tab:mrowIII}) использует окружение \env{tabularx}
+% со значением |\hsize| в аргументе ширины таблицы.
+%\begin{verbatim}
+%\makegapedcells
+%\renewcommand\theadset{\def\arraystretch{.85}}%
+%\renewcommand\theadgape{}
+%\begin{tabularx}\hsize{|X|c|c|}
+%...
+%\cline{1-2}
+%\makecell[{{p{\hsize}}}]{Cell ...} & F & \\
+%\cline{1-2}
+%\makecell[{{>{\parindent1em}p{\hsize}}}]{Cell ...} & G & \\
+%\hline
+%\end{tabularx}
+%\end{verbatim}
+% Как можно видеть, ячейки |\makecells| в последних двух рядах определены как
+% \begin{quote}
+% |\makecell[{{p{\hsize}}}]{...}|
+% \end{quote}
+% и
+% \begin{quote}
+% |\makecell[{{>{\parindent1em}p{\hsize}}}]{...}|
+% \end{quote}
+% соответственно.
+% \begin{table}\makegapedcells
+%\renewcommand\theadset{\def\arraystretch{.85}}%
+%\renewcommand\theadfont{\footnotesize}%
+%\renewcommand\theadgape{}
+% \ttabbox
+% {\caption{Пример окружения \env{tabularx}}\label{tab:mrowIII}}%
+% {\begin{tabularx}\hsize{|X|c|c|}
+% \hline
+% \multirowthead{4}{First Column head}&
+% \multicolumn{2}{c|}{\thead{Multicolumn head}}\\
+% \cline{2-3}
+%  & \thead{Second \\multlined \\ column head} &
+%   \thead{Third \\ column head}\\
+% \hline
+% Cell text & A &\multirowcell{4}{28--31}\\
+% \cline{1-2}
+% \makecell{Multilined \\Cell text} & B& \\
+% \hline
+% \makecell[l]{Left aligned \\ cell text} & C & \multirowcell{4}[0ex][l]{37--43}\\
+% \cline{1-2}
+% \makecell[r]{Right aligned \\ cell text} & D & \\
+% \hline
+% \makecell[b]{Bottom aligned \\ cell text} & E &
+%    \multirowcell{6}[0ex][r]{37--43\\52--58}\\
+% \cline{1-2}
+% \makecell[{{p{\hsize}}}]{Cell long long long long long long text with
+%    predefined width} & F & \\
+% \cline{1-2}
+% \makecell[{{>{\parindent1em}p{\hsize}}}]{Cell long long long long
+%    long long text with predefined width} & G & \\
+% \hline
+% \end{tabularx}}
+% \end{table}
+%
+% \subsection{Ячейки на несколько рядов: второй вариант}
+%
+% Второй, упрощённый, вариант задания ячейки на несколько рядов: \cdash---
+% использовать команды |\makecell| и |\thead|, а в конце аргумента задать |\\|
+% с отрицательной отбивкой, например
+%\begin{quote}
+% |\thead{First Column head\\[-5ex]}|
+%\end{quote}
+% при этом у ячеек в одном <<многоярусном>> ряду, сколько бы строк они ни имели бы,
+% отрицательная отбивка будет всегда одинаковая.
+%
+% \section{Нумерованные ряды ячеек в таблицах}
+%
+% Команды |\eline|, |\nline|, |\rnline| позволяют пропустить несколько ячеек:
+% \begin{quote}
+% |\eline|\marg{number of cells}
+% \end{quote}
+% и пронумеровать (|\nline|) несколько или все ячейки в ряду:
+% \begin{quote}
+% |\nline|\oarg{numbering type}\oarg{start number}\marg{number of cells}
+% \end{quote}
+% Команда |\rnline| работает так же как |\nline|, но вместо нумерации
+% латинскими буквами задаётся нумерация русскими (переопределяются счётчики
+% \LaTeX'а |\Alph| а |\alph| на |\Asbuk| и |\asbuk| соответственно).
+% (см.~табл.~\ref{tab:elines})
+%\begin{verbatim}
+%   \begin{tabular}{|*{12}{c|}}
+%   \hline
+%   \eline{6}                   \\ \hline
+%   \nline{6}                   \\ \hline
+%   \eline{3} & \nline[1][4]{3} \\ \hline
+%   \rnline[(a)]{6}             \\ \hline
+%   \nline[column I]{6}         \\ \hline
+%   \end{tabular}
+%\end{verbatim}
+%
+% \begin{table}
+% \ttabbox
+% {\caption{Примеры заполнения ячеек}\label{tab:elines}}%
+%   {\begin{tabular}{|*{12}{c|}}
+%   \hline
+%   \eline{6}                   \\ \hline
+%   \nline{6}                   \\ \hline
+%   \eline{3} & \nline[1][4]{3} \\ \hline
+%   \rnline[(a)]{6}             \\ \hline
+%   \nline[column I]{6}         \\ \hline
+%   \end{tabular}}
+%\end{table}
+%
+% \Finale
+\endinput

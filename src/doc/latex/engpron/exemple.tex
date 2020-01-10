@@ -1,0 +1,131 @@
+\documentclass[a4paper]{article}
+\usepackage{array,xspace}
+\usepackage[latin1]{inputenc}
+\usepackage[tame]{engpron}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english, frenchb]{babel}
+\setlength{\parindent}{0pt}
+\begin{document}
+
+\begin{center}
+  \LARGE Utilisation du module \texttt{engpron}
+\end{center}
+
+Voici quelques exemples d'utilisation des macros avec \texttt{\£}. Le
+module \verb+engpron+ est chargé avec les options \texttt{jones} et
+\texttt{monstress}  ---~options par défaut~--- et l'option explicite
+\texttt{tame} qui remplace l'option par défaut \texttt{wild}.
+
+\paragraph{Macro \texttt{\£X}} Cette macro \emph{doit} être suivie d'une
+lettre seule. Elle note les sons optionnels à la manière de
+Jones~\cite{jones15}.  
+
+On aura par exemple
+\verb!\PRON{!\texttt{\£e\£h\£Xt\£s\£U.li.\£en}\verb!}! 
+qui donnera \PRON{£e£h£Xt£s£U.li.£en}.  
+
+Suivie de la lettre \og e \fg elle donne \Pron{£Xe}
+(\verb+\Pron{£Xe}+) comme dans \PRON{£B£af.ek£Ht£q.£s£Xen} qui 
+s'obtient avec \verb+\PRON{£B£af.ek£Ht£q.£s£Xen}+.
+
+\paragraph{Macros \texttt{\£M} et \texttt{\£m}} Elles permettent
+d'obtenir les voyelles nasalisés, à la mode française pour la 1\iere
+et à la mode anglaise pour la 2\up{de}. Se reporter à la 2\ieme
+table. Elles doivent être suivies d'une des lettres : a, i, o,
+u. Penser à  \og ban \fg,  \og vin \fg,  \og long \fg et  \og parfum
+\fg (dans la prononciation très correcte du français soutenu).
+
+\paragraph{Macro \texttt{\£Z}} Elle note le \og r \fg final qui n'est
+prononcé qu'en cas de liaison. On a, p. ex. \Pron{£H£akt£e£Z} avec
+\verb+\Pron{£H£akt£e£Z}+.
+
+\vspace*{\stretch{1}}
+\begin{LivreActive}\Large
+\hspace*{\stretch{1}}
+\begin{tabular}[c]{|>{\ttfamily}c|c||>{\ttfamily}c|c||>{\ttfamily}c|c||>{\ttfamily}c|c||>{\ttfamily}c|c|}\hline
+\multicolumn{10}{|c|}{Classement par ordre alphabétique}\\
+\multicolumn{10}{|c|}{L'étoile renvoie aux explications ci-dessus}\\ \hline
+\£a & £a & \£b & £b & \£c & £c & \£d & £d & \£e  & £e \\ \hline
+\£f & £f & \£g & £g & \£h & £h & \£i & £i & \£j  & £j \\ \hline
+\£k & £k & \£l & £l & \£m & \(\ast\) & \£n & £n & \£o  & £o \\ \hline
+\£p & £p & \£q & £q & \£r & £r & \£s & £s & \£t  & £t \\ \hline
+\£u & £u & \£v & £v & \£w & £w & \£x & £x & \£y  & £y \\ \hline
+\£z & £z &     &    &     &    &     &    &      &    \\ \hline
+\£A & £A & \£B & £B & \£C & £C & \£D & £D & \£E  & £E \\ \hline
+\£F & £F & \£G & £G & \£H & £H & \£I & £I & \£J  & £J \\ \hline
+\£K & £K & \£L & £L & \£M & \(\ast\) & \£N & £N & \£O  & £O \\ \hline
+\£P & £P & \£Q & £Q & \£R & £R & \£S & £S & \£T  & £T \\ \hline
+\£U & £U & \£V & £V & \£W & £W & \£X & \(\ast\) & \£Y  & £Y \\ \hline
+\£Z & £Z &     &    &     &    &     &    &      &    \\ \hline
+\end{tabular}
+\hspace*{\stretch{1}}
+\end{LivreActive}
+\vspace*{\stretch{1}} 
+
+\begin{thebibliography}{99}
+\bibitem{jones15} Daniel~\textsc{Jones} \dag.
+\emph{English Pronouncing Dictionary}.
+15th Edition. This major new edition edited by Peter Roach \& James
+Hartman. 
+Cambridge University Press, 1997.
+\textsc{isbn} : \texttt{0-521-45903-6}
+\end{thebibliography}
+
+\newpage
+\thispagestyle{empty}
+
+\vspace*{\stretch{1}}
+\begin{LivreActive}
+\hspace*{\stretch{1}}
+{\Large
+\begin{tabular}[c]{|>{\ttfamily}c|c||>{\ttfamily}c|c||>{\ttfamily}c|c||>{\ttfamily}c|c|}\hline
+\multicolumn{8}{|c|}{Voyelles}\\ \hline
+\£a & £a & \£A & £A & \£e & £e & \£E & £E \\ \hline
+\£i & £i & \£I & £I & \£o & £o & \£O & £O \\ \hline
+\£u & £u & \£U & £U & \£v & £v & \£x & £x \\ \hline
+\£c & £c & \£C & £C & \£y & £y &     &    \\ \hline
+\multicolumn{8}{|c|}{Diphtongues}\\ \hline
+\£p & £p & \£q & £q & \£r & £r & \£P & £P\\ \hline
+\£Q & £Q & \£R & £R & \£w & £w & \£W & £W\\ \hline
+\£V & £V &     &    &     &    &     &   \\ \hline
+\multicolumn{8}{|c|}{Consonnes}\\ \hline
+\£d & £d & \£f & £f & \£j & £j & \£l & £l \\ \hline
+\£n & £n & \£s & £s & \£t & £t & \£z & £z \\ \hline
+\£T & £T & \£L & £L &     &    &     &    \\ \hline
+\multicolumn{8}{|c|}{Accents toniques}\\ \hline
+\£b & £b & \£B & £B & \£h & £h & \£H & £H \\ \hline
+\multicolumn{8}{|c|}{Voyelles nasalisées}\\
+\multicolumn{8}{|c|}{prononciation française}\\ \hline
+\£Ma & £Ma & \£Mi & £Mi & \£Mo & £Mo & \£Mu & £Mu \\ \hline
+\multicolumn{8}{|c|}{prononciation anglaise}\\ \hline
+\£ma & £ma & \£mi & £mi & \£mo & £mo & \£mu & £mu \\ \hline
+\end{tabular}}
+\hspace*{\stretch{1}}
+\vspace*{\stretch{1}}
+
+Le tableau ci-dessus est écrit dans un environnement
+\verb+LivreActive+ et l'on doit utiliser la macro \verb+\+\texttt{\£}
+pour obtenir le caractère \£. Mais on peut écrire \og £a \fg directement avec
+\og \texttt{\£a} \fg. 
+
+Lorsque l'on se trouve dans l'environnement \verb+LivreActive+, on
+obtient \pron{£H£akt£e£Z} avec
+\verb+\pron{+\texttt{\£H\£akt\£e\£Z}\verb+}+ mais on remarquera, en
+lisant ce fichier \texttt{exemple.tex} ce qu'il faut faire comme \og
+gymnastique \fg pour obtenir un semblant de \texttt{verbatim}.
+
+\vspace{2\baselineskip}
+\newlength{\montruc}\settowidth{\montruc}{Yvon \textsc{Henel}, \TeX nicien de surface.}
+\hspace*{\stretch{1}}\makebox[\montruc][c]{Yvon \textsc{Henel}, \TeX nicien de surface.}\\[.5\baselineskip]
+\hspace*{\stretch{1}}\makebox[\montruc][c]{2003-04-23}
+
+\vspace*{\stretch{3}}
+
+\end{LivreActive}
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

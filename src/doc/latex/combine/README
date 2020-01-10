@@ -1,0 +1,77 @@
+    The combine class lets you bundle individual documents into
+a single document, such as when preparing a conference proceedings.
+
+    The auxiliary combinet package puts the titles and authors from
+\maketitle commands into the main document's table of contents and the
+combnat package enables the combine class and the natbib package
+to be used harmoniously together.
+
+Changes in version 0.5 of combine.cls
+       and version 0.2 of combnat.sty (2002/08/24)
+o Added options for individual bibliographies, a global bibliography,
+  or both local bibliographies and a global combined bibliography.
+
+Changes in version 0.45 of combine.cls 
+       and version 0.2 of combinet.sty (2001/09/05)
+o Fixed ToC alignment problem
+
+Changes in version 0.44 of combine.cls (2001/08/25)
+o Imported documents can now use a class that \LoadClass another class.
+
+Changes in version 0.43 of combine.cls (2001/07/09)
+o Removed the feature that the \appendix command changed the
+  numbering scheme in all subsequent imported documents
+o ToC additions are now in predefined order instead of
+  input order
+
+Changes in version 0.1 of combnat.sty (2001/07/03)
+o First public release
+
+Changes in version 0.42 of combine.cls (2001/04/04)
+o Fixed incompatibility with the fancyhdr package
+o Reduced, and hopefully eliminated, a pagebreak problem in the ToC
+
+Changes in version 0.41 of combine.cls (2000/06/18)
+o Cooperates with the abstract and titling packages
+
+Changes in version 0.4 of combine.cls (2000/05/27)
+o Added book option
+o Extra options for ToC contents and more flexible ToC formatting
+o Counters are now reset for each imported document
+o Reduced the save stack size required for latexing combine.dtx
+
+Changes in version 0.3 of combine.cls: (2000/05/20)
+o \newtheorem is now catered for
+o Control over the \maketitle formatting
+o Improved documentation
+
+Changes in version 0.2 of combine.cls: (2000/05/07)
+o Renamed as combine class instead of collection class
+o Improved documentation
+
+Changes in version 0.1 of combinet.sty: (2000/05/07)
+o First public release
+
+    The distribution consists of the following files:
+README (this file)
+combine.dtx
+combine.ins
+
+    The distribution is provided under the terms of the LaTeX
+Project Public License (LPPL).
+
+    To install the distribution:
+o run: latex combine.ins (which will generate combine.cls,
+                          combinet.sty and combnat.sty)
+o run: latex combine.dtx
+o For an index, run: makeindex -s gind.ist combine
+o run: latex combine.dtx
+o Print combine.dvi for a hardcopy of the user manual 
+o Move combine.cls, combinet.sty and combnat.sty to locations 
+  where LaTeX will find them (The FAQ on CTAN in /help/uktug-FAQ
+  gives more information about this magic place).
+
+
+2002/08/24
+Peter Wilson
+peter.r.wilson@boeing.com

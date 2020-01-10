@@ -1,0 +1,124 @@
+
+Showlabels: put the names of \labels into the margins of a draft document
+-------------------------------------------------------------------------
+
+Version 1.6
+
+This package helps you keep track of all the labels you define, by
+putting the name of new labels into the margin whenever the
+\label command is used.
+
+The package allows you to do the same thing for other commands.  The
+only one for which this is obviously useful is the \cite command, but
+it's easy to do it for others, such as the \ref or \begin commands.
+
+
+Changes in 1.6, 2006 May 26
+---------------------------
+The \showlabels command will now work with commands (such as \cite or
+\includegraphics) which take an optional argument.
+
+Changes in v1.5a, 18 March 2005
+-------------------------------
+
+Changed definition of \showlabelfont to use \ttfamily rather than \tt
+(I'd avoided doing so before, to avoid a pointless incompatibility
+with LaTeX 2.09, but that seems barely worth the hassle).
+
+Changes in v1.5, 8 October 2004
+-------------------------------
+
+Added \showlabelfont and \showlabelsetlabel commands, allowing
+customisation of the printed labels.
+
+Added and documented options [final], [draft] (the former makes this
+package do nothing; the latter is the default behaviour).
+
+Changes in v1.4a, 28 January 2003
+---------------------------------
+
+The [inline] package option now causes equation labels to be put
+between lines also.  [left] and [right] options added.
+
+Fixed bug which meant that [nolabel] stopped \label in \caption from
+working.  \caption handling now rather more robust.
+
+Changes in v1.4, 24 July 2001
+------------------------------
+
+Significant alteration to the mechanism for displaying the labels,
+which makes it easy to do the same trick for the \cite command.  It's
+also fairly easy to extend this to any other commands which might want
+it, through the new \showlabels command, though \ref is the only one
+which immediately springs to mind.
+
+Also, the package option [inline] was introduced, giving an
+alternative format for displaying the labels.  This route is ripe for
+generalisation.
+
+Corrections to the code which places labels in the margin.  This is
+manifest in that the package is now (more) compatible with the wrapfig
+package.
+
+Changes in v1.3e, 30 May 2001
+-----------------------------
+
+Alteration to the way \label is redefined.  Should now be compatible
+with packages such as hyperref, which override the \label command
+themselves.
+
+Changes in v1.3d, 19 April 2001
+-------------------------------
+
+Slight formatting change -- removed question marks when a label is omitted.
+
+Changes in v1.3c, 22 July 1999
+------------------------------
+
+Added an \expandafter to an \ifx test.  Was this _really_ broken in
+_all_ those previous versions?!?!?
+
+Changes in v1.3b
+----------------
+
+No functional changes, but the package's copyright and licence
+conditions were clarified.
+
+Changes in v1.3
+---------------
+
+After a long delay, here is an updated version of my showlabels
+package.  It corrects all the reported bugs which I could reproduce,
+namely:
+
+ * The package now formats labels correctly when the \label command
+   appears outside either an equation or a \caption (silly of me).
+
+ * A couple of people reported problems in the interaction with the
+   amsmath package.  Either these were confined to that package's
+   earlier incarnations as AMS-LaTeX or the amstex package, or else
+   there's some arcane circumstance I can't reproduce, so I haven't
+   found anything to fix on this matter.  Note that the
+   \usepackage{showlabels} command must come _after_ the
+   \usepackage{amsmath} command.  Bug-sightings here will be warmly
+   appreciated.
+
+ * I haven't worried too much about the precise formatting of the
+   labels -- this is, after all, supposed to be a draft-only package.
+
+Thanks, for comments and bug reports, to many testers.  See the
+documentation for a full list.
+
+
+Licence
+-------
+
+This software is copyright, 1999, 2001-2005, Norman Gray.  It is released under
+the terms of the GNU General Public Licence.  See the copyright
+declaration at the top of file showlabels.dtx, and the file LICENCE for
+the licence conditions.
+
+
+
+Norman Gray, <norman@astro.gla.ac.uk>
+http://www.astro.gla.ac.uk/users/norman/

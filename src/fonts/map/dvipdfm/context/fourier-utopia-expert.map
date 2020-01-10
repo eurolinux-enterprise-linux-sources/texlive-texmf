@@ -1,0 +1,23 @@
+futb8x default putb8x
+futbi8x default putbi8x
+futbo8x default putb8x -s .167
+futr8x default putr8x
+futri8x default putri8x
+futro8x default putr8x -s .167
+futs8r 8r puts8a
+futs8x default puts8x
+futsi8r 8r putsi8a
+futsi8x default putsi8x
+futso8r 8r puts8a -s .167
+futso8x default puts8x -s .167
+futrc8r 8r putrc8a
+futsc8r 8r putsc8a
+futrd8r 8r putrd8a
+futc8r 8r putc8a
+futc8x default putc8x
+futco8r 8r putc8a -s .167
+futco8x default putc8x -s .167
+
+%%
+%% Here is utopia-expert (commercial)
+%%

@@ -1,0 +1,29 @@
+cmbsy5 lm-mathsy lmbsy5 -r
+cmbsy7 lm-mathsy lmbsy7 -r
+cmbsy10 lm-mathsy lmbsy10 -r
+cmsy5 lm-mathsy lmsy5 -r
+cmsy6 lm-mathsy lmsy6 -r
+cmsy7 lm-mathsy lmsy7 -r
+cmsy8 lm-mathsy lmsy8 -r
+cmsy9 lm-mathsy lmsy9 -r
+cmsy10 lm-mathsy lmsy10 -r
+cmex10 lm-mathex lmex10 -r
+cmmi5 lm-mathit lmmi5 -r
+cmmi6 lm-mathit lmmi6 -r
+cmmi7 lm-mathit lmmi7 -r
+cmmi8 lm-mathit lmmi8 -r
+cmmi9 lm-mathit lmmi9 -r
+cmmi10 lm-mathit lmmi10 -r
+cmmi12 lm-mathit lmmi12 -r
+cmmib5 lm-mathit lmmib5 -r
+cmmib7 lm-mathit lmmib7 -r
+cmmib10 lm-mathit lmmib10 -r
+
+
+% This file belongs to the Latin Modern package. The work is released under
+% the GUST Font License. See the MANIFEST.txt and README.eng files
+% for the details. For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+% Support for CM math fonts in Type1 format:
+% map lines which replace part of the cmother-bsr.map.

@@ -1,0 +1,22 @@
+This is an extremely minor package (7 lines of "real code")
+for LaTeX2e.  Allows for a references to something on the
+last page of a document.
+
+README.lastpage		This file (sorry not 8.3 character name)
+
+lastpage.ins		The installation batch file. (just run
+			latex on that) to get .drv and .sty files 
+
+lastpage.dtx		The main file.
+
+Written and
+currently maintained by Jeff Goldberg (J.Goldberg@Cranfield.ac.uk)
+
+Note that as of May 1999, I am formally releasing this package under the terms
+of the General Public License Agreement of the Free Software Foundation.
+
+The previous license was not well thought out and was overly restrictive.
+I am happy for the new freedoms granted by the license change to applied
+retrospectively to any previous release of this package.
+
+1999/05/29

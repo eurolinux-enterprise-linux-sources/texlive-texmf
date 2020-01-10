@@ -1,0 +1,96 @@
+\section{The package vhistory}
+
+The purpose of this package was described in detail in section \ref{introduction}.
+I told you, it is worth reading, didn't I? In this section the usage of vhistory is described in detail.
+
+\subsection{Loading the package}\label{load}
+As usual the package is loaded by using the command\\
+\mbox{}\hspace{2em}\verb|\usepackage{vhistory}|\\
+in the preamble. Vhistory requires \LaTeXe\ and the packages sets and ltxtable (which requires longtable and tabularx). If this packages are not already loaded, vhistory will load them.
+
+Vhistory understands several options to control its behaviour. These are listed below. An example for using options would be\\
+\mbox{}\hspace{2em}\verb|\usepackage[tocentry, owncaptions]{vhistory}|.
+
+\paragraph{nochapter:} If this option is used, the history of versions will no be placed in an own chapter---respectively an own section, if you use the document classes article or scrartcl.
+
+\paragraph{tocentry:} With this option you can cause an entry in the table of contents. Normaly there won't be such an entry. If the option nochapter is used, tocentry has no effect and you are responsible for toc entries.
+
+\paragraph{owncaptions:} vhistory supports the languages English and German. If you use an unsopported language, all captions (like ``History of versions'' or ``Chan\-ges'') will be in English. In this case you might want to change captions yourself. The option own\-capt\-ions supports you in this case. More information on this topic can be found in subsection \ref{languages}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Usage}\label{usage}
+The Usage of vhistory is rather easy and is to be described in this subsection.
+It is important to know that vhistory needs to runs of \LaTeX, because some data is written to external files.
+
+\subsubsection{Creating the history of versions}\label{begin}
+The history of versions is an environment:\\
+\mbox{}\hspace{2em}\verb|\begin{versionhistory}|\\
+\mbox{}\hspace{2em}\verb|<entries>|\\
+\mbox{}\hspace{2em}\verb|\begin{versionhistory}|
+
+An entry generally looks like:\\
+\mbox{}\hspace{2em}\verb@\vhEntry{<Version>}{<Date>}{<Authors>}{<Changes>}@
+
+The authors are written in the set notation of the package sets, i.\,e. the character \texttt{|} is used as the separator. An example for entry could therefore be:\\
+\mbox{}\hspace{2em}\verb@\vhEntry{1.1}{13.05.04}{JW|AK|KL}{Typos corrected.}@
+
+The \verb|\begin|\ldots starts a new chapter (or a new section respectively, if article is used), if not disabled as described above.
+
+The history of versions itself is set in an ``ltxtable''. As a result of that, the history of versions can consist of more than one page. Lines in the columns ``Author(s)'' and ``Changes'' are broken automatically. The package ltxtable requires the table to be in a separate file. This file is generated be vhistory an has the ending ``ver''.
+
+\subsubsection{Getting the current version number}
+The current version number---precisely: the version number of the last entry---can be read with the command\\
+\mbox{}\hspace{2em}\verb|\vhCurrentVersion|.\\
+The command is available right after loading the package.
+
+\subsubsection{Getting the current date}
+Analogous to the current version number, the date of the last change can be printed. By using the command\\
+\mbox{}\hspace{2em}\verb|\vhCurrentDate|\\
+you will get this data. The command is available right after loading the package, too.
+
+\subsubsection{Putting a list of all authors}
+You can get a list of all authors on two ways. Via the command\\
+\mbox{}\hspace{2em}\verb|\vhAllAuthorsSet|\\
+you can get the authors as a set as described in section \ref{sets}. The more convenient way is using the command\\
+\mbox{}\hspace{2em}\verb|\vhListAllAuthors|.
+
+This command returns an alphabetically sorted list of authors. The items of the list are comma separated. If you want another separator---e.\,g. \texttt{\&} for usage in a table---to be used instead, you can redefine the command\\
+\mbox{}\hspace{2em}\verb|\setsepararator|\\
+from the package sets (compare section \ref{inspectors}).
+
+Sometimes you want the list to contain full names like ``Jochen Wer\-ten\-au\-er'' instead of the short form ``JW'', which would probably be used in the history of versions. By using the command\\
+\mbox{}\hspace{2em}\verb|\vhListAllAuthorsLong|\\
+you can get this behaviour. In this case you still write ``JW'' in the \verb|\entry| command (note: there is no backslash here!), but also define a macro \verb|\JW| like shown below.\\
+\mbox{}\hspace{2em}\verb|\newcommand{\JW}{Jochen Wertenauer}|\\
+In the history of versions, the text ``JW'' will be shown in the authors column, but  \verb|\vhListAllAuthorsLong| will use the macro \verb|\JW|. If the macro is undefined, no text will be shown (for this author).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Language support}\label{languages}
+As mentioned is section \ref{load}, vhistory supports the languages English and German. All language dependent captions with their defaults are listed in table \ref{tab:languages}. If the document is written in a unsopported language, the English version will be used.
+
+By providing the option ``owncaptions'' you can use custom captions. This option causes vhistory to default the commands in the language that was selected, when vhistory is loaded. Therefore it makes sense to load packages like babel or ngerman before vhistory.
+
+A caption can be changed via the command\\
+\mbox{}\hspace{2em}\verb|\renewcommand{<Command>}{<custom text>}|.\\
+If you prefer to use ``Improvements'' instead of ``Canges'', you have to write\\
+\mbox{}\hspace{2em}\verb|\renewcommand{\vhchangename}{Improvements}|\\
+to get the desired result.
+
+\begin{table}%[htb]
+\begin{center}
+\begin{tabular}{|l|l|l|}\hline
+\textbf{Command} & \textbf{German} & \textbf{English}\\ \hline
+\verb|\vhhistoryname| & Versionshistorie & History of Versions \\
+\verb|\vhversionname| & Version & Version \\
+\verb|\vhdatename| & Datum & Date \\
+\verb|\vhauthorname| & Autor(en) & Author(s) \\
+\verb|\vhchangename| & Änderungen & Changes \\ \hline
+\end{tabular}
+\caption{language dependent captions}
+\label{tab:languages}
+\end{center}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example}
+\input{en_example}

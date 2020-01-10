@@ -1,0 +1,127 @@
+2006-09-28  Andy Buckley  <andy@insectnation.org>
+
+	* Updated date to today, ready for release 1.3.
+
+2006-09-25  Andy Buckley  <andy@insectnation.org>
+
+	* Updated example document to demonstrate the bold math in titles
+	and sans-serif titles.
+
+2006-09-21  Andy Buckley  <andy@insectnation.org>
+
+	* Made frontmatter centered titles have \LARGE size rather than
+	\Large.
+
+	* Added \boldmath to the definition of \bfseries so that maths in
+	titles etc. will automatically go bold. Thanks to Donald Arsenau
+	for supplying this neat trick!
+
+2006-09-18  Andy Buckley  <andy@insectnation.org>
+
+	* Fixed a bug in the definition of \definethesis (argument #2 was
+	never used).
+
+	* Added sftitles option, using the sfheaders package and some
+	changes to the hepthesis-specific sectioning commands. Updated
+	documentation to reflect this.
+
+2006-06-12  Andy Buckley  <andy@insectnation.org>
+
+	* Updated the documentation to reflect the recent changes.
+
+	* Removed some lingering \thesis-prefixed commands from the
+	examples.
+
+	* Aliased \maketitle to \titlepage{} (see below).
+
+	* Changed behaviour of \titlepage slightly: the first argument
+	will no longer be presented prefixed with "of" (so you should
+	include "of\\ " in the argument if you want the original,
+	non-internationalised behaviour). Also, the first argument is now
+	optional, so should be wrapped with square brackets rather than
+	curly braces. \thesistitlepage has been similarly updated.
+	
+	* Deprecated \definethesis command: it is now just a thin wrapper
+	for \title and \author.
+
+	* Added titling option to use the titling package if
+	available. Otherwise, redefine \title and \author to save their
+	arguments in \thetitle and \theauthor, as well as in \@title,
+	\@author, so that they are available in the document body, in
+	particular for building the title page.
+
+2006-06-06  Andy Buckley  <andy@insectnation.org>
+
+	* Prompted by a request from Claudia Strabel, the table, figure,
+	figure* and sidewaysfigure environments now use standard [!htbp]
+	placement specifiers.
+
+2006-02-23  Andy Buckley  <andy@insectnation.org>
+
+	* Ready for version 1.2 release (no changes since 2006-01-26 and
+	no reported bugs from beta testing)
+
+2006-01-26  Andy Buckley  <andy@insectnation.org>
+
+	* Added appendices and colophon environments and updated the
+	manual and example accordingly.
+
+	* Changed mainmatter environment to a special comment so that it
+	doesn't remove the section numbering until the backmatter starts:
+	I don't understand what it is about \renewenvironment that was
+	doing this.
+
+	* Fixed typo in backmatter definition which made it treat the
+	backmatter as mainmatter.
+
+2005-12-13  Andy Buckley  <andy@insectnation.org>
+
+	* Removed pdfpagemode=FullScreen option from hyperref. Maybe
+	re-introduce this sort of thing via an option.
+
+2005-12-09  Andy Buckley  <andy@insectnation.org>
+
+	* Fixed typo ("latex" -> "pdflatex") in the documentation of how
+	to use a Makefile to ease the PS/PDF conditional compilation
+	issues.
+
+	* Moved frontquote text up by 1.5 cm to balance the page a bit
+	better. This is still quite A4-specific: maybe this should be
+	specified in terms of \textheight?
+
+	* Added dedication page command and added some \cleardoublepage
+	and page style commands to the quote page command to ensure that
+	it doesn't overlap with the contents pages.
+
+2005-11-01  Andy Buckley  <andy@insectnation.org>
+
+	* Hacked the example files into much better shape and updated the
+	documentation to mention the new features and the pre-defined figure widths.
+
+	* Added the "deprecated" typeout into the thesis-prefixed commands
+	and environments.
+
+	* Added a sidewaysfigure environment, which introduces a
+	dependency on the rotating package. It's very standard, so I'm not
+	bothered. Maybe add an option to disable the rotating dependency later...
+	
+	* Added the hide{front,back,frontback} options.
+
+2005-09-26  Andy Buckley  <andy@insectnation.org>
+
+	* Finished off the first version of the documentation. Example
+	files could do with some work which I'm too lazy to do right now
+	:-)
+
+	* Added the \Chapter, \ChapterRef etc. commands from a personal
+	style file.
+
+2005-09-02  Andy Buckley  <andy@insectnation.org>
+
+	* Changed \oddsidemargin and \evensidemargin settings to use the
+	\@bindextramargin length.
+	
+	* Added bindnopdf option.
+	
+	* Started ChangeLog entries. Oops, I should have started a bit
+	earlier, eh?

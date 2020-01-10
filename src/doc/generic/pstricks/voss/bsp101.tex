@@ -1,0 +1,98 @@
+\documentclass[a4paper]{article}
+\usepackage{multido}
+\usepackage{pstricks}
+
+\input{random.tex}% From Donald Arseneau (CTAN:macros/generic/random.tex)
+
+\newcount\NumberDots
+\newdimen\DotSize
+\newdimen\Hue
+\newdimen\XPos
+\newdimen\YPos
+
+% Circle with dots at random positions
+\def\CircleWithDotsA#1#2{%
+% #1=radius of the circle
+% #2=number of dots (put on the (-#1,-#1)(#1,#1) square,
+%    not on the circle itself!)
+\pspicture(-#1,-#1)(#1,#1)
+  \setrannum{\NumberDots}{0}{#2}%
+  \psclip{\pscircle{#1}}
+    \multido{\iDots=1+1}{\NumberDots}{%
+      \setrandim{\XPos}{-#1 pt}{#1 pt}%
+      \setrandim{\YPos}{-#1 pt}{#1 pt}%
+      \psdot(\pointless\XPos,\pointless\YPos)}
+  \endpsclip
+\endpspicture}
+
+% Circle with dots at random positions, with random dot sizes
+\def\CircleWithDotsB#1#2{%
+% #1=radius of the circle
+% #2=number of dots (put on the (-#1,-#1)(#1,#1) square,
+%    not on the circle itself!)
+\pspicture(-#1,-#1)(#1,#1)
+  \setrannum{\NumberDots}{0}{#2}%
+  \psclip{\pscircle{#1}}
+    \multido{\iDots=1+1}{\NumberDots}{%
+      \setrandim{\XPos}{-#1 pt}{#1 pt}%
+      \setrandim{\YPos}{-#1 pt}{#1 pt}%
+      \setrandim{\DotSize}{2pt}{15pt}%
+      \psdot[dotsize=\DotSize](\pointless\XPos,\pointless\YPos)}
+  \endpsclip
+\endpspicture}
+
+% Circle with dots at random positions, with random dot sizes
+% and random colors
+\def\CircleWithDotsC#1#2{%
+% #1=radius of the circle
+% #2=number of dots (put on the (-#1,-#1)(#1,#1) square,
+%    not on the circle itself!)
+\pspicture(-#1,-#1)(#1,#1)
+  \setrannum{\NumberDots}{0}{#2}%
+  \psclip{\pscircle{#1}}
+    \multido{\iDots=1+1}{\NumberDots}{%
+      \setrandim{\XPos}{-#1 pt}{#1 pt}%
+      \setrandim{\YPos}{-#1 pt}{#1 pt}%
+      \setrandim{\DotSize}{2pt}{15pt}%
+      \setrandim{\Hue}{0pt}{1pt}%
+      \definecolor{MyColor}{hsb}{\pointless\Hue,0.8,1}
+      \psdot[dotsize=\DotSize,linecolor=MyColor]
+            (\pointless\XPos,\pointless\YPos)}
+  \endpsclip
+\endpspicture}
+
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+% To fix the random seed (otherwise the clock is used)
+\randomi=123456
+\begin{center}
+\CircleWithDotsA{1}{10}
+\psset{dotstyle=o}
+\CircleWithDotsA{1}{50}
+\psset{dotstyle=*}
+\CircleWithDotsA{1}{100}
+\psset{dotstyle=square}
+\CircleWithDotsA{1}{1000}
+\psset{dotstyle=square*}
+\CircleWithDotsA{1}{1500}
+
+%{\psset{dotscale=3,dotstyle=x}\CircleWithDotsA{3}{500}} % Bigger fixed dots
+
+%\psset{dotstyle=+}
+%\CircleWithDotsB{2}{10}
+%\psset{dotstyle=B+}
+%\CircleWithDotsB{2}{100}
+%\CircleWithDotsB{2}{200}
+
+\psset{dotstyle=|}
+\CircleWithDotsC{1.75}{50}
+\psset{dotstyle=x}
+\CircleWithDotsC{1.75}{100}
+\psset{dotstyle=oplus}
+\CircleWithDotsC{1.75}{500}
+\end{center}
+
+\end{document}

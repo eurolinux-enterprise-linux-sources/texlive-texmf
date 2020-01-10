@@ -1,0 +1,13 @@
+1. Update zu Umrand 1.2
+=======================
+
+Es wurde der Befehl \c durch \C in allen Anleitungen ersetzt, da \c in
+Plain und LaTeX als Cedille definiert ist. Der Befehl \C ist nun auch
+in UMRAND.STY enthalten.
+
+Die Anleitung lief nicht ohne NFSS, da der PLAIN-Befehl \sevenrm in 
+\LaTeX nicht enthalten ist. Da \testfont in die Anleitung integriert
+wurde, war hier eine kleine Anpassung notwendig. 
+(Bug-Report von K. Blum, Oldenburg)
+
+MfG Andreas Schrell.

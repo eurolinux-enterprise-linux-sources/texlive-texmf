@@ -1,0 +1,18 @@
+2004-05-09 data            small database and city files "extract the tarzip"
+2004-05-10 dataII          big database "extract the tarzip"
+2004-05-07 doc             "extract the tarzip"
+2004-05-10 examples2d      "extract the tarzip"
+2004-05-10 examples3d      "extract the tarzip"
+2004-05-04 map3d.pro       PostScript header file
+2004-05-05 map3dII.pro     PostScript header file
+2004-05-03 pst-map2d.sty   LaTeX style file
+2004-05-09 pst-map2d.tex   corresponding TeX file
+2004-05-03 pst-map2dII.sty LaTeX style file
+2004-05-09 pst-map2dII.tex corresponding TeX file
+2004-05-03 pst-map3d.sty   LaTeX style file
+2004-05-09 pst-map3d.tex   corresponding TeX file
+2004-05-03 pst-map3dII.sty LaTeX style file
+2004-05-09 pst-map3dII.tex corresponding TeX file
+
+Install all files as usual, decompress the zipped ones  and update 
+the TeX database with texhash or mktexlsr, if needed.

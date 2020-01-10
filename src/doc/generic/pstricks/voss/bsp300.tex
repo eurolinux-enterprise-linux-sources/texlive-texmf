@@ -1,0 +1,30 @@
+\documentclass{article}% bsp300.tex
+\listfiles
+\usepackage[dvipsnames,prologue]{pstricks}
+\usepackage{pst-labo}
+
+\begin{document}
+
+\sffamily
+\begin{pspicture}(0,-4)(7,4)
+  \rput(3,0){\pstDosage[niveauReactifBurette=25,niveauLiquide1=30,%
+    aspectLiquide1=Champagne,glassType=becher,phmetre,unit=0.5]}
+  \rput(2,3){B\"urette}   
+  \rput(4.7,3.6){25 mL}
+  \rput(5.2,-2.2){H$_3$O$^+$+Cl$^-$}
+  \rput(.8,-3){PH-Messer} 
+  \rput(5,-2.8){20 mL}
+  \rput(5,1){Na$^+$+OH$^-$} \rput(6.4,-3.6){Heizplatte}
+  \psline{->}(2.7,2.9)(3.4,2.9)
+\end{pspicture}
+\begin{pspicture}(-3,-2)(2,3)
+  \psset{unit=0.5cm}
+  \rput(-4.5,4.0){\pstEprouvette[tubePenche=-60,niveauLiquide1=90,niveauLiquide2=50]}
+  \rput(.5,0){\pstEntonnoir[glassType=flacon,niveauLiquide1=30]}
+  \rput(.5,7.5){
+    \framebox{\begin{minipage}{3.2cm}Nach der Dekantation
+    sind die einzelnen Phasen getrennt, das Leichteste sammelt man durch Filtrieren.
+    \end{minipage}}}
+\end{pspicture}
+
+\end{document}

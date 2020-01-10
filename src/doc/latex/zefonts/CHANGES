@@ -1,0 +1,16 @@
+July 17, 2000
+-------------
+     Added two fd files: omlzer.fd and omszer.
+     Created a comparison test between ae and ze fonts
+     (the ae_or_ze.{tex,ps} files)
+     CHANGES, readme and zefonts.tex updated
+September 22, 1998
+------------------
+     Old names (like ptmr0) for Adobe fonts updated to those in current
+     version of psnfss (like ptmr8r)
+     Changed the file names dvips/config.ze and dvips/ze.map to the more
+     apropiate dvips/slantcm.cfg and dvips/slantcm.map
+     Corrected in slantcm.map the errors detected in ze.map.
+     vf/cm*.vf files removed.
+     Various file names changed to lowercase.
+     Created this file (CHANGES).

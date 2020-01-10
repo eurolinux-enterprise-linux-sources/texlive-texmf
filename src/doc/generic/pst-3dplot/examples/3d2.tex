@@ -1,0 +1,31 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{pstricks}
+\usepackage{pst-3dplot}
+\usepackage{pst-grad}
+\parindent=0pt
+\makeatletter
+
+\begin{document}
+
+\begin{pspicture}(-5,-5)(5,5)
+\pstThreeDCoor
+\pstThreeDPut(1,0,0){
+  \parametricplotThreeD[xPlotpoints=20,yPlotpoints=50](0,360)(0,360){%
+    /a 1.5 def /b 2 def /c 3 def
+    a t cos u sin mul mul
+    b t sin u sin mul mul
+    c u cos mul
+  }
+}
+\pstThreeDPut(-1,2,3){
+  \parametricplotThreeD[hiddenLine=true,plotstyle=curve,fillstyle=gradient,
+    gradbegin=red,gradend=white,xPlotpoints=20,yPlotpoints=50](0,360)(0,360){%
+    /a 3.5 def /b 2 def /c 2 def
+    a t cos u sin mul mul
+    b t sin u sin mul mul
+    c u cos mul
+  }
+}
+\end{pspicture}
+
+\end{document}

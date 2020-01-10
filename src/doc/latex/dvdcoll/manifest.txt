@@ -1,0 +1,43 @@
+This work consists of the following files:
+
+-- Class --
+
+dvdcoll.cls
+
+-- Style --
+
+pdfnotiz.sty
+
+-- language definition files (dcl) --
+
+acadian.dcl
+american.dcl
+australian.dcl
+austrian.dcl
+british.dcl
+canadian.dcl
+canadien.dcl
+english.dcl
+francais.dcl
+french.dcl
+frenchb.dcl
+german.dcl
+germanb.dcl
+naustrian.dcl
+newzealand.dcl
+ngerman.dcl
+UKenglish.dcl
+USenglish.dcl
+
+-- Documentation --
+
+dvdcoll.pdf
+dcexample.tex
+dcexample.pdf
+
+-- Misc. Files --
+
+README
+manifest.txt
+INSTALL
+CHANGES

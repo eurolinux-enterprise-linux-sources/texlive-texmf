@@ -1,0 +1,21 @@
+\documentclass{article}% bsp301.tex -- H.Voss 2005
+\listfiles
+\usepackage[dvipsnames,prologue]{pstricks}
+\usepackage{pst-labo}
+
+\begin{document}
+
+\psset{unit=0.5cm,etiquette}
+\newpsstyle{Nickel}{fillstyle=solid,fillcolor=green}
+\pstTubeEssais[niveauLiquide1=20,aspectLiquide1=Champagne,Numero=1]\kern-20pt
+\pstTubeEssais[niveauLiquide1=30,aspectLiquide1=Cobalt,Numero=2]\kern-20pt
+\pstTubeEssais[niveauLiquide1=40,aspectLiquide1=Sang,Numero=3]\kern-20pt
+\pstTubeEssais[Numero=4]\kern-20pt
+\psset{bouchon,glassType=flacon}
+\pstTubeEssais[aspectLiquide1=Vinaigre,Numero={\footnotesize MnO$_4^-$}]
+\pstTubeEssais[aspectLiquide1=Huile,unit=0.75,Numero={\footnotesize Ce$^{4+}$}]
+\pstTubeEssais[aspectLiquide1=Nickel,Numero={\footnotesize Ni$^{2+}$}]
+\pstTubeEssais[Numero={\footnotesize Cu$^{2+}$}]
+\pstTubeEssais[niveauLiquide1=30,aspectLiquide1=Champagne,Numero={\footnotesize NaOH},unit=0.75]
+
+\end{document}

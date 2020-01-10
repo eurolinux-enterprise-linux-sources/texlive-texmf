@@ -1,0 +1,63 @@
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\usepackage{pst-grad}
+\usepackage{pst-vue3d}
+
+\newpsstyle{GradGrayWhite}{fillstyle=gradient,%
+    gradbegin=black!30,gradend=white,linewidth=0.1mm}%
+
+\pagestyle{empty}
+\parindent=0pt
+\begin{document}
+\iffalse
+\begin{pspicture}(-3.75,-3.25)(5,5.5)
+  \AxesThreeD[arrows=->](45,40,50)
+  \psset{PortionSphereTHETA=60,PortionSpherePHI=45,linewidth=0.1pt}
+  \SphereThreeD[fillstyle=solid,fillcolor=cyan,linewidth=0.1pt](0,0,0){30}
+  \PortionSphereThreeD[fillstyle=solid,fillcolor=red!30](0,0,0){30}
+  \LineThreeD[SphericalCoor,linestyle=dashed](0,0,0)(30,70,35)
+  \LineThreeD[SphericalCoor,linestyle=dashed](0,0,0)(30,50,35)
+  \LineThreeD[SphericalCoor,linestyle=dashed](0,0,0)(30,70,55)
+  \LineThreeD[SphericalCoor,linestyle=dashed](0,0,0)(30,50,55)
+  \LineThreeD[SphericalCoor](30,70,35)(50,70,35)
+  \LineThreeD[SphericalCoor](30,50,35)(50,50,35)
+  \LineThreeD[SphericalCoor](30,70,55)(50,70,55)
+  \LineThreeD[SphericalCoor](30,50,55)(50,50,55)
+  \PortionSphereThreeD[fillstyle=solid,fillcolor=red!80](0,0,0){50}
+  \psset{linestyle=dashed,linewidth=\pslinewidth}
+  \LineThreeD(0,0,0)(30,0,0)
+  \LineThreeD(0,0,0)(0,30,0)
+  \LineThreeD(0,0,0)(0,0,30)
+\end{pspicture}
+
+\clearpage
+\fi
+\begin{pspicture}(-5,-3.5)(3,5)%
+  \psset{THETA=30,PHI=30,Dobs=100,Decran=20}%
+  \SphereThreeD[linewidth=0.5pt](0,0,0){20}
+%  \SphereThreeD[fillstyle=solid,fillcolor=cyan,linewidth=0.1pt](0,0,0){20}
+%  \AxesThreeD[arrows=->](25)
+  \PortionSphereThreeD[style=GradGrayWhite](0,0,0){20}%
+  \pNodeThreeD(20;10;10){C1}%
+  \pNodeThreeD(40;10;10){D1}%
+  \psline(C1)(D1)%
+  \pNodeThreeD(20;10;-10){C2}%
+  \pNodeThreeD(40;10;-10){D2}%
+  \psline(C2)(D2)%
+  \pNodeThreeD(20;-10;-10){C3}%
+  \pNodeThreeD(40;-10;-10){D3}%
+  \psline(C3)(D3)%
+  \pNodeThreeD(20;-10;10){C4}%
+  \pNodeThreeD(40;-10;10){D4}%
+  \psline(C4)(D4)%
+%
+  \PortionSphereThreeD[style=GradGrayWhite](0,0,0){40}%
+  \psset{linecolor=black,PhiCercle=45,linestyle=dotted}%
+  \makeatletter\def\pst@linetype{1}\makeatother
+  \SphereCercleThreeD(0,0,0){20}%
+  \SphereMeridienThreeD[ThetaMeridien=45](0,0,0){20}%
+  \SphereCercleThreeD[PhiCercle=0](0,0,0){20}%
+  \SphereMeridienThreeD[THETA=30,PHI=30,ThetaMeridien=0](0,0,0){20}%
+\end{pspicture}
+
+\end{document}

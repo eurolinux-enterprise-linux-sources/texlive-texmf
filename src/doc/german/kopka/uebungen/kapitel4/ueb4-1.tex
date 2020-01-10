@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage{german}
+\begin{document}
+Beispiel f"ur die quote-Umgebung aus Band 1 der \LaTeX-Buchserie. Siehe
+dort Abschnitt 4.2.3:
+\begin{quote}
+Zwischen dem einger"uckten Text und dem vorangehenden bzw. folgenden
+Normaltext wird ober- und unterhalb des eingr"uckten Textes zus"atzlicher
+vertikaler Zwischenraum eingef"ugt.
+
+Der einger"uckte Text darf beliebig lang sein. Er kann aus einem Teilsatz,
+einem ganzen Absatz oder gar aus mehreren Abs"atzen bestehen.
+
+Mehrere Abs"atze werden bei der Eingabe wie "ublich durch eine Leerzeile
+getrennt, jedoch sollte eine Leerzeile zu Beginn und Ende des einger"uckten
+Textes entfallen, da hier automatisch zus"atzlicher Zwischenraum eingef"ugt
+wird.
+\end{quote}
+
+Und hier folgt das Beispiel f"ur eine quotation-Umgbung aus dem gleichen
+Abschnitt wie oben zitiert:
+\begin{quotation}
+Bei der \texttt{quotation}-Umgebung werden Abs"atze durch zus"atzliches
+Einr"ucken der ersten Zeile gekennzeichnet, w"ahrend bei der 
+\texttt{quote}-Umgebung die Abs"atze durch zus"atzlichen vertikalen
+Zwischenraum voneinander getrennt wurden.
+
+Demzufolge ist der hier einger"uckte Text durch die 
+\texttt{quotation}-Umgebung erzeugt worden, der weiter oben einger"uckte
+Text dagegen mit der \texttt{quote}-Umgebung.
+
+Die Umgebung \texttt{quotation} wird man sinnvollerweise nur verwenden,
+wenn auch im sonstigen Text Abs"atze durch Einr"ucken der ersten Zeile
+gekennzeichnet sind.
+\end{quotation}
+\end{document}
+

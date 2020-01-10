@@ -1,0 +1,26 @@
+\documentclass{minimal}
+\usepackage{pstricks}
+\usepackage{pst-plot}
+\pagestyle{empty}
+\begin{document}
+
+\begin{pspicture}(-5,-5)(5,5)
+\psplot[plotpoints=1000,linecolor=blue,linewidth=1.5pt]{-5}{5}{x dup RadtoDeg 16 mul 3.14 div cos mul} 
+\psline[linecolor=red](-5,-5)(5,5)
+\psline[linecolor=red](-5,5)(5,-5)
+\psaxes{->}(0,0)(-5,-5)(5,5)
+\uput[-90](5,0){$x$}
+\uput[0](0,5){$y$}
+\end{pspicture}
+
+\clearpage
+\psset{yunit=0.5}
+\begin{pspicture}(-5,10)(5,10)
+\psplot[plotpoints=1000,linecolor=blue,linewidth=1.5pt]{-5}{5}{x dup RadtoDeg 16 mul 3.14 div cos mul x add} 
+\psline[linecolor=red](-5,-10)(5,10)
+\psaxes[Dy=2]{->}(0,0)(-5,-10)(5,10)
+\uput[-90](5,0){$x$}
+\uput[0](0,5){$y$}
+\end{pspicture}
+
+\end{document}

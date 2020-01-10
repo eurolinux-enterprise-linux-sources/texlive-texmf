@@ -1,0 +1,1 @@
+latex           pdftex         language.dat    -translate-file=cp227.tcx *latex.ini

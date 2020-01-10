@@ -1,0 +1,337 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{pst-plot,pst-3d,pst-node}%
+\pagestyle{empty}
+\input{pommereau.tex}
+\SpecialCoor
+\makeatletter
+\def\SectionConiqueE{\pst@object{SectionConiqueE}}
+\def\SectionConiqueE@i{\@ifnextchar[{\SectionConiqueE@do}{\SectionConiqueE@do[]}}
+\def\SectionConiqueE@do[#1]#2#3{{%
+% #2 hauteur
+% #3 demi-angle au sommet
+\pst@Verb{%
+          \psk@embedangle
+          \psk@viewpoint
+          \psk@viewangle
+          \tx@SetMatrixThreeD}
+\pst@killglue
+\psset{#1}%
+\begin@OpenObj
+\addto@pscode{%
+% Les couleurs
+/Cyan 1 def
+/Magenta 1 def
+/Yellow 0.2 def
+/K 1 def
+% les rayons de lumière
+/xLight 1 def
+/yLight 1 def
+/zLight 0 def
+/NormeLight {xLight dup mul yLight dup mul zLight dup mul add add
+            sqrt} bind def
+% Les datas
+    /increment 10 def
+    /THETA #3 def
+    /Hauteur #2 \pst@number\psunit mul def
+    /Rcone {Hauteur THETA cos div THETA sin mul} bind def
+    /OMEGA \OMEGA\space def
+    /tanOMEGA {OMEGA dup sin exch cos div} bind def
+    /m1 {90 THETA sub dup sin exch cos div} bind def
+    /H \nhauteur\space\pst@number\psunit mul def
+% Vecteur ViewPoint
+    /vX \vx\space def
+    /vY \vy\space def
+    /vZ \vz\space def
+% la partie restante après coupe
+0 increment 360 increment sub {%
+    /iTA exch def
+% normale à la facette
+    /nXfacette THETA cos iTA increment 2 div add cos mul def
+    /nYfacette THETA cos iTA increment 2 div add sin mul def
+    /nZfacette THETA sin neg def
+% test de visibilité
+    /PSfacette vX nXfacette mul
+           vY nYfacette mul add
+           vZ nZfacette mul add
+    def
+/facetteReste {
+newpath
+    /zI {OMEGA 90 eq{H}{H 1 iTA sin m1 tanOMEGA mul div add div OMEGA sin div}ifelse} bind def
+    zI m1 div iTA cos mul
+    zI m1 div iTA sin mul
+    zI
+    \tx@ProjThreeD
+     moveto
+iTA 1 iTA increment add {%
+    /iTA1 exch def
+    /zI {OMEGA 90 eq{H}{H 1 iTA1 sin m1 tanOMEGA mul div add div OMEGA sin div}ifelse} bind def
+    zI m1 div iTA1 cos mul
+    zI m1 div iTA1 sin mul
+    zI
+    \tx@ProjThreeD
+    lineto
+    } for
+    0 0 lineto
+closepath
+} def
+PSfacette 0 ge {
+facetteReste
+/cosV {1 xLight nXfacette mul
+       yLight nYfacette mul
+       zLight nZfacette mul
+       add add
+      NormeLight
+       nXfacette dup mul
+       nYfacette dup mul
+       nZfacette dup mul
+       add add sqrt mul div sub} bind def
+% remplissage des facettes
+Cyan cosV mul Magenta cosV mul Yellow cosV mul 0 setcmykcolor
+fill
+facetteReste
+0 setgray
+stroke } if
+} for
+% l'ellipse du plan de coupe
+/ellipse {
+/TableauxPoints [
+0 1 359 {% on décrit le cercle
+    /theta exch def [
+    /zI {OMEGA 90 eq{H}{H 1 theta  sin m1 tanOMEGA mul div add div OMEGA sin div}ifelse} bind def
+    zI m1 div theta  cos mul
+    zI m1 div theta  sin mul
+    zI
+    \tx@ProjThreeD ]
+    } for
+    ] def
+newpath
+ TableauxPoints 0 get aload pop moveto
+0 1 359 {
+    /compteur exch def
+    TableauxPoints compteur get aload pop
+    lineto } for
+closepath
+ } def
+%le produit scalaire du vecteur viewpoint et du vecteur normal au plan >0 ?
+  /Test  vY OMEGA cos mul %
+         vZ OMEGA sin mul
+         add def
+Test 0 ge {
+gsave
+ ellipse
+1 1 0 setrgbcolor
+fill
+grestore
+ellipse
+% 0 setgray
+ stroke
+} if
+%MaillageConePositif
+%MaillageConeNegatif
+ }% fin du code ps
+\showpointsfalse
+\end@OpenObj}}
+%
+
+\let\ProjThreeD\tx@ProjThreeD
+\def\pnodeThreeD(#1,#2,#3)#4{%
+      \pst@Verb{%
+          \psk@embedangle
+          \psk@viewpoint
+          \psk@viewangle
+          \tx@SetMatrixThreeD}
+  \pnode(!#1 #2 #3 \ProjThreeD){#4}}
+%
+\def\ConeIIID{\pst@object{ConeIIID}}
+\def\ConeIIID@i{\@ifnextchar[{\ConeIIID@do}{\ConeIIID@do[]}}
+\def\ConeIIID@do[#1]#2#3{{%
+% #2 hauteur
+% #3 demi-angle au sommet
+\pst@Verb{%
+          \psk@embedangle
+          \psk@viewpoint
+          \psk@viewangle
+          \tx@SetMatrixThreeD}
+\pst@killglue
+\psset{#1}%
+\begin@OpenObj
+\addto@pscode{%
+/MaillageConePositif {
+1 setlinejoin
+0 increment 360 increment sub {%
+    /theta exch def
+% normale à la facette
+    /nXfacette THETA cos theta increment 2 div add cos mul def
+    /nYfacette THETA cos theta increment 2 div add sin mul def
+    /nZfacette THETA sin neg def
+% test de visibilité
+    /PSfacette vX nXfacette mul
+           vY nYfacette mul add
+           vZ nZfacette mul add
+    def
+% dessin de la facette si la condition de visibilité est satisfaite
+PSfacette 0 ge {
+facetteSup
+stroke
+} if
+} for
+} def
+%
+/MaillageConeNegatif {
+1 setlinejoin
+0 increment 360 increment sub {%
+    /theta exch def
+% normale à la facette
+    /nXfacette THETA cos theta increment 2 div add cos mul def
+    /nYfacette THETA cos theta increment 2 div add sin mul def
+    /nZfacette THETA sin def
+% test de visibilité
+    /PSfacette vX nXfacette mul
+           vY nYfacette mul add
+           vZ nZfacette mul add
+    def
+% dessin de la facette si la condition de visibilité est satisfaite
+PSfacette 0 ge {
+facetteInf
+stroke
+} if
+} for
+} def
+/facetteSup {
+newpath
+    /Xpoint Rcone theta cos mul def
+    /Ypoint Rcone theta sin mul def
+     Xpoint Ypoint Hauteur \tx@ProjThreeD
+     moveto
+theta 1 theta increment add {%
+    /theta1 exch def
+    /Xpoint Rcone theta1 cos mul def
+    /Ypoint Rcone theta1 sin mul def
+     Xpoint Ypoint Hauteur \tx@ProjThreeD
+    lineto
+    } for
+    0 0 lineto
+closepath} def
+%
+/facetteInf {
+newpath
+    /Xpoint Rcone theta cos mul def
+    /Ypoint Rcone theta sin mul def
+     Xpoint Ypoint Hauteur neg \tx@ProjThreeD
+     moveto
+theta 1 theta increment add {%
+    /theta1 exch def
+    /Xpoint Rcone theta1 cos mul def
+    /Ypoint Rcone theta1 sin mul def
+     Xpoint Ypoint Hauteur neg \tx@ProjThreeD
+    lineto
+    } for
+    0 0 lineto
+closepath} def
+% Les datas
+    /increment 10 def
+    /THETA #3 def
+    /Hauteur #2 \pst@number\psunit mul def
+    /Rcone {Hauteur THETA cos div THETA sin mul} bind def
+    /OMEGA \OMEGA\space def
+    /tanOMEGA {OMEGA dup sin exch cos div} bind def
+    /m1 {90 THETA sub dup sin exch cos div} bind def
+    /H \nhauteur\space\pst@number\psunit mul def
+% Vecteur ViewPoint
+    /vX \vx\space def
+    /vY \vy\space def
+    /vZ \vz\space def
+% le dessin de la face supérieure
+/face_sup {
+/TableauxPoints [
+0 1 359 {% on décrit le cercle
+    /theta exch def [
+    /Xpoint Rcone theta cos mul def
+    /Ypoint Rcone theta sin mul def
+     Xpoint Ypoint Hauteur \tx@ProjThreeD ]
+    } for
+    ] def
+newpath
+ TableauxPoints 0 get aload pop moveto
+0 1 359 {
+    /compteur exch def
+    TableauxPoints compteur get aload pop
+    lineto } for
+%0.7 setgray
+closepath
+%fill
+%stroke
+ } def
+ %
+/face_inf {
+/TableauxPoints [
+0 1 359 {% on décrit le cercle
+    /theta exch def [
+    /Xpoint Rcone theta cos mul def
+    /Ypoint Rcone theta sin mul def
+     Xpoint Ypoint Hauteur neg \tx@ProjThreeD ]
+    } for
+    ] def
+newpath
+ TableauxPoints 0 get aload pop moveto
+0 1 359 {
+    /compteur exch def
+    TableauxPoints compteur get aload pop
+    lineto } for
+%0.7 setgray
+closepath
+%fill
+% stroke
+ } def
+MaillageConePositif
+%MaillageConeNegatif
+ vZ 0 ge {face_sup}{face_inf} ifelse
+ }% fin du code ps
+\showpointsfalse
+\end@OpenObj}}
+
+\makeatother
+\definecolor{grisbleu}{rgb}{0.85, 0.85, .95}
+\begin{document}
+%\pstpyth{6pt}{8pt}{\test}
+%\expandafter\clear\the\test
+\def\nhauteur{4.5}%
+\def\OMEGA{55}%
+\cossin\cosO\sinO{\OMEGA}%
+\realmul\YH=\cosO*\nhauteur%
+\realmul\ZH=\sinO*\nhauteur%
+\begin{pspicture}(-5,-8)(5,10)
+\pstVerb{%
+    /OMEGA \OMEGA\space def
+    /H \nhauteur\space def
+    }%
+\def\vx{0.5}\def\vy{0.3}\def\vz{0.2}%
+\psset{viewpoint={\vx} {\vy} {\vz}}%
+\pnodeThreeD(0,0,0){O}
+\pnodeThreeD(0,0,11){Z}
+\pnodeThreeD(5,0,0){X}
+\pnodeThreeD(0,5,0){Y}
+\ThreeDput[normal=0 0 1](0,0,0){\psframe[fillstyle=solid,fillcolor=grisbleu](-5,-5)(5,5)
+    \psgrid[gridlabels=0,subgriddiv=0](-5,-5)(5,5)}
+\psline{->}(O)(X)
+\psline{->}(O)(Z)
+\psline{->}(O)(Y)
+\uput[180](Z){$z$}
+\uput[180](X){$x$}
+\uput[0](Y){$y$}
+\SectionConiqueE{9}{30}% hauteur, demi-angle au sommet
+\ThreeDput[normal=0 {\cosO} {\sinO}](0,\YH,\ZH){%
+%        \parametricplot[fillstyle=vlines,hatchcolor=red]{0}{360}{%
+%    B t cos mul A t sin mul HO' add OMEGA 0 lt {neg} if}
+    \psgrid[gridlabels=0,subgriddiv=0,gridcolor=red](-4,-3)(4,10)%
+    \psframe[linewidth=1mm](-4,-3)(4,10)}
+\pnodeThreeD(0,0,H 90 OMEGA sub cos div){Z'}
+\psdot(Z')
+\psline{->}(Z')(Z)
+\ConeIIID{10}{30}% hauteur, demi-angle au sommet
+\pnodeThreeD(0,H OMEGA cos mul,H OMEGA sin mul){H}
+\psdot(H)
+\uput[0](H){$H$}
+\psline[linecolor=red,linestyle=dashed](O)(H)
+\end{pspicture}
+\end{document}

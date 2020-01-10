@@ -1,0 +1,15 @@
+cs-qcsr q-cs qcsr
+cs-qcsri q-cs qcsri
+cs-qcsb q-cs qcsb
+cs-qcsbi q-cs qcsbi
+cs-qcsr-sc q-cs-sc qcsr
+cs-qcsri-sc q-cs-sc qcsri
+cs-qcsb-sc q-cs-sc qcsb
+cs-qcsbi-sc q-cs-sc qcsbi
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Schola.txt
+% and README-TeX-Gyre-Schola.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+% 

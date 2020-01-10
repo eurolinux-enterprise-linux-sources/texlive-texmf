@@ -1,0 +1,54 @@
+#! /bin/csh
+set HEADER=duplex2v.pro
+if ( -f fminitoc.dtx ) then
+echo 'Creating the french documentation...'
+if ( -f fminitoc.maf ) then
+   \rm fminitoc.maf
+endif
+# create the french documentation (DVI): 4 latex runs, with index and biblio
+latex fminitoc.dtx
+sed -e's/:>/=/' < fminitoc.idx > fminitoc.idx1; mv fminitoc.idx1 fminitoc.idx
+bibtex fminitoc
+makeindex -s fminitoc.ist -o fminitoc.ind fminitoc.idx
+mv fminitoc.ilg fminitoc.ilg1
+#
+latex fminitoc.dtx
+sed -e's/:>/=/' < fminitoc.idx > fminitoc.idx1; mv fminitoc.idx1 fminitoc.idx
+makeindex -s fminitoc.ist -o fminitoc.ind fminitoc.idx
+mv fminitoc.ilg fminitoc.ilg1
+#
+latex fminitoc.dtx
+sed -e's/:>/=/' < fminitoc.idx > fminitoc.idx1; mv fminitoc.idx1 fminitoc.idx
+makeindex -s fminitoc.ist -o fminitoc.ind fminitoc.idx
+mv fminitoc.ilg fminitoc.ilg1
+#
+latex fminitoc.dtx
+sed -e's/:>/=/' < fminitoc.idx > fminitoc.idx1; mv fminitoc.idx1 fminitoc.idx
+# convert the .dvi into PostScript
+# change the printer type
+dvips -h $HEADER -o fminitoc.ps fminitoc
+cp fminitoc.log ps-fminitoc.log
+# create the french documentation (PDF): 4 pdflatex runs, with index and biblio
+pdflatex fminitoc.dtx
+sed -e's/:>/=/' < fminitoc.idx > fminitoc.idx1; mv fminitoc.idx1 fminitoc.idx
+bibtex fminitoc
+makeindex -s fminitoc.ist -o fminitoc.ind fminitoc.idx
+mv fminitoc.ilg fminitoc.ilg1
+#
+pdflatex fminitoc.dtx
+sed -e's/:>/=/' < fminitoc.idx > fminitoc.idx1; mv fminitoc.idx1 fminitoc.idx
+makeindex -s fminitoc.ist -o fminitoc.ind fminitoc.idx
+mv fminitoc.ilg fminitoc.ilg1
+#
+pdflatex fminitoc.dtx
+sed -e's/:>/=/' < fminitoc.idx > fminitoc.idx1; mv fminitoc.idx1 fminitoc.idx
+makeindex -s fminitoc.ist -o fminitoc.ind fminitoc.idx
+mv fminitoc.ilg fminitoc.ilg1
+#
+pdflatex fminitoc.dtx
+sed -e's/:>/=/' < fminitoc.idx > fminitoc.idx1; mv fminitoc.idx1 fminitoc.idx
+# Cleaning
+if ( -f fminitoc.maf ) then
+   cat fminitoc.maf | xargs -i -t \rm {}
+endif
+endif

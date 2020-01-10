@@ -1,0 +1,23 @@
+\documentclass{minimal}
+\usepackage{pstricks}
+\usepackage{pst-3dplot}
+\pagestyle{empty}
+\begin{document} 
+
+\begin{pspicture}(-1,-5)(15,2.5)
+ \psset{Alpha=20}
+  \pstThreeDCoor[yMax=25]
+  \parametricplotThreeD[xPlotpoints=200,%
+    linecolor=blue,linewidth=1.5pt,linestyle=solid,plotstyle=curve](0,720)%
+      { 0 t 180 div 6 mul t sin 2.5 mul }
+  \parametricplotThreeD[xPlotpoints=200,linecolor=red,linewidth=1.5pt,%
+    linestyle=solid,plotstyle=curve](0,720)%
+    { t sin 2.5 mul t 180 div 6 mul 0 }
+  \psset{arrows=->,arrowscale=1.5,linewidth=0.5pt}
+  \parametricplotThreeD[yPlotpoints=44,linecolor=red](0,2.5)(15,720)%
+    { u sin t mul u 180 div 6 mul 0 }
+  \parametricplotThreeD[linecolor=blue,yPlotpoints=44](0,2.5)(0,720)%
+    { 0 u 180 div 6 mul u sin t mul }
+\end{pspicture}
+
+\end{document}

@@ -1,0 +1,12 @@
+---------------------------------------------------
+| pst-poly: PSTricks package for polygons         |
+---------------------------------------------------
+
+* Run "tex" on pst-poly.ins and copy pst-poly.tex and pst-poly.sty
+  in one of your TeX input directories
+
+* Run "latex" on pst-poly.dtx to generate the documentation
+
+* This is a PSTricks (PostScript Tricks) package, which won't
+  run with pdftex. In this case go to http://PSTricks.de/
+  for some help.

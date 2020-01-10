@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage{german}
+\newcommand{\D}{\displaystyle}
+\newcommand{\bm}{\boldmath}
+\setlength{\textwidth}{140mm}
+\begin{document}
+\[ \begin{array}{|c|c|c|}\hline
+\multicolumn{3}{|c|}{\rule[-1.25mm]{0mm}{5mm}\mbox{Gleichung der Tangentialebene
+und der Fl"achennormalen}}\\
+\hline
+\mbox{Gleichungs-}&&\\
+\mbox{form} & \mbox{Tangentialebene} & \mbox{Fl"achennormale}\\
+\mbox{der Fl"ache} & & \\ \hline
+\rule{0mm}{7mm}F(x,y,z)=0
+    & \begin{array}[t]{r@{\:+\:}l}
+	     \D\frac{\partial F}{\partial x}(X-x)
+	   & \D\frac{\partial F}{\partial y}(Y-y) \\[2ex]
+	   & \D\frac{\partial F}{\partial z}(Z-z) = 0
+      \end{array}
+    & \D\frac{X-x}{\D\frac{\partial F}{\partial x}} =
+	\frac{Y-y}{\D\frac{\partial F}{\partial y}} =
+	\frac{Z-z}{\D\frac{\partial F}{\partial z}}\\
+\rule[-4.2mm]{0mm}{10mm}z=f(x,y)
+    & Z-z = p(X-x) + q(Y-y)
+    & \D\frac{X-x}{p} = \frac{Y-y}{q} = \frac{Z-z}{-1}\\
+\begin{array}{c} x=x(u,v)\\y=y(u,v)\\z=z(u,v) \end{array}
+    & \begin{array}{|ccc|}
+	    X-x & Y-y & Z-z\\[0.5ex]
+	    \D\frac{\partial x}{\partial u} &
+	    \D\frac{\partial y}{\partial u} &
+	    \D\frac{\partial z}{\partial u} \\[2.0ex]
+	    \D\frac{\partial x}{\partial v} &
+	    \D\frac{\partial y}{\partial v} &
+	    \D\frac{\partial z}{\partial v} 
+      \end{array} = 0
+    & \D\frac{X-x}{\left|\begin{array}{c}
+	       \frac{\partial y}{\partial u}\;
+	       \frac{\partial z}{\partial u}\\[0.8ex]
+	       \frac{\partial y}{\partial v}\;\frac{\partial z}{\partial v}
+		   \end{array}\right|} =
+	\frac{Y-y}{\left|\begin{array}{c}
+	       \frac{\partial z}{\partial u}\;
+	       \frac{\partial x}{\partial u}\\[0.8ex]
+	       \frac{\partial z}{\partial v}\;\frac{\partial x}{\partial v}
+		   \end{array}\right|} =
+	\frac{Z-z}{\left|\begin{array}{c}
+	       \frac{\partial x}{\partial u}\;
+	       \frac{\partial y}{\partial u}\\[0.8ex]
+	       \frac{\partial x}{\partial v}\;\frac{\partial y}{\partial v}
+		   \end{array}\right|} \\
+\rule[-4.2mm]{0mm}{12mm}\mbox{\bm $r=r$}(u,v)
+    & \begin{array}{r}
+	 \mbox{\bm $(R-r)(r_1\times r_2) = \mbox{\unboldmath$0$}$}\\
+	 \mbox{oder\qquad\bm $(R-r)N = \mbox{\unboldmath$0$}$}
+      \end{array}
+    & \begin{array}{r@{\;=\;}l}
+	 \mbox{\bm $R$} & \mbox{\boldmath$r +
+	 \mbox{\unboldmath$\lambda$}(r_1\times r_2$)}\\
+	 \mbox{oder\quad\bm $R$} & 
+	 \mbox{\bm $r + \mbox{\unboldmath$\lambda$}N$}
+      \end{array}\\ \hline
+\multicolumn{3}{|c|}{\parbox{125mm}{\vspace*{0.5ex}In dieser Tabelle sind
+   $x,\,y,\,z$ und
+   \mbox{\bm $r$} die Koordinaten und der Radiusvektor des
+   Kurvenpunktes $M$; $X,\,Y,\,Z$ und \mbox{\bm $R$} sind die laufenden
+   Koordinaten und der Radiusvektor eines Punktes der Tangentialebene oder
+   der Fl"achennormalen im Punkt $M$; ferner ist
+   $p = \frac{\partial z}{\partial x}$, $q = \frac{\partial z}{\partial y}$
+   und $\mbox{\bm $r_1$} = \partial\mbox{\bm $r$}/\partial u$,
+       $\mbox{\bm $r_2$} = \partial\mbox{\bm$r$}/\partial v$.}}
+\\[0.8ex] \hline
+\end{array}  \]
+\end{document}
+

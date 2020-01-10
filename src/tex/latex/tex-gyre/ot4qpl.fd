@@ -1,0 +1,24 @@
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Pagella.txt
+% and README-TeX-Gyre-Pagella.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+\ProvidesFile{ot4qpl.fd}[2006/11/01 v1.0 font definition file for OT4/qpl]
+
+\DeclareFontFamily{OT4}{qpl}{}
+\DeclareFontShape{OT4}{qpl}{b}{sc}{<->rm-qplb-sc}{}
+\DeclareFontShape{OT4}{qpl}{b}{n}{<->rm-qplb}{}
+\DeclareFontShape{OT4}{qpl}{b}{scit}{<->rm-qplbi-sc}{}
+\DeclareFontShape{OT4}{qpl}{b}{it}{<->rm-qplbi}{}
+\DeclareFontShape{OT4}{qpl}{m}{sc}{<->rm-qplr-sc}{}
+\DeclareFontShape{OT4}{qpl}{m}{n}{<->rm-qplr}{}
+\DeclareFontShape{OT4}{qpl}{m}{scit}{<->rm-qplri-sc}{}
+\DeclareFontShape{OT4}{qpl}{m}{it}{<->rm-qplri}{}
+\DeclareFontShape{OT4}{qpl}{bx}{n}{<->ssub * qpl/b/n}{}
+\DeclareFontShape{OT4}{qpl}{bx}{it}{<->ssub * qpl/b/it}{}
+\DeclareFontShape{OT4}{qpl}{bx}{sc}{<->ssub * qpl/b/sc}{}
+\DeclareFontShape{OT4}{qpl}{bx}{scit}{<->ssub * qpl/b/scit}{}
+\endinput
+% End of ot4qpl

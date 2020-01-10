@@ -1,0 +1,31 @@
+-------------------------------------------------------
+paperTeX: class change history
+-------------------------------------------------------
+Copyright (C) 2007 by Ignacio Llopis <lloptor@gmail.com>
+-------------------------------------------------------
+
+v.1.1b (18 January 2007)
+-------------------------
+- solved problem with hyperlinks in the main index. added \phantomsection (s).
+- ``shortnews'' environment can now be refered. new label parameter.
+- very thanks to Randy Yates
+
+v.1.1a (15 January 2007)
+-------------------------
+- corrected a big error in documentation (I said usepackage{papertex}
+but papertex is a class!!)
+- very thanks to Christoph Bier
+
+v.1.1 (10 January 2007)
+------------------------
+- ``amssymb'' package is not needed anymore. It was used only to draw a \blackbox.
+- instead: \newcommand{\innerTextFinalMark}{\rule{0.65em}{0.65em}}.
+- very thanks to Robert Fuster.
+
+v.1.0 (6 July 2006)
+--------------------
+- first release.
+
+
+Ignacio Llopis <lloptor@gmail.com>
+http://nachollopis.com

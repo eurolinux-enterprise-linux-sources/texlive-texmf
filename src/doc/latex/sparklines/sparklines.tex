@@ -1,0 +1,58 @@
+\documentclass{article}
+\usepackage{sparklines}
+\renewcommand{\baselinestretch}{1.25}
+
+\begin{document}
+\title{Sparklines}
+\author{Andreas L\"{o}ffler}
+\date{21.~April 2005}\maketitle
+
+\section{What are sparklines?}
+
+ Sparklines are intense, simple, wordlike
+graphics (so named by Edward Tufte). In lieu of a more detailed introduction,
+Professor Tufte's site has an early release of a chapter on sparklines, see
+www.edwardtufte.com. A PHP implementation can be found at
+http://sparkline.sourceforge.net/.
+
+
+A sparkline can be added using the \texttt{sparkline}--environment. Also, you
+can add sparkling rectangles for the median and special sparkling dots in red
+or blue. \textbf{Only use sparklines with pdflatex}, sparklines do not appear
+within a dvi-file. \texttt{Sparklines} does not work with \texttt{pictex}.
+
+If we want to add a sparkline, be careful not to leave an empty line between
+the text left from the sparkline and the environment itself (starting with the
+sparkline environment)
+% This now starts the sparkline of length 10 times the width of the letter x
+\begin{sparkline}{10}
+% This environment has now an own coordinate system. x and y run from 0 to 1.
+
+% This draws a sparkling-rectangle with lower level y=0.3 and upper level y=0.5
+\sparkrectangle 0.3 0.5
+
+% This draws a blue colored sparkling-dot at x=0.5, y=0.8
+\sparkdot 0.5 0.62 blue
+
+% This draws a red colored sparkling-dot at x=1, y=0.2
+\sparkdot 1 0.2 red
+
+% draws a sparkline with ten values starting at x=0.1 and y=0.95, then x=0.2 and y=0.8 etc.
+% drawing finishes if / appears
+ \spark 0.1 0.95 0.2 0.8 0.3 0.3 0.4 0.52 0.5 0.62 0.6 0.7 0.7 0.5 0.8 0.4 0.9 0.25 1 0.2 /
+\end{sparkline}
+ Daimler Chrysler, 12\%, {\color{red} 129}, since otherwise the sparkline starts
+ at a new line.
+
+\section*{Version history}
+\begin{description}
+\item[] Apr 21, 2005
+
+ version 1.1: bug removed thanks to Mathias Hofmann <mathias.hofmann@web.de>
+
+\item[] Dec 12, 2004
+
+ version 1.0: first version of sparklines
+\end{description}
+
+\end{document}

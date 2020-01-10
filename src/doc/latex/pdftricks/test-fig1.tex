@@ -1,0 +1,28 @@
+\documentclass{article}
+\input tmp.inputs
+\pagestyle{empty}
+\usepackage{amssymb,amsbsy}
+\begin{document}
+\definecolor{lightblue}{rgb}{0,0,.5}
+\definecolor{Navy}{rgb}{0,0,0.5}
+\definecolor{LemonChiffon}{rgb}{1,0.98,0.8}
+\definecolor{ForestGreen}{rgb}{0.13,0.55,0.13}
+\def\transl#1#2{#1\space 72 2.54 div mul #2\space 72 2.54 div
+     mul translate  0 0 moveto }
+\newif\ifnotbothz
+ \pspicture(-6,-6)(6,6)
+ \psaxes{<->}(0,0)(-6,-6)(6,6)
+ \multido{\n=-5+1}{11}{%
+ \multido{\N=-5+1}{11}{%
+ \notbothztrue%
+ \ifnum\N=0 %
+ \ifnum\n=0 \notbothzfalse\fi%
+ \fi%
+ \ifnotbothz%
+ \psdot(0,0)%
+ \pstverb{\transl{\n}{\N}\space
+ \n\space neg \N\space
+    atan rotate -9 0 moveto 18 0 rlineto stroke }
+\fi}}
+\endpspicture
+\end{document}

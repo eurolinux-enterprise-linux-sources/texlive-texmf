@@ -1,0 +1,32 @@
+
+fourier-orns  
+fourier-alt  
+fourier-alt-semi  
+fourier-alt-bold  
+fourier-alt-black  
+fourier-alt-ita  
+fourier-alt-semiita  
+fourier-alt-boldita  
+fourier-alt-sl default fourier-alt -s .167
+fourier-alt-semi-sl default fourier-alt-semi -s .167
+fourier-alt-bold-sl default fourier-alt-bold -s .167
+fourier-bb  
+fourier-mcl  
+fourier-mex  
+fourier-ml  
+fourier-mlit  
+fourier-mlb  
+fourier-mlitb  
+fourier-ms  
+futb8r 8r putb8a
+futbi8r 8r putbi8a
+futbo8r 8r putb8a -s .167
+futr8r 8r putr8a
+futri8r 8r putri8a
+futro8r 8r putr8a -s .167
+
+
+
+%% Here is Fourier-GUtenberg (math complement for Utopia)
+%%
+%%%

@@ -1,0 +1,17 @@
+The timesheet package provides a style and macro for
+generating simple timesheets for specified dates.
+This package also requires the array and longtable
+packages from the LaTeX2e distribution on CTAN, and
+the calendar package that can be found in the
+LaTeX2e "contrib/other" hierarchy.  The package
+was put together by Frank Bennett on 9 November 1996.
+
+This package demonstrates how the calendar package
+can be put to use in generating calendars and other
+documents that apply a template to a list of dates.
+
+The current version is v0.02.
+
+1996/11/11
+Frank Bennett
+fb@soas.ac.uk

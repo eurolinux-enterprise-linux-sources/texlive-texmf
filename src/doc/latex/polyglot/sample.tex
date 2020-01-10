@@ -1,0 +1,80 @@
+\documentclass{book}
+
+\typeout{I am going to load five languages. Don't get desperate}
+\usepackage[english,german,spanish,french,hebrew,american]{polyglot}
+
+\raggedbottom
+
+\begin{document}
+
+\chapter{A sample document}
+
+\section{1st language: English}
+
+This document illustrates some points of the package \textsf{polyglot}.
+For instance, the British date is \today.
+
+The American one is
+\uselanguage[date]{american}{\today}.\\
+\verb=\uselanguage[date]{american}{\today}=
+
+\unselectlanguage
+\selectlanguage*{french}
+
+\section{2\sptext{e} langue: fran/cais}
+
+The first things you will notice in French is the indentation of the
+first line after the title, which is in the \verb=layout= group, and the
+small space just before the colon. Other features are:
+\begin{itemize}
+\item Dashes in every level of \verb=itemize= environment.
+\item Ligatures for a lot of accents (and encyclop"aedic
+task). \verb=encyclop"aedic=
+\item French << guillemets >>. \verb=<< guillemets >>=.
+\item French spacing.
+\end{itemize}
+
+Today is \today.
+
+\unselectlanguage
+\selectlanguage*{spanish}
+
+\section{3\sptext{er} idioma: espa~nol}
+
+Also ligatures, guillemets, new layout, etc. Today is \today.
+
+\clearpage
+
+\unselectlanguage
+\selectlanguage*{german}
+
+\section{4. Sprache: Deutsche}
+
+The usual ligatures are implemented, as "`German quotes"'
+\verb="`German quotes"'=, \verb="ck=, usw.
+In \verb=OT1= you get low umlauts:
+"a, "o, "u. Today  is \today.
+
+\section{5th language: hebrew}
+
+In this section we illustrate the use of the package
+for romanizing languages. In \verb=r_hebrew= we define
+some ligatures which simplifly the typing of text (following
+the ISO recomendations, with lots of diacritic marks). For example:
+\let\k\c
+\begin{quote}
+\selectlanguage{hebrew}
+b.ar-.a, tim-z-.en".a, te-z-e, r-o^s, y.av^o'', k.al^u'', n.av^i'',
+p.ar".a, z".e, q'en"e, g.al"o, b.an.a(y)w, r'e''iyy".a, h.a--.ar.e-z,
+w.e--'.e-d^om, r^ua.h
+\end{quote}
+\begin{verbatim}
+b.ar-.a, tim-z-.en".a, te-z-e, r-o^s, y.av^o'',
+k.al^u'', n.av^i'', p.ar".a, z".e, q'en"e,
+g.al"o, b.an.a(y)w, r'e''iyy".a, h.a--.ar.e-z,
+w.e--'.e-d^om, r^ua.h
+\end{verbatim}
+
+\end{document}
+
+

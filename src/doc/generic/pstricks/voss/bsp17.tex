@@ -1,0 +1,62 @@
+\documentclass[12pt,a4paper]{article}% Denis Girou
+\usepackage{fancyvrb}
+\usepackage{pstricks}
+\usepackage{pst-grad}
+\definecolor{LemonChiffon}{rgb}{1.,0.98,0.8}
+\definecolor{Orange}      {rgb}{1.,0.65,0.}
+\definecolor{PaleGreen}   {rgb}{0.6,0.98,0.6}
+\parindent=0pt
+\pagestyle{empty}
+\begin{document}
+\begin{pspicture}(3,1)
+\begin{BVerbatim}
+First line.
+Second line.
+\end{BVerbatim}
+\end{pspicture}
+
+\vspace{5mm}
+\begin{pspicture}(3,1)\psgrid[subgriddiv=0]
+\begin{BVerbatim}
+First line.
+Second line.
+\end{BVerbatim}
+\end{pspicture}
+\begin{SaveVerbatim}{VerbEnv}
+First line.
+Second line.
+\end{SaveVerbatim}
+
+\vspace{5mm}
+\fbox{\BUseVerbatim{VerbEnv}}
+
+\vspace{5mm}
+\colorbox{Orange}{\BUseVerbatim{VerbEnv}}
+
+\vspace{5mm}
+\setlength{\fboxrule}{1mm}
+\setlength{\fboxsep}{2mm}
+\fcolorbox{red}{Orange}{\BUseVerbatim{VerbEnv}}
+
+\vspace{5mm}
+\psframebox{\BUseVerbatim{VerbEnv}}
+
+\vspace{5mm}
+\psframebox[framearc=0.5,framesep=1,linestyle=dashed]{%
+  \BUseVerbatim{VerbEnv}}
+
+\vspace{5mm}
+\psframebox[linecolor=red,fillstyle=solid,fillcolor=LemonChiffon]{%
+  \BUseVerbatim{VerbEnv}}
+
+\vspace{5mm}
+\psdblframebox[linewidth=0.07,fillstyle=solid,fillcolor=PaleGreen]{%
+  \BUseVerbatim[boxwidth=0.9\linewidth]{VerbEnv}}
+
+\vspace{5mm}
+\psovalbox{\BUseVerbatim{VerbEnv}}
+
+\vspace{5mm}
+\psframebox[fillstyle=gradient,gradmidpoint=0,gradangle=90]{%
+  \BUseVerbatim[fontfamily=helvetica,fontseries=b]{VerbEnv}}
+\end{document}

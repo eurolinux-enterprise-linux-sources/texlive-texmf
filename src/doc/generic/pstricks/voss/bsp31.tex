@@ -1,0 +1,46 @@
+\documentclass[12pt]{article}% Denis Girou
+
+\usepackage{pstricks}
+\pagestyle{empty}
+
+\begin{document}
+
+\psset{subgriddiv=0,gridcolor=lightgray}
+
+\begin{pspicture}(9,4)
+\begin{psclip}{\psellipse(3,2)(3,1)}
+	\psellipse[fillstyle=solid,
+		fillcolor=magenta](6,2)(3,1)
+\end{psclip}
+\psellipse(3,2)(3,1)
+\psellipse(6,2)(3,1)
+\rput(2,3.5){epistemische Indizes}
+\psline{->}(2,3.2)(2,2)
+\rput(7,0.5){faktische Indizes}
+\psline{->}(7,0.7)(7,2)
+\rput(4.5,2){\parbox{1.5cm}{\small realistische Indizes}}
+\end{pspicture}
+
+\begin{pspicture}(5,5)%\psgrid
+  \newcommand{\SurfaceA}{\pscircle(1,1){1}}
+  \newcommand{\SurfaceB}{\pscircle(2.5,3){2}}
+  \SurfaceA\SurfaceB
+  \begin{psclip}{\SurfaceA}
+    \psset{fillstyle=solid,fillcolor=blue}
+    \SurfaceB
+  \end{psclip}
+\end{pspicture}
+%
+\begin{pspicture}(5,5)%\psgrid
+  \newcommand{\SurfaceA}{\psframe(1.5,0.5)(3.8,4.8)}
+  \newcommand{\SurfaceB}{\psellipse(2,3.5)(1.5,1)}
+  \newcommand{\SurfaceC}{\pscircle(3.5,3){1.5}}
+  \newcommand{\SurfaceD}{\psdiamond(2.5,3)(2,1)}
+  \SurfaceA\SurfaceB\SurfaceC\SurfaceD
+  \begin{psclip}{\SurfaceA\SurfaceB\SurfaceC\SurfaceD}
+    \psset{fillstyle=solid,fillcolor=red}
+    \SurfaceA
+  \end{psclip}
+\end{pspicture}
+
+\end{document}

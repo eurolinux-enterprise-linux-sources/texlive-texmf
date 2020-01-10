@@ -1,0 +1,101 @@
+#!/bin/sh
+# This script makes a links to Ghostscript fonts for
+# Adobe standard fonts in current directory
+# Petr Olsak, March 1998
+
+# Please, change the Ghostcript Font path, if needed:
+
+GSFPATH=/usr/lib/ghostscript/fonts
+
+# Warning!! It seems that some fonts does not work
+# with pdftex version 3.14159-0.12f (Web2C 7.2):
+# You have to use the version 0.12h at least.
+
+ln -s $GSFPATH/b018015l.pfb URWBookmanL-DemiBold.pfb
+ln -s $GSFPATH/b018035l.pfb URWBookmanL-DemiBoldItal.pfb
+ln -s $GSFPATH/b018012l.pfb URWBookmanL-Ligh.pfb
+ln -s $GSFPATH/b018032l.pfb URWBookmanL-LighItal.pfb
+
+ln -s $GSFPATH/n022003l.pfb NimbusMonL-Regu.pfb
+ln -s $GSFPATH/n022023l.pfb NimbusMonL-ReguObli.pfb
+ln -s $GSFPATH/n022004l.pfb NimbusMonL-Bold.pfb
+ln -s $GSFPATH/n022024l.pfb NimbusMonL-BoldObli.pfb
+
+ln -s $GSFPATH/a010013l.pfb URWGothicL-Book.pfb
+ln -s $GSFPATH/a010033l.pfb URWGothicL-BookObli.pfb
+ln -s $GSFPATH/a010015l.pfb URWGothicL-Demi.pfb
+ln -s $GSFPATH/a010035l.pfb URWGothicL-DemiObli.pfb
+
+ln -s $GSFPATH/n019003l.pfb NimbusSanL-Regu.pfb
+ln -s $GSFPATH/n019023l.pfb NimbusSanL-ReguItal.pfb
+ln -s $GSFPATH/n019004l.pfb NimbusSanL-Bold.pfb
+ln -s $GSFPATH/n019024l.pfb NimbusSanL-BoldItal.pfb
+
+ln -s $GSFPATH/n019043l.pfb NimbusSanL-ReguCond.pfb
+ln -s $GSFPATH/n019063l.pfb NimbusSanL-ReguCondItal.pfb
+ln -s $GSFPATH/n019044l.pfb NimbusSanL-BoldCond.pfb
+ln -s $GSFPATH/n019064l.pfb NimbusSanL-BoldCondItal.pfb
+
+ln -s $GSFPATH/p052003l.pfb URWPalladioL-Roma.pfb
+ln -s $GSFPATH/p052023l.pfb URWPalladioL-Ital.pfb
+ln -s $GSFPATH/p052004l.pfb URWPalladioL-Bold.pfb
+ln -s $GSFPATH/p052024l.pfb URWPalladioL-BoldItal.pfb
+
+ln -s $GSFPATH/c059013l.pfb CenturySchL-Roma.pfb
+ln -s $GSFPATH/c059033l.pfb CenturySchL-Ital.pfb
+ln -s $GSFPATH/c059016l.pfb CenturySchL-Bold.pfb
+ln -s $GSFPATH/c059036l.pfb CenturySchL-BoldItal.pfb
+
+ln -s $GSFPATH/n021003l.pfb NimbusRomNo9L-Regu.pfb
+ln -s $GSFPATH/n021023l.pfb NimbusRomNo9L-ReguItal.pfb
+ln -s $GSFPATH/n021004l.pfb NimbusRomNo9L-Medi.pfb
+ln -s $GSFPATH/n021024l.pfb NimbusRomNo9L-MediItal.pfb
+
+ln -s $GSFPATH/s050000l.pfb StandardSymL.pfb
+ln -s $GSFPATH/z003034l.pfb URWChanceryL-MediItal.pfb
+ln -s $GSFPATH/d050000l.pfb Dingbats.pfb
+
+
+ln -s URWBookmanL-DemiBold.pfb     Bookman-Demi.pfb
+ln -s URWBookmanL-DemiBoldItal.pfb Bookman-DemiItalic.pfb
+ln -s URWBookmanL-Ligh.pfb         Bookman-Light.pfb
+ln -s URWBookmanL-LighItal.pfb     Bookman-LightItalic.pfb
+
+ln -s NimbusMonL-Regu.pfb          Courier.pfb
+ln -s NimbusMonL-ReguObli.pfb      Courier-Oblique.pfb
+ln -s NimbusMonL-Bold.pfb          Courier-Bold.pfb
+ln -s NimbusMonL-BoldObli.pfb      Courier-BoldOblique.pfb
+
+ln -s URWGothicL-Book.pfb          AvantGarde-Book.pfb
+ln -s URWGothicL-BookObli.pfb      AvantGarde-BookOblique.pfb
+ln -s URWGothicL-Demi.pfb          AvantGarde-Demi.pfb
+ln -s URWGothicL-DemiObli.pfb      AvantGarde-DemiOblique.pfb
+
+ln -s NimbusSanL-Regu.pfb          Helvetica.pfb
+ln -s NimbusSanL-ReguItal.pfb      Helvetica-Oblique.pfb
+ln -s NimbusSanL-Bold.pfb          Helvetica-Bold.pfb
+ln -s NimbusSanL-BoldItal.pfb      Helvetica-BoldOblique.pfb
+
+ln -s NimbusSanL-ReguCond.pfb      Helvetica-Narrow.pfb
+ln -s NimbusSanL-ReguCondItal.pfb  Helvetica-Narrow-Oblique.pfb
+ln -s NimbusSanL-BoldCond.pfb      Helvetica-Narrow-Bold.pfb
+ln -s NimbusSanL-BoldCondItal.pfb  Helvetica-Narrow-BoldOblique.pfb
+
+ln -s URWPalladioL-Roma.pfb        Palatino-Roman.pfb
+ln -s URWPalladioL-Ital.pfb        Palatino-Italic.pfb
+ln -s URWPalladioL-Bold.pfb        Palatino-Bold.pfb
+ln -s URWPalladioL-BoldItal.pfb    Palatino-BoldItalic.pfb
+
+ln -s CenturySchL-Roma.pfb         NewCenturySchlbk-Roman.pfb
+ln -s CenturySchL-Ital.pfb         NewCenturySchlbk-Italic.pfb
+ln -s CenturySchL-Bold.pfb         NewCenturySchlbk-Bold.pfb
+ln -s CenturySchL-BoldItal.pfb     NewCenturySchlbk-BoldItalic.pfb
+
+ln -s NimbusRomNo9L-Regu.pfb       Times-Roman.pfb
+ln -s NimbusRomNo9L-ReguItal.pfb   Times-Italic.pfb
+ln -s NimbusRomNo9L-Medi.pfb       Times-Bold.pfb
+ln -s NimbusRomNo9L-MediItal.pfb   Times-BoldItalic.pfb
+
+ln -s StandardSymL.pfb             Symbol.pfb
+ln -s URWChanceryL-MediItal.pfb    ZapfChancery-MediumItalic.pfb
+ln -s Dingbats.pfb                 ZapfDingbats.pfb

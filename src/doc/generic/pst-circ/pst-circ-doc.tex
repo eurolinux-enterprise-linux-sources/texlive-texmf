@@ -1,0 +1,1180 @@
+\documentclass{article}
+
+\usepackage{multicol}
+\usepackage[a4paper,margin=1.5cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage[baw,pstricks]{fvrb-ex}
+\usepackage{pst-circ}
+\usepackage{pstcol}
+\usepackage{url}
+\makeatletter
+\def\@UrlFont{\small\ttfamily}
+\renewenvironment{description}
+  {\list{}{\labelwidth\z@ \itemindent-\leftmargin
+    \itemsep0pt \parsep0pt
+    \let\makelabel\descriptionlabel}}
+  {\endlist}
+
+\renewcommand{\Begin@Example}{%
+\parindent=0pt
+\multiply\topsep by 2 \VerbatimEnvironment
+\begin{VerbatimOut}[codes={\catcode`\£=12\catcode`\/=12\catcode`\&=12%
+                           \catcode`\"=12}]{\jobname.tmp}}
+
+\renewcommand{\Below@Example}[1]{%
+\VerbatimInput[gobble=0,commentchar=£,commandchars=/&",numbersep=3pt]%
+              {\jobname.tmp}
+\catcode`\£=9\relax%
+\NoHighlight@Attributes % To suppress possible highlighting
+\ifFvrbEx@Grid\vspace{5pt}\fi
+#1%
+\ifFvrbEx@Grid\vspace{5pt}\fi
+\par}
+
+\renewcommand{\SideBySide@Example}[1]{%
+\@tempdimb=\FV@XRightMargin \advance\@tempdimb -5mm
+\begin{minipage}[c]{\@tempdimb}
+  \fvset{xrightmargin=0pt}
+  \catcode`\£=9\relax%
+  \NoHighlight@Attributes % To suppress possible highlighting
+  #1
+\end{minipage}%
+\@tempdimb=\textwidth \advance\@tempdimb -\FV@XRightMargin \advance\@tempdimb 5mm
+\begin{minipage}[c]{\@tempdimb}
+  \VerbatimInput[gobble=0,commentchar=£,commandchars=/&",numbersep=3pt,
+                 xleftmargin=5mm,xrightmargin=0pt]{\jobname.tmp}
+\end{minipage}}
+% The \NoHighlight@Attributes from `hbaw' and `hcolors' packages
+% must be modified too
+\def\NoHighlight@Attributes{%
+\catcode`\/=0\relax%
+\catcode`\&=1\relax%
+\catcode`\"=2\relax%
+\def\HLa##1{##1}%
+\def\HLb##1{##1}%
+\def\HLc##1{##1}%
+\def\HLd##1{##1}%
+\def\HLe##1{##1}%
+\def\HLf##1{##1}%
+\def\HLBFa##1{##1}%
+\def\HLBFb##1{##1}%
+\def\HLBFc##1{##1}%
+\def\HLBFd##1{##1}%
+\def\HLBFe##1{##1}%
+\def\HLBFf##1{##1}%
+\def\HLITa##1{##1}%
+\def\HLITb##1{##1}%
+\def\HLITc##1{##1}%
+\def\HLITd##1{##1}%
+\def\HLITe##1{##1}%
+\def\HLITf##1{##1}%
+\def\HLCBBa##1{##1}%
+\def\HLCBBb##1{##1}%
+\def\HLCBBc##1{##1}%
+\def\HLCBBd##1{##1}%
+\def\HLCBBe##1{##1}%
+\def\HLCBBf##1{##1}%
+\def\HLCBBz##1{##1}%
+\def\HLCBWa##1{##1}%
+\def\HLCBWb##1{##1}%
+\def\HLCBWc##1{##1}%
+\def\HLCBWd##1{##1}%
+\def\HLCBWe##1{##1}%
+\def\HLCBWf##1{##1}%
+\def\HLCBWz##1{##1}%
+}
+
+\makeatother
+
+\fvset{numbers=none,frame=single,labelposition=topline}
+
+\DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
+
+\newcommand{\CircPackage}{\textbf{`pst-circ'}}
+
+\lhead{\CircPackage}\rhead{A PSTricks package for drawing electric circuits}
+\pagestyle{fancy}
+
+\psset{subgriddiv=0,griddots=5,gridlabels=7pt}%
+\showgrid
+\usepackage[colorlinks,linktocpage]{hyperref}
+
+\begin{document}
+
+\title{\CircPackage\\ A PSTricks package for drawing electric circuits\\\normalsize ver. 1.2b}
+\author{{Christophe \textsc{Jorssen} \url{<christophe.jorssen@noos.fr>}}\\
+Herbert \textsc{Voss} \url{<voss@perce.de>}}
+\date{28 August 2003}
+\maketitle
+
+\begin{center}
+\psframebox[framearc=0.3,framesep=5mm,linewidth=.7mm]{%
+\parbox{15cm}{%
+{\textbf{Abstract:} \CircPackage{} is a PSTricks package to draw easily electric circuits. Most
+dipoles, tripoles and quadrupoles used in classical electrotechnical
+circuits are provided as graphical units which can readily be
+interconnectedd to produce circuit diagrams of a reasonable level of complexity}}}
+\end{center}
+
+\setlength{\columnseprule}{0.6pt}
+\begin{multicols}{2}
+{\parskip 0pt \tableofcontents}
+\end{multicols}
+
+\section{Introduction}
+
+The package \CircPackage{} is a collection of graphical elements based
+on PStricks that can be used to facilitate display of electronic
+circuit elements. For example, an equivalent circuit of a voltage
+source, its source impedance, and a connected load can easily be
+constructed along with arrows indicating current flow and potential
+differences. The emphasis is upon the circuit elements and the
+details of the exact placement are hidden as much as possible so the
+author can focus on the circuitry without the distraction of sorting
+out the underlying vector graphics.
+
+\section{Usage}
+
+\subsection{Parameters}
+
+There are specific paramaters defined to change easily the behaviour of the pst-circ
+objects you are drawing.
+
+%\begin{multicols}{2}
+\begin{description}
+\item[\HLTTc{intensity} (boolean):] (\emph{default:~false})
+\item[\HLTTc{intensitylabel} (string):] (\emph{default:~\texttt{\cs{empty}}})
+\item[\HLTTc{intensitylabeloffset} (dimension):] (\emph{default:~0.5})
+\item[\HLTTc{intensitycolor} (PSTricks color):] (\emph{default:~black})
+\item[\HLTTc{intensitylabelcolor} (PSTricks color):] (\emph{default:~black})
+\item[\HLTTc{intensitywidth} (dimension):] (\emph{default:~\texttt{\cs{pslinewidth}}})
+\item[\HLTTc{tension} (boolean):] (\emph{default:~false})
+\item[\HLTTc{tensionlabel} (string):] (\emph{default:~\texttt{\cs{empty}}})
+\item[\HLTTc{tensionoffset} (dimension):] (\emph{default:~1})
+\item[\HLTTc{tensionlabeloffset} (dimension):] (\emph{default:~1.2})
+\item[\HLTTc{tensioncolor} (PSTricks color):] (\emph{default:~black})
+\item[\HLTTc{tensionlabelcolor} (PSTricks color):] (\emph{default:~black})
+\item[\HLTTc{tensionwidth} (dimension):] (\emph{default:~\texttt{\cs{pslinewidth}}})
+\item[\HLTTc{labeloffset} (dimension):] (\emph{default:~0.7})
+\item[\HLTTc{labelangle} (PSTricks label angle):] (\emph{default:~0})
+\item[\HLTTc{dipoleconvention}:] (\emph{default:~receptor})
+\item[\HLTTc{directconvetion} (boolean):] (\emph{default:~true})
+\item[\HLTTc{dipolestyle} (string):] (\emph{default:~normal})
+\item[\HLTTc{variable} (boolean):] (\emph{default:~false})
+\item[\HLTTc{parallel} (boolean):] (\emph{default:~false})
+\item[\HLTTc{parallelarm} (dimension):] (\emph{default:~1.5})
+\item[\HLTTc{parallelsep} (real):] (\emph{default:~0})
+\item[\HLTTc{parallelnode} (boolean):] (\emph{default:~false})
+\item[\HLTTc{intersect} (boolean):] (\emph{default:~false})
+\item[\HLTTc{intersectA} (node):]
+\item[\HLTTc{intersectB} (node):]
+\item[\HLTTc{OAinvert} (boolean):] (\emph{default:~true})
+\item[\HLTTc{OAperfect} (boolean):] (\emph{default:~true})
+\item[\HLTTc{OAiplus} (boolean):] (\emph{default:~false})
+\item[\HLTTc{OAiminus} (boolean):] (\emph{default:~false})
+\item[\HLTTc{OAiout} (boolean):] (\emph{default:~false})
+\item[\HLTTc{OAipluslabel} (string):] (\emph{default:~\texttt{\cs{empty}}})
+\item[\HLTTc{OAiminuslabel} (string):] (\emph{default:~\texttt{\cs{empty}}})
+\item[\HLTTc{OAioutlabel} (string):] (\emph{default:~\texttt{\cs{empty}}})
+\item[\HLTTc{transistorcircle} (boolean):] (\emph{default:~true})
+\item[\HLTTc{transistorinvert} (boolean):] (\emph{default:~false})
+\item[\HLTTc{transistoribase} (boolean):] (\emph{default:~false})
+\item[\HLTTc{transistoricollector} (boolean):] (\emph{default:~false})
+\item[\HLTTc{transistoriemitter} (boolean):] (\emph{default:~false})
+\item[\HLTTc{transistoribaselabel} (string):] (\emph{default:~\texttt{\cs{empty}}})
+\item[\HLTTc{transistoricollectorlabel} (string):] (\emph{default:~\texttt{\cs{empty}}})
+\item[\HLTTc{transistoriemitterlabel} (string):] (\emph{default:~\texttt{\cs{empty}}})
+\item[\HLTTc{transistortype} (string):] (\emph{default:~PNP})
+\item[\HLTTc{primarylabel} (string):] (\emph{default:~\texttt{\cs{empty}}})
+\item[\HLTTc{secondarylabel} (string):] (\emph{default:~\texttt{\cs{empty}}})
+\item[\HLTTc{transformeriprimary} (boolean):] (\emph{default:~false})
+\item[\HLTTc{transformerisecondary} (boolean):] (\emph{default:~false})
+\item[\HLTTc{transformeriprimarylabel} (string):] (\emph{default:~\texttt{\cs{empty}}})
+\item[\HLTTc{transformerisecondarylabel} (string):] (\emph{default:~\texttt{\cs{empty}}})
+\item[\HLTTc{tripolestyle} (string):] (\emph{default:~normal})
+\end{description}
+%\end{multicols}
+
+\section{Macros}
+
+\subsection{Dipole macros}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\resistor"(A)(B){$R$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\capacitor"(A)(B){$C$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\battery"(A)(B){$E$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\coil"(A)(B){$L$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\Ucc"(A)(B){$E$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\Icc"(A)(B){$\eta$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\switch"(A)(B){$K$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\diode"(A)(B){$D$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\Zener"(A)(B){$D$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\lamp"(A)(B){$\mathcal L$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\circledipole"(A)(B){$\mathcal G$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\LED"(A)(B){$\mathcal D$}
+\end{PSideBySideExample}
+
+\subsection{Tripole macros}
+
+Obviously, tripoles are not node connections. So \CircPackage{} tries its best to adjust the
+position of the tripole regarding the three nodes. Internally, the connections are done by the
+\cs{ncangle} pst-node macro. However, the auto-positionning and the auto-connections are not always
+well chosen\footnote{This is something we are working on. I think that auto-positionning and
+auto-connections should be done at PostScript level and not at PSTricks level. If someone has any
+ideas, please mail us.}, so don't try to use tripole macros in strange situations!
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,3)
+  \pnode(0,0){A}
+  \pnode(0,3){B}
+  \pnode(5,1.5){C}
+  /HLCBWz&\OA"(B)(A)(C)
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,3)
+  \pnode(0,1.5){A}
+  \pnode(5,3){B}
+  \pnode(5,0){C}
+  /HLCBWz&\transistor"(A)(B)(C)
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,3)
+  \pnode(0,2){A}
+  \pnode(5,2){B}
+  \pnode(0,0){C}
+  /HLCBWz&\Tswitch"(A)(B)(C){$K$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,3)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \pnode(3,2.25){C}
+  /HLCBWz&\potentiometer"[labeloffset=0pt](A)(B)(C){$P$}
+\end{PSideBySideExample}
+
+\subsection{Quadrupole macros}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,5)
+  \pnode(0,5){A}
+  \pnode(0,0){B}
+  \pnode(5,5){C}
+  \pnode(5,0){D}
+  /HLCBWz&\transformer"(A)(B)(C)(D){$\mathcal T$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](4,3)
+  \pnode(0,2.5){A}
+  \pnode(0,0.5){B}
+  \pnode(4,2.5){C}
+  \pnode(4,0.5){D}
+  /HLCBWz&\optoCoupler"(A)(B)(C)(D){$OC$}
+\end{PSideBySideExample}
+
+\subsection{Multidipole}
+
+
+
+\cs{multidipole} is a macro that allows multiple dipoles to be drawn between two specified nodes.
+\cs{multidipole} takes as many arguments as you want. \textbf{Note the \rnode{Dot}{dot} that is
+after the last dipole.}
+
+\def\HLrnode#1{\rnode{Dot2}{#1}}
+\begin{PSideBySideExample}[xrightmargin=8.5cm](8,8)
+  \pnode(0,0){A}
+  \pnode(8,8){B}
+  /HLCBWz&\multidipole"(A)(B)\resistor{$R$}%
+    \capacitor[linecolor=red]{$C$}%
+    \diode{$D$}/HLrnode&/HLCBWz."
+\end{PSideBySideExample}
+
+\ncangles[linestyle=dashed,linecolor=gray,nodesep=3pt,armA=.5cm,angleA=-90,armB=4cm,angleB=0]{->}{Dot}{Dot2} 
+Important: for the time being, \cs{multidipole} takes optional arguments but does not 
+restore original values. We recommand not using it.
+
+
+\subsection{Wire}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\wire"(A)(B)
+\end{PSideBySideExample}
+
+\subsection{Potential}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  /HLCBWz&\tension"(A)(B){$u$}
+\end{PSideBySideExample}
+
+\subsection{ground}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0.5,1){A}
+  \pnode(1,1){B}
+  \pnode(2.5,1){C}
+  /HLCBWz&\ground"(A)
+  \ground{/HLCBWz&135"}(B)
+  \ground[/HLCBWz&linecolor"=blue]{180}(C)
+\end{PSideBySideExample}
+
+\section{Parameters}
+
+\subsection{Label parameters}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,.5){A}
+  \pnode(3,.5){B}
+  \resistor[/HLCBWz&labeloffset"=0](A)(B){$R$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,0){A}
+  \pnode(3,2){B}
+  \resistor[/HLCBWz&labelangle"=:U](A)(B){$R$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,0){A}
+  \pnode(3,2){B}
+  \resistor[/HLCBWz&labelangle"=0](A)(B){$R$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,5)
+  \pnode(0,5){A}
+  \pnode(0,0){B}
+  \pnode(5,5){C}
+  \pnode(5,0){D}
+  \transformer[/HLCBWz&primarylabel"=$n_1$,
+    /HLCBWz&secondarylabel"=$n_2$](A)(B)(C)(D){$\mathcal T$}
+\end{PSideBySideExample}
+
+
+\subsection{Current intensity and electrical potential parameters}
+
+If the \HLTTc{intensity} parameter is set to \texttt{true}, an arrow is drawn on the wire
+connecting one of the nodes to the dipole. If the \HLTTc{tension} parameter is set to \texttt{true},
+an arrow is drawn parallel to the dipole.
+
+The way those arrows are drawn is set by \HLTTc{dipoleconvention} and \HLTTc{directconvention}
+parameters. \HLTTc{dipoleconvention} can take two values~: \texttt{generator} or \texttt{receptor}.
+\HLTTc{directconvention} is a boolean.
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,.5){A}
+  \pnode(3,.5){B}
+  \resistor[/HLCBWz&intensity",/HLCBWz&tension"](A)(B){}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,.5){A}
+  \pnode(3,.5){B}
+  \resistor[intensity,tension,
+    /HLCBWz&dipoleconvention"=generator](A)(B){}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,.5){A}
+  \pnode(3,.5){B}
+  \resistor[intensity,tension,
+    /HLCBWz&directconvention"=false](A)(B){}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,.5){A}
+  \pnode(3,.5){B}
+  \resistor[intensity,tension,
+    dipoleconvention=generator,directconvention=false](A)(B){}
+\end{PSideBySideExample}
+
+If \HLTTc{intensitylabel} is set to an non empty argument, then \HLTTc{intensity} is automatically
+set to true. If \HLTTc{tensionlabel} is set to an non empty argument, then \HLTTc{tension} is
+automatically set to true.
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,.5){A}
+  \pnode(3,.5){B}
+  \resistor[/HLCBWz&intensitylabel"=$i$,/HLCBWz&tensionlabel"=$u$](A)(B){}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1.5){A}
+  \pnode(3,1.5){B}
+  \resistor[intensitylabel=$i$,/HLCBWz&intensitylabeloffset"=-0.5,
+    tensionlabel=$u$,/HLCBWz&tensionlabeloffset"=-1.2,
+    /HLCBWz&tensionoffset"=-1](A)(B){}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,.5){A}
+  \pnode(3,.5){B}
+  \resistor[intensitylabel=$i$,/HLCBWz&intensitywidth"=3\pslinewidth,
+    /HLCBWz&intensitycolor"=red,/HLCBWz&intensitylabelcolor"=yellow,
+    tensionlabel=$u$,/HLCBWz&tensionwidth"=2\pslinewidth,
+    /HLCBWz&tensioncolor"=green,/HLCBWz&tensionlabelcolor"=blue](A)(B){}
+\end{PSideBySideExample}
+
+Some specific intensity parameters are available for tripoles and quadrupoles.
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,3)
+  \pnode(0,0){A}
+  \pnode(0,3){B}
+  \pnode(5,1.5){C}
+  \OA[/HLCBWz&OAipluslabel"=$i_+$,
+    /HLCBWz&OAiminuslabel"=$i_-$,
+    /HLCBWz&OAioutlabel"=$i_o$](B)(A)(C)
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,3)
+  \pnode(0,1.5){A}
+  \pnode(5,3){B}
+  \pnode(5,0){C}
+  \transistor[/HLCBWz&transistoribaselabel"=$i_B$,
+    /HLCBWz&transistoricollectorlabel"=$i_C$,
+    /HLCBWz&transistoriemitterlabel"=$i_E$](A)(B)(C)
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,5)
+  \pnode(0,5){A}
+  \pnode(0,0){B}
+  \pnode(5,5){C}
+  \pnode(5,0){D}
+  \transformer[/HLCBWz&transformeriprimarylabel"=$i_1$,
+    /HLCBWz&transformerisecondarylabel"=$i_2$]%
+    (A)(B)(C)(D){$\mathcal T$}
+\end{PSideBySideExample}
+
+
+\subsection{Parallel parameters}
+
+If the \HLTTc{parallel} parameter is set to \texttt{true}, the dipole is drawn parallel to the line
+connecting the nodes.
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,3)
+  \pnode(0,.5){A}
+  \pnode(3,.5){B}
+  \resistor(A)(B){}
+  \resistor[/HLCBWz&parallel"](A)(B){}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,3)
+  \pnode(0,.5){A}
+  \pnode(3,.5){B}
+  \resistor(A)(B){}
+  \resistor[parallel,/HLCBWz&parallelsep"=.5](A)(B){}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,3)
+  \pnode(0,.5){A}
+  \pnode(3,.5){B}
+  \resistor(A)(B){}
+  \resistor[parallel,parallelsep=.3,
+    /HLCBWz&parallelarm"=2](A)(B){}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,3)
+  \pnode(0,.5){A}
+  \pnode(3,.5){B}
+  \resistor(A)(B){}
+  \resistor[parallel,parallelsep=.3,
+    parallelarm=2,/HLCBWz&parallelnode"](A)(B){}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=8.5cm](8,8)
+  \pnode(0,0){A}
+  \pnode(8,8){B}
+  \multidipole(A)(B)\resistor{$R$}%
+    \capacitor[linecolor=red]{$C$}%
+    \coil[parallel,parallelsep=.1]{$L$}%
+    \diode{$D$}.
+\end{PSideBySideExample}
+
+Note: When used with \cs{multidipole}, the  parallel \HLTTc{parameter}
+must not be set for the first dipole.
+
+\subsection{Wire intersections}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,3)
+  \pnode(0,0){A}
+  \pnode(3,3){B}
+  \pnode(0,3){C}
+  \pnode(3,0){D}
+  \wire(A)(B)
+  \wire[/HLCBWz&intersect",/HLCBWz&intersectA"=A,/HLCBWz&intersectB"=B](C)(D)
+\end{PSideBySideExample}
+
+Wire intersect parameters work also with \cs{multidipole}.
+
+\begin{PSideBySideExample}[xrightmargin=8.5cm](8,8)
+  \pnode(0,0){A}
+  \pnode(8,8){B}
+  \pnode(0,8){C}
+  \pnode(8,0){D}
+  \wire(A)(B)
+  \multidipole(C)(D)\resistor{$R$}%
+    \wire[intersect,intersectA=A,intersectB=B]%
+    \capacitor{$C$}.
+\end{PSideBySideExample}
+
+
+
+\subsection{Dipole style parameters}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \resistor[/HLCBWz&dipolestyle"=/HLCBWz&zigzag"](A)(B){$R$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \capacitor[dipolestyle=/HLCBWz&chemical"](A)(B){$C$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \capacitor[dipolestyle=/HLCBWz&elektor"](A)(B){$C$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \capacitor[dipolestyle=/HLCBWz&elektorchemical"](A)(B){$C$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \coil[dipolestyle=/HLCBWz&rectangle"](A)(B){$L$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \coil[dipolestyle=/HLCBWz&curved"](A)(B){$L$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \coil[dipolestyle=/HLCBWz&elektor"](A)(B){$L$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \coil[dipolestyle=/HLCBWz&elektorcurved"](A)(B){$L$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \diode[dipolestyle=/HLCBWz&thyristor"](A)(B){$T$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \diode[dipolestyle=/HLCBWz&GTO"](A)(B){$T$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \diode[dipolestyle=/HLCBWz&triac"](A)(B){$T$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \resistor[/HLCBWz&variable"](A)(B){$R$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \capacitor[/HLCBWz&variable"](A)(B){$C$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \coil[/HLCBWz&variable"](A)(B){$L$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \battery[/HLCBWz&variable"](A)(B){$U$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,2)
+  \pnode(0,1){A}
+  \pnode(3,1){B}
+  \coil[dipolestyle=/HLCBWz&elektor",variable](A)(B){$L$}
+\end{PSideBySideExample}
+
+In the following example the parameter \verb|dipolestyle| is used for a tripole and quadrupole, because
+the coils are drawn as rectangles and the resistor as a zigzag.
+
+\begin{PSideBySideExample}[xrightmargin=3.5cm](3,3)
+  \pnode(0,0){A}
+  \pnode(3,3){B}
+  \pnode(3,1.5){C}
+  \potentiometer[,dipolestyle=/HLCBWz&zigzag",%
+  	labelangle=:U](A)(B)(C){$P$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=4.5cm](4,4)
+  \pnode(0,4){A}
+  \pnode(0,0){B}
+  \pnode(4,4){C}
+  \pnode(4,0){D}
+  /HLCBWz&\transformer"[dipolestyle=/HLCBWz&rectangle"](A)(B)(C)(D){$\mathcal T$}
+\end{PSideBySideExample}
+
+
+\subsection{Tripole style parameters}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,3)
+  \pnode(0,2){A}
+  \pnode(5,2){B}
+  \pnode(0,0){C}
+  \Tswitch[tripolestyle=left](A)(B)(C){$K$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,3)
+  \pnode(0,2){A}
+  \pnode(5,2){B}
+  \pnode(0,0){C}
+  \Tswitch[tripolestyle=right](A)(B)(C){$K$}
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,3)
+  \pnode(0,3){A}
+  \pnode(0,0){B}
+  \pnode(5,1.5){C}
+  \OA[tripolestyle=french](A)(B)(C)
+\end{PSideBySideExample}
+
+\subsection{Other Parameters}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,3)
+  \pnode(0,0){A}
+  \pnode(0,3){B}
+  \pnode(5,1.5){C}
+  \OA[/HLCBWz&OAinvert"=false](B)(A)(C)
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,3)
+  \pnode(0,0){A}
+  \pnode(0,3){B}
+  \pnode(5,1.5){C}
+  \OA[/HLCBWz&OAperfect"=false](B)(A)(C)
+\end{PSideBySideExample}
+
+\begin{PSideBySideExample}[xrightmargin=5.5cm](5,3)
+  \pnode(0,1.5){A}
+  \pnode(5,3){B}
+  \pnode(5,0){C}
+  \transistor[/HLCBWz&transistorinvert",/HLCBWz&transistorcircle"=false](A)(B)(C)
+\end{PSideBySideExample}
+
+
+\section{Examples}
+
+\begin{SideBySideExample}[xrightmargin=8cm]
+  \begin{pspicture}(-1.5,-1)(6,5)
+  \psgrid[subgriddiv=1,griddots=10]
+  % Node definitions
+  \pnode(0,0){A}
+  \pnode(0,3){B}
+  \pnode(4.5,3){C}
+  \pnode(4.5,0){D}
+  % Dipole node connection
+  \Ucc[tension,dipoleconvention=generator](A)(B){$E$}
+  \multidipole(B)(C)%
+    \switch[intensitylabel=$i$]{$K$}%
+    \resistor[labeloffset=0,tensionlabel=$u_R$]{$R$}.
+  \capacitor[tensionlabel={$u_C$},
+    tensionlabeloffset=-1.2,tensionoffset=-1,
+    directconvention=false](D)(C){$C$}
+  % Wire to complete circuit
+  \wire(A)(D)
+  % Ground
+  \ground(D)
+  \end{pspicture}
+\end{SideBySideExample}
+
+\begin{SideBySideExample}[xrightmargin=8cm]
+  \begin{pspicture}(-0.5,0)(7,8)
+  \psgrid[subgriddiv=1,griddots=10]
+  % Node definitions
+  \pnode(0.5,1){A}
+  \pnode(3.5,1){B}
+  \pnode(6.5,1){C}
+  \pnode(0.5,4){D}
+  \pnode(3.5,4){Minus}
+  \pnode(3.5,3){Plus}
+  \pnode(6.5,5){S}
+  \pnode(3.5,5){E}
+  % Dipole node connections
+  \resistor(D)(Minus){$R_2$}
+  \capacitor(E)(S){$C$}
+  \resistor[parallel,parallelarm=2](E)(S){$R_1$}
+  \OA[intensity](Minus)(Plus)(S)
+  % Wires
+  \wire(Minus)(E)
+  \wire(Plus)(B)
+  % Tensions
+  \tension(A)(D){$u_E$}
+  \makeatletter % (special tricks see below)
+  \tension(C)(S@@){$u_S$}
+  \tension[linecolor=blue](Plus@@)(Minus@@){$\epsilon$}
+  \makeatother
+  % Grounds
+  \ground(A)
+  \ground(B)
+  \ground(C)
+  \end{pspicture}
+\end{SideBySideExample}
+
+\begin{SideBySideExample}[xrightmargin=8.5cm]
+  \begin{pspicture}(-1,0)(7,8)
+  \psgrid[subgriddiv=1,griddots=10]
+  % Node definitions
+  \pnode(1,1){A}
+  \pnode(1,7){B}
+  \pnode(3,1){C}
+  \pnode(3,7){D}
+  % Dipole node connections
+  \Ucc[tensionlabel=$E$](A)(B){}
+  \resistor(B)(D){$R$}
+  \coil(D)(C){$L$}
+  \capacitor[parallel,parallelarm=2.5](D)(C){$C$}
+  % Wire
+  \wire(A)(C)
+  \end{pspicture}
+\end{SideBySideExample}
+
+\begin{SideBySideExample}[xrightmargin=8.5cm]
+  \begin{pspicture}(6,6)
+  \psgrid[subgriddiv=1,griddots=10]
+  % Node definitions
+  \pnode(0,3){A}
+  \pnode(3,3){B}
+  \pnode(6,3){C}
+  % Dipole node connections
+  \coil[intensitylabel=$i$](A)(B){$L$}
+  \coil[intensitylabel=$i'$,intensitycolor=green,%
+    parallel,parallelarm=2](B)(C){$L'$}
+  \capacitor[parallel,parallelarm=-2](B)(C){$C$}
+  \end{pspicture}
+\end{SideBySideExample}
+
+\begin{SideBySideExample}[xrightmargin=8.5cm]
+  \begin{pspicture}(6,6)
+  \psgrid[subgriddiv=1,griddots=10]
+  % Node definitions
+  \pnode(0,0){A}\pnode(6,0){B}
+  \pnode(0.3,4){Cprime}\pnode(5.7,4){Dprime}
+  \pnode(2.5,4){Gprime}\pnode(2.5,0){Hprime}
+  \pnode(0,4){C}\pnode(6,4){D}
+  \pnode(0.3,6){E}\pnode(5.7,6){F}
+  \pnode(4,6){G}\pnode(4,0){H}
+  \multidipole(G)(H)%
+    \wire[intersect,
+      intersectA=C,intersectB=D]
+    \resistor{$R'_3$}.
+  \resistor(E)(G){$R'_1$}
+  \resistor(G)(F){$R'_2$}
+  \multidipole(C)(D)\resistor{$R_1$}%
+    \wire\resistor{$R_2$}.
+  \wire(A)(B)\wire(Cprime)(E)
+  \wire(Dprime)(F)
+  \resistor(Hprime)(Gprime){$R_3$}
+  \end{pspicture}
+\end{SideBySideExample}
+
+
+
+\begin{SideBySideExample}[xrightmargin=9.5cm]
+  \begin{pspicture}(9,11)
+  \psgrid[subgriddiv=1,griddots=10]
+  % Node definitions
+  \pnode(0,0){A}
+  \pnode(9,0){B}
+  \pnode(0,6){C}
+  \pnode(9,6){D}
+  \pnode(4.5,1){E}
+  \pnode(4.5,10.5){F}
+  %
+  \switch(A)(C){$K$}
+  \multidipole(A)(B)\resistor{$R$}%
+    \battery[intensitylabel=$i$]{$V$}.
+  \wire(B)(D)
+  \multidipole(C)(D)\diode{$D$}\wire.
+  \resistor[tensionlabel=$U_1$](C)(F){$R_1$}
+  \resistor(C)(E){$R_4$}
+  \capacitor[parallel,parallelarm=1.2,
+    parallelsep=1.5](C)(E){$C_2$}
+  \coil(E)(D){$L$}
+  \capacitor[parallel,parallelarm=1.2,
+    parallelsep=1.5](E)(D){$C_3$}
+  \capacitor[tensionlabel=$U_2$](F)(D){$C_1$}
+  \multidipole(E)(F)\wire%
+    \wire[intersect,
+    intersectA=C,intersectB=D]%
+    \circledipole[labeloffset=-0.7]{$E$}%
+    \resistor[parallel,
+      parallelsep=.6,parallelarm=.8]{$R$}.
+  \end{pspicture}
+\end{SideBySideExample}
+
+
+\begin{CenterExample}
+  \begin{pspicture}(13,8)
+    \psset{intensitycolor=red,intensitylabelcolor=red,%
+        tensioncolor=green,tensionlabelcolor=green,%
+        intensitywidth=3pt}
+    \psgrid[griddots=5,gridlabels=7pt,subgriddiv=0]
+    \circledipole[
+         tension,%
+         tensionlabel=$U_0$,%
+         tensionoffset=0.75,%
+         labeloffset=0](0,0)(0,6){\LARGE\textbf{=}}
+    \wire[intensity,intensitylabel=$i_0$](0,6)(2.5,6)
+    \diode[dipolestyle=thyristor](2.5,6)(4.5,6){$T_1$}
+    \wire[intensity,intensitylabel=$i_1$](4.5,6)(6.5,6)
+    \multidipole(6.5,7.5)(2.5,7.5)%
+        \coil[dipolestyle=rectangle,labeloffset=-0.75]{$L_5$}%
+        \diode[labeloffset=-0.75]{$D_5$}.
+    \wire[intensity,intensitylabel=$i_5$](6.5,6)(6.5,7.5)
+    \wire(2.5,7.5)(2.5,3)
+    \wire[intensity,intensitylabel=$i_c$](2.5,4.5)(2.5,6)
+    \qdisk(2.5,6){2pt}\qdisk(6.5,6){2pt}
+    \diode[dipolestyle=thyristor](2.5,4.5)(4.5,4.5){$T_2$}
+    \wire[intensity,intensitylabel=$i_2$](4.5,4.5)(6.5,4.5)
+    \capacitor[tension,tensionlabel=$u_c$,%
+        tensionoffset=-0.75,tensionlabeloffset=-1](6.5,4.5)(6.5,6){$C_k$}
+    \qdisk(2.5,4.5){2pt}\qdisk(6.5,4.5){2pt}
+    \wire[intensity,intensitylabel=$i_3$](6.5,4.5)(6.5,3)
+    \multidipole(6.5,3)(2.5,3)%
+        \coil[dipolestyle=rectangle,labeloffset=-0.75]{$L_3$}%
+        \diode[labeloffset=-0.75]{$D_3$}.
+    \wire(6.5,6)(9,6)\qdisk(9,6){2pt}
+    \diode(9,0)(9,6){$D_4$}
+    \wire[intensity,intensitylabel=$i_4$](9,3.25)(9,6)
+    \wire[intensity,intensitylabel=$i_a$](9,6)(11,6)
+    \multidipole(11,6)(11,0)%
+        \resistor{$R_L$}
+        \coil[dipolestyle=rectangle]{$L_L$}%
+    \circledipole[labeloffset=0,%
+            tension,tensionoffset=0.7,%
+            tensionlabel=$U_B$]{\LARGE\textbf{=}}.
+    \wire(0,0)(11,0)\qdisk(9,0){2pt}
+    \pnode(12.5,5.5){A}\pnode(12.5,0.5){B}
+    \tension(A)(B){$u_a$}
+  \end{pspicture}
+\end{CenterExample}
+
+
+\makeatletter
+%
+\def\REG{\@ifnextchar[{\pst@REG}{\pst@REG[]}}
+%
+\def\pst@REG[#1](#2)(#3)(#4)#5{{%
+  \setkeys{psset}{#1,dimen=middle,arm=0}%
+  \pst@getcoor{#2}\pst@tempa
+  \pst@getcoor{#3}\pst@tempb
+  \pst@getcoor{#4}\pst@tempc
+  \pnode(!%
+    \pst@tempa /Y1 exch \pst@number\psyunit div def
+    /X1 exch \pst@number\psxunit div def
+    \pst@tempb /Y2 exch \pst@number\psyunit div def
+    /X2 exch \pst@number\psxunit div def
+    \pst@tempc /Y3 exch \pst@number\psyunit div def
+    /X3 exch \pst@number\psxunit div def
+    /XC X1 X2 add 2 div def
+    /YC Y1 2 mul Y3 add 3 div def
+    /Xin XC 1 sub def
+    /Yin YC 0.5 add def
+    /Xout XC 1 add def
+    /Yout Yin def
+    /Xref XC def
+    /Yref YC 1 sub def
+    XC YC){C@}
+  \pnode(! Xin Yin){in@}
+  \pnode(! Xout Yout){out@}
+  \pnode(! Xref Yref){ref@}
+  \rput(C@){\pst@draw@REG}
+  \ncangle{#2}{in@}
+  \ncangle{#3}{out@}
+  \ncangle{#4}{ref@}
+  \rput(C@){#5}
+  }\ignorespaces}
+%
+\def\pst@draw@REG{%
+  \begingroup
+  \psset{linewidth=1.5\pslinewidth}%
+  \psframe(-1,-0.5)(1,0.75)
+  \psline(-1.5,0.5)(-1,0.5)
+  \psline(1.5,0.5)(1,0.5)
+  \psline(0,-0.5)(0,-1)
+  \endgroup
+  }
+%
+\makeatother
+
+The fellowing example was written by Manuel Luque.
+\begin{CenterExample}
+  \begin{pspicture}(14,4)
+  \psgrid[subgriddiv=1,griddots=10]
+  \pnode(0,0){B}\pnode(0,3){A}
+  \pnode(2.5,3.5){C}\pnode(2.5,-0.5){D}
+  \pnode(5,3){E}\pnode(6.5,1.5){F}
+  \pnode(5,0){G}\pnode(3.5,1.5){H}
+  \pnode(8,2.5){I}\pnode(8,1){J}
+  \pnode(10,2.5){K}\pnode(10,1){L}
+  \pnode(14,2.5){M}\pnode(12,1){N}
+  \pnode(3,1){H'}\pnode(14,2.5){O}
+  \pnode(14,1){P}\pnode(13.5,1){Q}
+  \transformer[transformeriprimarylabel=$i_1$,
+    transformerisecondarylabel=$i_2$,
+    primarylabel=$n_1$,secondarylabel=$n_2$]%
+    (A)(B)(C)(D){$T_1$}
+  {\psset{fillstyle=solid,fillcolor=black}
+  \diode(H)(E){}\diode(H)(G){}
+  \diode(E)(F){}\diode(G)(F){}}
+  \capacitor[dipolestyle=chemical](I)(J){}
+  \capacitor(K)(L){}
+  \REG(K)(M)(N)%
+    {\shortstack{\textsf{%
+    \textbf{\large LM7805}}\\\textbf{+5V}}}
+  \ncangle{I}{F}\psline(I)(K)
+  \ncangle{E}{C}\ncangle{G}{D}
+  \ncangle[arm=0]{P}{Q}
+  \ncangle[arm=0]{H}{H'}
+  \ground(H')\ground(J)
+  \ground(L)\ground(N)
+  \ground(Q)\qdisk(I){1.5pt}
+  \qdisk(K){1.5pt}\qdisk(E){1.5pt}
+  \qdisk(G){1.5pt}\qdisk(H){1.5pt}
+  \qdisk(F){1.5pt}
+  \pscircle[fillstyle=solid](A){0.075}
+  \pscircle[fillstyle=solid](B){0.075}
+  \pscircle[fillstyle=solid](P){0.075}
+  \pscircle[fillstyle=solid](O){0.075}
+  \end{pspicture}
+\end{CenterExample}
+
+The fellowing example was written by Lionel Cordesses.
+
+\begin{CenterExample}
+  \begin{pspicture}(11,3)
+  \psset{dipolestyle=elektor}
+  \pnode(1,2){Vin}\pnode(0.5,2){S}\pnode(0.5,0){Sm}
+  \pnode(2.5,2){A}\pnode(4.5,2){B}\pnode(6.5,2){C}
+  \pnode(8,2){Cd}\pnode(8.5,2){D}\pnode(9.5,2){E}
+  \pnode(2.5,0){Am}\pnode(4.5,0){Bm}\pnode(6.5,0){Cm}
+  \pnode(8.5,0){Dm}\pnode(9.5,0){Em}
+  \Ucc[labeloffset=0.9](Sm)(S){$V_{in}$}\resistor(Vin)(A){$R$}
+  \capacitor(A)(Am){$C_1$} \capacitor(B)(Bm){$C_3$}
+  \capacitor[labeloffset=-0.7](D)(Dm){$C_n$}\resistor(E)(Em){$R$}
+  \coil(A)(B){$L_2$}\coil(B)(C){$L_4$}
+  \wire(Am)(Bm)\wire(Bm)(Cm)\wire(Cm)(Dm)\wire(Dm)(Em)\wire(D)(E)
+  \wire(Cd)(D)\psline[linestyle=dashed](C)(Cd)
+  \wire(S)(Vin)\wire(Sm)(Am)
+  \pscircle*(D){2\pslinewidth} \pscircle*(Dm){2\pslinewidth}
+  \pscircle*(A){2\pslinewidth} \pscircle*(Am){2\pslinewidth}
+  \pscircle*(B){2\pslinewidth} \pscircle*(Bm){2\pslinewidth}
+  \end{pspicture}
+\end{CenterExample}
+
+\section{Adding new components}
+
+Adding new components is not simple. As a matter of fact, because of the complex
+mechanism of \cs{multidipole}, there are multiple steps. The easiest way to proceed is
+to draw the component, send it to me (\texttt{\makeatletter
+christophe.jorssen@noos.fr\makeatother}) and I'll do the programming work regarding your
+component. Nevertheless, it can take some time\dots
+
+If you want to modify the code, you need to know the following
+things. For a dipole, you first
+need to define the following items \fvset{commandchars=/&"}
+
+\begin{Verbatim}
+  \def\/emph&component/_name"{\@ifnextchar[{\pst@/emph&component/_name"}{\pst@/emph&component/_name"[]}}
+  %
+  \def\pst@/emph&component/_name"[#1](#2)(#3)#4{{%
+    \pst@draw@dipole{#1}{#2}{#3}{#4}\pst@draw@/emph&component/_name"
+    }\ignorespaces}
+  %
+  \def\pst@multidipole@/emph&component/_name"{\@ifnextchar[{\pst@multidipole@/emph&component/_name"@}%
+    {\pst@multidipole@/emph&component/_name"@[]}}
+  %
+  \def\pst@multidipole@/emph&component/_name"@[#1]#2{%
+    \expandafter\def\csname pst@circ@tmp@\number\pst@circ@count@iii\endcsname{#2}%
+    {\setkeys{psset}{#1}%
+    \ifPst@circ@parallel\aftergroup\advance\aftergroup\pst@circ@count@i\aftergroup\m@ne\fi}%
+    \pst@circ@count@ii=\pst@circ@count@i%
+    \advance\pst@circ@count@ii\@ne%
+    \toks0\expandafter{\pst@multidipole@output}%
+    \edef\pst@multidipole@output{%
+      \the\toks0%
+      \pst@multidipole@def@coor%
+      \noexpand\/emph&component/_name"[#1]%
+    (! X@\the\pst@circ@count@i\space Y@\the\pst@circ@count@i)%
+    (! X@\the\pst@circ@count@ii\space Y@\the\pst@circ@count@ii)%
+        {\noexpand\csname pst@circ@tmp@\number\pst@circ@count@iii\endcsname}%
+    }%
+    \pst@multidipole@
+  }
+  %
+  \def\pst@draw@/emph&component/_name"{%
+    % The PSTricks code for your component
+    % The center of the component is at (0,0)
+    \pnode(/emph&component/_left/_end",0){dipole@1}
+    \pnode(/emph&component/_right/_end",0){dipole@2}
+  }
+\end{Verbatim}
+
+Then, you have to make some changes in the \cs{multidipole} core code\dots In the definition
+of \Verb+\pst@multidipole+, look for the last \Verb+\ifx+ test
+\begin{Verbatim}
+  % ...
+  % Extract from \pst@multidipole
+                      \else
+                        \ifx\circledipole #4%
+                          \let\next\pst@multidipole@circledipole
+                        \else
+                          \ifx\LED #4%
+                            \let\next\pst@multidipole@LED
+                          \else
+                          % Put your modification here
+                            \let\next\ignorespaces
+                          \fi
+                        \fi
+                      \fi
+  % Extract form \pst@multidipole
+  % ...
+\end{Verbatim}
+and add (in red)
+\begin{Verbatim}
+  % ...
+  % Extract from \pst@multidipole
+                      \else
+                        \ifx\circledipole #4%
+                          \let\next\pst@multidipole@circledipole
+                        \else
+                          \ifx\LED #4%
+                            \let\next\pst@multidipole@LED
+                          \else
+                            /red&\ifx\/emph&component/_name" #4%"
+                              /red&\let\next\pst@multidipole@/emph&component/_name""
+                            /red&\else"
+                              \let\next\ignorespaces
+                            /red&\fi"
+                          \fi
+                        \fi
+                      \fi
+  % Extract form \pst@multidipole
+  % ...
+\end{Verbatim}
+Do the same in \Verb+\pst@multidipole@+
+\begin{Verbatim}
+  % ...
+  % Extract from \pst@multidipole@
+                      \else
+                        \ifx\circledipole #1%
+                          \let\next\pst@multidipole@circledipole
+                        \else
+                          \ifx\LED #1%
+                            \let\next\pst@multidipole@LED
+                          \else
+                            /red&\ifx\/emph&component/_name" #1%"
+                              /red&\let\next\pst@multidipole@/emph&component/_name""
+                            /red&\else"
+                              \let\next\ignorespaces
+                              \pst@multidipole@output
+                            /red&\fi"
+                          \fi
+                        \fi
+                      \fi
+  % Extract form \pst@multidipole@
+  % ...
+\end{Verbatim}
+and that's it! All you have to do then is send your modified \texttt{pst-circ.tex} to 
+me and  it will become part of the official release of \CircPackage.
+
+\textbf{Important:} Pay attention to the comment character \Verb+%+
+at the end of lines. They are \emph{very} important in order to avoid spurious blanks.
+
+\section{Acknowledgements}
+
+We thank of course Manuel Luque for his original work on pst-circ and for his circuit
+drawings: this wouldn't have been possible without him. As usual, Denis Girou gave us a 
+precious hand with some dark tricks of \TeX{} and PSTricks. Jean-C\^ome Charpentier
+wrote the outline of \cs{multidipole} (a story about riri, fifi and loulou\dots).
+Thanks also to Douglas Waud.
+
+\end{document}

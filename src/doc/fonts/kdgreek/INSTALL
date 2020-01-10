@@ -1,0 +1,158 @@
+		INSTALLATION NOTES FOR GreekTeX v 3.1
+		-------------------------------------
+
+			    K J Dryllerakis
+			Logic Programming Group
+			Imperial College,London
+			    kd@doc.ic.ac.uk
+
+
+	This document describes how to get GreekTeX up and running
+	on your system. It is devided into two parts: instructions
+	for Unix users and Instructions for DOS emTeX users. I would
+	like to hope that these two categories represent a majority
+	of TeX users and I apologize for not extending specialised
+	instructions to users of other systems. For those of you that do
+	not fall in the two categories do not panic! Read the DOS
+	section and procede with the same steps. Just change the
+	paths and executables to match the ones in your system.
+	
+
+Part A: 	Unix Users
+--------------------------
+
+	What you need: 
+		To rebuild the whole GreekTeX package you need to have
+		access to the metafont and initex programs as well
+		as the ability to integrate new fonts and formats
+		to the search path of the local tex distribution.
+		You also need the gftopk utility for transforming
+		mf output to dvi readable form. For automated installation
+		you need a "standard" unix 'make' program, and the
+		'dc' calculator. If you do not have any of these you
+		will have to do the job by hand. If you do not have
+		the dc calculator you can still build the fonts
+		by altering the script to suit your own needs.
+		You also need to know the resolution of the local
+		printer. Finally you can do with a bit of patience.
+
+	Procedure:
+		The installation procedure follows the steps:
+			* build and install the fonts in the
+			  standard path (both pk and tfm files)
+			* build the greek format files for both
+			  greekTeX and grlatex.
+			* place the files in the appropriate 
+			  directory
+			* do a test run to see how it looks!
+
+	How to procede for an automated installation:
+	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	STEP			DESCRIPTION
+	-> 0	Find a suitable place to unpack the file
+		kdgreek3.1.tar.Z. Let us call the subdirectory
+		kdgreek3.1/ where all the files will be the
+		TOP directory.
+	-> 1	First edit the file unix/newfont. If a similar
+		script exists in your system the just forget it
+		and mode to the step 2. In particular set the
+		default paths and executable names to point
+		to the right direction and make sure the file
+		has the execute attribute set.
+	-> 2	Edit the Makefile at the TOP directory to 
+		reflect the paths and setting of your own system.
+		It should be easy and straightforward and not many
+		changes should be needed in a standard distribution.
+	-> 3 	Make the fonts: at the shell prompt type
+			make fonts
+		This will try to create the greek fonts for all
+		needed magnification levels and place them at
+		their proper place (all the job is done by the
+		newfont script in the unix directory or the
+		newfont script that you set in the makefile).
+		Do not be alarmed if "stange Pos " occur at some
+		fonts and magnifications. The fonts are still in
+		experimental stage and do have problems. If your
+		version of metafont stops at a '?' prompt just
+		hit return to continue.
+	-> 4	You can now build the formats. give the command
+			make formats
+		this will build both greek.fmt and lgreek.fmt in
+		the build subdirectory. Log files will be in the
+		log subiderctory of build.
+	-> 5 	Install everything in its proper place by 
+		executing the command:
+			make install
+		This will place everything in the proper place
+		and have you ready to go.
+	-> 6 	Try the system out: go to the doc doc subdir
+		and type 
+			greektex usage
+		then see what happens.
+	
+
+Part B: 	DOS emTeX users
+-------------------------------
+
+	What you need:
+		In order to use GreekTeX on a PC running DOS and emTeX
+		you will need mf and friends to create the fonts (mfjob
+		for automated procedures) plain tex and latex bearing
+		version 3.0 or later (that is the format file not the
+		executable). 
+
+	How to procede:
+		Unpack the distribution where convenient. If you got
+		GreekTeX as greektex.zip the use [pk]unzip -d greektex
+		at an apropriate directory. You can delete the unix,
+		utils directories and the makefile since they are
+		intended for unix users. 
+
+	-> 1	Copy the file emtex/kdgreek.mfj to the MFJOB path or
+		in the mf directory. cd to the mf directory and
+		give the command mfjob -i kdgreek. If everything goes
+		well you will end up with a new bunch of fonts in
+		the proper directories.
+	-> 2	cd to tex and type
+			tex -i -8 greek \dump
+		This will create the files greek.fmt and greek.log
+		Move greek.fmt to the directory where you normally 
+		store the format files (e.g. emtex/btexfmts) and 
+		delete the file greek.log after reviewing the messages.
+	-> 3	cd to latex and type
+			tex -i -8 lgreek \dump
+		Repeat the same procedure as in step 2 for copying the
+		lgreek.fmt and removing the lgreek.log file.
+	-> 4	copy the files in the tex, latex directories to the
+		default search path of emtex (e.g. /emtex/inputs)
+		If you will be using a greek ISO character set for
+		modern greek you might also want to copy the files
+		emtex/greek.* to your inputs dir.
+	->5	Finally move the emtex/*.bat files to the emtex bin
+		directory and you are all set to go.
+	->6	Test the system by cd to doc and doing
+			greektex usage.tex
+		
+	GOOD LUCK
+
+Please send comments and bug reports to kd@doc.ic.ac.uk
+
+DISCLAIMER: 
+	Although I have put much effort in eliminating bugs, the
+	greekTeX package is still in experimental phase. If you 
+	decide to use the package please do not blame me for any
+	problems that may arise from its use. I cannot be held
+	responsible for any problems and I cannot gurantee 
+	bug fixes (although I guarantee that in due time I will
+	look over all reports and suggestions).
+
+
+-------------------------------------------------------------------------------
+K J Dryllerakis					Deparment    of    Computing
+Logic Programming Group				Imperial  College,    LONDON
+Janet: kd @uk.ac.ic.doc				Tel:  +44(71) 589 5111 x5089
+Uucp : kd@icdoc.UUCP				Internet:    kd@doc.ic.ac.uk
+-------------------------------------------------------------------------------
+
+
+

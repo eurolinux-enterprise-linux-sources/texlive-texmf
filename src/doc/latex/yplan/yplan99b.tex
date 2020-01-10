@@ -1,0 +1,143 @@
+%%
+%% Yplan99B.tex
+%% Vertical Year planner calendar (July to December 1999)
+%%
+%% ---------------------------
+%% Copyright 1999 RWD Nickalls
+%% This program can be redistributed and/or modified under the terms
+%% of the LaTeX Project Public License Distributed from CTAN
+%% archives in directory macros/latex/base/lppl.txt; either
+%% version 1 of the License, or any later version.
+%% --------------------------
+%%
+%% Dr RWD Nickalls,
+%% Department of Anaesthesia,
+%% City Hospital,
+%% Nottingham, UK.
+%%
+%% dicknickalls@compuserve.com
+%% TEL: +44-(0)-115-9691169 Ext:45637
+%% FAX: +44-(0)-115-9627713
+%%
+%% Designed for LaTeX 2e, although it can be easily adapted for
+%% use with LaTeX 2.09, since it is only a big table.
+%%
+%% I designed this year planner as one year my
+%% A4 diary had no good year planner at the end.
+%% The vertical size can be adjusted by changing \datestrut.
+%% ---enjoy!
+%%
+%%----------------------------------
+\documentclass[a4paper]{article}
+%%------------------------------------
+\setlength{\topmargin}{-1cm}
+\setlength{\oddsidemargin}{-13.5mm}
+\setlength{\textwidth}{18.5cm}
+%%
+\newcommand{\monthstrut}{\rule{0pt}{12pt}}
+%% \monthstrut controls the white space above the month.
+%%
+\newcommand{\datestrut}{\rule{0pt}{12pt}}
+%% \datestrut controls the white space above the date.
+%%--------------------------------------
+\begin{document}
+%%---------------
+%% no pagenumbering
+\thispagestyle{empty}
+%%--------------------
+\begin{table}
+\hspace{1cm} {\LARGE 1999}\\
+{\ }  \\
+\begin{tabular}{|c||p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|}
+\hline
+   \multicolumn{1}{|c||}{\monthstrut\ } &
+   \multicolumn{1}{|c|}{JULY} &
+   \multicolumn{1}{|c|}{AUGUST} &
+   \multicolumn{1}{|c|}{SEPTEMBER} &
+   \multicolumn{1}{|c|}{OCTOBER} &
+   \multicolumn{1}{|c|}{NOVEMBER} &
+   \multicolumn{1}{|c|}{DECEMBER} \\
+   \hline
+   \hline
+\datestrut Mo &     &    &     &   &  1  &     \\
+\cline{1-1}\cline{6-6}
+\datestrut Tu &     &    &     &   &  2  &     \\
+\cline{1-1}\cline{4-4}\cline{6-7}
+\datestrut We &     &    & 1   &   &  3  & 1    \\
+\cline{1-2}\cline{4-4}\cline{6-7}
+\datestrut Th & 1   &    & 2   &   &  4  & 2    \\
+\cline{1-2}\cline{4-7}
+\datestrut Fr & 2   &    & 3   & 1 &  5  & 3    \\
+\cline{1-2}\cline{4-7}
+\datestrut Sa & 3   &    & 4   & 2 &  6  & 4    \\
+\hline
+\datestrut Su & 4   & 1  & 5   & 3 &  7  & 5    \\
+\hline\hline
+\datestrut Mo & 5   & 2  & 6   & 4 &  8  & 6    \\
+\hline
+\datestrut Tu & 6   & 3  & 7   & 5 &  9  & 7    \\
+\hline
+\datestrut We & 7   & 4  & 8   & 6 &  10 & 8    \\
+\hline
+\datestrut Th & 8   & 5  & 9   & 7 &  11 & 9    \\
+\hline
+\datestrut Fr & 9   & 6  & 10  & 8 &  12 & 10   \\
+\hline
+\datestrut Sa & 10  & 7  & 11  & 9 &  13 & 11   \\
+\hline
+\datestrut Su & 11  & 8  & 12  & 10&  14 & 12   \\
+\hline\hline
+\datestrut Mo & 12  & 9  & 13  & 11&  15 & 13   \\
+\hline
+\datestrut Tu & 13  & 10 & 14  & 12&  16 & 14   \\
+\hline
+\datestrut We & 14  & 11 & 15  & 13&  17 & 15   \\
+\hline
+\datestrut Th & 15  & 12 & 16  & 14&  18 & 16   \\
+\hline
+\datestrut Fr & 16  & 13 & 17  & 15&  19 & 17   \\
+\hline
+\datestrut Sa & 17  & 14 & 18  & 16&  20 & 18   \\
+\hline
+\datestrut Su & 18  & 15 & 19  & 17&  21 & 19   \\
+\hline\hline
+\datestrut Mo & 19  & 16 & 20  & 18&  22 & 20   \\
+\hline
+\datestrut Tu & 20  & 17 & 21  & 19&  23 & 21   \\
+\hline
+\datestrut We & 21  & 18 & 22  & 20&  24 & 22   \\
+\hline
+\datestrut Th & 22  & 19 & 23  & 21&  25 & 23   \\
+\hline
+\datestrut Fr & 23  & 20 & 24  & 22&  26 & 24   \\
+\hline
+\datestrut Sa & 24  & 21 & 25  & 23&  27 & 25   \\
+\hline
+\datestrut Su & 25  & 22 & 26  & 24&  28 & 26   \\
+\hline\hline
+\datestrut Mo & 26  & 23 & 27  & 25&  29 & 27   \\
+\hline
+\datestrut Tu & 27  & 24 & 28  & 26&  30 & 28   \\
+\hline
+\datestrut We & 28  & 25 & 29  & 27&     & 29   \\
+\cline{1-5}\cline{7-7}
+\datestrut Th & 29  & 26 & 30  & 28&     & 30   \\
+\cline{1-5}\cline{7-7}
+\datestrut Fr & 30  & 27 &     & 29&     & 31   \\
+\cline{1-3}\cline{5-5}\cline{7-7}
+\datestrut Sa & 31  & 28 &     & 30&     &      \\
+\cline{1-3}\cline{5-5}
+\datestrut Su &     & 29 &     & 31&     &      \\
+\hline\hline
+\datestrut Mo &     & 30 &     &   &     &      \\
+\cline{1-1}\cline{3-3}
+\datestrut Tu &     & 31 &     &   &     &       \\
+\hline
+\end{tabular}
+{\ }    \\
+\newcommand{\bs}{$\backslash$}
+\textsc{ctan}{\bs}macros{\bs}latex{\bs}contrib{\bs}other{\bs}yplan{\bs}yplan99
+B.tex% \hfill\hbox{\copyright\ 1999\ RWD Nickalls}
+\end{table}
+%--------------
+\end{document}

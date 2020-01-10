@@ -1,0 +1,93 @@
+vntex-3.1.5
+
+Copyright 2003-2005 Han The Thanh <hanthethanh@gmx.net>.
+This file is part of vntex.  License: LPPL, version 1.3 or newer,
+according to http://www.latex-project.org/lppl.txt
+
+
+Changes from version 2.0 (released 2003/03/03 at vntex.sf.net):
+===============================================================
+
+  * New test files with (hopefully) more meaningful names and also some
+    explanation in doc/generic/vntex/tests/README.
+
+  * Changed locations of enc/map files to conform to TDS 1.1: they now
+    belong to fonts/{enc,map}/{dvips,pdftex}/vntex.  This
+    may break a few things, but it must be done now, as TDS 1.1 is used
+    by all recent TeX distributions
+
+  * Added some font samples to doc/generic/vntex/tests (see README
+    for more details).
+
+  * added support for tex4ht. (Now part of the tex4ht distribution)
+
+  * a few files had been removed:
+
+      - dvips/vntex/config.vnr: inconsistency with urwvn, where no
+        config.urwvn was available.
+
+      - special.map: the line for vnr fonts has been added to the
+        official version of special.map distributed by tetex and
+        texlive.
+
+      - tcx files: they are part of the standard TeX distributions now.
+
+  * dblaccnt.sty and dblaccnt.tex are no longer used; they are
+    retained for backwards compatibility only -- dblaccnt.sty now
+    works with LaTeX 2003/12/01.
+
+  * vntex now supports utf8 (native LaTeX) as well as utf8x (ucs.sty).
+    Support for ucs.sty is a separate package now.
+
+  * Added support for mscore fonts (tfm/vf/fd/map/enc); this requires
+    a very recent version of pdftex (1.21a).
+
+  * All human readable files contain copyright notes now.
+
+  * Vietnamese fonts for tex4ht are now part of the tex4ht distribution
+
+  * plainenc.tex removed from VnTeX
+
+  * plnfss removed from VnTeX
+
+  * ucs removed from VnTeX
+
+  * The primary site of vntex is now http://vntex.org .  The former URL
+    http://vntex.sourceforge.net or http://vntex.sf.net is still usable.
+
+  * The urwvn fonts had been significantly improved.  The faked small caps 
+    in URW Palatino had been replaced by real small caps designed by Ralf
+    Stubner.  Vietnamese accents had been provided by Han The Thanh.
+    Oldstyle numbers are not supported yet.
+
+  * Vietnamese characters had been added to Bitsream Charter fonts.
+
+  * VnURWChanceryL-MediItal added.
+
+Changes from version 3.02 (released 2005/09/25 at vntex.sf.net):
+===============================================================
+
+  * vncaps.tex: Fixed bug in \indexname.
+
+  * Add support for Gentium, Grotesk, Garamond
+
+  * t5enc.dfu: Use \ACIRCUMFLEX and
+    friends only if there are additional diacritics.
+
+  * Add support for URW Classico, CMbright, Concrete, Arev.
+
+  * New font definition files t5futs.fd, t5mdput.fd, t5ptmom.fd,
+    t5fnc.fd, t5mak.fd, t5mdugm.fd, t5pxr.fd, t5mdbch.fd, t5txr.fd.
+
+  * New macro package varioref-vi.sty.
+
+  * Add support for Comicsans.
+
+  * Add support for txtt fonts.
+
+  * Add new font Vntopia.
+
+  * Supplier directories for VNR fonts are now 'vntex' instead of 'public'.
+
+  * Add support for Scientific Workplace (swpvntex.sty).
+

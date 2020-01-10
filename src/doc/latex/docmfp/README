@@ -1,0 +1,27 @@
+    The docmfp package extends the doc package to cater for documenting 
+non-LaTeX code, such as Metafont and Metapost, or even C code.
+
+    The distribution consists of the following files:
+README (this file)
+docmfp.ins
+docmfp.dtx
+
+    The distribution is provided under the terms of the LaTeX
+Project Public License (LPPL).
+
+Changes in version 1.1
+----------------------
+o Added a general \Describe macro
+o Added a general Code environment
+
+    To install the package:
+o run: latex docmfp.ins (which will generate docmfp.sty)
+o run: latex docmfp.dtx
+o run: makeindex -s gind.ist docmfp
+o run: latex docmfp.dtx
+o Print docmfp.dvi for a hardcopy of the package manual 
+o Move docmfp.sty to a location where LaTeX will find it.
+
+2000/10/28
+Peter Wilson
+peter.r.wilson@boeing.com

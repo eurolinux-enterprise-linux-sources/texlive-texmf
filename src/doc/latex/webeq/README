@@ -1,0 +1,76 @@
+The AcroTeX eDucation Bundle --- D. P. Story
+Version 6.01 
+
+Contents:
+0)  acrotex.ins --- installation batch file for the AcroTeX Bundle.
+1)  web.dtx --- a package that redefines the page layout to
+    more web-friendly dimensions.  Also defines a new table of
+    contents, navigational aids.  Driver options are for dvipsone
+    (by Y&Y), dvips, pdftex, dvipdfm and dviwindo.  There are
+    language options for dutch, french, german, italian.
+     norsk, russian spanish, dansk, polish, finnish.
+2)  exerquiz.dtx --- a package that defines three new environments:
+    (1) exercise, for creating online exercises with solutions
+    linked to the questions; (2) shortquiz, for creating multiple
+    choice quizzes with immediate response, with options to see the
+    solution; (3) quiz, longer quizzes that are graded with
+    JavaScript, the quizzes can optionally be corrected by
+    JavaScript as well. 
+3)  eForms.dtx -- this package give fairly complete support of PDF forms. The
+    documentation for this package is eformman.pdf
+4)  insdljs.dtx --- a package for inserting document level JavaScripts
+    from a LaTeX source. Command for defining open page actions and an
+    environment for defining JavaScript.
+5)  dljslib.dtx --- A library of JavaScript functions for modifying the way
+    in which Exerquiz processes an answer.
+6)  eq_pdfs.zip -- this zip file contains a file eq_pdfs.tex that
+    demonstrates that exerquiz works with pdfscreen.
+7)  eq2db.zip/eq2db Package --- The eq2db Package is a LaTeX package converts exerquiz
+    quizzes to quizzes that are submitted to server-side script. There are also
+    general server-side script for storing quiz results to to a database, emailing
+    results to the instructor, and storing quiz results to a tab-delimited text file.
+    The scripts are ASP (Active Server Pages) and require Ms IIS 4.0 or later.
+8)  webeqman.pdf --- the manual of usage for web/exerquiz packages. Screen version.
+9)  webeqman_p.pdf --- the manual of usage for web/exerquiz packages, print version.
+10) eformman.pdf --- the manual that describes eForm support
+11) eformman_p.pdf --- printable version of same.
+12) eq2dbman.pdf --- manual of usage for the eq2db Package and accompanying scripts.
+13) eq2dbman_p.pdf --- printable version of same.
+
+
+Installation Instructions:
+Create a directory in the search path of your LaTeX installation called
+acrotex, and unzip the acrotex.zip package.  Install the AcroTeX
+Bundle by executing the command: latex acrotex.ins. The eq2db Package (optional)
+can be installed with the command: latex eq2db.ins.
+
+Now try LaTeXing the file webeqtst.tex, with the appropriate driver
+option set: E.g.,
+\usepackage[dvipsone]{web}
+\usepackage[dvips]{web}
+\usepackage[pdftex]{web}
+\usepackage[dvipdfm]{web}
+
+Hopefully everything will work correctly.
+
+The manual of usage, webeqman.pdf, was written using the web and
+exerquiz packages.  The printable version, webeqman_p.pdf is the
+manual re-LaTeXed using the `forpaper' option of the exerquiz
+package.  All the details are contained in this manual.
+
+If you want to do something fancy with eForms, review the eformman.pdf.
+If you are interested in online quizzing, see eq2dbman.pdf.
+
+Let me know if there are problems or suggested features.  e-mail
+me at dpstory@uakron.edu
+
+I maintain a web site featuring TeX/LaTeX/PDF stuff called
+AcroTeX (www.math.uakron.edu/~dpstory/acrotex.html).  There you
+will find the home web page of the AcroTeX eDucation Bundle.
+(www.math.uakron.edu/~dpstory/webeq.html).
+
+Now, I simply must get back to work.
+
+D. P. Story
+dpstory@uakron.edu
+07/06/04

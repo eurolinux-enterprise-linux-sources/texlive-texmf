@@ -1,0 +1,40 @@
+\documentclass{minimal}
+\listfiles
+%\usepackage[T1]{fontenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{pstricks,pst-jftree}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+\deftriangle\fixedtri(.8)(1)(-1)
+\defbranch\steepmedleft(1)(2)
+\defbranch\steepmedright(1)(-2) 
+\def\overnode#1#2{%
+  \vtop{\offinterlineskip 
+    \halign{\hfil##\hfil\cr \vrule width0pt depth5pt #2\cr \pnode{#1}\cr}}} 
+\jftree[xunit=54pt,yunit=22pt,triratio=.5,everynode={\strut}] 
+\!\0{IP} 
+  \fixedtri[triratio=.95]\1 
+  \fixedtri{\triline{sono stati\hfil}}\cr 
+\!\1{FP}\medleft\2\medright\3\cr 
+\!\2{$F_{\rlap{$\scriptstyle[+strong]$}}$} 
+  \medvert{\overnode{A1}{$arrestati_i$}}\cr 
+\!\3{Voice$_{\rlap{$\scriptstyle Pass$}}$} 
+  \medleft{\hskip1.4em\overnode{A2}{Voice}$_{Pass}$} 
+  \medright\6\cr 
+\!\6{$Agr_OP$}\medleft\7\medright\8\cr 
+\!\7{DP}\medvar{\overnode{A3}{alcuni uomini$_m$}}\cr 
+\!\8{${Agr_O}'$} 
+  \steepmedleft{\overnode{A4}{$Agr_O$}} 
+  \steepmedright\9\cr 
+\!\9{VP}\medvar{\quad\overnode{A5}{${\mathit{t}}_{\,i}$} 
+  \overnode{A6}{${\mathit{t}}_{\,m}$}\quad}\cr 
+\endjftree 
+{\psset{nodesepA=0,nodesepB=3pt,arrows=->} 
+ \ncarc[arcangle=45,nodesepA=5pt]{A2}{A1} 
+ \nccurve[angleA=-150,angleB=-70]{A5}{A4} 
+ \nccurve[angleA=-140,angleB=-70,nodesepA=3pt, linestyle=dashed]{A6}{A3} 
+ \nccurve[angleA=-160,angleB=-100,ncurv=1.4,nodesepA=5pt]{A4}{A2}} 
+
+\end{document}

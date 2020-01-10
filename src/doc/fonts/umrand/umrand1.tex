@@ -1,0 +1,201 @@
+\newpage\setcounter{page}{1}
+\font\f=umranda
+\font\F=umranda at 20pt
+{\def\make{\input{b}
+          \vskip 2mm
+		  \hrule
+          \verbatiminput{b}
+		  \vskip 2mm\hrule\hrule\vskip 1mm}
+\fussy
+\Thema{Umrandungen}
+\Nr{9}
+
+Heute gehts um Umrandungen, die Makros und der Font sind ziemlich
+umfangreich, so da"s beide hier nur in der Anwendung gezeigt werden sollen.
+Es sind definiert:
+\begin{verbatim}
+\def\C{\char'} % Oktaldarstellung
+\font\f = umranda
+\font\F = umranda at 20pt
+\end{verbatim}
+Und los gehts:
+\vskip 2mm
+
+\begin{bsp}
+\RandBox {Dieses ist eine Quadrat-Testbox}
+         font {\f} [0pt]
+         (\C114) ([\C71\\\C73]\C71) (\C114)
+         (\C72[\C74\\\C72])        ([\C74\\\C72]\C74)
+         (\C114) (\C73[\C71\\\C73]) (\C114)
+\end{bsp}
+\make
+
+\begin{bsp}
+\RandBox {Es w"achst Gras "uber die Sache}
+         font {\f} [0pt]
+         () ([\C75\\\C77]\C75) ()
+         (\C76[\C100\\\C76])           ([\C100\\\C76]\C100)
+         () (\C77[\C75\\\C77]) ()
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\RandBox {Ist das nicht zum Kringeln?}
+         font {\f} [-0.3em]
+         () ([\C65]) ()
+         ([\C67])   ([\C67])
+         () ([\C65]) ()
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\RandBox {Eine sich schl"angelnde Schlange.}
+         font {\F} [-0.3em]
+         () ([\C127]) ()
+         ([\C131])   ([\C135])
+         () ([\C133]) ()
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\RandBox {Dieses ist eine riesige Box mit Fischen}
+         font {\f} [0.1em]
+         (\C113) ([\C102]) (\C113)
+         ([\C104])         ([\C110])
+         (\C113) ([\C106]) (\C113)
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\RandBox {Wellenlinien mit verschiedenen Ecken}
+         font {\f} [0pt]
+         (\C115) ([\C111]) (\C114)
+         ([\C112])         ([\C112])
+         (\C115) ([\C111]) (\C114)
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\RandBox {\parbox{7cm}{Dieses ist eine riesige und gro"se Testbox
+                       mit hoffentlich zwei Zeilen! Der Rand besteht
+                       aus sich "uberlappenden Wellenteilen.}}
+         font {\f} [-0.5em]
+         (\C113) ([\C111]) (\C113)
+         ([\C112])         ([\C112])
+         (\C113) ([\C111]) (\C113)
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\EinfachRand {Wieder mal eine (andere) Box} font {\F} char {\C43} [0pt]
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\EinfachRand {Noch eine Box, diesmal mit Stacheldraht.}
+    font {\F} char {\C41} [0.2em]
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\EinfachRand {Und man sieht hier noch einen Kasten.}
+    font {\F} char {\C42} [0.2em]
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\EinfachRand {Yin und Yang} font {\f} char {\C10} [0.2em]
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\EinfachRand {Nach einer Grafik von Apollonio.}
+    font {\F} char {\C37} [0.2em]
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\RandBox {Test in einer Box mit Buchstaben.}
+         font {\tt} [0.2em]
+         (W)        ([B\\C]B)       (X)
+         ([D\\E\\F])                ([G\\H\\I])
+         (Y)        ([J\\K]J)           (Z)
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\RandBox {Wir machen das Unm"ogliche m"oglich.}
+         font {\F} [0.1em]
+         (\C3)              ([\C2\\\C6]\C2)         (\C1)
+         ([\C4\\\C0]\C4)                        ([\C0\\\C4]\C0)
+         (\C5)              ([\C6\\\C2]\C6)     (\C7)
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\RandBox {Wunder dauern etwas l"anger.}
+         font {\F} [0.2em]
+         ()                 ([\C2\\\C6]\C2)         ()
+         ([\C4\\\C0]\C4)                        ([\C0\\\C4]\C0)
+         ()                 ([\C6\\\C2]\C6)     ()
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\RandBox {Eine Box wie vorne, aber mit Abst"anden.}
+         font {\F} [0.2em]
+         ()         ([\C43])        ()
+         ([\C43])                       ([\C43])
+         ()         ([\C43])        ()
+\end{bsp}
+\make
+
+
+
+\begin{bsp}
+\RandBox {Mischmasch mit gedrehtem Yin und Yang.}
+         font {\f} [0.2em]
+         (\C7)      ([\C10\\\C12\\\C14\\\C16\\\C20\\\C22])      (\C5)
+         ([\C21])                                               ([\C13])
+         (\C1)      ([\C10\\\C12\\\C14\\\C16\\\C20\\\C22])      (\C3)
+\end{bsp}
+\make
+
+\begin{bsp}
+\EinfachRand {\parbox{7cm}{Dieses hier ist eine Parbox mit mehreren Zeilen
+Text, die sp"ater umrahmt werden soll. Der Rahmen besteht nicht aus Linien
+sondern aus Schmucksymbolen, die von \TeX\ automatisch zu einem Rahmen in
+der erforderlichen Gr"o"se zusammengesetzt werden.}}
+    font {\f} char {\C66} [-0.7em]
+\end{bsp}
+\make
+}
+\endinput

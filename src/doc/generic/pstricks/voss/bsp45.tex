@@ -1,0 +1,20 @@
+\documentclass[]{article}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{multido}
+\pagestyle{empty}
+\parindent=0pt
+\begin{document}
+
+\begin{center}
+\begin{pspicture}(8,8)
+  \cnode*(4,4){4pt}{A}
+  \multido{\nA=0+10,\rB=0+0.5,\rHue=0.0+0.005}{200}{%
+    \xdefinecolor{MyColor}{hsb}{\rHue,1,1}%
+     \nput[rot=\nA,%
+        labelsep=\rB pt]{\nA}{A}{\textcolor{MyColor}{\TeX}}
+  }
+\end{pspicture}
+\end{center}
+
+\end{document}

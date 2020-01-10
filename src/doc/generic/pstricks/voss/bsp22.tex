@@ -1,0 +1,24 @@
+\documentclass{article}
+\usepackage{pstricks}
+\usepackage{multido}
+%
+\newcommand{\PstFillBox}[3]{%
+  \definecolor{MyColor}{rgb}{#1,#2,#3}%
+  \begin{pspicture}(-0.44,-0.47)(0.44,0.47)
+    \psframe[fillstyle=solid,%
+       fillcolor=MyColor,%
+       linecolor=MyColor](-0.5,-0.5)(0.5,0.5)
+  \end{pspicture}
+}
+\parindent=0pt
+\pagestyle{empty}
+
+\begin{document}
+\multido{\rCountA=0+0.1}{10}{%
+  \multido{\rCountB=0+0.1}{10}{%
+    \PstFillBox{\rCountA}{\rCountB}{0.75}%
+  }\\%
+}
+\end{document}
+
+

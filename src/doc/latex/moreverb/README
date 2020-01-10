@@ -1,0 +1,20 @@
+The _supported_ moreverb package...  supported in the sense that I'll
+try and get things mended.
+
+This is a further iteration of moreverb, following my original port to
+2e and a bug mend (or two?) by David Carlisle.
+
+This version has been pruned somewhat, from its 2.09 original, to take
+account of changes to the facilities offered by the LaTeX team members
+themselves.
+
+Major changes from the original 2e port are:
+
+ - the package no longer (re-)implements \verbatiminput (since it's
+   in the verbatim package, which the package loads anyway)
+ - the package no longer implements the verbatimcmd environment, and
+   points you to alltt instead
+ - the source is `documented'
+
+Robin Fairbairns
+rf@cl.cam.ac.uk

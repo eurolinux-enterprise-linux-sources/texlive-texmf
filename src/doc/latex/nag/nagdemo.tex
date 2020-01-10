@@ -1,0 +1,88 @@
+%%
+%% This is file `nagdemo.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% nag.dtx  (with options: `nagdemo')
+%% This is a generated file.
+%% 
+%% This file is part of the `nag' package.
+%% The `nag' package has the LPPL maintenance status: maintained.
+%% Current Maintainer is Ulrich M. Schwarz, ulmi@users.sarovar.org
+%% 
+%% Copyright (C) 2005, 2006 by Ulrich M. Schwarz.
+%% 
+%% This file may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either
+%% version 1.3a of this license or (at your option) any later
+%% version. The latest version of this license is in:
+%% http://www.latex-project.org/lppl.txt
+%% 
+%% Test document: finding and complaining about obsolete macros.
+%%
+\RequirePackage[l2tabu, orthodox]{nag}
+\documentclass{article}
+%% some usual culprits
+\usepackage{times, a4wide, epsfig, palatino}
+\begin{document}
+\typeout{Next: it and bf complaints}
+{\it f{\bf oo}f}highter
+
+\typeout{Next: not-an-env complaints}
+\begin{Large}
+  \begin{sffamily}
+    Foo!
+  \end{sffamily}
+\end{Large}
+
+\typeout{Next: center in float complaint}
+\begin{figure}
+  \begin{center}
+    Foo.
+  \end{center}
+  \caption{\label{fig}Higher!}
+\end{figure}
+
+\typeout{Next: no complaints: manually fake caption}
+\begin{figure}
+    Foo.
+\makeatletter\nag@hascaptiontrue\makeatother
+  \label{date}
+\end{figure}
+
+\typeout{Next: put-label-after-caption complaint}
+\begin{figure}
+    Foo.
+  \label{coconut}\caption{Bar.}
+\end{figure}
+
+\typeout{Next: no-caption complaint}
+\begin{figure}
+    Foo.
+\end{figure}
+
+\typeout{Next: appendix complaints}
+\begin{appendix}
+  \begin{center}
+    Foo.
+  \end{center}
+\typeout{Next: no over complaint, centerline complaint, no frac complaint}
+  \centerline{Ferner gilt $4\over 2=2$.}
+  $\frac 42$
+\end{appendix}
+\typeout{Next: unmatched endflushright}
+\endflushright
+\typeout{Next: unclosed center}
+{\center Smack in the middle!}
+\typeout{Next: mismatched endflushright}
+\endflushright
+
+\typeout{You should get 17 warnings.}
+\end{document}
+%%X Local Variables:
+%%X mode: latex
+%%X End:
+\endinput
+%%
+%% End of file `nagdemo.tex'.

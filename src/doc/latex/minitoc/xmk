@@ -1,0 +1,30 @@
+#! /bin/csh
+#######################
+foreach f ( mtc-add mtc-ads )
+foreach i ( 1 2 3 )
+pdflatex $f
+bibtex $f
+if ( -e $f.idx ) then
+        makeindex -s gind.ist -o $f.ind $f.idx
+endif
+if ( -e $f.glo ) then
+        makeindex -s gglo.ist -o $f.gls $f.glo
+endif
+end
+if ( -e $f.maf) then
+        \rm -f `cat $f.maf` $f.aux $f.log $f.toc $f.bbl $f.blg $f.lof $f.lot $f.ind $f.idx $f.ind $f.maf
+endif
+end
+#######################
+foreach f ( \
+            mtc-2c mtc-2nd mtc-add mtc-ads mtc-amm mtc-apx mtc-art mtc-bk mtc-bo mtc-ch0 mtc-cri \
+            mtc-fo1 mtc-fo2 mtc-gap mtc-hi1 mtc-hi2 mtc-hia mtc-hir mtc-hop mtc-liv mtc-mem mtc-mm1 \
+            mtc-mu mtc-sbf mtc-scr mtc-syn mtc-tbi mtc-tlc mtc-tlo mtc-tsf \
+          )
+   foreach i ( 1 2 3 )
+      pdflatex $f
+   end
+if ( -e $f.maf) then
+        \rm -f `cat $f.maf` $f.aux $f.log $f.toc $f.bbl $f.blg $f.lof $f.lot $f.ind $f.idx $f.ind $f.maf
+endif
+end

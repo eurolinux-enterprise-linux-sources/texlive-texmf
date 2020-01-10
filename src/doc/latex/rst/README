@@ -1,0 +1,27 @@
+rst package
+Version 1.3, dated 17-Feb-2003
+
+TeX Macros to typeset Rhetorical Structures (RSTs).
+
+Written by David Reitter (reitter at mle.media.mit.edu)
+
+All rights reserved. Usage is free, put please cite or point to the manual.
+Copyright 2003 David Reitter. No redistribution, if .tar.gz file is altered.
+
+New versions to be found here: http://www.reitter-it-media.de/ (CompLing/Lang.Tech. area)
+
+This package provides the commands \dirrel, \multinuc, \rstsegment,
+the standalone command \rl,
+and the environment rhetoricaltext with the associated commands \unit, \source and \relr.
+
+Please refer to rst-package.pdf for instructions.
+
+Installation:
+
+Use .sty as usual with a \usepackage{rst} instruction.
+
+This package requires the following other packages, which usually come with the standard TeX installations.
+
+- color (can be avoided, see manual)
+- ifthen
+- calc

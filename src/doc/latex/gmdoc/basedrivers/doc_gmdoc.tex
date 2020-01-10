@@ -1,0 +1,129 @@
+%^^A%%%&--translate-file=cp1250pl  -*- coding: cp1250 -*-
+
+\PassOptionsToPackage{hyperindex=false}{hyperref}% Because FM writes some almost
+% explicit indexing commands where he uses `encapsulating' i.e.,
+% a~command to encapsulate the page number, which would interfere with
+% \pk{hyperref}'s default \verb+|hyperpage+.
+\documentclass[outeroff]{gmdocc}
+\usepackage{array}
+
+\def\BasePath{c:/TeXLive2005/texmf-dist/source/latex/base/}% Probably
+% you should write the respective path on your computer.
+
+
+\ltxLookSetup
+\gmdoccMargins
+\olddocIncludes% This is the crucial declaration.
+\twocoltoc
+
+\DeleteShortVerb\|
+\OldMakeShortVerb*\|
+
+\makeatletter
+
+\author{Frank Mittelbach \and David Carlisle}
+\title{The \pk{doc} and \pk{shortvrb} Packages\\ and\\
+  the \pk{ltxdoc} Class}
+\date{Typeset with the \pk{gmdoc} package by Natror\\\today} 
+
+\begin{document}
+
+\smartunder
+
+\maketitle 
+
+
+\addtocontents{toc}{% to discard |\begin{multicols}{2}| of one
+  % included document. (Table of contents is declared twocolumn with
+  % |\twocoltoc| above.)
+    \let\protect\begin\protect\@gobbletwo
+      \protect\StoreMacro\protect\end
+      \def\protect\end{\protect\RestoreMacro\protect\end\protect\@gobble}%
+}% Because one document has a~\env{multicols} twocolumn table of
+% contents and the other has usual one column, this will put entire
+% toc in(to) \env{multicols}.
+
+
+\tableofcontents
+
+%^^A TODO Old comments i.e. authomatic verbatimization of all the cs's
+%^^A met in the comment layer.
+
+\makeatletter
+\AfterMacrocode{161}{% it's for a~tiny little typo in line 3299: They
+  % forgot to wrap |\@tempb| and |\@tempc| in shortverbs.
+  \def\@tempb{\cs{@tempb} }\def\@tempc{\cs{@tempc} }}
+
+\AtBegInputOnce{%
+  \chschange{v2.1b}{2006/10/20}{2126}%
+  \let\CheckSum\gobble
+  % \par Of course, none of the documents is not loaded, so we give the
+  % fileinfo explicitly.
+  \def\filedate{2004/02/09}\def\fileversion{v2.1b}%
+  % \label{explicit fileinfo}
+  \let\GetFileInfo\relax
+  \addtomacro\IndexParms{\arraybackslash}}% because |\IndexParms| use
+% |\raggedright| and FM executes |\IndexParms| inside a~\env{tabular}.
+
+\DocInclude[\BasePath]{doc}
+
+\AtBegInputOnce{%
+  \chschange{v2.0u}{2006/10/20}{410}%
+  \let\CheckSum\gobble
+  \def\filedate{1999/08/08} \def\fileversion{v2.0u}% see line
+  % \ref{explicit fileinfo}. 
+  \let\GetFileInfo\relax
+  % The rest of this |\AtBegInputOnce|'s contents is necessary since
+  % DC wrote it not commented out, which with \pk{doc} results with
+  % printing it both to the package (class) and the documentation, but
+  % with \pk{gmdoc} it puts this stuff in the code layer that'll be
+  % only printed verbatim.
+  \providecommand\dst{\expandafter{\normalfont\scshape docstrip}}
+  \title{The file \texttt{ltxdoc.dtx} for use with 
+    \LaTeXe.\thanks{This file has version
+      number \fileversion, dated \filedate.}\\[2pt]
+    It contains the code for \texttt{ltxdoc.cls}}
+  \date{\filedate}
+  \author{David Carlisle}
+  \maketitle}
+
+\DocInclude[\BasePath]{ltxdoc}%
+
+\gmdocIncludes
+
+\SelfInclude{%
+  \title{\pk{doc_by_gmdoc.tex} The Driver\thanks{As mentioned in the
+      title, I~typeset these package and class with the \pk{gmdoc}
+      package, for which are they a~great inspiration and the base.
+      The typesetting needed only a~few tricks, so here i~give the
+%^^A(
+      code of the `driver': a~snake eats its tail ;-) .}}
+    \author{Grzegorz `Natror' Murzynowski}%
+    \date{\today}%
+    \maketitle}
+
+\typeout{%
+  Produce change log with^^J%
+  makeindex -r -s gmglo.ist -o \jobnamewoe.gls \jobnamewoe.glo^^J
+  (gmglo.ist should be put into some texmf/makeindex directory.)^^J}
+\PrintChanges
+\typeout{%
+  Produce index with^^J%
+  makeindex -r \jobnamewoe^^J}
+ \PrintIndex
+
+\end{document}
+
+% MakeIndex shell commands:
+
+makeindex -r doc_gmdoc
+makeindex -r -s gmglo.ist -o doc_gmdoc.gls doc_gmdoc.glo
+
+% \NoEOF
+% \_ {\bf bf: \_} {\bfseries bfseries \_} 
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

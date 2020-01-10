@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp12.tex ---   
+%% Autor           : Herbert Voss <voss@perce.de>
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{pst-plot}
+\usepackage{multido}
+%
+\def\Years#1{%
+  \ifcase#1\or\or 1953/55\or 1955/57\or 1957/59\or 1959/61\or 1961/63\or 1963/64\fi%
+}
+\def\pshlabel#1{\small\Years{#1}}
+%
+% the following data could be saved in a file and then read
+% with \readdata{\dataI}{external/file/name.dat}
+%
+\def\dataI{%
+1       891560
+2       534050
+3       525876
+4       552269
+5       411130
+6       436733
+}
+\def\dataII{
+1       1355
+2       432
+3       390
+4       301
+5       194
+6       193
+}
+%
+\makeatletter
+\def\ScaleFactor{1.0}
+\pst@def{ScalePoints}<%
+  /y ED /x ED
+  counttomark dup dup cvi eq not { exch pop } if
+  /m exch def /n m 2 div cvi def
+  n { y mul \ScaleFactor\space div m 1 roll x mul m 1 roll /m m 2 sub def } repeat>
+%
+\makeatother
+%
+\begin{document}
+%
+\begin{pspicture}(-0.5,-0.5)(10.5,11)
+  \psset{xunit=1.5}
+  \multido{\r=0+3.125,\i=0+500}{4}{%
+    \psline[linewidth=0.1pt](7,\r)(7.1,\r)\uput[0](7.1,\r){\i}%
+  }
+  \psaxes[dy=2,Dy=200000,axesstyle=frame,%
+          tickstyle=bottom,Ox=1](7,10)
+  \rput{90}(-1.5,5){Number of X-rays}
+  \rput(3.5,6){Number of X-rays}
+  \rput{90}(8,5){Cases diagnosed}
+  \rput(5,2.5){Cases diagnosed}
+  \rput(3.5,-1.25){Survey Period}
+  \psset{showpoints=true,dotsize=0.2,plotstyle=line,linewidth=2pt}
+  \def\ScaleFactor{100000.0}
+  \listplot[linecolor=red]{\dataI}
+  \def\ScaleFactor{150.0}
+  \listplot[linecolor=blue]{\dataII}
+\end{pspicture}
+
+\end{document}

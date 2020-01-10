@@ -1,0 +1,57 @@
+\documentclass[a4paper]{minimal}
+\usepackage{pstricks}              % PSTricks with the `color' extension
+\usepackage[tiling]{pst-fill}      % PSTricks package for filling/tiling
+\usepackage{pst-char}              % PSTricks package for character path
+\usepackage{pst-grad}              % PSTricks package for gradient filling
+\usepackage[margin=1cm]{geometry}
+\usepackage{graphicx}
+\pagestyle{empty}
+%
+\begin{document}
+\DeclareFixedFont{\ptsmall}{T1}{ptm}{m}{sc}{5mm}
+\DeclareFixedFont{\ps}{U}{psy}{m}{n}{6cm}
+\DeclareFixedFont{\pt}{T1}{ptm}{m}{n}{6cm}
+%
+\psboxfill{\ptsmall$\Pi\Sigma T\rho\iota\chi\kappa\sigma$}
+%
+\resizebox{\linewidth}{!}{%
+\begin{pspicture}(-12,0)(11,6)
+    \pscharpath[gradbegin=cyan,gradend=red,
+                fillstyle=gradient,gradangle=-30,
+                gradmidpoint=0.5,addfillstyle=boxfill,
+                fillangle=30,fillsep=0.6mm]%
+                {\rput[b](-0.5,0){\ps PS\kern-15pt T\kern-30pt r\kern-15pt 
+		i\kern-25pt c\kern-14pt k\kern-10pt s}}
+\end{pspicture}}
+
+\clearpage
+
+\DeclareFixedFont{\ptsmall}{T1}{ptm}{m}{sc}{5mm}
+\DeclareFixedFont{\ps}{U}{psy}{m}{n}{8cm}
+\DeclareFixedFont{\pt}{T1}{ptm}{m}{n}{8cm}
+\psboxfill{\ptsmall PSTricks}
+
+\begin{pspicture}(0,0)(.25\linewidth,8)
+    \pscharpath[gradbegin=cyan,gradend=red,
+                fillstyle=gradient,gradangle=-30,
+                gradmidpoint=0.5,addfillstyle=boxfill,
+                fillangle=30,fillsep=0.6mm]%
+                {\rput[b](-0.5,0){\ps\char209\kern-.3em\pt A}}
+\end{pspicture}\hfill
+\psboxfill{\ptsmall$\pi$}
+\begin{pspicture}(0,0)(.25\linewidth,8)
+    \pscharpath[fillstyle=solid,fillcolor=cyan!20,addfillstyle=boxfill,
+                fillangle=30,fillsep=0.6mm]%
+                {\rput[b](-0.5,0){\ps\char112}}
+\end{pspicture}\hfill
+\psboxfill{\ptsmall$\lambda$}
+\begin{pspicture}(0,0)(.25\linewidth,8)
+    \pscharpath[gradbegin=white,gradend=blue,
+                fillstyle=gradient,gradangle=-30,
+                gradmidpoint=0.5,addfillstyle=boxfill,
+                fillangle=90,fillsep=0.6mm]%
+                {\rput[b](0,0){\ps l}}
+\end{pspicture}
+
+
+\end{document}

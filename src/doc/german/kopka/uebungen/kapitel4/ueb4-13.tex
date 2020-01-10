@@ -1,0 +1,12 @@
+\documentclass{article}
+\usepackage{german}
+\begin{document}
+
+\newsavebox{\warnung}
+\sbox{\warnung}{\setlength{\fboxrule}{0.25mm}\setlength{\fboxsep}{1.5mm}%
+\fbox{\parbox{10cm}{Benutzereigene Formatierungen sollten nur vorgenommen
+   werden, wenn die \LaTeX-Standardformatierungen \textit{absolut} ungeeignet
+   sind!}}}
+
+\begin{center} \usebox{\warnung} \end{center}
+\end{document}

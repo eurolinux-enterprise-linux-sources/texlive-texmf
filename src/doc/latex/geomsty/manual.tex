@@ -1,0 +1,1312 @@
+% $Header: /usr/home/levy/texts/geomsty/RCS/manual.tex,v 1.12 95/07/03 15:57:22 levy Exp Locker: levy $
+
+\documentstyle[11pt,geom]{article}
+
+\def\leftfoot{\RCSstring$Revision: 1.12 $}
+\def\rightfoot{\RCSstring$Date: 95/07/03 15:57:22 $}
+\def\RCSstring$#1 ${#1}
+
+\addtolength{\textwidth}{.5in}
+\addtolength{\oddsidemargin}{-.25in}
+\addtolength{\evensidemargin}{-.25in}
+\def\AmS{{\the\textfont2 A\kern-.1667em\lower.5ex\hbox{M}\kern-.125emS}}
+\def\amstex/{\AmS-\TeX}         
+\def\amslatex/{\AmS-\LaTeX{}}
+\def\latex/{\LaTeX{}}
+
+\makeatletter
+\def\@verbatim{\par\small\trivlist \item[]\if@minipage\else\vskip\parskip\fi
+\leftskip\@totalleftmargin\advance\leftskip 1em \rightskip\z@
+\parindent\z@\parfillskip\@flushglue\parskip\z@
+\@tempswafalse \def\par{\if@tempswa\hbox{}\fi\@tempswatrue\@@par}
+\obeylines \tt \catcode``=13 \@noligs \let\do\@makeother \dospecials}
+\makeatother
+
+\newenvironment{wizard}{\medbreak\begin{small}
+    \leavevmode\llap{\hbox to \parindent{$*$\hfil}}}{\par\end{small}\medbreak}
+\def\preref#1{{\normalshape#1}}
+\newtheorem[{\par\large}{\it}]{theorem}{Theorem}[section]
+\equationwith{theorem}
+\newtheorem[{\par\large}{}]{warning}{Warning}
+\def\thewarning{\unskip}
+\def\picpath{}
+
+\makeatletter
+\ifx\fmtname\format@e
+\DeclareSymbolFont{AMSa}{U}{msa}{m}{n}
+\DeclareMathSymbol\square           {\mathord}{AMSa}{"03}
+\fi
+\makeatother
+
+\makeindex
+
+\begin{document}
+
+\title{The {\tt geom} style for \latex/}
+\author{Silvio Levy\\Geometry Center\\
+University of Minnesota}
+\date{Revised for \latex/2$_\epsilon$, July 1995}
+
+\maketitle
+
+\tableofcontents
+%\listoffigures
+
+\vfil
+
+\copyright 1992 Silvio Levy. The software described in this document
+is available free of charge through the Geometry Center at the
+University of Minnesota.  It is distributed without any warranty,
+express or implied.
+
+Bug reports and comments about the software and documentation
+can be sent to {\tt levy@geom.umn.edu}.  I will take them into
+consideration in future releases, but there is no
+guarantee that particular bugs will be fixed.
+
+\vfil\eject
+
+\section{Introduction} 
+
+This document describes a \latex/ style called \ix{{\tt geom}},
+which is loosely based on Lamport's \verb+book+ 
+and \verb+article+ styles \cite{Lamport},
+but provides a number of additional features, such as:
+\begin{itemize}
+\item 
+inclusion of \ix{PostScript} figures in the document,
+and of \TeX\ text within figures;
+\item
+automatic creation of index entries and cross-reference
+labels where appropriate;
+\item
+no restriction on the use of macros and special characters in
+titles, cross-references, captions, etc.;
+\item
+greater versatility in defining theorem-like environments;
+\item
+upright digits in an italics environment (optionally); and
+\item
+proofing aids such as version numbers and a running index.
+\end{itemize}
+There are also purely esthetic differences,
+many of which can be controlled by the user.
+
+This style had its inception in a set of \latex/ macros
+\ixinv{historical notes}%
+\ixinv{acknowledgements}%
+written for the formatting of \ix{Bill Thurston}'s \ix{{\it
+Three-Dimensional Geometry and Topology}}, first by \ix{Yair Minsky}
+and subsequently by me.  After three years of gestation, the macros
+started being used intensively by some other people---notably Thurston,
+\ix{David Epstein} and a number of students at \ix{Warwick
+University}---and more modifications, including a complete rewrite,
+were made.  The first book published using the \verb+geom+ style
+\cite{Epstein:WordProcessing} came out in February 1992.
+
+The Appendix to this document describes \verb+mathfig+, a system for
+typesetting \TeX\ labels in Mathematica figures. (Mathematica is
+described in \cite{wolfram}).  This system can also be used
+independently of \verb+geom+.
+
+This release owes much to the patience of these first users and the
+feedback they provided, for which I am very grateful.  Naturally, my
+debt to the people on whose work I've built---\ix{Don Knuth},
+\ix{Leslie Lamport}, \ix{Rainer Sch\"opf}, \ix{Frank Mittelbach},
+\ix{Trevor Darrell} and others---is impossible to quantify. I wish to
+take this opportunity to thank them, and also John Rawnsley, who
+provided the port to \latex/2$_\epsilon$.  I also thank Al Marden, the
+Founding Director of the Geometry Center, for creating the conditions
+needed for this work to happen.
+
+\section{Overall Organization}
+
+In order to use this style, you need to be running a version of
+\latex/ that supports the so-called \ix{new font selection 
+scheme} (NFSS), due to Frank Mittelbach and Rainer Sch\"opf.
+If your version of \latex/ is \latex/2$_\epsilon$, you are
+automatically using NFSS.  If your version is \latex/2.09, you must
+check whether it supports NFSS. Start \latex/ and type
+\verb+\show\selectfont+.  If the response includes
+%
+\begin{verbatim}
+> \selectfont=undefined.
+\end{verbatim}
+%
+this is the wrong \latex/.  Don't despair yet; 
+the right \latex/ may be available at your
+site, but under a different name---try \verb+amslatex+,
+or ask your local guru. (Strictly speaking, \amslatex/
+\cite{amslatex} is a set of \latex/ style files that emulate \amstex/.
+Since their use requires NFSS and the
+necessary modifications used to be supplied with the \amslatex/ style files,
+the name is sometimes used for \latex/+NFSS.)  If you can't find
+\latex/+NFSS at all, see further instructions in \Fullref{Installation}.
+
+Unlike most other \latex/ styles, \verb+geom+ comes in several
+files, devoted to different capabilities such as cross-referencing,
+figures, indexing and so on.  
+The files currently in the distribution are:
+$$\hbox to \hsize{\small
+\valign{&\hbox{\strut #}\cr
+{\tt dvips.chg}&
+{\tt geom.sty}&
+{\tt geomar10.sty}&
+{\tt geomar11.sty}&
+{\tt geomar12.sty}&
+{\tt geomart.sty}&
+{\tt geombk10.sty}&
+{\tt geombk11.sty}&
+{\tt geombk12.sty}\cr
+\noalign{\hfil}
+%
+driver dependencies&
+master file&
+changes to \verb+art10.sty+&
+changes to \verb+art11.sty+&
+changes to \verb+art12.sty+&
+changes to \verb+article.sty+&
+changes to \verb+book10.sty+&
+changes to \verb+book11.sty+&
+changes to \verb+book12.sty+\cr
+\noalign{\hfil}
+%
+{\tt geombook.sty}&
+{\tt geomenv.sty}&
+{\tt geomeqns.sty}&
+{\tt geomfig.sty}&
+{\tt geomfnt.sty}&
+{\tt geomindx.sty}&
+{\tt geompsfi.sty}&
+{\tt multicol.doc}&
+{\tt multicol.sty}\cr
+\noalign{\hfil}
+%
+changes to \verb+book.sty+&
+environments&
+option file&
+high-level figure support&
+fonts and special symbols&
+index and glossary&
+PostScript figure support&
+source for \verb+multicol.sty+&
+two-column formatting\cr
+}}$$
+
+The file \verb+geom.sty+ is the master, and it is read in when
+\verb+geom+ is called as an option to a main document style, which can
+be either \verb+book+ or \verb+article+.
+That is, to use the stuff described in this document,
+\ixinv{calling {\tt geom}}%
+your text file should start with a line such as
+\begin{verbatim}
+\documentstyle[12pt,geom,...]{book}
+\end{verbatim}
+When \verb+geom.sty+ is loaded in, it guesses what your main style is,
+and reads in some changes to that style, contained in the files
+\verb+geombook.sty+, \verb+geombk12.sty+, and so on.
+
+%Each of the following sections is devoted to one major feature of
+%\verb+geom+.  Where appropriate, I discuss the file(s) where the feature
+%is implemented, to allow you to make your own modifications.
+
+The file \verb+multicol.sty+ is part of the package files developed by
+Frank Mittelbach and Rainer Sch\"opf at the University of Mainz.
+It is accompanied by \verb+multicol.doc+, which is a ``source'' file
+with documentation.  To obtain more of the excellent software written
+by Mittelbach and Sch\"opf, check the CTAN archives (see the
+Installation section below).
+
+The rest of this document describes the installation of \verb+geom+
+(skip if it's already installed), its major features,
+and how you can take advantage of them and (sometimes) modify them.
+Some material that is either very technical or unlikely to be needed
+except under unusual circumstances is printer in smaller type and
+introduced by an asterisk $*$.
+
+\section{Installation}
+
+You only need to read this section if you are in charge of installing
+\verb+geom+ at your site.  Installation is very simple if your \latex/
+supports NFSS and your \TeX-to-PostScript driver is Tom Rokicki's
+\verb+dvips+ \cite{Rokicki}.  
+
+To check whether you have \latex/+NFSS, see the
+beginning of \Fullref{Overall Organization}. If you don't,
+it's time to switch over to \latex/2$_\epsilon$.
+Get it by ftp from one of the worldwide CTAN archives
+(currently \verb+pip.shsu.edu+,
+\verb+ftp.uni-stuttgart.de+, and \verb+tex.ac.uk+).
+
+If your driver is not
+\verb+dvips+, you have two choices: either install \verb+dvips+, which
+is almost certainly a good idea (get it by ftp from a CTAN archive); or make a
+copy of the file \verb+dvips.chg+ in this distribution, and modify it
+so it writes the \verb+\special+ commands required by your driver.  If
+you adapt \verb+dvips.chg+ for your driver, give the new file a
+different name, and replace with this name all occurrences of
+\verb+dvips.chg+ in the rest of this section.  Also, please send me a
+copy of the file, so I can include it in future distributions.
+
+As I was saying before I got sidetracked, installation is simple.
+If you're on a UNIX system, edit the \verb+Makefile+ to make sure the 
+pathnames are correct for your site, and run \verb+make install+.  If you're
+not on a UNIX system, here are the step-by-step instructions:
+
+Place the files listed in the previous section (all the distribution
+files that end in \verb+.sty+, \verb+.chg+ or \verb+.doc+) in the
+system-wide directory for \TeX\ input files.  Create a symbolic link
+\verb+driver.chg+ in this directory, pointing to \verb+dvips.chg+.
+(If your system does not support symbolic links, copy \verb+dvips.chg+
+to \verb+driver.chg+.)
+
+Copy the file \verb+mathlabels.orig+ to \verb+mathlabels+ and edit its
+first line to be the correct pathname of the perl executable on your
+system.  (If you don't have \verb|perl| at all, you don't know what
+you're missing---get it as soon as possible.)  Decide on a directory
+where you want to install the auxiliary scripts \verb+mathlabels+ and
+\verb+geomfix+ (which are used by \verb+mathfig+), and put copies of
+them there.  Copy the file \verb+mathfig.orig+ to \verb+mathfig+ and
+edit the lines at the top to specify the location of the
+\verb+mathlabels+ and \verb+geomfix+ scripts, then copy
+\verb+mathlabels+ to a system-wide directory for executables.  
+%On a
+%UNIX system, copy \verb+mathfig.1.orig+ to
+%\verb+mathfig.1+ and edit it to correctly mention the loations of the
+%\verb+mathlabels+ and \verb+geomfix+ scripts, then
+%install the manual page \verb+mathfig.1+ in the appropriate place.
+
+Finally, copy \verb+math.pro+ and \verb+illustrator.pro+ into the
+directory where your \TeX-to-PostScript driver looks for prolog files.
+(This assumes your driver supports the inclusion of prolog files;
+switch to \verb+dvips+ if it doesn't.)
+
+\section{No More Fragile Commands}
+
+In standard \latex/, commands such as \verb+\section+ have {\it moving
+arguments}, that is, arguments that migrate to an auxiliary file {\it
+jobname}\verb+.aux+ to be used later in typesetting the table of
+contents and so on \cite[33--34]{Lamport}.
+In this process, macros in the body of the argument
+are expanded, so that when you type, say,
+\begin{verbatim}
+\section{Annoying \TeX nicalities}
+\end{verbatim}
+what goes into the auxiliary file is something like
+\begin{verbatim}
+\@writefile{toc}{\string\contentsline\space {chapter}{\string\numberline\space 
+{1}Annoying T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emXnicalities}{1}}
+\end{verbatim}
+where the second line contains the expansion of the macro \verb+\TeX+.
+
+There are several problems with this. First, the expansion, and
+consequently the line where it occurs in the auxiliary file, can be
+very long, which in some implementations means that \TeX\ cannot
+read the line back in.  Secondly, the expansion might not
+make sense, or might do the wrong thing, at the time when it is read in again.
+Even worse, the expansion 
+of \verb+\section{\small foo}+, for example, actually
+causes an infinite loop.
+
+\begin{wizard}
+Experienced users of \TeX\ who
+want to know why this happens can try typing the following lines to
+plain \TeX:
+\begin{verbatim}
+\def\foo{\let\bar\foo}
+\foo                    %Nothing much happens
+\immediate\write0{\foo} %Disaster strikes
+\end{verbatim}
+The problem is that at the time of the \verb+\write+ no assignment is
+taking place, so the \verb+\foo+ at the end of the expansion is not
+handled as a literal.
+\end{wizard}
+
+Standard \latex/'s solution to these problems is for the user to
+precede ``fragile'' macros with the \verb+\protect+ command
+\cite[33--34]{Lamport}.  By contrast, in the \verb+geom+ style,
+you don't have to worry about ``fragile'' commands
+in the following situations:
+\begin{itemize} 
+\item
+in the arguments of the sectioning commands
+\verb+\chapter+, \verb+\section+, and so on;
+\item
+in the optional argument to the \verb+theorem+
+environment and its relatives (\Fullref{Theorems and Their Friends});
+\item
+in the arguments to \verb+\caption+, \verb+\fig+ and its relatives
+(\Fullref{PostScript Figures}); 
+\item
+in the arguments to \verb+\markright+ and \verb+\markboth+;
+\item
+in the argument to \verb+\cite+.
+\end{itemize} 
+This covers almost all important situations where fragile
+commands need to be \verb+\protect+ed \cite[151]{Lamport}.  In future
+versions I hope to extend this permissiveness to the remaining
+situations.
+
+Notice, however, that the \verb+\verb|...|+ construction continues to
+be forbidden inside arguments to most commands.  This is due to
+reasons deeply embedded in \TeX\ itself, and is unlikely ever to 
+change.
+
+\begin{wizard}
+In some circumstances you might want the old \latex/ behavior of
+macro expansion inside the argument of \verb+\chapter+, say.
+For instance, you might have a locally defined macro whose definition
+will be unknown at the time the table of contents is read.
+In this case you can use the following construction:
+\begin{verbatim}
+\edef\mystring{...} % where ... stands for the argument to be expanded
+\expandafter\chapter\expandafter{\mystring}
+\end{verbatim}
+\end{wizard}
+
+\section{Labels and Cross-References}
+
+In standard \latex/, the argument to the \verb+\label+ command cannot
+contain anything but characters (after expansion).  In the \verb+geom+
+style, this restriction is lifted, so labels contain just about
+anything.  For example, \verb+\label{\TeX}+ and
+\verb+\label{Isometries of $\bold R^2$}+ are acceptable.  Macros are
+no longer expanded.
+
+One advantage of this flexibility is that subdivisions can be
+automatically labeled by their titles.  In the \verb+geom+ format, by
+default, every sectioning command such as \verb+\section+ generates a
+label with its title. If this feature causes you to run out of
+memory, you can turn it off by saying \verb+\autolabelfalse+ in your
+document's preamble.
+
+To refer to the place where a label occurs, you can still use the
+\verb+\ref+ command, as in standard \latex/.  This gives a bald
+number---for example, \verb+\ref{+{\tt Isometries of }\verb+$\bold R^2$}+ will
+print ``8.3'' if Section~8.3 starts with 
+\verb+\section{+{\tt Isometries of }\verb+$\bold R^2$}+ 
+while automatic labeling is in effect.
+
+A new feature is that you can
+replace \verb+\ref+ by \verb+\fullref+ or \verb+\Fullref+, to get
+``section 8.3'' or ``Section 8.3'', respectively.
+The way \verb+\fullref+ works is by storing in a certain register the
+type of environment in which a label was created.  Thus, when
+a new section starts, this register gets the value ``section''.  When
+a \verb+\begin+ command introducing
+one of the environments described in \Fullref{Theorems and Their Friends} is encountered
+inside this section, the register gets updated to the type of that
+environment, say ``theorem''.  It reverts to ``section'' when
+the matching \verb+\end+ command is read.
+
+Even if you have nested
+environments, labels placed in each of them are assigned the correct
+type. Consider the input 
+%
+\begin{verbatim}
+\newtheorem[{\par\large}{\it}]{theorem}{Theorem}[section]
+\equationwith{theorem}                  % These two lines are explained
+...                                     % in later sections
+\begin{theorem}[Erd\"os]
+A theorem both deep and profound / Is that a circle is round:
+\begin{equation}
+\mathrm{curvature}\,S^1=\mathrm {const}.
+\label{circle}
+\end{equation}
+In a paper by Erd\"os / Written in Kurdish / A counterexample is found.
+\label{Kurdish}
+\end{theorem}
+\end{verbatim}
+%
+which gives
+%
+\begin{theorem}[Erd\"os]
+A theorem both deep and profound / Is that a circle is round:
+\begin{equation}
+\mathrm{curvature}\,S^1=\mathrm {const}.
+\label{circle}
+\end{equation}
+In a paper by Erd\"os / Written in Kurdish / A counterexample is found.
+\label{Kurdish}
+\end{theorem}
+Now \verb+\Fullref{Erd\"os}+ gives ``\Fullref{Erd\"os}'',
+\verb+\Fullref{circle}+ gives ``\Fullref{circle}'', and
+\verb+\Fullref{Kurdish}+ gives ``\Fullref{Kurdish}''.  Furthermore,
+\verb+\ref*{Erd\"os}+ gives ``\ref*{Erd\"os}'', that is, it prints the
+(optional) tag associated with theorems and the like.  Of course you
+can also use \verb+\fullref*+ and \verb+\Fullref*+.
+
+\begin{wizard}
+If you disagree with \latex/'s idea of what the label type should be
+at a particular point, you can override is using \verb+\setlabeltype+.
+For example, if we had \verb+\setlabeltype{formula}+ right before the
+\verb+\label+ command in the previous example, the result of
+\verb+\Fullref{circle}+ would be ``Formula~\ref{circle}'' instead of
+``\Fullref{circle}''.
+\end{wizard}
+
+Before \verb+\ref+ actually prints the number of a cross-reference, it
+applies the macro \verb+\preref+ to it.  By default, this macro does
+nothing; but you can redefine it to do whatever you want with the
+number.  If you want the number to appear upright even if the
+surrounding text is in italics, you can say
+\begin{verbatim}
+\def\preref#1{{\normalshape#1}}
+\end{verbatim}
+The output of \verb+\pageref+ and of \verb+\cite+ is also passed to
+\verb+\pageref+ before being printed.
+
+\section{Theorems and Their Friends}
+
+Standard \latex/ provides the \verb+\newtheorem+ command to create
+environments for statements like theorems, lemmas, and so on.
+The basic idea can be adapted for other types of text that should
+stand out, such an exercises, conventions, and so on.
+Not all of these should be treated typographically the same: for
+example, you might want exercises in smaller type.
+
+The \verb+geom+ style extends \latex/'s \verb+\newtheorem+ command
+to allow you to do this easily.  Recall from \cite[58]{Lamport} that
+\verb+\newtheorem+ has two required arguments: the name of the new
+environment (say ``theorem''), and the text used to introduce it (say
+``Theorem''). In standard \latex/ it also takes an optional argument,
+whose meaning depends on whether it comes before or after the second
+required argument.
+
+In the \verb+geom+ style, you can use yet another optional argument,
+right after \verb+\newtheorem+, to tell \latex/ how this environment
+differs from a vanilla theorem-like environment.  This optional
+argument should consist of two sequences of commands, each surrounded
+by braces, like this:
+%
+\begin{verbatim}
+\newtheorem[{\par\large}{\it}]{theorem}{Theorem}[section]
+\end{verbatim}
+%
+(This is the same definition used for the
+example in \Fullref{Labels and Cross-References}.)
+
+The first sequence of commands in braces, \verb+\par\large+, will be
+executed as soon as \latex/ sees a \verb+\begin{theorem}+.  This means
+the theorem will come out in larger type (see the output in
+\Fullref{Labels and Cross-References}).  \latex/ implicitly starts a
+new level of braces when it encounters a \verb+\begin+
+command---changes inside the environment are local, so the
+\verb+\large+ will cease to have effect at the end of the environment.
+
+The second sequence of commands is inserted right after the
+introductory text {\bf{\def\preref#1{#1} \Fullref{Erd\"os}} (Erd\"os)}.  It affects
+everything from that point till the end of the environment.  Here
+we've used \verb+\it+, so the statement of the theorem is printed in
+italics.  Note that, unlike the standard \verb+article+ and
+\verb+book+ styles, \verb+geom+ does not italicize theorems by
+default.  If we didn't have the \verb+\it+ in the \verb+\newtheorem+
+command, the text of the theorem would be upright.
+
+\begin{wizard}
+You can also control the appearance of the introductory text itself 
+by changing the definition of \verb+\theoremintro+, which by default is
+%
+\begin{verbatim}
+\def\theoremintro#1{\normalshape\bf#1}
+\end{verbatim}
+%
+The argument \verb+#1+ stands for the introductory text.
+\end{wizard}
+
+You need two pairs of braces in the new optional argument to
+\verb+\newtheorem+, even if one is empty.  If both are empty,
+the behavior is the same as if the optional argument weren't there.
+
+Another enhancement to \verb+\newtheorem+ in 
+the \verb+geom+ style is automatic labeling.  Suppose you say
+%
+\begin{verbatim}
+\newtheorem{definition}[theorem]{Definition}
+\end{verbatim}
+\newtheorem[{\setlabeltype{def.}}{}]{definition}[theorem]{Definition}
+%
+(recall from \cite[59]{Lamport} that the use of \verb+[theorem]+ causes
+definitions to be numbered in the same sequence as theorems,
+assuming the \verb+theorem+ environment has been previously defined).
+%
+Now saying
+%
+\begin{verbatim}
+\begin{definition}[universe]
+The universe is a Hubble bubble.
+\end{definition}
+\end{verbatim}
+prints
+\begin{definition}[universe]
+The universe is a Hubble bubble.
+\end{definition}
+%
+and implicitly calls \verb+\label{universe}+.  (As
+mentioned in \Fullref{Labels and Cross-References}, you can turn this
+feature off by saying \verb+\autolabelfalse+.)  The environment knows
+its type at the time the label is made, so saying
+\verb+\Fullref{universe}+ will print ``Definition~\ref{universe}''.
+
+\begin{wizard}
+The type is usually just the environment name, but it can be
+overridden by including \verb+\setlabeltype+ (\Fullref{Labels and
+Cross-References}) in the first optional argument to
+\verb+\newtheorem+.  Thus if the \verb+definition+ environment had
+been created with
+\begin{verbatim}
+\newtheorem[{\setlabeltype{def.}}{}]{definition}[theorem]{Definition}
+\end{verbatim}
+\verb+\Fullref{universe}+ would appear as ``\Fullref{universe}''.
+\end{wizard}
+
+The preferred style of some publishing houses calls for digits and
+punctuation to be typeset upright in theorems and such, amidst
+surrounding text in italics.  The control sequence
+\verb+\specialdigits+ achieves this.  It causes each digit in text, as
+well as parentheses, commas, colon, semicolons and periods, to
+effectively be preceded by \verb+\normalshape+.  You can use
+\verb+\specialdigits+ after \verb+\it+ in the definition of a new
+environment with \verb+\newtheorem+.
+
+\begin{wizard}
+The way \verb+\specialdigits+ works is by making digits and
+punctuation into active characters (changing their \verb+\catcode+s to
+13). This has two consequences.  First, characters that arise from
+macro expansion don't get the special treatment, because their
+\verb+\catcode+s are frozen beforehand; this is true, in particular,
+of the expansion of \verb+\ref+ commands (but see the end of
+\Fullref{Labels and Cross-References}).
+
+The second consequence is that the digits and decimal point no longer
+work in specifying dimensions: if you write \verb+\vskip 1in+ while
+\verb+\specialdigits+ is in effect, you get an error message
+complaining that a number was expected.  To get around this, you can
+temporarily cancel the specialness with \verb+\regulardigits+.  If you
+run into this problem more than once or twice, it's best to create a
+macro, outside the scope of \verb+\specialdigits+, that expands to the
+desired command (\verb+\def\inch{\vskip 1in}+).
+\end{wizard}
+
+\section{The Proof Environment}
+
+Theorems and proofs go hand in hand.  
+The \verb+proof+ environment in \verb+geom+, in its most basic form,
+prints {\it Proof.} at the beginning of the proof, and an end-of-proof
+symbol $\square$ at the end.  With an optional argument it behaves
+like this: 
+%
+\begin{verbatim}
+\begin{proof}[Poincar\'e conjecture]
+Notice first that ...
+... as we wished to show.
+\end{proof}
+\end{verbatim}
+%
+\begin{proof}[Poincar\'e conjecture]
+Notice first that \dots\ as we wished to show.
+\end{proof}
+
+\begin{wizard}
+The formatting of the proof's introductory text is controlled by
+the macro \verb+\proofintro+, whose single argument is the optional
+argument to \verb+\begin{proof}+---in this case, ``Poincar\'e
+conjecture''.  If the optional argument is not used,
+\verb+\proofintro+ is passed an empty argument.
+The default setting of \verb+\proofintro+ is
+%
+\begin{verbatim}
+\def\proofintro#1{\def\@tempa{#1}%
+  {\it Proof\ifx\@tempa\empty\else\ of #1\fi. }\ignorespaces}
+\end{verbatim}
+%
+You can probably figure out how it decides whether to write 
+{\it Proof} or {\it Proof of\dots}. You can change its definition to
+obtain other effects.  
+
+Likewise, the formatting of the box at the end of the proof is
+controlled by the macro \verb+\provedboxcontents+, which is entirely
+analogous.  Its standard setting is
+\begin{verbatim}
+\def\provedboxcontents#1{\def\@tempa{#1}%
+  \ifx\@tempa\empty$\square$\else\fbox{\small#1}\fi}
+\end{verbatim}
+\end{wizard}
+
+To identify your proofs with the number of their corresponding
+theorems, lemmas, corollaries, etc., use \verb+\setprooftag+ in the
+definition of these environments.  For instance, after you say
+%
+\begin{verbatim}
+\newtheorem[{\setprooftag}{\it}]{theorem}{Theorem}[section]
+\newtheorem[{\setprooftag}{\it}]{corollary}[theorem]{Corollary}
+\end{verbatim}
+%
+\verb+\begin{proof}+ will behave as if you were passing it as
+its optional argument the number of the most recent theorem or corollary.
+Nested proofs keep track of their arguments correctly, so the box at
+the end of each gets the same tag as the {\it Proof of\dots} at the
+beginning. 
+
+However, certain situations are too confusing for \verb+\setprooftag+.
+For example, if you state a corollary between a theorem and its proof,
+the proof will incorrectly get the corollary's number, which is more
+recent.  In this situation you have to use the optional argument.  Of
+course, it's best to use \verb+\ref{...}+ as the argument, rather than
+an explicit number, which might change later.
+
+If a proof
+ends with a displayed formula, it is recommented that the proved box
+be placed next to the formula (as if it were a tag).  This is done
+by inserting \verb+\proved+ before the closing \verb+$$+.  
+Likewise, if the last line of the proof is part of an \verb+\item+,
+you can use \verb+\proved+ before the closing \verb+\end{enumerate}+
+(or whatever) so the proved box won't be set on a line by itself.
+In even more difficult
+cases---for instance, a formula that already has a tag, or is part of a 
+multi-line display---plop \verb+\box\provedbox+ where you want the box to be.
+
+\section{Equations}
+
+The \verb+geom+ style reinstates the plain \TeX\ macro
+\verb+\eqalign+, which is not part of standard \latex/ but is
+nonetheless very useful.  Unlike the \verb+eqnarray+ environment,
+\verb+\eqalign+ creates math alignments that are not treated as whole
+lines, and so can be combined with other elements.
+
+The example in \Fullref{Labels and Cross-References} has
+\verb+\equationwith{theorem}+ after the \verb+theorem+
+environment is created.  
+This causes equations made with the \verb+equation+ and
+the \verb+eqnarray+ environments to be numbered in the same sequence
+as theorems.  You can replace \verb+theorem+ with any environment that
+was defined with \verb+\newtheorem+ and that has a counter with its name
+(the environment has a counter with its name if 
+there was no optional argument between
+the first and second required arguments to \verb+\newtheorem+).
+
+If you load the optional style \verb+geomeqns+---that is,
+if your document starts with
+\begin{verbatim}
+\documentstyle[geom,geomeqns,...
+\end{verbatim}
+the tags in the \verb+equation+ and the \verb+eqnarray+ environments
+are printed on the left, in boldface.  This makes them visually
+similar to the tags that introduce theorems, so it is generally
+appropriate to use this style if you're numbering equations and
+theorems in the same sequence.
+
+\section{The {\mediumseries \tt Figure} and {\mediumseries \tt Table} environments}
+
+The \verb+geom+ style supports the \verb+figure+ and \verb+table+
+environments of standard \latex/, and, as mentioned above, if you use
+the \verb+\caption+ command you don't have to worry about fragile
+macros inside its argument.  However, I recommend that you use
+instead the new \verb+Figure+ and \verb+Table+ environments, which
+provide some bells and whistles.
+
+These environments take three arguments: a cross-reference label, a title and
+a legend (or explanatory caption). The command
+%
+\begin{verbatim}
+\begin{Figure}{torus}{The square torus}
+{A torus can be obtained, topologically,
+by gluing together parallel sides of a square.}
+$$
+\begin{picture}(1,1)
+...     % lots of \put commands
+\end{picture}
+$$
+\end{Figure}
+\end{verbatim}
+%
+prints
+%
+\begin{Figure}{torus}{The square torus}
+{A torus can be obtained, topologically,
+by gluing together parallel sides of a square.}
+$$
+\unitlength=1in
+\begin{picture}(1,1)
+\put(0,0){\vector(1,0){1}}
+\put(0,0){\vector(0,1){1}}
+\put(1,0){\vector(0,1){1}}
+\put(0,1){\vector(1,0){1}}
+\end{picture}
+$$
+\end{Figure}
+%
+
+\noindent
+and in addition it creates a cross-reference label \verb+torus+ and an
+entry in the table of contents with the text ``The square torus''.
+As you can see,
+the figure number and the title appear in
+boldface, the legend in a lighter face. In proofing mode
+(\Fullref{Proofing Aids}), the file
+name also appears under the figure, in tiny letters.  If you don't
+want a legend, just write \verb+{}+ after the first two arguments.
+(In other words, the legend is {\it not} an optional argument---it is
+simply an argument that sometimes happens to be empty.)
+There is an optional argument to the \verb+\Figure+ environment, consisting
+of a subset of the letters \verb+htbp+ and indicating a location 
+where the figure may be placed \cite[176]{Lamport}; it should come
+before all other arguments.
+All of this applies to the \verb+Table+ environment as well.
+
+\section{PostScript Figures}
+
+Most often your picture won't be made with \latex/ commands; it will
+exist in a separate PostScript file.  Inclusion of PostScript figures
+is still a bit of a bugaboo for many \TeX\ users, in spite of the
+existence for many years now of Trevor Darrell's excellent macro
+package \ix{Psfig/\TeX} \cite{psfig} and others.
+
+The \verb+geom+ style automatically loads the file
+\verb+geompsfi.sty+, a modified version of \ix{Psfig/\TeX}
+(incorporating some improvements by \ix{Stephan Bechtols\-heim} and
+others of my own).  It allows you to include PostScript figures very
+simply: 
+%
+\begin{verbatim}
+\fig{PStorus}{The square torus}{A torus can be obtained, topologically,
+by gluing together parallel sides of a square.}
+\end{verbatim}
+%
+\fig{PStorus}{The square torus}{A torus can be obtained, topologically,
+by gluing together parallel sides of a square.}
+
+The \verb+\fig+ macro takes the same three arguments (plus an optional
+one) as the \verb+Figure+ environment.  But the first argument, in
+addition to being used to make a label, is also the name of the file
+where the PostScript figure is stored (minus the \verb+.ps+ suffix).
+Thus \Fullref{PStorus} is stored in the file \verb+PStorus.ps+.
+
+To get two or three figures side by side, sharing the same caption,
+use \verb+\doublefig+ or \verb+\triplefig+.  The PostScript file names
+for \verb+\doublefig{foo}...+ would be in this case would be
+\verb+foo-1.ps+ and \verb+foo-2.ps+, and likewise for
+\verb+\triplefig+.  There is no similar mechanism for more than three
+figures.
+
+The directory where the figures are to be found is governed by the
+macro \verb+\picpath+.  For example, if the directory is
+called \verb+/u/levy/pictures+, you should say 
+\begin{verbatim}
+\def\picpath{/u/levy/pictures/}
+\end{verbatim}
+at the beginning of your document.  (You need the \verb+/+ at the end.)
+
+\begin{wizard}
+You can also use a relative pathname, such as \verb+pictures/+, or even
+the empty string (or \verb+./+) for the current directory.  
+However, the program that sends
+your \verb+.dvi+ file to the printer may not find the pictures since
+it is likely to be invoked from a different directory.
+
+If a pathname includes characters that are special to \TeX, you need
+to make then unspecial in order to define \verb+\picpath+.  Here is an
+example: 
+\begin{verbatim}
+\begingroup     % start a group so the change in _ is local
+\catcode`\_=12  % make _ behave like an ordinary character
+\gdef\picpath{/home/tampa_a/fac/wpt/pictures/} % this def is global
+\endgroup       % now _ reverts to its usual meaning
+\end{verbatim}
+\end{wizard}
+
+If you have a long document with lots of pictures, it is better to
+organize them into sections and chapters.  In that case you should
+leave \verb+\picpath+ unset, and set the macro \verb+\masterpicpath+
+to the master picture directory.  If I were using this scheme in this
+document, I might say
+%
+\begin{verbatim}
+\def\masterpicpath{/home/levy/pictures/}
+\end{verbatim}
+%
+and put \Fullref{torus} in file
+\verb+/home/levy/pictures/+{\tt\ref{PostScript Figures}}\verb+/PStorus.ps+.
+(With the \verb+book+ style, which has chapters, I would need
+\verb+chap3/+{\tt\ref{PostScript Figures}} 
+instead of just {\tt\ref{PostScript Figures}}.)
+
+The way \verb+\fig+ works is by calling
+the command \verb+\psfig+ \cite{psfig}, which creates a \TeX\ \verb+\vbox+
+of the right size and containing instructions for the figure to be
+included at the time of printing.  You normally won't use 
+\verb+\psfig+ directly, since \verb+\fig+ calls it automaticaly.
+
+\begin{wizard}
+However, occasionally you many want to use \verb|\psfig| directly to
+take advantage of this macro's many options, such as resizing.  See
+the Psfig/\TeX\ manual \cite{psfig} for details; but some of the newer
+options to Psfig/\TeX\ are not supported here.
+\end{wizard}
+
+In order for the \verb+\psfig+ command to know what size box to make,
+it needs to find your PostScript figure file, and
+the file must have near the top a line like this:
+\begin{verbatim}
+%%BoundingBox: 0 30 98 128
+\end{verbatim}
+The first two numbers represent the low $x$- and $y$-coordinates of
+the figure's bounding box, in points, and the last two represent
+the high $x$- and $y$-coordinates.  In the example just given, which
+corresponds to \Fullref{PStorus}, the bounding box goes from $0$ to
+$98$~pt in the $x$-direction and from $30$ to $128$~pt in the
+$y$-direction, so its height and width are both $98$~pt, or
+approximately 1.35~inches.  The corners of the bounding box appear on
+the page in proof mode (\Fullref{Proofing Aids}). 
+
+Note that \verb+\psfig+ only cares about the height and the width of
+the bounding box, not about the actual values of the high and low
+coordinates.  The latter are relevant only in reference to the
+coordinates of the objects inside the picture, about which
+\verb+\psfig+ knows nothing.  (Thus the bottom left corner of the
+square in \Fullref{PStorus} has coordinates $(4,34)$, which is a
+little bit above and to the right of the bounding box's bottom left
+corner $(0,30)$.)  If one added the same number to the $x$-coordinates
+of the bounding box and of every object in the picture, the result
+would be exactly the same.
+
+Normally, the \verb+%%BoundingBox+ line should have been placed in the
+PostScript file automatically, by whatever program you used to create
+the figure.  If the program did not write a line like that, you have
+to do it by hand, and you should consider switching to another program.
+
+Notice that the labels $a$ and $b$ in \Fullref{PStorus} appear in
+the same font as they would in the text.  In fact the labels were
+typeset by \TeX\ itself, and do not come from the PostScript file,
+where it would be hard to specify them satisfactorily---especially
+details such as the placement of the primes and other subscripts and
+superscripts.  The information for these labels is contained in a file
+with the suffix \verb+.lab+, which normally is generated by the same
+program that creates the PostScript file, or by a postprocessor.
+If you want to include {\it Mathematica} graphics, for example, you
+should use the \verb+mathfig+ utility, described in the Appendix.
+
+\begin{wizard}
+The average user has no need to know what the \verb~.lab~ file looks
+like, but if you want to write a new postprocessor in order to
+implement this labeling scheme in conjunction with your favorite
+drawing program, here are the details.  Each line of the file
+yields one label, and contains the \verb+\setlabel+ command
+followed by five arguments: the text of the label, to be typeset in
+math mode; the $x$- and $y$-coordinates of the label's {\it reference
+point}, in points; and the {\it relative} $x$- and $y$-coordinates of
+the reference point.  A value of 1 for the last two arguments means
+the reference point of the label it at the top or right of the label's
+bounding box; a value of $-1$ means bottom or left, a value of $0$
+means middle, and so on.
+
+For example, here is the file \verb+PStorus.lab+ corresponding to
+\Fullref{PStorus}:
+\begin{verbatim}
+\setlabel{a}{48.600000}{34.162104}{0}{1}
+\setlabel{b}{4.162104}{78.600000}{1}{0}
+\setlabel{a'}{48.600000}{123.037896}{0}{-1}
+\setlabel{b'}{93.037896}{78.600000}{-1}{0}
+\end{verbatim}
+For the label $a$, the reference point is at the top middle of the
+label's bounding box, so the label itself will be centered under the
+point with coordinates $(48.6,34.1)$.
+
+If you want to typeset a label outside math mode, use \latex/'s
+\verb+\mbox+ command (or \TeX's \verb+\hbox+).  The font used by
+default in this case is the same as for captions.  Thus, to get the
+label {\sf foo} you'll probably want to type the string
+\verb+\hbox{foo}+ into your figure-making program.
+
+Sometimes the fact that the source \verb+\hbox{foo}+ has many more
+characters than the output causes problems---for example, the
+figure-making program might leave too much space for the label.  The
+macro \verb+\hyperactivelabels+ provides a way around this.  This
+macro is called every time a label is about to be typeset, and you can
+define it at will, to allow abbreviations, say.  Thus, after the
+commands
+\begin{verbatim}
+\def\hyperactivelabels{\mathcode`:="8000}
+\def\activecolon#1:{\hbox{#1}}
+{\catcode`\:=\active\global\let:=\activecolon}
+\end{verbatim}
+the construction \verb+:foo:+ has exactly the same effect as
+\verb+\hbox{foo}+---but only inside labels.  (The command
+\verb+\mathcode`:="8000+ causes the colon to be treated as an active
+character in math mode; the next two lines say, in a roundabout way,
+what this active character should do.)
+\end{wizard}
+
+Utilities (programs) that generate PostScript graphics files generally
+start the file with a ``signature'' (a comment line stating the
+utility's name and version) and a chunk of PostScript code---call it a
+header---establishing abbreviations, subroutines, fonts and the like.
+The header is always the same, so if you have dozens of figures
+generated by the same utility it's good to factor out this
+commonality, if possible.  With certain utilities, you can save your
+files without the header.  Then they won't print on their own; but
+when \verb+\psfig+ looks into them, if it can recognize the utility's
+signature, it puts into the dvi file a command that causes the
+inclusion of the header at printing time.  This way the header is
+included only once for all figures, saving memory and time.  The
+utilities that \verb+\psfig+ currently knows about are Mathematica
+\cite{wolfram} and Adobe Illustrator \cite{illustrator}.  With
+Illustrator, saving without the header is accomplished by clicking on
+the appropriate entry in the ``Save As'' dialog box.  For Mathematica,
+see the Appendix.
+
+\begin{wizard}
+For the signature to be seen by \verb+\psfig+, it must appear near the
+top of the file; the actual number of lines that \verb+\psfig+ scans
+is controlled by the counter \verb+\maxheaderlines+.  The
+\verb+%%BoundingBox+ line must also lie in that same initial stretch.
+The default value of \verb+\maxheaderlines+ is 100, which is almost
+always adequate.
+\end{wizard}
+
+\section{Fonts}
+As mentioned in \Fullref{Overall Organization}, the \verb+geom+ style
+requires NFSS,
+a rational font management system that makes the use of new
+fonts easier than under old \latex/.
+
+Under this scheme, unlike the old, if you say \verb+\bf... \small...+,
+the \verb+\small+ has no effect on the boldness of the current
+font---size, boldness, style and so on are independent attributes.
+This is generally good, but it does create backward incompatibilities.
+For example, if you have an old \latex/ document where you've relied
+on \verb+\small+ to reset the weight of the font, you're in for a
+surprise.  Also, \verb+\rm+ should generally be replaced by
+\verb+\normalshape+.  For a list of all such differences, see
+\cite{amslatex}.
+
+Another case of conflicting ideas on what font-change commands should
+do is inside math mode.  Under NFSS,
+\verb+\bf+ has no effect inside math mode---you need to say
+\verb+$\mathbf{xyz}$+, for example.  The \verb+geom+ style will
+print a warning on your terminal if it sees \verb|\bf| in math mode.  
+
+In addition to the math-mode commands \verb+\mathbf+, \verb+\mathrm+ and
+\verb+\mathit+, the \verb+geom+ style defines \verb+\mathss+ and
+\verb+\mathtt+ as the math mode counterparts of \verb+\sf+ (sans-serif)
+and \verb+\tt+ (typewriter type).
+
+Support for Fraktur (``gothic'') and blackboard-bold fonts is
+provided, as well as for the fonts \verb+msam+ and \verb+msbm+, which
+contain a plethora of mathematical symbols. This is all thanks to the
+AMS, and you should turn to the \amslatex/ distribution
+\cite{amslatex} if your site lacks the fonts themselves or the
+prerequisite auxiliary files \verb+amsfonts.sty+ and
+\verb+amssymb.sty+.
+
+\section{The Index, the Table of Contents and the Glossary}
+
+The basic command for putting something into the index is
+\verb+\index+, as in standard \latex/.  But \verb+\index+ does not
+print its argument.  To index a word that actually appears in the text
+say \verb+\ix{...}+.  To index mathematical notation say
+\verb+\ixn$...$+ or \verb+\ixninv$...$+, depending on whether the
+contents should appear or not.  And, just for symmetry, you can also
+use \verb+\ixinv+, which equals \verb+\index+:
+$$
+\vbox{\halign to .7\hsize{\tabskip=0pt plus 1fil
+#\hfil &&{\tt \char`\\ #}\hfil\cr
+&\omit Text&\omit Notation\cr
+\noalign{\medskip}
+Visible&ix&ixn\cr
+Invisible&ixinv&ixninv\cr}}
+$$
+
+An index entry is made automatically for any \verb+\label+ or
+\verb+\ref+ command.  In the second case the entry goes into the index
+file preceded by a \verb+%+. 
+
+Remember that, unless you have issued the
+command \verb|\autolabelfalse|, there are lots of situations in which
+a label, and consequently an index entry, is generated automatically:
+in particular, this happens for each sectioning command
+(\Fullref{Labels and Cross-References}) and for each tagged
+theorem, lemma, and so on (\Fullref{Theorems and Their Friends}).  
+This provides a
+wealth of index entries, which later you can winnow out
+semi-automatically, if necessary, since entries of this sort appear in
+quotation marks, preceded by their type.  You can see all the entries
+that a given page contributes to the index by looking at the small
+print on the top left of the page when proofing mode is on 
+(\Fullref{Proofing Aids}).
+
+\begin{wizard}
+The \verb+geom+ style modifies the \verb+\theindex+ format of standard
+\latex/ so that the index is printed in smaller type.  Moreover, it
+achieves a double-column format not by using standard \latex/'s
+\verb+\twocolumn+ command, which starts a new page, but rather
+\ix{Frank Mittelbach}'s \verb+multicols+ environment \cite{Mittelbach},
+which is implemented in the file \verb+multicol.sty+.  Using this
+environment you can have single-column and double-column text on the
+same page.  If you want to add an explanation before the index, for
+example, you might say something like this:
+\begin{verbatim}
+\begin{theindex}
+\null            % this avoids what seems to be a bug in multicol.sty
+\end{multicols}  % end double column format started by \begin{theindex}
+
+Numbers in parentheses refer to pages where the entry should be
+discussed but isn't, due to laziness on the author's part.
+
+\begin{multicols}2 % restart double column format
+\item aardvark...
+\end{theindex}
+\end{verbatim}
+\end{wizard}
+
+Support for a glossary is somewhat more extensive than in standard
+\latex/. You can mark a word as a glossary entry by saying
+\verb+\glo{...}+; this causes a \glo{dagger} to be placed before the
+word, and an index entry for the word to be generated in the file {\it
+jobname}\verb+.idx+, preceded by \verb+\dag+.  
+
+\begin{wizard}
+Note that the
+\verb+geom+ style does not use a separate {\it jobname}\verb+.glo+
+file; although standard \latex/'s \verb+\glossary+ command is still
+available if you insist in writing entries to that file, this command
+has not been made robust in the way that \verb+\index+ and \verb+\label+
+have. (See \Fullref{No More Fragile Commands}.)
+\end{wizard}
+
+The glossary itself is
+delimited by \verb+\begin{theglossary}+ and \verb+\end{theglossary}+.
+Glossary entries start like this:
+%
+\begin{verbatim}
+\entry{doohickey} ...
+\entry[\cite{...}]{thingamajig} ...
+\end{verbatim}
+%
+The entry name is printed in boldface, followed by a period.
+The contents of the optional argument are printed immediately after
+the entry name, before the period.  The comments made above about
+double-column formatting apply to the glossary as well.
+
+The table of contents is treated in much the same way as in standard
+\latex/, but there is one important difference: starred sectioning
+commands, like \verb+\section*+, do show up in the table of contents,
+unless you've said \verb+\starredcontentsfalse+.  
+Since one generally doesn't want the table of contents
+to include an entry for the table of contents itself,
+the definition of \verb+\tableofcontents+ in 
+\verb+geomart.sty+ starts like this:
+\begin{verbatim}
+\def\tableofcontents{{\starredcontentsfalse\section*{Contents}...}}
+\end{verbatim}
+The extra pair of braces limits the action of
+\verb+\starredcontentsfalse+ to this entry only.
+
+\section{Proofing Aids}
+
+The \verb+geom+ style provides a number of proofing aids that you can
+turn on and off by saying \verb+\proofingtrue+ and
+\verb+\proofingfalse+.  The default is for proofing to be on.  These
+facilities are independent of standard \latex/'s \verb+draft+ option
+to the \verb+book+ and \verb+article+ style, whose only effect is to
+make overfull box markers visible.
+
+If you use \latex/'s \verb+\includeonly+ mechanism \cite[76]{Lamport},
+you can print your final version by passing the macro
+\verb+\noproofing+ as the argument to \verb+\includeonly+.  This not
+only turns off all proofing aids, but also prevents \latex/ from
+starting a new page for each input file.  (Naturally, the page breaks
+will likely be different because of that, so you'll need to run the
+job twice to get cross-references right.)
+
+\begin{wizard}
+Normally you have two lines like this in the main file for your
+document:
+\begin{verbatim}
+\typein[\sectionstoinclude]{Enter the sections that should be processed: }
+\includeonly{\sectionstoinclude}
+\end{verbatim}
+so you can type in the sections to be included from the terminal,
+without having to modify the source file.  The macro
+\verb+\noproofing+ works in this mode, too.
+\end{wizard}
+
+By the way, if you are using the \verb+book+ style, the construction
+\verb+\chap1{345}+ expands to 
+\begin{verbatim}
+chap1/1.3,chap1/1.4,chap1/1.5
+\end{verbatim}
+This has nothing to do with proofing, but it provides a useful shorthand
+for use with \verb+\includeonly+.
+Braces should be used around a section or chapter number having more
+than one digit.
+
+In proofing mode you get, to the left of the main text, a column in
+tiny print with all the index entries contributed by that page.  This
+includes automatic entries with their respective prefixes (see
+\Fullref{The Index, the Table of Contents and the Glossary}).
+
+If you are in proof mode and the macros \verb+\leftfoot+ and
+\verb+\rightfoot+ are defined, they will be typeset flush left and
+flush right on the footline.  These macros are often defined to
+contain information about draft version, date of last modification,
+etc., which can be updated automatically.
+
+\begin{wizard}
+Near the top of the 
+source file for this document, I wrote the lines
+\begin{verbatim}
+\def\leftfoot{\RCSstring$Revision: 1.12 $}
+\def\rightfoot{\RCSstring$Date: 95/07/03 15:57:22 $}
+\def\RCSstring$#1 ${#1}
+\end{verbatim}
+The first two lines are automatically updated by the UNIX utility
+\ix{RCS} (Revision Control System) whenever I check the file in or
+out.  RCS requires that the keywords \verb+Revision+, \verb+Date+ and
+so on be found within dollar signs, and it tacks on a blank before the
+closing \verb+$+ for good measure.  The \verb+\RCSstring+ macro
+eliminates this extraneous stuff.
+\end{wizard}
+
+\section*{Appendix: {\mediumseries \tt mathfig}---A System for Doing Typesetting in
+Mathematica} 
+
+\begin{warning}
+The software described in this Appendix depends on Mathematica
+\cite{wolfram}.  I make no representation whatsoever concerning its
+performance.  Although I have used \verb+mathfig+ under Mathematica
+versions 1.2, 2.0 and 2.1, I emphasize that \verb+mathfig+ may fail to
+work as described here and that I take no responsibility for such
+failure.
+\end{warning}
+
+The \verb+mathfig+ program, for use on UNIX systems, takes a
+Mathematica source file \verb+foo.m+ and calls Mathematica to create
+a PostScript file \verb+foo.ps+.  
+Then \verb+mathfig+ postprocesses \verb+foo.ps+ to
+take out the PostScript labels putting the same information in a file
+\verb+foo.lab+ that can be read later by \latex/, as explained in
+\Fullref{PostScript Figures}.  The usage of this program is the following:
+$$
+\hbox to \hsize{\small\hskip 1em
+{\tt mathfig} [ {\tt -d} {\it directory} ] [ {\tt -i} {\it initfile} ]
+{\it files}\hfil}
+$$
+The \verb+-d+ option makes all file names relative to the specified
+directory.  The \verb+-i+ option tells Mathematica to read an
+initialization file.  Any number of files can be passed as subsequent
+argument; \verb+\mathfig+ processes one at a time, starting a new
+Mathematica session each time.
+
+The steps performed by \verb+mathfig+ when processing the file
+\verb+foo.m+ are the following.  It calls \verb+math+ and gives it the
+commands \verb+Get["+{\it initfile}\verb+"]+ (if an initialization
+file was specified) and \verb+Get["foo.m"]+.  The result of
+\verb+Get["foo.m"]+ should be an expression with head \verb+Graphics+
+or \verb+Graphics3D+.  This expression is passed to \verb+Display+,
+with output sent to the filter \verb+geomfix+; this filter is
+analogous to the \verb+psfix+ program supplied with Mathematica.  The
+output of \verb+geomfix+ is further processed to create the files
+\verb+foo.ps+ and \verb+foo.lab+.  This last step is performed by
+\verb+mathlabels+, a \verb+perl+ program.  (\verb+perl+ is a widely
+used UNIX utility, and it should be available at your site. If
+\verb+mathfig+ claims that \verb+mathlabels+ cannot be found, it may
+be because \verb+perl+ is not where \verb+mathfig+ expects to find it;
+see the end of \Fullref{Installation}.)
+
+By default, \verb+\mathfig+ creates a figure two inches high and five
+inches wide.  A different height can be specified by including the
+assignment \verb+$height=+{\it height} in the Mathematica source file,
+where {\it height} is a number specifying the height in inches.  You
+can also say \verb+$width=+{\it width}.  The reason to put these numbers
+in the source file, rather than choosing them at run time, is
+archival: in this way the output is entirely determined by the
+contents of the source file.
+
+\begin{wizard}
+Furthermore, if you assign values to the variables \verb+$xlo+,
+\verb+$xhi+, \verb+$ylo+ and \verb+$yhi+, the figure produced by
+Mathematica will be clipped to a window with the given boundaries, and
+rescaled so as to fit in a box of the given height and width.  For
+example, setting \verb+$xlo=$ylo=.1+ and \verb+$xhi=$yhi=.9+ will trim
+10\% off the size of the box around each edge, and the remaining
+graphics will be rescaled by a factor of $1/(.9-.1)=1.25$.  Under
+Mathematica 1.2, this is the only way I know to make a 3D-graphics
+object occupy the whole bounding box.  Unfortunately the values of
+\verb+$xlo+ and so on have to be determined by trial and error.
+
+The symbols \verb+$height+, \verb+$width+, \verb+$xlo+, \verb=$ylo=,
+\verb+$xhi+, \verb=$yhi= and \verb=$Def= should not be used in your
+Mathematica source file except with the meanings described above.
+(\verb=$Def= is used internally.)
+
+When Mathematica generates a picture with labels, the scaling
+computations are implicit in the resulting PostScript code, and they
+take into account the dimensions of the labels present in the code.
+Thus the graph generated by
+%
+\begin{verbatim}
+Plot[x,{x,0,1}]
+\end{verbatim}
+%
+looks a bit smaller on the screen than the one generated by
+%
+\begin{verbatim}
+Plot[x,{x,0,1},Ticks->False]
+\end{verbatim}
+%
+because the first has to accomodate labels along the axes, in the same
+size window.  However, when you run \verb+mathfig+, the labels are
+taken out of the PostScript file, and therefore don't have any effect
+on the scaling of the picture.  The \verb+mathfig+ output for the two
+commands above would be scaled by exactly the same amount, and the
+\TeX\ labels generated for the first command would stick out of the
+bounding box a little bit, just as they do in \Fullref{PStorus}.
+\end{wizard}
+
+\bibliography{manual}
+\bibliographystyle{alpha}
+\vfil\eject
+
+\begin{theindex}
+\end{theindex}
+
+\end{document}
+
+% $Log:	manual.tex,v $
+%Revision 1.12  95/07/03  15:57:22  levy
+%update for latex2e
+%
+%Revision 1.11  1993/09/16  22:17:03  levy
+%\tt -> \mediumseries\tt in section heads
+%
+%Revision 1.10  92/08/25  19:55:41  levy
+%typo
+%
+%Revision 1.9  92/08/03  13:47:49  levy
+%*** empty log message ***
+%
+%Revision 1.8  92/07/22  13:32:23  levy
+%post - TUG meeting
+%
+%Revision 1.7  92/07/17  13:32:29  levy
+%typos
+%
+%Revision 1.6  92/07/17  13:27:50  levy
+%*** empty log message ***
+%
+%Revision 1.5  92/07/11  21:26:42  levy
+%*** empty log message ***
+%
+%Revision 1.4  92/04/02  22:45:56  levy
+%*** empty log message ***
+%
+%Revision 1.3  92/04/02  09:58:12  levy
+%*** empty log message ***
+%
+%Revision 1.2  92/04/01  18:57:39  levy
+%*** empty log message ***
+%
+%Revision 1.1  1992/03/19  18:08:13  levy
+%Initial revision
+%

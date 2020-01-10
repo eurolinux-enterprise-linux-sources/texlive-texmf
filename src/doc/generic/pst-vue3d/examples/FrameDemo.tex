@@ -1,0 +1,58 @@
+\documentclass[12pt]{article}  % Herbert Voss 2003-12-20
+\usepackage{pst-vue3d,multido}
+\begin{document}
+
+\fbox{\begin{pspicture}(-1.3,-0.75)(2,1.1)
+\FrameThreeD[%
+	normaleLatitude=0,%
+	normaleLongitude=0,%
+	fillcolor=green,fillstyle=solid](0,0,0)(-10,-5)(10,5)%
+\AxesThreeD[linecolor=red](20,15,10)
+\end{pspicture}%
+}
+\hfill
+\fbox{\begin{pspicture}(-1.3,-0.75)(2,1.1)
+\FrameThreeD[%
+	normaleLatitude=90,%
+	normaleLongitude=0,%
+	fillcolor=green,fillstyle=solid](0,0,0)(-10,-5)(10,5)%
+\AxesThreeD[linecolor=red](20,15,10)
+\end{pspicture}%
+}%
+\hfill
+\fbox{\begin{pspicture}(-1.3,-0.75)(2,1.1)
+\FrameThreeD[%
+	normaleLatitude=0,%
+	normaleLongitude=90,%
+	fillcolor=green,fillstyle=solid](0,0,0)(-10,-5)(10,5)%
+\AxesThreeD[linecolor=red](20,15,10)
+\end{pspicture}
+}
+
+
+
+\fbox{\begin{pspicture}(-1.3,-0.75)(2,1.1)
+\psset{normaleLatitude=0,normaleLongitude=0,linewidth=0.5pt}
+\FrameThreeD[fillcolor=cyan,fillstyle=solid](0,0,0)(-10,-5)(10,5)%
+\QuadrillageThreeD[grille=2.5,linecolor=black,pas=5](0,0,0)(-10,-5)(10,5)%
+\AxesThreeD[linecolor=red](20,15,10)
+\end{pspicture}%
+}
+\hfill
+\fbox{\begin{pspicture}(-1.3,-0.75)(2,1.1)
+\psset{normaleLatitude=90,normaleLongitude=0,linewidth=0.5pt}
+\FrameThreeD[fillcolor=cyan,fillstyle=solid](0,0,0)(-10,-5)(10,5)%
+\QuadrillageThreeD[grille=2.5,linecolor=black](0,0,0)(-10,-5)(10,5)%
+\AxesThreeD[linecolor=red](20,15,10)
+\end{pspicture}%
+}%
+\hfill
+\fbox{\begin{pspicture}(-1.3,-0.75)(2,1.1)
+\psset{normaleLatitude=0,normaleLongitude=90,linewidth=0.5pt}
+\FrameThreeD[fillcolor=cyan,fillstyle=solid](0,0,0)(-10,-5)(10,5)%
+\QuadrillageThreeD[grille=2.5,linecolor=black](0,0,0)(-10,-5)(10,5)%
+\AxesThreeD[linecolor=red](20,15,10)
+\end{pspicture}
+}
+
+\end{document}

@@ -1,0 +1,9 @@
+create digamma
+     
+add kerning, especially between accents and capitals
+     
+create more typefaces (italics?)
+     
+complete hyphenation table
+     
+create tick marks for numbers

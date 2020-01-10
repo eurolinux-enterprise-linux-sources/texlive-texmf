@@ -1,0 +1,264 @@
+%%
+%% This is file `labboode.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% labbook.dtx  (with options: `labboode')
+%% 
+%% Copyright (C) 2002 Frank K^^fcster.
+%% 
+%% All rights reserved.
+\ProvidesFile{labboode.tex}%
+            [2003/05/20 v1.1 LaTeX2e labbook document class]
+\documentclass[a4paper]{article}
+\usepackage{doc}
+\usepackage{ngerman}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+
+\MacroIndent=2em
+
+\MakeShortVerb{\|}
+
+\begin{document}
+
+\title{labbook.cls, eine \LaTeX-Klasse zum F"uhren von experimentellen
+  Laborjournalen, Version 1.1}
+
+\author{Frank K"uster}
+\date{2003-05-20}
+\maketitle
+
+\begin{abstract}
+  Diese Klasse soll es erm"oglichen, Laborb"ucher mit chronologischen
+  Aufzeichnungen "uber Experimente mit \LaTeX\ zu f"uhren. Die neuen
+  Seiten werden einfach jeden Tag hinten angeheftet, aus den
+  Gliederungselementen wird ein Experiment-Index generiert, um das
+  Auffinden von bestimmten Experimenten zu erleichtern. Durch
+  unterschiedliche Seitennummerierung kann der Vorspann (Index,
+  Inhalt, Abk^^fcrzungsverzeichnis) unabh^^e4ngig vom Hauptteil verl"angert
+  werden.  Die Klasse basiert auf der KOMA-Script-Klasse
+  |scrbook.cls|. Es k"onnen daher alle Merkmale dieser Klasse
+  verwendet werden -- die Lekt"ure des |scrguide|, der
+  KOMA-Script-Dokumentation, wird daher sehr empfohlen.
+\end{abstract}
+
+\tableofcontents
+
+\section{Generelles}
+
+\subsection{Rechtliches}
+
+Die F"uhrung von Laborb"uchern ist teilweise gesetzlich geregelt, oft
+stellen Institutionen zur Forschungsf"orderung weitere Anforderungen.
+In der Regel ist es daher \emph{nicht} erlaubt, ein Laborjournal
+lediglich in elektronischer Form zu f"uhren; teilweise sind gebundene
+B"ucher vorgeschrieben. Allerdings scheint es auch dort "ublich zu
+sein, die Notizen, die man w"ahrend der Experimente auf losen
+Bl"attern, in Computerdateien oder einem "`Schmierbuch"' gef"uhrt hat,
+mehr oder weniger regelm"a"sig ins gebundene Laborjournal zu
+"ubertragen.
+
+Aus diesem Grund scheint es mir vertretbar, mit einer elektronischen
+und einer parallelen ausgedruckten Fassung des Laborjournals zu
+arbeiten. Bei Bedarf kann die ausgedruckte Fassung geheftet oder
+gebunden werden, eine auf CD-ROM gebrannte Version sollte einem Buch
+an Beweiskraft nicht nachstehen. Dem stehen die gro"sen Vorteile v.a. einer
+PDF-Fassung gegen"uber: Volltextsuche, einfache Einbindung von
+Graphen und Bildern, M"oglichkeit der Verlinkung von Datendateien etc.
+
+\subsection{Merkmale}
+\label{sec:features}
+
+\begin{description}
+\item[Basisklasse] |labbook.cls| basiert auf der KOMA-Script-Klasse
+  |scrbook.cls| und bietet daher alle M^^f6glichkeiten dieser Klasse, vom
+  Seitenlayout ^^fcber Kopfzeilengestaltung und Absatzauszeichnung bis
+  hin zu Variationen des Layouts von \textit{floats} und
+  Randbemerkungen. Die Lekt^^fcre des scrguide wird sehr empfohlen!
+\item[Gliederung] Die Gliederung erfolgt zun"achst chronologisch,
+  statt |\chapter| wird |\labday| verwendet. Innerhalb eines Tages
+  wird nach Experimenten untergliedert -- das kann eine vollst^^e4ndige
+  Messung von der Planung bis zur Auswertung sein, aber auch ein
+  Arbeitsgang eines mehrere Tage dauernden Versuchs. |\experiment|
+  steht auf der Ebene von |\section|, zus^^e4tzlich steht
+  |\subexperiment| auf der |\subsection|-Ebene zur Verf^^fcgung. Darunter
+  gibt es die "ublichen Gliederungsebenen, auch wenn eine sehr tiefe
+  Schachtelung wenig sinnvoll erscheint -- man beachte das
+  |\minisec|-Kommando von KOMA-Script.
+\item[Index und Inhaltsverzeichnis] Wegen der chronologischen Gliederung ist ein
+  traditionelles Inhaltsverzeichnis nicht ausreichend, besonders wenn
+  Versuche in einem zusammenh"angenden Experiment an verschiedenen
+  Tagen durchgef"uhrt werden. Daher wird zus^^e4tzlich ein Index
+  ausgegeben. Der Index wird aus den Inhaltsverzeichnis-Eintr^^e4gen der
+  Abschnittsbefehle erstellt. Als Argument f^^fcr |\experiment| und
+  |\subexperiment| kann man auch vorher definierte Abk^^fcrzungen
+  verwenden. Dadurch soll die konsistente Erstellung des Index
+  erleichtert werden. Au^^dferdem k^^f6nnen einem Experiment mehrere
+  Indexeintr^^e4ge zugeordnet werden.
+\item[hyperref-Integration] Die Klasse arbeitet gut mit dem Paket
+  |hyperref.sty| zur Erstellung von pdf-Dateien mit
+  Navigationsfunktionen zusammen.
+\end{description}
+
+\section{Benutzung}
+\label{sec:usage}
+
+\subsection{Initialisierung}
+\label{sec:options}
+
+Wenn man hyperref verwenden m^^f6chte \emph{muss} man die Klassenoption
+|hyperref| angeben:
+\begin{verbatim}
+\documentclass[hyperref]{labbook}
+\end{verbatim}
+Danach kann man hyperref und andere Pakete in der jeweils passenden
+Reihenfolge laden. Wird hyperref geladen, ohne die Option anzugeben,
+dann ^^fcberschreibt es einige ^^c4nderungen, die in dieser Klasse in
+\LaTeX-Interna eingef^^fcgt werden. Umgekehrt werden diese ^^c4nderungen gar
+nicht erst durchgef^^fchrt, wenn man die Option |hyperref| angibt, aber
+das Laden des Paketes vergisst! Bei der Verwendung von hyperref
+sollte man au^^dferdem die KOMA-Option |idxtotoc| in Erw^^e4gung ziehen: Der
+Index wird n^^e4mlich nicht nur in das Inhaltsverzeichnis aufgenommen,
+sondern auch in die PDF-Bookmarks.
+
+Ansonsten werden derzeit einfach alle Optionen an scrbook
+durchgereicht. Die Verwendung von |openany| bietet sich an, damit
+Labortage auf jeder Seite beginnen k^^f6nnen.
+
+\section{Gliederungsbefehle}
+\label{sec:gliederungsbefehle}
+
+subsection{\textbackslash\texttt{labday}}
+label{sec:labday}
+
+\DescribeMacro{\labday} Der Befehl |\labday| kann verwendet werden, um
+eine nicht nummerierte "Uberschrift zu erzeugen. Ihr Text (bzw. der des
+optionalen Arguments) wird ins Inhaltsverzeichnis aufgenommen und als
+lebender Kolumnentitel gesetzt.  In der Regel wird man einfach das
+Datum, vielleicht mit dem Wochentag, verwenden.  |\labday| k^^fcmmert
+sich auch um die Indexeintr^^e4ge der untergeordneten Gliederungspunkte;
+man sollte es nur innerhalb von mainmatter verwenden. Intern wird
+|\addchap| aufgerufen, es gibt keine Sternform und kein optionales
+Argument.
+
+\subsection{\textbackslash\texttt{experiment} und
+  \textbackslash\texttt{subexperiment}: Einfache Verwendung}
+\label{sec:exper-und-subexp}
+
+\DescribeMacro{\experiment} Innerhalb eines Tages k"onnen nummerierte
+"Uberschriften f^^fcr einzelne Experimente mit
+\begin{verbatim}
+\experiment[<Kurzform>]{<Langform>}
+\end{verbatim}
+erzeugt werden. Ihr Text (bzw. der des optionalen Arguments) wird
+nicht nur ins Inhaltsverzeichnis und den Seitenkopf geschrieben,
+sondern auch in den Index. Dieser erleichtert die Orientierung,
+besonders wenn Experimente mehrfach oder "uber mehrere Tage hinweg
+durchgef"uhrt werden. Die Indexeintr"age geben nicht nur die Seiten
+des Beginns jedes Experiments an, sondern den ganzen Seitenbereich,
+und fassen zusammenh^^e4ngende Bereiche des gleichen Experiments an
+unterschiedlichen Tagen zusammen.
+
+Beachten Sie, dass man im optionalen Argument keine Kommas verwenden
+darf, weil es auch eine durch Kommas abgetrennte Liste enthalten kann
+(s.\,u.). Wenn Sie doch ein Komma ben^^f6tigen, schlie^^dfen Sie das
+optionale Argument nochmals in geschweifte Klammern ein:
+\begin{verbatim}
+\experiment[{eins, zwei, drei}]{Die Eins, die zwei und die Drei}
+\end{verbatim}
+
+\DescribeMacro{\subexperiment} Das selbe gilt f"ur die darunter
+liegenden |\subexperiment|-Eintr"age. Sie sind f"ur Untergliederungen
+der Art "`Planung, Durchf"uhrung, Auswertung"' oder "`Herstellung,
+Reinigung, Messung"' vorgesehen.
+
+\subsection{Fortgeschrittene Verwendung: Abk"urzungen}
+\label{sec:abkurzungen}
+
+\DescribeMacro{\newexperiment} Wenn man f^^fcr das gleiche Experiment an
+unterschiedlichen Stellen leicht unterschiedliche Formulierungen (oder
+Schreibungen) w^^e4hlt, erh^^e4lt man unterschiedliche Indexeintr^^e4ge. Um
+dies zu vermeiden, kann man sich Abk"urzungen f^^fcr h^^e4ufig auftretende
+Experimente definieren. Dies geschieht mit dem Makro
+
+|\newexperiment{<abk>}{<Langform>}{<Kurzform>}|
+
+Dabei bezeichnet |<abk>| die Abk"urzung, mit der man auf die
+definierte |<Langform>| und |<Kurzform>| zugreifen kann (letztere f^^fcr
+Index, Inhaltsverzeichnis und Kolumnentitel). Der Text der Abk"urzung
+ist dabei \emph{ohne} vorangestellten Backslash einzugeben, also als
+|\experiment{abk}|! Die Abk"urzungen d"urfen au^^dfer der Tilde
+(\textasciitilde), dem Komma und Leerzeichen s^^e4mtliche Zeichen
+enthalten.
+
+\DescribeMacro{\newsubexperiment} F^^fcr |\subexperiment| steht ein
+analoges Makro, |\newsubexperiment|, zur Verf^^fcgung.
+
+Bei jeder Verwendung eines dieser Makros wird "uberpr"uft, ob die
+gew"unschte Abk"urzung bereits verwendet wurde, und gegebenenfalls ein
+Fehler erzeugt. Gleichlautende Abk"urzungen f"ur |\experiment| und
+|\subexperiment| sind grunds"atzlich m"oglich, d"urften aber nur
+Verwirrung stiften (beim Benutzer, nicht bei \TeX). Wird das dritte
+Argument dieser Makros leer gelassen, so wird die Langform auch f"ur
+Index und Inhaltsverzeichnis verwendet.
+
+|\experiment| und |\subexperiment| k"onnen wie |\section| mit oder
+ohne optionales Argument verwendet werden, und zwar sowohl mit v"ollig
+frei gew"ahlten "Uberschriften (Kurz- und Langform) als auch mit einer
+Abk"urzung. Die Kombination einer Abk"urzung im optionalen Argument
+und einer variierten, freien Langform im Hauptargument ist m"oglich,
+die Verwendung eines frei formulierten optionalen Arguments mit einer
+Abk"urzung im Pflichargument f"uhrt jedoch zu einem Fehler, denn die
+Abk"urzung legt ja bereits einen Index- und Verzeichniseintrag fest.
+Die Verwendung zweier unterschiedlicher Abk"urzungen in optionalem und
+Pflichtargument ist m"oglich, wenn sie beide zum selben Indexeintrag
+f"uhren.
+
+\subsection{Mehrfache Indexeintr^^e4ge}
+
+Manchmal f^^fchrt man zusammenpassende Arbeitschritte f^^fcr verschiedene
+Experimente parallel aus, das verkompliziert die Indexeintr^^e4ge.
+Stellen Sie sich z.\,B. vor, Sie h^^e4tten mit einer Screening-Methode
+die Substanzen A152 und B96 aus einer kombinatorischen Bibliothek als
+vielversprechende Medikamente identifiziert. Als n^^e4chstes m^^f6chten Sie
+deren exakte Struktur, Zusammensetzung oder Sequenz verifizieren und
+eine Pr^^e4parationsmethode f^^fcr etwas gr^^f6^^dfere Mengen entwickeln.
+Wahrscheinlich k^^f6nnen Sie Zeit sparen, indem Sie einige dieser
+Schritte f^^fcr beide Substanzen parallel ausf^^fchren, aber dann erhalten
+Sie einen Index mit Eintr^^e4gen wie "`A152 und B96, Sequenzierung"' --
+und zwei Monate sp^^e4ter sollen Sie sich erinnern, ob sie B96 zusammen
+mit A152 sequenziert haben oder stattdessen in der folgenden Woche mit
+A43 und C12. Daher w^^e4re es praktisch, f^^fcr das Experiment
+"`Sequenzierung von A152 und B96"' zwei Indexeintr^^e4ge zu erhalten,
+n^^e4mlich "A152, Sequenzierung"' und "B96, Sequenzierung"'. Und genau
+das k^^f6nnen Sie einfach erzeugen.
+
+\DescribeMacro{\subexperiment}\DescribeMacro{\experiment}
+Denn die Syntax von |\experiment| und |\subexperiment| erlaubt es,
+eine durch Kommata abgetrennte Liste im optionalen Argument zu
+verwenden. Das erste Element wird f^^fcr das Inhaltsverzeichnis und die
+Kolumnentitel verwendet, und die folgenden Elemente liefern
+Indexeintr^^e4ge. Angenommen, Sie haben die Abk^^fcrzungen A152-seq und
+B96-seq definiert, dann brauchen Sie nur zu schreiben:
+\begin{verbatim}
+\experiment[Sequenzierung A152 und B96, A152-seq,
+B96-seq]{Sequenzierung der Inhibitor-Kandidaten A152 und B96}
+\end{verbatim}
+und Sie erhalten was Sie w^^fcnschen. Leerzeichen vor und nach den
+Kommata werden ignoriert. Sie k^^f6nnen ^^fcberall Abk^^fcrzungen oder freien
+Text w^^e4hlen, obwohl f^^fcr die Indexeintr^^e4ge wahrscheinlich nur
+Abk^^fcrzungen wirklich sinnvoll sind.
+
+\section{Implementierung}
+
+Die Implementierung ist auf Englisch dokumentiert und kann durch
+^^dcbersetzung von |labbook.dtx| mit latex erhalten werden.
+
+\PrintIndex
+
+\end{document}
+\endinput
+%%
+%% End of file `labboode.tex'.

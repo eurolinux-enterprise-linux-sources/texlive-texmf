@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage{pstricks}
+\usepackage{pst-3dplot}
+\usepackage{pst-text}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\begin{center}
+\begin{pspicture}(-3.2,-1.55)(3.25,3.0)
+  \pstThreeDCoor[zMax=3]
+  \pstextpath{%
+    \parametricplotThreeD[xPlotpoints=200,linestyle=none](0,2160){%
+      2.5 t cos mul
+      2.5 t sin mul
+      t 450 div
+    }
+  }{\large\red
+   {\usefont{OT1}{dante}{m}{n}\selectfont DANTE} e.V. %
+   \normalsize\green
+    in Darmstadt im Jahre 2004 %
+    \blue bei einem Vortrag über %
+    {\magenta\Huge \texttt{PSTricks}} und seine vielen Pakete (Herbert Vo\ss{} und Rolf Niepraschk.
+  }%
+\end{pspicture}
+\end{center}
+
+\end{document}

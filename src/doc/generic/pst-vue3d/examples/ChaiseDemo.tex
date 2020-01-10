@@ -1,0 +1,36 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+\parindent=0pt
+\usepackage{pstricks,pst-vue3d}
+%
+\definecolor{marron}{rgb}{1,0.55,0}
+\def\Sol{%
+    \psset{normaleLongitude=90,normaleLatitude=90}
+    \FrameThreeD[fillcolor=lightgray,fillstyle=solid](0,0,-2)(2,-2)(-2,2)
+    \QuadrillageThreeD[grille=.5,linecolor=red](0,0,-2)(-2,-2)(2,2)%
+    \QuadrillageThreeD[grille=0.75,linecolor=cyan](0,0,-2)(-2,-2)(2,2)%
+}
+\def\chaise{%
+	\FrameThreeD[normaleLatitude=0,normaleLongitude=0,%
+		fillcolor=marron,fillstyle=solid](-0.8,1,2)(0.2,0)(1.8,1)
+    \CubeThreeD[A=.1,B=0.1,C=0.9](0.9,-0.9,-1.1)
+    \CubeThreeD[A=.1,B=0.1,C=0.9](0.9,0.9,-1.1)
+    \CubeThreeD[A=.1,B=0.1,C=2](-0.9,0.9,0)
+    \CubeThreeD[A=.1,B=0.1,C=2](-0.9,-0.9,0)
+    \CubeThreeD[A=0.9,B=1,C=0.1](0.1,0,-0.1)
+}
+\begin{document}
+
+\begin{center}
+  \begin{pspicture}(-5.5,-7)(5,4.5)
+    \psset{THETA=30,PHI=20,Dobs=10,Decran=20}
+    \Sol\chaise
+	\pNodeThreeD(-0.5,-0.3,0){littleChair}
+	\rput[lC](littleChair){%
+	    \psset{THETA=30,PHI=20,Dobs=100,Decran=20}
+    	\Sol\chaise%
+	}
+  \end{pspicture}
+\end{center}
+
+\end{document}

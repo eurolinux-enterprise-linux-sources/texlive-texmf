@@ -1,0 +1,28 @@
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\SpecialCoor
+\usepackage{pst-xkey}
+
+\makeatletter
+\define@key[psset]{}{transpalpha}{\pst@checknum{#1}\pstranspalpha}
+\psset{transpalpha=0.5}
+%
+\def\psfs@transp{%
+  \addto@pscode{/Normal .setblendmode \pstranspalpha .setshapealpha}
+  \psfs@solid%
+}
+\makeatother
+
+\pagestyle{empty}
+\parindent=0pt
+\begin{document}
+
+\psset{linestyle=none,fillstyle=transp}
+\begin{pspicture}(-5,-5)(5,5)
+  \rput(0,1){\Huge\textbf{PSTricks}}
+  \pscircle[fillcolor=green](2;135){2cm}
+  \pscircle[fillcolor=red](2;45){2cm}
+  \pscircle[fillcolor=blue](1;-90){2cm}
+\end{pspicture}
+
+\end{document}

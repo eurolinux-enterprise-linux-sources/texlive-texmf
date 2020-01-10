@@ -1,0 +1,41 @@
+\documentclass[12pt,ngerman]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{lmodern,textcomp,ragged2e}
+\usepackage{pstricks}
+\usepackage{pst-fill}
+\usepackage{pstricks-add}
+\usepackage{babel}
+\SpecialCoor
+\newsavebox\TBox
+\pagestyle{empty}
+\psboxfill{\pspicture(0.25,0.25)\psframe[linecolor=black!15](0.25,0.25)\endpspicture}
+\setlength\fboxsep{0pt}
+\newcommand\BoxText[4][3cm]{%
+  \savebox\TBox{\parbox{#1}{\RaggedRight#4}}
+  \rput[t](#2){\fbox{\psframebox[fillstyle=boxfill]{\usebox\TBox}}}%
+  \pnode(#2|0,0){A}\pnode(#2){B}
+  \ncline{->}{A}{B}%
+  \uput*{0.5cm}[-90](A){\footnotesize #3}%
+}
+\parindent=0pt
+\pagestyle{empty}
+\begin{document}
+
+PEDERSS\O N, Geble \\
+\textborn\ um 1490 in Her\o y in Helgeland, Norwegen,\\
+\textdied\ 1557 als Bischof in Bergen in Westnorwegen
+
+\begin{pspicture}(-0.5,1.25)(2.5,-10)
+\psset{xunit=5}
+\psaxes[yAxis=false,Ox=1518]{|->}(0,0)(2.5,-10)% 
+\BoxText[5cm]{2.2,-1.2}{17.3.}{%
+vom Dom\-kapitel beauf\-tragt mit dem König Christian II. 
+über die bevor\-stehen\-de Bischofswahl zu beraten}
+\BoxText[4cm]{1.1123,-2.6}{10.2.}{%
+Pfarrer an der alten Marien\-kirche}
+\BoxText{.767,-1.2}{15.10.}{%
+Mitglied des Dom\-kapitels}
+\end{pspicture}
+
+\end{document}

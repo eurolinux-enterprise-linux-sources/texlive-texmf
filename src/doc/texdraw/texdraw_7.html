@@ -1,0 +1,250 @@
+<HTML>
+<HEAD>
+<!-- Created by texi2html 1.56k from texdraw.texi on 10 March 2004 -->
+
+<TITLE>TeXdraw - B. TeXdraw Toolbox</TITLE>
+</HEAD>
+<BODY>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_6.html">previous</A>, <A HREF="texdraw_8.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+<P><HR><P>
+
+
+<H1><A NAME="SEC31" HREF="texdraw_toc.html#TOC31">B. TeXdraw Toolbox</A></H1>
+
+<P>
+This appendix describes some of the macros supplied with TeXdraw
+which can be used to define additional commands for creating drawings.
+The macros described here work in the user specified coordinate system.
+Some of these toolbox macros are used by the TeXdraw commands
+themselves, others are supplied in an auxiliary file
+<TT>`txdtools.tex'</TT>.
+
+
+
+<UL>
+<LI><A HREF="texdraw_7.html#SEC32">Coordinate parsing</A>
+<LI><A HREF="texdraw_7.html#SEC33">Real arithmetic</A>
+<LI><A HREF="texdraw_7.html#SEC34">Arrow curve</A>
+</UL>
+
+
+
+<H2><A NAME="SEC32" HREF="texdraw_toc.html#TOC32">B.1 Coordinate parsing</A></H2>
+
+<P>
+The coordinate parsing macro <CODE>\getpos</CODE> is useful for creating new
+commands.  This macro takes care of stripping leading and trailing
+blanks from coordinates specified between parentheses.  In addition,
+symbolic coordinates are translated to the corresponding relative
+coordinate using the segment offset and scaling in effect.
+
+
+<P>
+The macro <CODE>\currentpos</CODE> returns the relative coordinates of the
+current position.  The returned values are relative to the current
+segment and the current scaling.  The macro <CODE>\cossin</CODE> returns the
+real-valued cosine and sine of the direction of the line joining two
+points.  The macro <CODE>\vectlen</CODE> returns the length of a vector.  The
+results appear as the value of user supplied macro names.
+
+
+<P>
+<A NAME="IDX168"></A>
+<A NAME="IDX169"></A>
+<A NAME="IDX170"></A>
+<A NAME="IDX171"></A>
+<A NAME="IDX172"></A>
+<A NAME="IDX173"></A>
+<A NAME="IDX174"></A>
+<DL COMPACT>
+
+<DT><CODE>\getpos (<VAR>x</VAR> <VAR>y</VAR>)\<VAR>mx</VAR>\<VAR>my</VAR></CODE>
+<DD>
+<A NAME="IDX175"></A>
+ 
+Decode coordinate values. The coordinates specified by <CODE>(<VAR>x</VAR>
+<VAR>y</VAR>)</CODE> are decoded. Symbolic coordinates are translated to the
+corresponding relative coordinate using the current segment offset and
+scaling.  The resulting character strings representing the real-valued
+coordinates are assigned to the macros specified by <CODE>\<VAR>mx</VAR></CODE> and
+<CODE>\<VAR>my</VAR></CODE>.
+<A NAME="IDX176"></A>
+<DT><CODE>\currentpos \<VAR>mx</VAR>\<VAR>my</VAR></CODE>
+<DD>
+Return the coordinates of the current position.  The coordinates are
+relative to the current segment offset and scaling.  The resulting
+character strings representing the real-valued coordinates are assigned
+to the macros specified by <CODE>\<VAR>mx</VAR></CODE> and <CODE>\<VAR>my</VAR></CODE>.
+<A NAME="IDX177"></A>
+<DT><CODE>\cossin (<VAR>x1</VAR> <VAR>y1</VAR>)(<VAR>x2</VAR> <VAR>y2</VAR>)\<VAR>cosa</VAR>\<VAR>sina</VAR></CODE>
+<DD>
+Return the cosine and sine of the direction of a vector joining two
+points.  The cosine and sine of the angle of the vector which goes from
+<CODE>(<VAR>x1</VAR> <VAR>y1</VAR>)</CODE> to <CODE>(<VAR>x2</VAR> <VAR>y2</VAR>)</CODE>.  The character
+strings representing these real-valued quantities are assigned to the
+macros specified by <CODE>\<VAR>cosa</VAR></CODE> and <CODE>\<VAR>sina</VAR></CODE>.
+<A NAME="IDX178"></A>
+<DT><CODE>\vectlen (<VAR>x1</VAR> <VAR>y1</VAR>)(<VAR>x2</VAR> <VAR>y2</VAR>)\<VAR>len</VAR></CODE>
+<DD>
+Return the length of a vector joining two points.  The length of the
+vector is relative to the current scaling.  The character string
+representing the real-valued length is assigned to the macro specified
+by <CODE>\<VAR>len</VAR></CODE>.
+</DL>
+
+
+
+<H2><A NAME="SEC33" HREF="texdraw_toc.html#TOC33">B.2 Real arithmetic</A></H2>
+
+<P>
+The TeXdraw toolbox supplies macros to perform real arithmetic on
+coordinate values.  The result appears as the value of a user supplied
+macro name.
+<DL COMPACT>
+
+<DT><CODE>\realadd {<VAR>value1</VAR>} {<VAR>value2</VAR>} \<VAR>sum</VAR></CODE>
+<DD>
+<A NAME="IDX179"></A>
+ 
+Add two real quantities, assigning the resultant character string
+representing the sum to the macro <CODE>\<VAR>sum</VAR></CODE>.
+<A NAME="IDX180"></A>
+<DT><CODE>\realmult {<VAR>value1</VAR>} {<VAR>value2</VAR>} \<VAR>prod</VAR></CODE>
+<DD>
+Multiply two real quantities, assigning the resultant character string
+representing the product to the macro <CODE>\<VAR>prod</VAR></CODE>.
+<A NAME="IDX181"></A>
+<DT><CODE>\realdiv {<VAR>value1</VAR>} {<VAR>value2</VAR>} \<VAR>result</VAR></CODE>
+<DD>
+Divide two real quantities, assigning the resultant character string
+representing the result of <VAR>value1</VAR>/<VAR>value2</VAR> to the macro
+<CODE>\<VAR>result</VAR></CODE>.
+</DL>
+
+
+
+<H2><A NAME="SEC34" HREF="texdraw_toc.html#TOC34">B.3 Arrow curve</A></H2>
+<P>
+<A NAME="IDX182"></A>
+
+
+<P>
+This example illustrates the use of the TeXdraw toolbox routines to
+do computations with the coordinates.  The problem will be tackled in
+two parts.  First, we will produce a macro to place an arrowhead on a
+Bezier curve.  Then given this macro, we will produce a macro which can
+draw a "wiggly" line from the current position to a given coordinate.
+
+
+<P>
+The first macro, <CODE>\cavec</CODE>, uses the <CODE>\cossin</CODE> command to
+determine the the cosine and sine of the angle of the line joining the
+second control point to the end point of the Bezier curve.  Recall that
+the Bezier curve is tangent to this line at the end point.  After
+drawing the Bezier curve, the scaling is set locally to absolute units
+of 0.05 inches.  We go back down the line from the end point by 0.05
+inches and draw an arrow vector to the end point from there.  This arrow
+vector is mostly arrowhead, with little or no tail.
+
+
+
+<PRE>
+\def\cavec (#1 #2)(#3 #4)(#5 #6){
+  \clvec (#1 #2)(#3 #4)(#5 #6)
+  \cossin (#3 #4)(#5 #6)\cosa\sina
+  \rmove (0 0)
+  \bsegment
+    \drawdim in \setsegscale 0.05
+    \move ({-\cosa} -\sina)  \avec (0 0)
+  \esegment}
+</PRE>
+
+<P>
+Note the use of macros as arguments to a <CODE>\move</CODE> command.  Minus
+signs are put in front of the macros.  However, the value of the macro
+<CODE>\cosa</CODE> or <CODE>\sina</CODE> could be negative.  Fortunately, TeX
+accepts two minus signs in a row and interprets the result as positive.
+Note that the <CODE>\rmove (0 0)</CODE> command before the beginning of the
+segment ensures that the Bezier curve is stroked before the arrowhead is
+drawn.
+
+
+<P>
+The second macro <CODE>\caw</CODE> builds on <CODE>\cavec</CODE>.  The goal is to
+produce a wiggly vector that can be used as a pointer in a drawing.
+Consider the following symmetrical normalized Bezier curve.
+
+<PRE>
+\centertexdraw{ \move (0 0) \cavec (1.4 0.1)(-0.4 -0.1)(1 0) }
+</PRE>
+
+<P>
+This curve has the appropriate wiggle.  Now we want to be able to draw
+this curve, appropriately scaled and rotated.  The macro <CODE>\caw</CODE>
+needs to do computations on the coordinates.  First, <CODE>\caw</CODE> uses
+the macros <CODE>\getpos</CODE> and <CODE>\currentpos</CODE> to get the positions of
+the end and start of the curve.  Next, the length of the vector is
+calculated using the macro <CODE>\vectlen</CODE>.  A local macro
+<CODE>\rotatecoord</CODE> is used to rotate a coordinate pair about the
+origin, using the cosine and sine of the rotation angle.  The vector
+length is used to scale the normalized curve.  The remaining code draws
+the rotated, normalized curve.
+
+
+
+<PRE>
+\def\caw (#1 #2){
+  \currentpos \xa\ya
+  \cossin ({\xa} \ya)(#1 #2)\cosa\sina
+
+% The nominal wiggly curve is (0 0) (1+dx dy) (-dx -dy) (1 0)
+% Find the rotated offset (dx dy) -&#62; (du dv)
+  \rotatecoord (0.4 0.1)\cosa\sina \du\dv
+
+% calculate the length of the vector
+  \vectlen ({\xa} \ya)(#1 #2)\len
+
+% draw the curve in normalized units
+  \bsegment
+    \setsegscale {\len}
+    \realadd \cosa \du \tmpa  \realadd \sina \dv \tmpb
+    \cavec ({\tmpa} \tmpb)({-\du} -\dv)({\cosa} \sina)
+  \esegment
+  \move (#1 #2)}
+
+% rotate a coordinate (x y)
+% arguments: (x y) cosa sina x' y'
+%  x' = cosa * x - sina * y;  y' = sina * x + cosa * y
+\def\rotatecoord (#1 #2)#3#4#5#6{
+  \getpos (#1 #2)\xarg\yarg
+  \realmult \xarg {#3} \tmpa  \realmult \yarg {#4} \tmpb
+  \realadd \tmpa {-\tmpb} #5
+  \realmult \xarg {#4} \tmpa  \realmult \yarg {#3} \tmpb
+  \realadd \tmpa \tmpb #6}
+</PRE>
+
+<P>
+Finally, the new macro can be used as follows.
+
+<PRE>
+\centertexdraw{
+  \arrowheadtype t:W
+  \move (0 0)
+  \cavec (1.4 0.1)(-0.4 -0.1)(1 0)
+  \move (1 0) \caw (1 1) \htext{tip at \tt (1 1)}
+  \move (1 0) \caw (2 1) \htext{tip at \tt (2 1)}
+  \move (1 0) \caw (2 0) \htext{tip at \tt (2 0)}
+
+}
+</PRE>
+
+<P>
+Note that the Bezier curve in the macro <CODE>\cavec</CODE> lies below the
+arrowhead.  The example then draws an arrowhead of type <CODE>W</CODE> to
+erase the part of the line below the arrowhead.
+
+
+<P><HR><P>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_6.html">previous</A>, <A HREF="texdraw_8.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+</BODY>
+</HTML>

@@ -1,0 +1,16 @@
+\documentclass{article}
+\usepackage{german}
+\newcounter{saveeqn}
+\newcounter{prenum}
+\newcommand{\vareqn}[2]{\setcounter{saveeqn}{\value{equation}}%
+   \setcounter{equation}{0}\setcounter{prenum}{#1}
+   \renewcommand{\theequation}{\arabic{prenum}[#2{equation}]}}
+\newcommand{\reseteqn}{\setcounter{equation}{\value{saveeqn}}%
+   \renewcommand{\theequation}{\arabic{equation}}} 
+\begin{document}
+\setcounter{equation}{5}
+\vareqn{15}{\alph}
+\begin{equation} \frac{a^2 - b^2}{a + b} = a - b \end{equation}
+\reseteqn
+\begin{equation} \sqrt[n]{\frac{x^n - y^n}{1 + u^{2n}}} \end{equation}
+\end{document}

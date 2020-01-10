@@ -1,0 +1,64 @@
+         
+
+			  ifmslide.sty v0.45
+	    Powerful presentations with PDFLaTeX and LaTeX
+
+			   Provided by the
+		  Institute of Mechanics, AGIV (ifm)
+	     University of Technology Darmstadt, Germany.
+
+
+	Author: Thomas Emmel <emmel@mechanik.tu-darmstadt.de>
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+This is README, last changed June 24, 2001
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Idea of ifmslide:
+Make presentations not only for the screen or a beamer (pdflatex) but
+for printed slides (latex) too without changing something* in your document
+and without problems getting any well sized print-format.
+
+(*only add the display option...)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Content:
+
+README ............... this file
+
+ifmslide.sty ......... the style file
+ifmslide.cfg ......... it's configuration
+
+ifmman.pdf
+ifmman.tex
+ifmman.dvi ........... the documentation and samples
+
+button??.[pdf,eps] ... buttons for use with the style
+genbutton ............ perl-script to generate new buttons
+
+ifmlogoc.[pdf,eps] ... The non-official logo of our institute ;-)
+athenep1.[pdf,eps] ... The official sign of our university
+
+liquid_helium.[eps,jpg]
+aqua_ravines.[eps,jpg]
+              ........ two "tiles" out of KDE as example for 
+                       the \paneltile-command
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+All documentation is currently in ifmman.tex
+To get a readable version, just use pdflatex ifmman.tex, or load
+it down from your favorite tex-server...
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Hint:
+
+Use the environment variable TEXPSHEADERS in addition to TEXINPUTS
+if files like graphics are not found with pdflatex.
+I think that is a problem of tetex in the current release only?
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+License:
+
+The bundle is placed under the LaTeX Project Public License 
+(macros/latex/base/lppl.txt on CTAN).

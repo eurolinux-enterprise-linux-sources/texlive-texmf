@@ -1,0 +1,19 @@
+\documentclass{article}
+\usepackage{pstricks}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\begin{center}
+\begin{pspicture}(6,4) 
+  \psframe*[linecolor=lightgray,shadow=true,shadowcolor=red,
+      shadowangle=90,shadowsize=15pt](6,3.5)
+  \psframe[fillcolor=white,fillstyle=solid,%
+      framearc=0.5,shadow=true](2.5,0.5)(5.6,3)
+  \rput[lb](0.2,3.55){\large\textbf{Projekt Grafik}}
+  \rput(4.1,2.5){\large\textbf{Eingabe}}
+\end{pspicture}
+\end{center}
+
+\end{document}

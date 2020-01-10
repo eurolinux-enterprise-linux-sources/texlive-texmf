@@ -1,0 +1,109 @@
+\documentclass[30pt,landscape]{foils}
+\usepackage[english,german]{babel}  % language support for german/english
+\usepackage[latin1]{inputenc}       % allow Latin1 characters
+\usepackage{ifvtex}
+\usepackage{ifpdf}
+% Using vtex we most probably also do create pdf...
+\ifvtexpdf\pdftrue\fi
+\ifpdf
+\usepackage{pause}               % loads also color.sty
+\usepackage{background}
+\usepackage{graphicx}            % for including graphics
+\usepackage{geometry}
+\usepackage{hyperref}
+\else
+\usepackage[dvipdfm]{pause}      % loads also color.sty
+\usepackage[dvipdfm]{background}
+\usepackage[dvips]{graphicx}
+\usepackage[dvips]{geometry}
+\usepackage[dvipdfm]{hyperref}
+\fi
+\usepackage{pp4slide}
+\usepackage{pp4link}
+\geometry{headsep=3ex,hscale=0.9}
+\hypersetup{pdftitle={pp4extensions},
+  pdfsubject={Extensions to PPower4},
+  pdfauthor={Klaus Guntermann, FG Systemprogrammierung, TU Darmstadt
+  <guntermann@iti.informatik.tu-darmstadt.de>},
+  pdfkeywords={pdftex, acrobat, ppower4},
+  pdfpagemode={FullScreen},
+  colorlinks={true},
+  linkcolor={red}
+  }
+\begin{document}
+
+{\Large\normalcolor\bf
+  Extensions to PPower4\\
+  \null\hfill enhancing Presentations\break}
+
+{\noindent\small
+There was enough demand to expand the page transition facilities of 
+PPower4. This requires additional features in the post processor,
+because it has to add the transitions for the intermediate pages.\\
+In this document we show which effects are provided and how they are
+specified. Not all of them are useful in a partial build, though.\\
+Finally we introduce an additional \toplink{infofirst}{hyperlink target}
+for partial builds.\pause}
+
+{\tiny
+Hit Return/Enter/PageDown to go on...\hfill\pauselevel{=1}}
+
+\foilhead{How can one use it?}
+\raggedright
+\begin{itemize}
+\item One can request vertical blinds
+   with \verb|\pauseVBlinds|.\pauseVBlinds
+\item Use \verb|\pauseReplace| to switch back to ``normal''.\pauseReplace
+\item Also horizontal blinds can be used. Use
+  \verb|\pauseHBlinds|.\pauseHBlinds
+\end{itemize}{\small
+The transition selections made by the variants of \\
+\verb|\pause| do not affect the ``real'' page transitions.\\
+Use the features of \verb|hyperref| to set those.\endgraf}
+
+\foilhead{More page transitions}
+\begin{itemize}
+\item Yes, there is also \verb|\pauseDissolve|.\pauseDissolve
+\item The variants of Split are \verb|\pauseVOSplit|,\pauseVOSplit
+\item \verb|\pauseVISplit|,\dotfill See it?\pauseVISplit\null
+\item \verb|\pauseHOSplit|,\dotfill Hi!\pauseHOSplit\null
+\item and \verb|\pauseHISplit|.\dotfill Wow!\pauseHISplit\null
+\end{itemize}
+Can \dotfill{} we \dotfill{} continue?\null
+\foilhead{Still more transitions}
+\begin{itemize}
+\item Box modes are \verb|\pauseOBox|\pauseOBox
+\item and \verb|\pauseIBox|.\dotfill Oops?\pauseIBox\null
+\item \verb|\pauseWipe| must be used with an argument (e.\,g. \{90\}\pauseWipe{90},
+\item 0, 180 and 270). We try also \{180\}\dotfill\pauseWipe{180}\null
+\end{itemize}
+Do \dotfill{} you \dotfill{} want \dotfill{} more?\null
+\foilhead{But now we are almost done with transitions}
+\begin{itemize}\hypertarget{first.5}
+\item \verb|\pauseGlitter| also needs an argument, which may
+  be~\{0\}\hfill  {\tiny In case you want to \Acrobatmenu{GoBack}{go back...}}
+  \pauseGlitter{0}
+\item or 270\dotfill Yeah!\pauseGlitter{270}\null
+\item or 315\dotfill Done.\pauseGlitter{315}\null
+\item There is still the normal \verb|\pause| command. \pause
+  It will keep the last transition mode selected.
+\end{itemize}
+\foilhead{More news}\toptarget{infofirst}
+{\small
+Since version 0.8 of PPower4 you can also go to the first
+partial build created for a slide/page. With the old version you could
+only link to the completely built slide.
+\\
+We show this with the
+\hyperlink{first.5}{start} (\verb|\hyperlink{first.5}{start}|)
+of slide 5 and with its
+\hyperlink{page.5}{end} (\verb|\hyperlink{page.5}{end}|).
+
+Note that the link to the start of a slide will need to be defined
+with a name \verb|first.|$n$ and that it will not work before
+postprocessing.\\
+It is recommended to use \verb|pp4link.sty| and the
+corresponding commands \verb|\toptarget| and \verb|\toplink|.
+
+Thank you for using/considering PPower4. Enjoy!\par}
+\end{document}

@@ -1,0 +1,63 @@
+
+
+vnb10 lm-rep-t5psn lmb10
+vnbx10 lm-rep-t5psn lmbx10
+vnbx12 lm-rep-t5psn lmbx12
+vnbx5 lm-rep-t5psn lmbx5
+vnbx6 lm-rep-t5psn lmbx6
+vnbx7 lm-rep-t5psn lmbx7
+vnbx8 lm-rep-t5psn lmbx8
+vnbx9 lm-rep-t5psn lmbx9
+vnbxsl10 lm-rep-t5psn lmbxo10
+vnbxti10 lm-rep-t5psn lmbxi10
+vncsc10 lm-rep-t5psn lmcsc10
+vndunh10 lm-rep-t5psn lmdunh10
+vnitt10 lm-rep-t5psn lmtti10
+vnr10 lm-rep-t5psn lmr10
+vnr12 lm-rep-t5psn lmr12
+vnr17 lm-rep-t5psn lmr17
+vnr5 lm-rep-t5psn lmr5
+vnr6 lm-rep-t5psn lmr6
+vnr7 lm-rep-t5psn lmr7
+vnr8 lm-rep-t5psn lmr8
+vnr9 lm-rep-t5psn lmr9
+vnsl10 lm-rep-t5psn lmro10
+vnsl12 lm-rep-t5psn lmro12
+vnsl8 lm-rep-t5psn lmro8
+vnsl9 lm-rep-t5psn lmro9
+vnsltt10 lm-rep-t5psn lmtto10
+vnss10 lm-rep-t5psn lmss10
+vnss12 lm-rep-t5psn lmss12
+vnss17 lm-rep-t5psn lmss17
+vnss8 lm-rep-t5psn lmss8
+vnss9 lm-rep-t5psn lmss9
+vnssbx10 lm-rep-t5psn lmssbx10
+vnssdc10 lm-rep-t5psn lmssdc10
+vnssi10 lm-rep-t5psn lmsso10
+vnssi12 lm-rep-t5psn lmsso12
+vnssi17 lm-rep-t5psn lmsso17
+vnssi8 lm-rep-t5psn lmsso8
+vnssi9 lm-rep-t5psn lmsso9
+vnssq8 lm-rep-t5psn lmssq8
+vnssqi8 lm-rep-t5psn lmssqo8
+vntcsc10 lm-rep-t5psn lmtcsc10
+vnti10 lm-rep-t5psn lmri10
+vnti12 lm-rep-t5psn lmri12
+vnti7 lm-rep-t5psn lmri7
+vnti8 lm-rep-t5psn lmri8
+vnti9 lm-rep-t5psn lmri9
+vntt10 lm-rep-t5psn lmtt10
+vntt12 lm-rep-t5psn lmtt12
+vntt8 lm-rep-t5psn lmtt8
+vntt9 lm-rep-t5psn lmtt9
+vnu10 lm-rep-t5psn lmu10
+vnvtt10 lm-rep-t5psn lmvtt10
+% This file belongs to the Latin Modern package. The work is released under
+% the GUST Font License. See the MANIFEST.txt and README.eng files
+% for the details. For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+% Prepared by Thomas Esser and Staszek Wawrykiewicz (May 14, 2005).
+% Touched by Bogus\l{}aw Jackowski (April 13, 2006).
+% Support for VNR (Vietnamese) text fonts in Type1 format:
+% map lines which replace the new vnrtext.map (or parts of an old vnr.map).

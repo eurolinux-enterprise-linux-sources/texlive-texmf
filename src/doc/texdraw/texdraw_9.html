@@ -1,0 +1,321 @@
+<HTML>
+<HEAD>
+<!-- Created by texi2html 1.56k from texdraw.texi on 10 March 2004 -->
+
+<TITLE>TeXdraw - D. Alphabetic listing of commands</TITLE>
+</HEAD>
+<BODY>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_8.html">previous</A>, <A HREF="texdraw_10.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+<P><HR><P>
+
+
+<H1><A NAME="SEC39" HREF="texdraw_toc.html#TOC39">D. Alphabetic listing of commands</A></H1>
+<P>
+<A NAME="IDX186"></A>
+
+
+<DL COMPACT>
+
+<DT><CODE>\arrowheadsize l:<VAR>length</VAR> w:<VAR>width</VAR></CODE>
+<DD>
+Set the arrowhead size to be <VAR>length</VAR> units long and <VAR>width</VAR>
+units wide.  The width is measured across the "base" of the arrowhead.
+The initial arrowhead size has a <VAR>length</VAR> of 0.16 inches and a
+<VAR>width</VAR> of 0.08 inches.
+
+<DT><CODE>\arrowheadtype t:<VAR>type</VAR></CODE>
+<DD>
+Set the arrowhead type to <VAR>type</VAR>, where <VAR>type</VAR> is one of
+<CODE>F</CODE>, <CODE>T</CODE>, <CODE>W</CODE>, <CODE>V</CODE>, or <CODE>H</CODE>.  There are two
+kinds of arrowheads.  The first kind is a triangle.  There are 3
+variants: type <CODE>T</CODE> is an empty triangle, type <CODE>F</CODE> is a filled
+triangle (using the current gray level for lines), type <CODE>W</CODE> is a
+triangle filled with white.  The second kind of arrowhead is an open
+ended Vee.  There are 2 variants: type <CODE>V</CODE> has the stem continue to
+the tip, type <CODE>H</CODE> has the stem stop at the base of the arrowhead.
+The initial arrowhead type is <CODE>T</CODE>.
+
+<DT><CODE>\avec (<VAR>x</VAR> <VAR>y</VAR>)</CODE>
+<DD>
+Draw a line with an arrowhead from the current position to
+<CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE>.  The new current position is <CODE>(<VAR>x</VAR>
+<VAR>y</VAR>)</CODE>.  The arrowhead is aligned with the line, with the tip at
+<CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE>.
+
+<DT><CODE>\begin{texdraw}</CODE>
+<DD>
+Start a TeXdraw drawing.  The drawing is terminated with an
+<CODE>\end{texdraw}</CODE> command.  This command is for use with LaTeX.
+
+<DT><CODE>\bsegment</CODE>
+<DD>
+Start a drawing segment.  The coordinate system is shifted such that the
+current position corresponds to the coordinate <CODE>(0 0)</CODE>.  Changes to
+scaling, position and line parameters stay local to the drawing segment.
+
+<DT><CODE>\btexdraw</CODE>
+<DD>
+Start a TeXdraw drawing.  The drawing is terminated with an
+<CODE>\etexdraw</CODE> command.
+
+<DT><CODE>\centertexdraw { ... }</CODE>
+<DD>
+Center a TeXdraw box.  The argument contains TeXdraw commands.
+The resulting box has the horizontal size <CODE>\hsize</CODE> and height equal
+to the height of the drawing.
+
+<DT><CODE>\clvec (<VAR>x1</VAR> <VAR>y1</VAR>)(<VAR>x2</VAR> <VAR>y2</VAR>)(<VAR>x3</VAR> <VAR>y3</VAR>)</CODE>
+<DD>
+Draw a Bezier curve from the current position to the coordinate
+<CODE>(<VAR>x3</VAR> <VAR>y3</VAR>)</CODE> which becomes the new current position.  The
+coordinates <CODE>(<VAR>x1</VAR> <VAR>y1</VAR>)</CODE> and <CODE>(<VAR>x2</VAR> <VAR>y2</VAR>)</CODE>
+serve as control points for the curve.  Only the last coordinate given
+is used to update the size of the drawing.
+
+<DT><CODE>\drawbb</CODE>
+<DD>
+Draw a ruled box around the effective size of a drawing produced by
+TeXdraw commands.
+
+<DT><CODE>\drawdim <VAR>dim</VAR></CODE>
+<DD>
+Set the units to <VAR>dim</VAR>.  The argument <VAR>dim</VAR> can be any valid
+TeX dimension unit.  The units are used to interpret coordinate
+values.  Examples of valid units: <CODE>cm</CODE>, <CODE>mm</CODE>, <CODE>in</CODE>,
+<CODE>pt</CODE>, and <CODE>bp</CODE>.
+
+<DT><CODE>\end{texdraw}</CODE>
+<DD>
+End a TeXdraw drawing started with a <CODE>\begin{texdraw}</CODE>
+command.  The resulting TeXdraw drawing is placed in a box with
+height equal to the height of the drawing and width equal to the width
+of the drawing.  The depth of the box is zero.  This command is for use
+with LaTeX.
+
+<DT><CODE>\esegment</CODE>
+<DD>
+End a drawing segment.  The current position in effect before the
+corresponding <CODE>\bsegment</CODE> command is restored.  The scaling and
+line parameter values revert to those in effect before the corresponding
+<CODE>\bsegment</CODE> was invoked.
+
+<DT><CODE>\etexdraw</CODE>
+<DD>
+End a TeXdraw drawing started with a <CODE>\btexdraw</CODE> command.  The
+resulting TeXdraw drawing is placed in a box with height equal to the
+height of the drawing and width equal to the width of the drawing.  The
+depth of the box is zero.
+
+<DT><CODE>\everytexdraw { ... }</CODE>
+<DD>
+Specify TeXdraw commands to be executed at the beginning of every
+TeXdraw drawing.
+
+<DT><CODE>\fcir f:<VAR>level</VAR> r:<VAR>radius</VAR></CODE>
+<DD>
+Draw a filled circle with center at the current position.  The radius is
+specified by <VAR>radius</VAR>.  The circle is painted with the gray level
+specified by <VAR>level</VAR>.  A gray level of 1 corresponds to white, with
+decreasing values getting darker.  The level 0 is full black.  This
+command does not draw a line along the circumference.  The drawing size
+is increased if necessary to contain the circle.
+
+<DT><CODE>\fellip f:<VAR>level</VAR> rx:<VAR>x-radius</VAR> ry:<VAR>y-radius</VAR></CODE>
+<DD>
+Draw a filled ellipse with center at the current position.  The radius
+in the <VAR>x</VAR> direction is specified by <VAR>x-radius</VAR>.  The radius in
+the <VAR>y</VAR> direction is specified by <VAR>y-radius</VAR>.  The ellipse is
+painted with the gray level specified by <VAR>level</VAR>.  A gray level of 1
+corresponds to white, with decreasing values getting darker.  The level
+0 is full black.  This command does not draw a line along the boundary
+of the ellipse.  The drawing size is increased if necessary to contain
+the ellipse.
+
+<DT><CODE>\htext (<VAR>x</VAR> <VAR>y</VAR>){<VAR>text</VAR>}</CODE>
+<DD>
+<DT><CODE>\htext {<VAR>text</VAR>}</CODE>
+<DD>
+The first form of this command places the TeX text <VAR>text</VAR>
+horizontally with the text reference point at the coordinate
+<CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE>.  The new current position is <CODE>(<VAR>x</VAR>
+<VAR>y</VAR>)</CODE>.  The second form of this command places the TeX text
+<VAR>text</VAR> horizontally with the text reference point at the current
+position.  The text reference point is set with the <CODE>\textref</CODE>
+command.
+
+<DT><CODE>\ifill f:<VAR>level</VAR></CODE>
+<DD>
+Close the current path and paint the interior of the region with gray
+level <VAR>level</VAR>.  The line around the path is not drawn.  Gray levels
+are real values from 0 (black) through intermediate values (grays) to 1
+(white).
+
+<DT><CODE>\larc r:<VAR>radius</VAR> sd:<VAR>start-angle</VAR> ed:<VAR>end-angle</VAR></CODE>
+<DD>
+Draw a counterclockwise arc.  The center of the arc is at the current
+position.  The radius is specified by <VAR>radius</VAR>.  The start and end
+angles (in degrees) are specified by <VAR>start-angle</VAR> and
+<VAR>end-angle</VAR>.  This command does not affect the limits (size) of the
+drawing.
+
+<DT><CODE>\lcir r:<VAR>radius</VAR></CODE>
+<DD>
+Draw a circle with center at the current position.  The radius is
+specified by <VAR>radius</VAR>.  This command draws a line along the
+circumference of the circle.  The drawing size is increased if necessary
+to contain the circle.
+
+<DT><CODE>\lellip rx:<VAR>x-radius</VAR> ry:<VAR>y-radius</VAR></CODE>
+<DD>
+Draw an ellipse with center at the current position.  The radius in the
+<VAR>x</VAR> direction is specified by <VAR>x-radius</VAR>.  The radius in the
+<VAR>y</VAR> direction is specified by <VAR>y-radius</VAR>.  The drawing size is
+increased if necessary to contain the ellipse.
+
+<DT><CODE>\lfill f:<VAR>level</VAR></CODE>
+<DD>
+Close the current path, draw the line around the path using the current
+grey level for lines and paint the interior of the region with specified
+gray level <VAR>level</VAR>.  Gray levels are real values from 0 (black)
+through intermediate values (grays) to 1 (white).
+
+<DT><CODE>\linewd <VAR>width</VAR></CODE>
+<DD>
+Set the line width to <VAR>width</VAR> units.  Initially <VAR>width</VAR> is 0.01
+inches (corresponding to 3 pixels at 300 pixels to the inch).
+
+<DT><CODE>\lpatt (<VAR>pattern</VAR>)</CODE>
+<DD>
+Set lines to have the pattern <CODE>(<VAR>pattern</VAR>)</CODE>.  A pattern is a
+sequence of on/off lengths separated by blanks and enclosed in parentheses.
+The lengths alternately specify the length of a dash and the length of a
+gap between dashes.  Each length is interpreted using the current
+scaling and drawing units.  The pattern is used cyclically.  The empty
+pattern signifies a solid line.  The initial line pattern is a solid
+line, corresponding to the empty pattern <CODE>\lpatt ()</CODE>.
+
+<DT><CODE>\lvec (<VAR>x</VAR> <VAR>y</VAR>)</CODE>
+<DD>
+Draw a line from the current position to coordinate <CODE>(<VAR>x</VAR>
+<VAR>y</VAR>)</CODE>.  The new current position is <CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE>.
+
+<DT><CODE>\move (<VAR>x</VAR> <VAR>y</VAR>)</CODE>
+<DD>
+Move to coordinate <CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE>.  The new current position
+is <CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE>.
+
+<DT><CODE>\ravec (<VAR>dx</VAR> <VAR>dy</VAR>)</CODE>
+<DD>
+Draw a line with an arrowhead from the current position, <VAR>dx</VAR> units
+in the <VAR>x</VAR> direction and <VAR>y</VAR> units in the <VAR>y</VAR> direction.
+The final position becomes the new current position.  The arrowhead is
+aligned with the line, with the tip at the new current position.
+
+<DT><CODE>\relsegscale <VAR>value</VAR></CODE>
+<DD>
+Adjust the segment scale factor by multiplying by <VAR>value</VAR>.  This has
+the effect of multiplying the current overall scale factor by the same
+factor.  The overall scaling factor is the product of the unit scale
+factor and the segment scale factor.
+
+<DT><CODE>\relunitscale <VAR>value</VAR></CODE>
+<DD>
+Adjust the unit scale factor by multiplying by <VAR>value</VAR>.  This has
+the effect of multiplying the overall scale factor by the same factor.
+The overall scaling factor is the product of the unit scale factor and
+the segment scale factor.
+
+<DT><CODE>\rlvec (<VAR>dx</VAR> <VAR>dy</VAR>)</CODE>
+<DD>
+Draw a line from the current position, <VAR>dx</VAR> units in the <VAR>x</VAR>
+direction and <VAR>dy</VAR> units in the <VAR>y</VAR> direction.  The final
+position becomes the new current position.
+
+<DT><CODE>\rmove (<VAR>dx</VAR> <VAR>dy</VAR>)</CODE>
+<DD>
+Move from the current position, <VAR>dx</VAR> units in the <VAR>x</VAR> direction
+and <VAR>dy</VAR> units in the <VAR>y</VAR> direction.  The final position becomes
+the new current position.
+
+<DT><CODE>\rtext td:<VAR>angle</VAR> (x y){<VAR>text</VAR>}</CODE>
+<DD>
+<DT><CODE>\rtext td:<VAR>angle</VAR> {<VAR>text</VAR>}</CODE>
+<DD>
+The first form of this command places the TeX text <VAR>text</VAR> at an
+angle with the text reference point at the coordinate <CODE>(<VAR>x</VAR>
+<VAR>y</VAR>)</CODE>.  The new current position is <CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE>.  The
+second form of this command places the TeX text <VAR>text</VAR> at an
+angle with the text reference point at the current position.  In both
+cases, the TeX text is placed in a box and the box is rotated
+counterclockwise by <VAR>angle</VAR> degrees about the text reference point.
+The text reference point is set with the <CODE>\textref</CODE> command.
+
+<DT><CODE>\savecurrpos (*<VAR>px</VAR> *<VAR>py</VAR>)</CODE>
+<DD>
+Save the current position as the absolute position referenced by
+<CODE>(*<VAR>px</VAR> *<VAR>py</VAR>)</CODE>.
+
+<DT><CODE>\savepos (<VAR>x</VAR> <VAR>y</VAR>)(*<VAR>px</VAR> *<VAR>py</VAR>)</CODE>
+<DD>
+Save the coordinate position <CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE> as the absolute
+position referenced by <CODE>(*<VAR>px</VAR> *<VAR>py</VAR>)</CODE>.  The coordinate
+<CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE> is interpreted in the normal fashion as a
+coordinate relative to the current segment, using the current scaling
+factors and drawing unit.
+
+<DT><CODE>\setgray <VAR>level</VAR></CODE>
+<DD>
+Set the gray level of lines.  Gray levels are real values from 0 (black)
+through intermediate values (gray) to 1 (white).  The initial gray level
+is 0 corresponding to black.
+
+<DT><CODE>\setsegscale <VAR>scale</VAR></CODE>
+<DD>
+Set the segment scale factor.  The argument <VAR>scale</VAR> is a real number
+which is used to scale coordinate values.  The overall scale factor is
+the product of the unit scale factor and the segment scale factor.
+
+<DT><CODE>\setunitscale <VAR>scale</VAR></CODE>
+<DD>
+Set the unit scaling to <VAR>scale</VAR>.  The argument <VAR>scale</VAR> is a real
+number which is used to scale coordinate values.  The overall scaling
+factor is the product of the unit scale factor and the segment scale
+factor.
+
+<DT><CODE>\texdrawbox { ... }</CODE>
+<DD>
+Create a TeXdraw box.  The argument contains TeXdraw commands.
+This macro returns a TeX box with height equal to the height of the
+drawing and width equal to the width of the drawing.  The depth of the
+box is zero.
+
+<DT><CODE>\textref h:<VAR>h-ref</VAR> v:<VAR>v-ref</VAR></CODE>
+<DD>
+Set the text reference point for subsequent text commands.  The
+horizontal reference point <VAR>h-ref</VAR> is one of <CODE>L</CODE>, <CODE>C</CODE> or
+<CODE>R</CODE> (left, center or right).  The vertical reference point
+<VAR>v-ref</VAR> is one of <CODE>T</CODE>, <CODE>C</CODE> or <CODE>B</CODE> (top, center or
+bottom).  For rotated text, the reference point is determined before
+rotation.  The initial text reference point corresponds to
+<CODE>\textref h:L v:B</CODE>.
+
+<DT><CODE>\vtext (x y){<VAR>text</VAR>}</CODE>
+<DD>
+<DT><CODE>\vtext {<VAR>text</VAR>}</CODE>
+<DD>
+The first form of this command places the TeX text <VAR>text</VAR>
+vertically with the text reference point at the coordinate
+<CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE>.  The new current position is <CODE>(<VAR>x</VAR>
+<VAR>y</VAR>)</CODE>.  The second form of this command places the TeX text
+<VAR>text</VAR> vertically with the text reference point at the current
+position.  In both cases, the TeX text is placed in a box and the box
+is rotated counterclockwise by 90 degrees about the text reference
+point.  The text reference point is set with the <CODE>\textref</CODE>
+command.
+
+</DL>
+
+<P><HR><P>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_8.html">previous</A>, <A HREF="texdraw_10.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+</BODY>
+</HTML>

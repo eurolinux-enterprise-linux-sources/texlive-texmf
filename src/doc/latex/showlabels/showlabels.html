@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+                      "dtd/xhtml1-strict.dtd">
+
+<html>
+<head>
+<title>Showlabels</title>
+<link href="http://nxg.me.uk" rev="author"/>
+<link type="text/css" rel="stylesheet"
+      href="http://nxg.me.uk/style/base.css"/>
+</head>
+
+<body>
+<h1>Showlabels</h1>
+<div class="abstract">
+<p>Put the names of <code>\label</code>s into the margins of a
+draft document.</p>
+<p>Version 1.6, 2006 May 26.</p>
+</div>
+
+<p>This class option introduces no new commands, it just helps you
+keep track of all the labels by putting the name of the new label into
+the margin whenever either the <code>\label</code> command is used, or
+an equation is automatically numbered (by replacing the internal
+<code>\@eqnnum</code> command).  There are therefore no usage
+instructions.  You invoke this package with the command
+<code>\usepackage{showlabels}</code> in the preamble, and you may give
+the options <code>[inner]</code> or <code>[outer]</code> (the default)
+to have the labels placed in the inner or outer margin of the text.</p>
+
+<p>The package will also work in the presence of the
+<code>[twocolumn]</code> option.  In this case, the options
+<code>[inner]</code> and <code>[outer]</code> will be ignored, and the
+label will be placed in the nearer margin.</p>
+
+<dl>
+
+<dt>1.6, 2006 May 26</dt>
+<dd>The <code>\showlabels</code> command will now work with commands
+  (such as <code>\cite</code> or <code>\includegraphics</code>) which
+  take an optional argument.</dd>
+
+<dt>1.5a, 2005 March 17</dt>
+<dd>Defined <code>\showlabelfont</code> using
+<code>\ttfamily</code> rather than <code>\tt</code> (I'd
+avoided doing this before to avoid a seemingly pointless
+incompatibility with LaTeX 2.09, but (a) I imagine the
+package is incompatible with that for other reasons, and (b)
+it's really not worth the hassle...).</dd>
+
+<dt>1.5, 2004 October 8</dt>
+<dd>Added <code>\showlabelfont</code> and
+<code>\showlabelsetlabel</code> commands, allowing
+customisation of the printed labels.  Added and documented
+options [final], [draft] (the former makes this package do
+nothing; the latter is the default behaviour).
+</dd>
+
+<dt>1.4a, 2003 January 28</dt>
+<dd>Acquired the <code>[left]</code> and
+<code>[right]</code> options, and fixed a bug which affected
+<code>\label</code> commands in captions.</dd>
+
+<dt>1.4, 2001 July 24</dt>
+<dd>Became (more) compatible with the
+wrapfig package.  Also, I added the
+<code>\showlabels</code> command, to have the package display
+references to commands other than <code>\label</code>
+(<code>\cite</code> and <code>\ref</code> are obvious ones),
+and an <code>[inline]</code> option to have labels (etc.)
+displayed inline where possible, rather than always in the
+margin.</dd>
+
+<dt>1.3e, 2001 May 30</dt>
+<dd>Became compatible with the hyperref package in
+particular, and in general with other packages which
+themselves modify the <code>\label</code> command.  This will
+work, however, only if the showlabels package is loaded after
+other packages which do this.  Notwithstanding Sebastian
+Rahtz's excellent general advice on this, showlabels should
+indeed be loaded after hyperref.</dd>
+
+<dt>1.1, 2001?</dt>
+<dd>Modified to conform to the slightly
+different mechanism that <code>amsmath</code> uses to produce equation
+numbers.  I don't habitually use <code>amsmath</code>, so I won't
+discover any bugs or weaknesses with its support here, and I'd
+consequently be glad to be informed of any that appear.  Do note that
+the <code>\usepackage{showlabels}</code> command <em>must</em> appear
+after the <code>\usepackage{amsmath}</code> if it is to detect that
+you are using the amsmath package.  Note also that, since these
+additions appeared, AMS-LaTeX and the <code>amstex</code> package seem
+to have been declared `obsolete' in favour of the <code>amsmath</code>
+package.  This package now claims conformance with the
+<code>amsmath</code> package alone, though it will probably work with
+older versions in fact.
+</dd>
+
+</dl>
+
+<h3>Compatibility and problems</h3>
+
+<p>For reasonably obvious reasons, this package will <em>not</em> work at
+all well with the multicol package, and for possibly less obvious
+reasons, it won't work with the <code>[leqno]</code> option either (at
+some point it should be modified to at least recognise and warn of the
+conflict in either case).  The package can occasionally place labels
+in the wrong margins, near the top of a page -- see the documentation
+for a discussion of this.</p>
+
+<h3>Download and installation</h3>
+
+<ol>
+<li>Download the file
+<a href="showlabels-1.6.tar.gz" >showlabels-1.6.tar.gz</a>
+or
+<a href="showlabels-1.6.zip" >showlabels-1.6.zip</a>
+and unpack it.</li>
+
+<li>Run LaTeX on the file <code>showlabels.ins</code> -- this will
+unpack the style file <code>showlabels.sty</code> amongst other files.
+Place this somewhere where TeX can find it. </li>
+
+<li>Run LaTeX on the file <code>showlabels.dtx</code> to obtain the
+documentation.</li>
+</ol>
+
+<p>On CTAN:
+<a href='http://www.tex.ac.uk/tex-archive/macros/latex/contrib/supported/showlabels/'
+	>/tex-archive/macros/latex/contrib/supported/showlabels/</a></p>
+
+<div class="signature">
+<a href="http://www.astro.gla.ac.uk/users/norman/"
+	>Norman Gray</a><br/>
+2006 May 26
+</div>
+
+</body>
+</html>
+
+
+
+
+<!-- Local Variables: -->
+<!-- mode: xml -->
+<!-- sgml-indent-step: 0 -->
+<!-- sgml-indent-data: nil -->
+<!-- End: -->

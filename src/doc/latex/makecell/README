@@ -1,0 +1,12 @@
+makecell 0.1c
+Tabular column heads and multilined cells.
+
+      Package offers a command, based on one-column tabular environment,
+      which allows to support  a common layout  for tabular column heads
+      in whole document.      Another offered command is for creation of 
+      multilined tabular cells.    There are also:     1) a macro, which
+      changes vertical spaces around all cells in tabular, like in tabls
+      package,  but based  on macros of array package;     2) macros for
+      multirow cells/heads, which use macro from multirow package. 
+
+Documentation: makecell.pdf.

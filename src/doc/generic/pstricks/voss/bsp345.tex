@@ -1,0 +1,170 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\pagestyle{empty}
+\parindent=0pt
+\usepackage{filecontents}
+\usepackage{pst-all}
+\usepackage{pstricks-add}
+\begin{document}
+
+\bgroup
+%\begin{LTXexample}[pos=t]
+%\usepackage{pstricks-add}
+\def\data{0.003472 -13.159  0.003332 -12.859  0.003246 -11.27}
+\pstScalePoints(1000,1){}{ abs }% absolute Werte
+\psset{xunit=30cm}
+\begin{pspicture}(3.2,11.1)(3.5,15)
+  \psaxes[dy=1cm,Dy=-1.0,Oy=-11.2,dx=3cm,Dx=0.0001,Ox=0.0032]{->}(3.2,11.2)(3.5,14.0)
+  \listplot[showpoints=true,linewidth=1pt]{\data}
+\end{pspicture}\\  %-------------------------------------------
+\begin{pspicture}(3.2,0)(3.5,1)
+  \psaxes[yAxis=false,dy=1cm,Dy=-1.0,Oy=-11.2,%
+     dx=1.5cm,Dx=0.00005,Ox=0.00320]{->}(3.2,0)(3.5,1)
+\end{pspicture}\\  %-------------------------------------------
+\begin{pspicture}(3.2,-0.75)(3.5,1)
+  \psaxes[yAxis=false,dy=1cm,Dy=-1.0,Oy=-11.2,%
+     dx=3cm,Dx=0.1,Ox=3.2,xlabelFactor={\cdot 10^{-3}}]{->}(3.2,0)(3.5,1)
+\end{pspicture}\\  %-------------------------------------------
+\pstScalePoints(1000,1){}{ }% absolute Werte
+\begin{pspicture}(3.2,-10)(3.5,-15)
+  \psaxes[dy=1cm,Dy=1.0,Oy=-11.2,dx=3cm,Dx=0.0001,Ox=0.0032]{->}(3.2,-11.2)(3.5,-14.0)
+  \listplot[showpoints=true,linewidth=1pt]{\data}
+\end{pspicture}\\
+%\end{LTXexample}
+\egroup
+
+\clearpage
+
+
+\begin{filecontents}{listplot2.dat}
+%%% modele a 2 poles [alpha,nu]: [0.02 0.2], [0.02 0.222], 64 points, fs=1Hz
+%%% seule la frequence du 2eme pole varie: 0.222 ==> 0.211
+%%% il y a 20 points equidistants soit un deltaf de 5.5000e-004 Hz
+ 0.0220     170   200
+ 0.0214     176   200
+ 0.0209     177   200
+ 0.0203     184   200
+ 0.0198     187   200
+ 0.0192     186   199
+ 0.0187     186   200
+ 0.0181     161   199
+ 0.0176     129   200
+ 0.0170      82   195
+ 0.0165      34   186
+ 0.0159      11   158
+ 0.0154       3   133
+ 0.0148       0    72
+ 0.0143       0    21
+ 0.0137       0     3
+ 0.0132       0     2
+ 0.0126       0     0
+ 0.0121       0     0
+ 0.0115       0     0
+ 0.0110       0     0
+\end{filecontents}
+
+\bgroup
+%\begin{LTXexample}[pos=t]
+%\usepackage{pstricks-add}
+\readdata{\data}{listplot2.dat}
+\sffamily
+\pstScalePoints(100,0.5){0.022 sub neg}{}% changes the order of the x values
+\def\pshlabel#1{\footnotesize #1}\def\psvlabel#1{\footnotesize #1}
+\psset{xAxisLabel=$\nu_2-\nu_1$,yAxisLabel=Success rate [\%],%
+  xAxisLabelPos={2.5cm,-0.5cm},yAxisLabelPos={-0.8cm,2.5cm},%
+  llx=-0.9cm,lly=-0.8cm,urx=0.2cm,ury=0.1cm}
+\psgraph[Ox=1.1,Oy=0,Dy=10,axesstyle=frame,linewidth=0.50pt,ticklinestyle=dotted,%
+      yticksize=0.0 1.1,xticksize=0 100,tickwidth=0.3pt](0,0)(1.1,100){5cm}{5cm}
+ \listplot[plotNo=1,plotNoMax=2,linestyle=dashed,linecolor=blue,linewidth=1pt]{\data}
+ \listplot[plotNo=2,plotNoMax=2,linestyle=solid,linecolor=red,linewidth=1pt]{\data}
+ \rput[l](0.65,95){\psline[linewidth=0.3pt,linecolor=red](0.1,0)\qquad\footnotesize Method A}
+ \rput[l](0.65,85){\psline[linestyle=dashed,linecolor=blue,linewidth=0.3pt](0.1,0)
+ \qquad\sffamily\footnotesize Method B}
+\endpsgraph
+%\end{LTXexample}
+\egroup
+
+\clearpage
+
+
+\bgroup
+%\begin{LTXexample}[pos=t]
+%\usepackage{pstricks-add}
+\def\pshlabel#1{\scriptsize #1}
+\def\psvlabel#1{\footnotesize #1}
+\psset{yunit=0.75}
+\begin{pspicture}(-1,-0.75)(11,8)
+  \pspolygon[linecolor=red!50,fillstyle=solid,fillcolor=black!10]%
+   (0,0)(0,3.6)(0.5,2.7)(1,3.8)(1.5,3.7)(2,3.2)(2.5,4.3)(3,6.2)
+   (3.5,6.4)(4,6)(4.5,5.9)(5,5.8)(5.5,6.2)(6,6.9)(6.5,4.1)(7,3)
+   (7.5,3.1)(8,2.8)(8.5,2.2)(9,5.7)(9.5,5.3)(10,6.1)(10,0)
+  \psaxes[linewidth=1pt,xticksize=5pt,yticksize=-3pt,xsubticks=5,%
+    labelsep=10pt,Oy=20,Dy=5,dy=1,yDecimals=1]{->}(0,0)(10,7)
+  \psaxes[linewidth=1pt,xticksize=5pt,yticksize=3pt,xsubticks=5,%
+    labelsep=-30pt,Oy=20,Dy=5,dy=1,yDecimals=1,xAxis=false]{->}(10,0)(11,7)
+\end{pspicture}
+%\end{LTXexample}
+\egroup
+
+\clearpage
+
+%
+\bgroup
+%\begin{LTXexample}[pos=t]
+\psset{arrowscale=2,unit=1.25cm}
+  \begin{pspicture}(-1.2,-1.5)(1.2,1.5)
+    \psaxes[ticks=y,linecolor=red,subticks=1]{->}(0,0)(-1,-1.25)(1,1.25)
+    \uput[-90](1.1,0){x}
+    \uput[180](0,1.1){y}
+    \pscircle(0,0){1}
+    \psplot[linewidth=1pt]{0}{1}{x}
+    \psarc[linewidth=1pt](0,0){0.5}{0}{45}
+    \rput[bl](0.12,0.04){$\alpha$}
+    \psline[linecolor=green](0.70,0)(0.7,0.70)%Sinus
+    \psline[linecolor=blue](0,0)(0.70,0)%Cosinus
+    \pnode(0.7,0.70){A}
+  \end{pspicture}
+%
+  \begin{pspicture}(-3.14,-1.5)(4.71,1.5)
+    \psaxes[xunit=1.570796327,showorigin=false,ticks=all,tickcolor=red,linecolor=red,trigLabels=true]{->}(0,0)(-2,-1.5)(3.14,1.5)
+    \psplot[plotstyle=line,linewidth=1pt,linecolor=green]{-3.14}{3.14}{x 180 mul 3.14 div sin}
+    \psplot[plotstyle=line,linewidth=1pt,linecolor=blue]{-3.14}{3.14}{x 180 mul 3.14 div cos}
+    \psline[linecolor=red]{-}(0.7,0)(0.7,0.7)
+    \pcline[linestyle=dashed,linewidth=0.2pt](A)(0.7,0.7)
+    \uput[-90](0.70,0){$arc(\alpha)$}
+    \uput[-90](5,0){x}
+    \uput[180](0,1.4){y}
+  \end{pspicture}
+%\end{LTXexample}
+\egroup
+
+
+\clearpage
+
+\bgroup
+%\begin{LTXexample}[pos=t]
+\psset{xunit=2cm,yunit=0.5cm}%
+\begin{pspicture}(-28.5,-1.5)(-21.5,10.75)%\showgrid%
+\psaxes[Dy=0.25,dy=2.5,Ox=-28]{->}(-28,0)(-28.2,-0.2)(-21.5,10.5)
+\uput{0.3}[-90](-25.4,0){$-25.4$}
+\psline[linestyle=dotted,linewidth=0.5mm](-25.4,-0.1)(-25.4,10)%
+\psbrace[linecolor=red,nodesepA=0cm,nodesepB=-1.5cm,ref=tC,rot=90]%
+  (-27.9,-1)(-25.45,-1){Ablehnungsbereich der H0}%
+\psbrace[linecolor=blue,nodesepA=0cm,nodesepB=-1.5cm,ref=tC,rot=90]%
+  (-25.4,-1)(-22.5,-1){Annahmebereich der H0}%
+\pscurve[linewidth=2pt,linecolor=magenta]%
+(-28,10.000)(-27.9,10.000)(-27.8,10.000)(-27.7,10.000)(-27.6,10.000)%
+(-27.5,10.000)(-27.4,10.000)(-27.3,10.000)(-27.2,10.000)(-27.1,10.000)(-27,10.000)%
+(-26.9,10.000)(-26.8,10.000)(-26.7,10.000)(-26.6,10.000)(-26.5,10.000)(-26.4,10.000)(-26.3,10.000)%
+(-26.2,10.000)(-26.1,9.998)(-26,9.987)(-25.9,9.938)(-25.8,9.772)(-25.7,9.332)%
+(-25.6,8.413)(-25.5,6.915)(-25.4,5.000)(-25.3,3.085)(-25.2,1.587)(-25.1,0.668)(-25,0.228)%
+(-24.9,0.062)(-24.8,0.013)(-24.7,0.002)(-24.6,0.000)(-24.5,0.000)(-24.4,0.000)(-24.3,0.000)%
+(-24.2,0.000)(-24.1,0.000)(-24,0.000)(-23.9,0.000)(-23.8,0.000)(-23.7,0.000)(-23.6,0.000)%
+(-23.5,0.000)(-23.4,0.000)(-23.3,0.000)(-23.2,0.000)(-23.1,0.000)(-23,0.000)
+\end{pspicture}
+%\end{LTXexample}
+\egroup
+
+
+\end{document}

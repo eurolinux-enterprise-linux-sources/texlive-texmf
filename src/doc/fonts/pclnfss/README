@@ -1,0 +1,101 @@
+ABOUT
+
+pclnfss - a package of LaTeX 2e class files for selecting and using
+the standard 45 scalable fonts built into most PCL laser printers.
+Updates the .../texmf/tex/latex/dvilj/*.sty package files provided
+with the original dviljk-2.x distribution.
+
+VERSIONS
+
+2004 Mar 15 - v0.1 Leif Harcke <lharcke@stanford.edu>
+
+INSTALLATION
+
+ Style files
+ -----------
+Copy the tex/latex/pclnfss directory containing the *.sty and *.fd
+files to your .../texmf/tex/latex directory.  You should remove the
+older .../texmf/tex/latex/dvilj/* class files.
+
+ Font Metrics and Virtual Fonts
+ ------------------------------
+If your TeX distribution doesn't have the LaserJet font metric files
+and virtual fonts installed, copy the files in the fonts/ directory to
+the corresponding locations in your .../texmf/fonts/ directory.
+
+DEPENDENCIES
+
+You need dviljk-2.6p2 as distributed with teTeX or a similar DVI to
+PCL driver in order to generate PCL code from the resulting DVI
+driver.  dviljk is still part of the base teTeX distribution.  A
+different branch of the code can be found in
+
+  http://www.ctan.org/tex-archive/obsolete/dviware/dviljk/
+
+and
+
+  http://ftp.tug.org/historic/systems/dviware/dviljk/
+
+Warning: the above versions are labeled 2.8, but teTeX seems to be
+distributing v2.6p2 as the current version.  The dviljk codebase
+branched sometime in the 1996-1997 timeframe.
+
+TEST SUITE
+
+Run LaTeX on the typelist.tex file in the tests/ directory.  Then run
+the dvihp shell script on the dvi file to send the output to the PCL
+printer.  The output should resemble a facsimile of the PCL Typeface
+List that can be printed using the front panel controls of the
+printer.
+
+USING THE PACKAGES
+
+A quick example:
+
+  \documentclass{article}
+  \usepackage{garamond}
+  \begin{document}
+  \noindent Testing the Garamond font.  {\it Italic} {\bf Bold}\\
+  Here is a WingDing of a pencil: \usefont{OT1}{hwi}{m}{n} \char033
+  \end{document}
+
+
+LICENSE
+
+GNU General Public License.  This package is a modification of the
+original dvilj style files which came with the dviljk package, which
+was distributed under the GPL.  See the file COPYING in the root level
+of this package.
+
+CREDITS
+
+Andy Piper contributed the original dvilj PCL font selection packages
+for the LaserJet 4L printer to the dviljk package.  Karl Berry
+generated the virtual font files (see src/README) for the dviljk
+package.  dviljk is based on the dvi2xx package by Gustaf Neumann.
+Norman Walsh generated the original pl files from the TFM files
+supplied on the HP developer's disk using his HPtfm2pl program.
+
+BUGS / MISSING FEATURES
+
+ * need better documentation
+ * provide virtual math fonts a la PSNFSS's mathptx package
+ * generate font metrics and style files for the 60 or 80 standard
+   PCL6 fonts.
+
+BUILDING METRICS AND VIRTUAL FONTS FROM SCRATCH
+
+Only for the diehard.  This would require getting a copy of the
+original TFM files on the Hewlett Packard developer disk.  Then use
+Norman Walsh's HPtfm2pl program (DOS executable only):
+
+  http://www.ctan.org/tex-archive/support/hp2pl/
+
+to convert the TFM files to pl files.  Optionally, you could start
+with Norm's pl metrics available from
+
+  http://www.ctan.org/tex-archive/fonts/ljmetrics/
+
+Then use Karl Berry's programs in this package's src/ directory to
+generate the virtual fonts.
+

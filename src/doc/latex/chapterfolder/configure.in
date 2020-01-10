@@ -1,0 +1,17 @@
+AC_INIT([chapterfolder latex package],[1.0],[boretti@eig.unige.ch],[chapterfolder])
+
+AC_PROG_MAKE_SET
+
+AC_PROG_LATEX
+AC_PROG_TEXHASH
+AC_PROG_KPSEWHICH
+AC_LATEX_PACKAGE(ifthen,report,IFTHEN)
+export IFTHEN;	
+if test $IFTHEN = "no" ;
+then
+	AC_MSG_ERROR([Unable to locate the ifthen package for report])
+fi;
+AC_TEXMF_PATH
+Base=$texmfpath ; export Base;
+AC_SUBST(Base)
+AC_OUTPUT([Makefile])

@@ -1,0 +1,27 @@
+\documentclass{article}% Herbert Voss bsp346.tex
+\usepackage{pstricks}%  >= version 1.04
+\usepackage{pst-vue3d}%
+\pagestyle{empty}%
+
+\begin{document}
+  \psset{THETA=30,PHI=0,normaleLongitude=0,normaleLatitude=0,RotY=90}%
+% In this pspicture, the cylinder is centered inside the "blade".
+\begin{pspicture}(0,0)(5,5)
+  \CylindreThreeD[fillstyle=solid,fillcolor=gray,linestyle=none](0,0,0){5}{20}%
+  \pscustom[fillstyle=eofill,fillcolor=yellow]{%
+    \CircleThreeD(19,0,0){7}%
+    \CircleThreeD(19,0,0){12}%
+  }
+\end{pspicture}\qquad
+% In this pspicture, the "blade" should look like it is cutting into 
+% the cylinder.
+\begin{pspicture}(0,0)(5,5)
+  \CylindreThreeD[fillstyle=solid,fillcolor=gray,linestyle=none](0,0,0){5}{19}%
+  \pscustom[fillstyle=eofill,fillcolor=yellow]{%
+    \CircleThreeD(19,0,-4){7}%
+    \CircleThreeD(19,0,-4){12}%
+  }
+  \CylindreThreeD[fillstyle=solid,fillcolor=gray,linestyle=none](19,0,0){5}{1}%
+\end{pspicture}
+\end{document}
+

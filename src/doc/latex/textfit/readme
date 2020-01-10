@@ -1,0 +1,10 @@
+This package is used to scale up text to a desired size. Works by
+deriving a new scale factor for the current font, and getting \TeX\ to
+reset the text. See the commented source for usage.
+
+Install by running \TeX\ on textfit.ins and place `textfit.sty'
+where \LaTeX\ can find it.
+
+
+
+

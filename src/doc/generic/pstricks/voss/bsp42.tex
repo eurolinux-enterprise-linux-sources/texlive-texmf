@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage{pstricks}
+\pagestyle{empty}
+\parindent=0pt
+\begin{document}
+
+\begin{center}
+\xdefinecolor{blue90}{rgb}{0.8,0.8,1}
+\begin{pspicture}(3,3)
+  \pscircle*[linecolor=blue90](1.5,1.5){1.5}
+  \pscircle[fillstyle=hlines](1,2){1}
+  \pscircle[fillstyle=hlines,hatchcolor=red,%
+     hatchangle=0](2,1){1}
+\end{pspicture}
+~
+\begin{pspicture}(3,3)
+  \pscircle*[linecolor=blue90](1.5,1.5){1.5}
+  \pscircle[fillstyle=hlines*](1,2){1}
+  \pscircle[fillstyle=hlines*,hatchcolor=red,%
+     hatchangle=0](2,1){1}
+\end{pspicture}
+~
+\begin{pspicture}(3,3)
+  \pscircle*[linecolor=blue90](1.5,1.5){1.5}
+  \pscircle[fillstyle=crosshatch](1,2){1}
+  \pscircle[fillstyle=crosshatch,hatchcolor=red,%
+     hatchangle=0](2,1){1}
+\end{pspicture}
+\end{center}
+
+\end{document}

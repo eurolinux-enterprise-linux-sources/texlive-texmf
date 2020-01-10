@@ -1,0 +1,221 @@
+============================================================
+              LaTeX Support for Lucida Bright
+============================================================
+Copyright 1997--2003 David Carlisle, Sebastian Rahtz and
+Walter Schmidt
+
+
+The macro packages
+==================
+The macro packages lucidabr.sty and lucbmath.sty support
+using the Lucida Bright and Lucida New Math fonts with
+LaTeX.  Loading the package lucidabr changes all text and
+math fonts to Lucida:
+
+  \usepackage[...]{lucidabr}
+
+Loading the package lucbmath changes only the math fonts, so
+that you can use the Lucida New Math fonts together with
+font families, which have no math fonts of their own.  The
+default roman font family (i.e.  \rmdefault) must be changed
+_before_ loading of the package:
+
+  \renewcommand{\rmdefault{...}
+  \usepackage[...]{lucbmath}
+
+
+Using AMS LaTeX
+===============
+When using the Lucida New Math fonts with the amsmath
+package, the sequence of loading is crucial.  The lucidabr
+or lucbmath packages are to be loaded _after_ amsmath only:
+
+  \usepackage{amsmath}
+  \usepackage{lucidabr} % or lucbmath
+
+Otherwise certain math symbols will be broken.
+
+
+Package options
+===============
+Package Options in version 4.4 (new options in release 4.x
+marked with *):
+
+  expert
+  noexpert         (default)
+          Declares whether the extended `expert' set is available.
+          Mainly the expert set provides bold math fonts.
+
+  nolucidascale
+  lucidascale       (default)
+  lucidasmallscale
+          Controls the relative sizes of the text and math fonts used.
+
+* mathitalic1       (default)
+* mathitalic2
+* mathitalic3
+   Controls the style of the `math italic letters' Style 1
+   uses the `Lucida Math Italic Alternate' font.  Style 2
+   uses the `Lucida Math Italic' font.  Style 3 uses the
+   `Lucida Math Upright Italic' font.  Style 1 is the
+   default.  Style 3 is only available with the expert set.
+
+* slantedgreek      (default)
+* uprightgreek
+   Controls whether lowercase greek is slanted or upright.
+   Uppercase Greek is always upright.  These options match
+   those of the mathtime package.
+
+* vargreek
+   Define extra command names to access:  uppercase slanted
+   Greek (\varGamma...)  lowercase upright Greek
+   (\upalpha...)  Irrespective of whether \alpha is
+   accessing upright or slanted Greek alphabet.
+
+* OT1
+* T1
+* LY1
+   Controls the encoding used in the operators font.
+   Normally these options do not need to be explicitly given
+   as the default is to use the current default text
+   encoding, so if \usepackage[T1]{fontenc} is used before
+   loading this package, T1 encoding will be used.  These
+   options are similar to the ones provided by the mathtime
+   package.  Note that when cm fonts are being used the OT1
+   encoding is always used for the operators font as it is
+   required to access Greek in that case.  However Lucida
+   provides upper and lowercase Greek in the math fonts.
+
+* seriftt
+   The default Lucida monospace font is sans serif.  If the
+   expert set is available this option enables the use of a
+   seriffed monospace font as the family used by \ttfamily
+   and \textttt.
+
+* fax
+   Use the `fax' variant of Lucida Bright as the Roman
+   family.  This is available in all four combinations of
+   bold and italic.
+
+* casual
+   Use the `casual' variant of Lucida Bright as the Roman
+   family.  This requires the expert set.  No bold is
+   available for this set.
+
+* calligraphic
+   Replace the italic font in whichever Roman family is
+   being used by Lucida calligraphic italic, for a more
+   flamboyant style.
+
+* handwriting
+   Replace the italic font in whichever Roman family is
+   being used by Lucida Handwriting italic.  You probably
+   don't want to do this in technical documents that make
+   use of the Lucida New Math fonts, but it is there if you
+   need it.
+
+* noamssymbols
+   Do not define individual command names to all the AMS
+   math symbols (and a few extra Lucida math symbols).  This
+   makes this package emulate the amsfonts package rather
+   than the amssymbl package.  It saves a lot of space for
+   smaller TeX systems.  You can then just define commands
+   for the symbols you are going to use.
+         
+* errorshow         (default)
+* warningshow
+* nofontinfo
+   This package makes a lot of font re-assignments.  The
+   default warning messages can get rather obtrusive.  These
+   option names match those in the mathtime package.  The
+   default behaviour for this package is `errorshow' that
+   is, only font errors are shown to the terminal.  The
+   warningshow option re-instates the normal LaTeX
+   behaviour, font warnings go to the terminal and the log.
+   The `nofontinfo' option stops the font tracing
+   information altogether, it is not written even to the
+   log.
+
+* altbullet
+   The bullet in the Lucida Bright text font is relatively
+   small.  Using this option you get instead the larger
+   bullet from the math symbol font.
+
+
+NFSS classification of the text fonts and usage notes
+=====================================================
+NB:  
+The information in this section does _not_ apply, if you are
+using the fonts that come with StarOffice (as opposed to
+Y&Y's originals.)
+
+family   series    shape(s)  FontName                            
+-------------------------------------------------------------
+hlh      m, b        n, it,  LucidaBright, 
+                             LucidaBright-Italic,
+                             LucidaBright-Demi,
+                             LucidaBright-DemiItalic,
+                     sl, sc  LucidaBrightSlanted,
+                             LucidaBrightSmallcaps,
+                             LucidaBrightSmallcaps-Demi
+hls      m, b, ub(*) n, it   LucidaSans, LucidaSans-Italic,
+                             LucidaSans-Demi, 
+                             LucidaSans-DemiItalic,
+                             LucidaSans-Bold,
+                             LucidaSans-BoldItalic
+hlct(*)  m, b        n, sl   LucidaTypewriter,
+                             LucidaTypewriterBold,       
+                             LucidaTypewriterOblique,    
+                             LucidaTypewriterBoldOblique
+hlst     m, b        n, sl   LucidaSans-Typewriter,
+                             LucidaSans-TypewriterOblique,
+                             LucidaSans-TypewriterBold,
+                             LucidaSans-TypewriterBoldOblique
+hlx(*)   m, b        n, it   LucidaFax,LucidaFax-Italic,
+                             LucidaFax-Demi, LucidaFax-Italic
+hlce(*)  m           it      LucidaCalligraphy-Italic
+hlcn(*)  m           n, it   LucidaCasual,
+                             LucidaCasual-Italic
+hlcw(*)  m           it      LucidaHandwriting-Italic
+hlcf(*)  m           n       LucidaBlackletter
+
+Available font encodings are T1, TS1 (text companion) and 
+LY1 (Y&Y proprietary).  
+
+The obsolete OT1 font encoding, while still being the
+default with LaTeX, is _not_ supported.  Thus, you should
+switch to T1/TS1 or LY1 before using the Lucida Bright
+fonts, for instance:
+
+  \usepackage[T1]{fontenc}
+  \usepackage{textcomp}
+  \usepackage{lucidabr}
+  ...
+
+Many, but not all of the Lucida fonts provide an Euro
+symbol \texteuro in the LY1 and TS1 encoding.  Families or
+shapes that are lacking the Euro are marked in the above
+table with an asterisk.  
+
+The Lucida fonts do not include all symbols of the TS1
+(text companion) font encoding:  Only those symbols are
+available, that belong to the ISO-Adobe 1 character set,
+plus the Omega and (partially) the Euro.
+
+All demibold fonts are assigned to series `b'.  The two
+sans serif bold fonts are assigned to `ub' (ultra bold).
+This means that with the exception of the Sans bold fonts
+_all_ fonts in the Lucida Bright font set are available
+through normal `user level' commands such as \bfseries,
+\sffamily etc.  To access the bold Sans Serif one may go
+\fontseries{ub}\sffamily.
+
+The blackletter font is made available in math mode as
+\mathfrak (with the lucidabr or lucbmath package).  If you
+want to use this as a text font, you should define a command
+to execute \fontfamily{hlcf}\selectfont.  Unfortunately, the
+available encodings do _not_ provide the "long s", but
+LucidaBlackletter was not made to mimick historical
+typesetting, anyway.
+
+========================== finis ===========================

@@ -1,0 +1,6 @@
+#
+# Change "tex.ini -> bplain.ini" and "- -> language.dat"
+# if you want babel support in tex. Add -translate-file=cp227.tcx before
+# tex.ini if you want to make all characters directly "printable" for
+# any \write (instead of ^^xy).
+tex             tex             -               tex.ini

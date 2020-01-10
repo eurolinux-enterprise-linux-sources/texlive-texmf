@@ -1,0 +1,25 @@
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\usepackage{pst-vue3d}
+\SpecialCoor
+\makeatletter
+%
+\makeatother
+\begin{document}
+
+\psset{unit=3}
+\begin{pspicture}(-1.5,-0.75)(2.5,2.25)
+	\AxesThreeD(20)
+ 	\pNodeThreeD(15,18,15){P}% cartesian
+	\uput[0](P){P}
+	\psset{linecolor=red}
+	\qdisk(P){3pt}
+	\showCoorThreeD[linecolor=red](15,18,15)
+	\psset{linecolor=blue}
+	\pNodeThreeD(20;60;40){Q}% spherical
+	\uput[0](Q){Q}
+	\qdisk(Q){3pt}
+	\showCoorThreeD[linecolor=blue](20;60;40)
+\end{pspicture}
+
+\end{document}

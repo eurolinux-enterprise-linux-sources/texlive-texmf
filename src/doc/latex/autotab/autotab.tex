@@ -1,0 +1,113 @@
+%format latex
+%documentstyle[german,11pt,supertab,autotab]{darticle}
+\documentstyle[german,11pt,supertab,autotab]{artdaf} %02.02.91
+ 
+\textheight 24cm
+\textwidth 17cm
+\topmargin -2cm
+\oddsidemargin -1cm
+\parskip 6pt
+ 
+\begin{document}
+\begin{center}
+\Large\bf Generating tabulars using the \\
+          {\tt autotab} Style           \\[.5cm]
+\normalsize Gabriele Kruljac \\
+            5. Oktober 1989
+\end{center}
+This is the description of the {\tt autotab} style. It offers some
+new commands to generate tabulars nearly automatically.
+ 
+The style itself is called as \verb|\documenstyle| option
+\verb|\documentstyle[...,autotab,...]{darticle}|. The tabular
+creating commands are called inside a {\tt tabular} or
+{\tt supertabular} environment. Syntax:
+\begin{center}
+\begin{tabular}{l p{10cm}}
+\verb|\readtabline{...}| & reads from data file and generates
+                          the tabular entries; argument is
+                          the number of columns = number of records
+                          which bild one tabular line \\
+\verb|\autotabline|      & is the built tabular entry, inserts it's
+                           into the tabular  at the specified point
+\end{tabular}
+\end{center}
+ 
+Every time \verb|\readtabline| is called it asks for the name of
+the input data file and starts reading. The style reads as much records
+as specified by the argument of the \verb|\readtabline| command,
+puts them into \verb|\autotabline| connected with ampersands (\verb|&|)
+and adds \verb|\\| to the last of these records.
+This algorithm is repeated until end-of-file is found.
+ 
+Using {\tt autotab} in conjunction with the {\tt supertabular}
+environment offers the possibility to generate tabulars without regard
+to necessary pagebreaks, because they will be inserted automatically
+by {\tt supertabular} (see separate description).
+ 
+\subsection*{Example}
+The data is stored in file {\tt sonderdr.dat}. \verb|\readtabline|
+results in an online dialog question:
+\begin{center}
+\begin{tabular}{l}
+\tt Please type the name of the tabular input data file:\\
+\verb|\inputfile=|
+\end{tabular}
+\end{center}
+The user types:\hfill{\tt sonderdr.dat}.\hspace*{\fill}
+ 
+\noindent The data look like:
+\begin{verbatim}
+    265/89
+    Study of Plasma Potential Effects in a 40 MHz ...
+    Spectrochim. Acta
+    1989
+    44B
+    219-228
+    ww
+    264/89
+    Atomic Emission and Atomic Absorption Spectrometric ...
+    .
+    .
+    .
+    .
+    .
+    263/89
+    Comparative Surface and Bulk Analysis of Oxygen in Si3N4 ...
+    Fresenius Z.Anal.Chem.
+    1989
+    333
+    502-506
+    WW
+    262/89
+\end{verbatim}
+Seven records build one tabular line. There must be a blank record for each empty entry (marked by . in the above example).
+ 
+\noindent Here is the definition of the tabular:
+\begin{verbatim}
+    \small\renewcommand{\arraystretch}{.8}
+    \tablehead{\hline Publ-Nr. & \multicolumn{1}{c|}{Titel}
+               & ersch. & Jahr & Bd. & Seite & Institut \\
+               \hline}
+    \tabletail{\hline}
+    \begin{center}
+    \begin{supertabular}{|l|p{5cm}|p{3cm}|l|l|l|l|}
+    \noalign{\readtabline{7}}
+    \autotabline
+    \end{supertabular}
+    \end{center}
+\end{verbatim}
+ 
+\noindent And here is the result:
+\small\renewcommand{\arraystretch}{.8}
+\tablehead{\hline
+           Publ-Nr. & \multicolumn{1}{c|}{Titel}
+           & ersch.  & Jahr & Bd. & Seite & Institut \\ \hline}
+\tabletail{\hline}
+\begin{center}
+\begin{supertabular}{|l|p{5cm}|p{3cm}|l|l|l|l|}
+\noalign{\readtabline{7}}
+\autotabline
+\end{supertabular}
+\end{center}
+\end{document}

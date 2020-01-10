@@ -1,0 +1,31 @@
+    The hyphenat package can be used to disable all hyphenation
+in a document or in selected text within the document. It also 
+enables hyphenation within `words' that contain analphabetic 
+characters (e.g., that include underscores), and hyphenation of
+text typeset in monospaced (e.g., CM typewriter) fonts.
+
+Changes in version 2.3a
+o Fixed a double hyphenation problem with some non-CM fonts.
+
+Changes in version 2.3
+o Added \hyp command for hyphenation of compound hyphenated words.
+
+    The distribution consists of the following files:
+README (this file)
+hyphenat.ins
+hyphenat.dtx
+
+    The distribution is provided under the terms of the LaTeX
+Project Public License (LPPL).
+
+    To install the package:
+o run: latex hyphenat.ins (which will generate hyphenat.sty)
+o run: latex hyphenat.dtx
+o (for an index run: makeindex -s gind.ist hyphenat)
+o run: latex hyphenat.dtx
+o Print hyphenat.dvi for a hardcopy of the package manual 
+o Move hyphenat.sty to a location where LaTeX will find it.
+
+2001/01/02
+Peter Wilson
+peter.r.wilson@boeing.com

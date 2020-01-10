@@ -1,0 +1,6 @@
+Save the files pst-circ.sty|.tex in a directory, which is part of your 
+local TeX tree. pst-circ.pro should be saved in ../texmf/dvips/pstricks/
+Then do not forget to run texhash to update this tree.
+pst-circ needs pst-plot and pst-tricks, which should be part of your
+local TeX installation, otherwise get it from a CTAN server, f.ex.
+ftp://ftp.dante.de

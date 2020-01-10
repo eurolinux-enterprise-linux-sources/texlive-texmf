@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage{array,ifthen}
+\usepackage{zefonts}
+\title{A comparison between `ae' and `ze' fonts
+       (virtual T1 fonts)}
+\author{Robert Fuster\\
+        \footnotesize Departament de Matem\`atica Aplicada\\
+        \footnotesize Universitat Polit\`ecnica de Val\`encia\\
+        \footnotesize 46071 Val\`encia (Spain)\\
+        \footnotesize e-mail: \texttt{rfuster\@ mat.upv.es}\\
+        \footnotesize URL: \texttt{HTTP://www.upv.es/\~{}rfuster}}
+\date{July 17, 2000 (version 2.1)}
+\setlength{\extrarowheight}{2pt}
+\newcounter{n} \newcounter{p}
+\newcommand{\taula}{%
+    \setcounter{n}{0}
+    \setcounter{p}{0}
+    \begin{center}
+    \setcounter{n}{0}
+    \setcounter{p}{0}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    \whiledo{\value{n} < 255}{%
+     \symbol{\then}\stepcounter{p}\stepcounter{n}\ifthenelse{\value{p} = 16}{%
+                                  \setcounter{p}{0}\\\hline
+                                 }{\ifthenelse{\value{n} < 256}{&}{}%
+                                     }}
+    \symbol{\then}\\\hline
+    \end{tabular}
+    \end{center}
+}
+\begin{document}
+\maketitle
+In the following figures you can compare
+the `ze' fonts with the  `ae' (almost european) fonts.
+\begin{figure}
+    \caption{10pt roman font in zefonts (zerm1000) \label{fig:zerm1000}}
+    \taula
+    \caption{10pt roman font in ae fonts (aer10) \label{fig:aer10}}
+    {\renewcommand{\rmdefault}{aer}\rmfamily\selectfont\taula
+    }
+\end{figure}
+\begin{figure}
+    \caption{10pt sans serif font in zefonts (zess1000) \label{fig:zess1000}}
+    \sffamily\taula
+    \caption{10pt sans serif font in ae fonts (aess10) \label{fig:aess10}}
+    {\renewcommand{\sfdefault}{aess}\sffamily\selectfont\taula
+    }
+\end{figure}
+\begin{figure}
+    \caption{10pt typewriter font in zefonts (zett1000) \label{fig:zett1000}}
+    \ttfamily\taula
+    \caption{10pt typewriter font in ae fonts (aett10) \label{fig:aett10}}
+    {\renewcommand{\ttdefault}{aett}\ttfamily\selectfont\taula
+    }
+\end{figure}
+\end{document}

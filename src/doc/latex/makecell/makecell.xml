@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE entry SYSTEM 'catalogue.dtd'>
+<entry datestamp='$Date: 2006/06/28 10:01:40 $' modifier='$Author: schoepf $' id='makecell'>
+  <name>makecell</name>
+  <caption>Tabular column heads and multilined cells.</caption>
+  <authorref id='auth:lapko'/>
+  <license type='lppl'/>
+  <version number='0.1c'/>
+  <description>
+      This package offers a command, based on one-column tabular 
+      environment, which allows to support a common layout for
+      tabular column heads in whole document. Another offered
+      command is for creation of multilined tabular cells. There
+      are also: 1)&nbsp;a macro, which changes vertical spaces 
+      around all cells in tabular (like in tabls package) but based
+      on macros of <xref refid='array'>array</xref> package; 
+      2)&nbsp;macros for multirow cells/heads, which use macro from
+      <xref refid='multirow'>multirow</xref> package. 
+  </description>
+  <ctan path='/macros/latex/contrib/makecell'/>
+  <documentation href='ctan://macros/latex/contrib/makecell/README'/>
+  <texlive location/>
+  <miktex/>
+</entry>

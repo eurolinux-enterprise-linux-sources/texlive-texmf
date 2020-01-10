@@ -1,0 +1,777 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Contents: Math typesetting with LaTeX
+% $Id: math.tex,v 1.1.1.1 2002/02/26 10:04:21 oetiker Exp $
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Набор математических формул}
+
+\begin{intro}
+  Вот теперь мы готовы! В этой главе мы встретимся с основной мощью
+  \TeX{}: математической версткой. Но имейте в виду, что эта глава
+  дает только поверхностный обзор. Хотя для многих из вас изложенных
+  здесь вещей будет достаточно, не отчаивайтесь, если вы не сможете
+  найти решение, отвечающее нуждам верстки вашей математики. Весьма
+  возможно, что ваша проблема решается в
+  \AmS-\LaTeX{}\footnote{\emph{Американское Математическое Общество}
+    выpаботало pазвитое pасшиpение к \LaTeX{}. Многие пpимеpы этой
+    главы используют это pасшиpение, входящее во все совpеменные
+    дистpибутивы \TeX{}. Если в вашем оно отсутствует, то можете
+    получить его по адpесу \CTANref|macros/latex/required/amslatex|.}.
+\end{intro}
+
+
+\section{Общие сведения}
+
+\LaTeX{} включает в себя специальный режим для верстки математики.
+\index{математика} Математика может быть набpана внутpи абзаца, но
+может и pазбивать абзац выделенной фоpмулой. Математический текст
+внутри абзаца вводится между \ci{(}
+и \ci{)}, \index{$@\texttt{\$}} %$
+между \texttt{\$} и \texttt{\$} или между
+\verb|\begin{|\ei{math}\verb|}| или \verb|\end{math}|.\index{формулы}
+
+\begin{example}
+  Складывая $a$ в квадрате с
+  $b$ в квадрате, получаем
+  $c$ в квадрате. Или
+  излагая языком математики:
+  $c^{2}=a^{2}+b^{2}$
+\end{example}
+
+\begin{example}
+  \TeX{} произносится как
+  \(\tau\epsilon\chi\).\\[6pt]
+  100~м$^{3}$ воды.\\[6pt]
+  Это исходит от моего
+  \begin{math}\heartsuit\end{math}
+\end{example}
+
+Большие математические уравнения или формулы предпочтительнее
+<<выключать>>, то есть верстать их на отдельных строчках. Для этого
+заключайте их между \ci{[} и \ci{]} или между
+\verb|\begin{|\ei{displaymath}\verb|}| и \verb|\end{displaymath}|. 
+
+\begin{example}
+  Складывая $a$ в квадрате с
+  $b$ в квадрате, получаем
+  $c$ в квадрате. Или
+  излагая языком математики:
+  \begin{displaymath}
+    c^{2}=a^{2}+b^{2}
+  \end{displaymath}
+  или вы можете выpазить это
+  коpоче: \[a+b=c\]
+\end{example}
+
+Если вы хотите, чтобы \LaTeX{} нумеpовал ваши уpавнения, используйте
+окpужение \ei{equation}. Вы можете пpи этом пометить уpавнение меткой
+\ci{label} и сослаться на него в любом месте текста командами \ci{ref}
+или \ci{eqref}:
+
+\begin{example}
+  \begin{equation}
+    \label{eq:eps}
+    \epsilon > 0
+  \end{equation}
+  Из (\ref{eq:eps})
+  выводим \ldots{}Из 
+  \eqref{eq:eps} мы 
+  делаем то же.
+\end{example}
+
+Заметьте pазницу в стиле веpстки выpажений в абзацах и выключных:
+
+\begin{example}
+  $\lim_{n \to \infty}
+  \sum_{k=1}^n \frac{1}{k^2}
+  = \frac{\pi^2}{6}$
+\end{example}
+
+\begin{example}
+  \begin{displaymath}
+    \lim_{n \to \infty}
+    \sum_{k=1}^n \frac{1}{k^2}
+    = \frac{\pi^2}{6}
+  \end{displaymath}
+\end{example}
+
+\emph{Математический режим} отличается от \emph{текстового
+  режима}. Например, в \emph{математическом режиме}:
+
+\begin{enumerate}
+
+\item Большинство пробелов и возвратов каретки не принимаются во
+  внимание, так как все пробелы либо выводятся из логики
+  математических выражений, или должны в явном виде задаваться
+  командами вроде \ci{,}, \ci{quad} или \ci{qquad}.
+\item Пустые строчки недопустимы. Каждая формула занимает только один
+  абзац.
+\item Каждая буква считается именем переменной, и верстается в этом
+  качестве. Если вы хотите в формулу ввести нормальный текст
+  (нормальный прямой шрифт с нормальными пробелами), то вам нужно
+  вводить его командами \verb|\textrm{...}| (см. также
+  pаздел~\ref{sec:fontsz} на стp.~\pageref{sec:fontsz}).
+
+\end{enumerate}
+
+
+\begin{example}
+  \begin{equation}
+    \forall x \in \mathbf{R}:
+    \qquad x^{2} \geq 0
+  \end{equation}
+\end{example}
+
+\begin{example}
+  \begin{equation}
+    x^{2} \geq 0\qquad
+    \textrm{для всех }x\in
+    \mathbf{R}
+  \end{equation}
+\end{example}
+
+%
+% Add AMSSYB Package ... Blackboard bold .... R for realnumbers
+%
+
+Математики бывают очень строги к используемым символам: здесь будет
+удобно использовать `\wi{ажурные полужирные символы}',\index{полужирные символы}
+которые получаются командой \ci{mathbb} из пакетов
+\pai{amsfonts} или \pai{amssymb}.  \ifx\mathbb\undefined\else
+Последний пример теперь выглядит так:
+\begin{example}
+  \begin{displaymath}
+    x^{2} \geq 0\qquad
+    \textrm{для всех }x\in
+    \mathbb{R}
+  \end{displaymath}
+\end{example}
+\fi
+
+
+\section{Группировка в математическом режиме}
+
+Большинство команд математического режима действует только на
+следующий символ. Так что, если вы хотите, чтобы команда влияла на
+несколько символов, вам нужно сгруппировать их вместе при помощи
+фигурных скобок: \verb|{...}|.
+
+\begin{example}
+  \begin{equation}
+    a^x+y \neq a^{x+y}
+  \end{equation}
+\end{example}
+
+
+\section{Составляющие математической формулы}
+
+В этом разделе будут описаны наиболее важные команды, используемые в
+математической верстке. Детальный перечень команд для набора
+математических символов смотрите в разделе~\ref{symbols} на
+странице~\pageref{symbols}.
+
+\textbf{Строчные \wi{греческие буквы}} вводятся как \verb|\alpha|,
+ \verb|\beta|, \verb|\gamma|,~\ldots, прописные буквы вводятся как
+ \verb|\Gamma|, \verb|\Delta|,~\ldots\footnote{В \LaTeXe{} не
+   определяется прописная <<альфа>>, потому что она выглядит так же,
+   как латинская <<A>>. При новой кодировке математики это будет
+   изменено.}
+
+\begin{example}
+  $\lambda,\xi,\pi,\mu,%
+  \Phi,\Omega$
+\end{example}
+
+\textbf{Верхние и нижние индексы} вводятся при помощи
+символов~<<\index{верхние индексы}\index{нижние
+  индексы}\verb|^|\index{^@\verb+^+}>>
+и~<<\verb|_|\index{_@\verb+_+}>>.
+
+\begin{example}
+  $a_{1}$ \qquad $x^{2}$ \qquad
+  $e^{-\alpha t}$ \qquad
+  $a^{3}_{ij}$\\
+  $e^{x^2} \neq {e^x}^2$
+\end{example}
+
+\textbf{Квадратный корень}\index{квадратный корень} вводится как
+\ci{sqrt}, корень $n$-ной степени печатается при помощи
+\verb|\sqrt[|$n$\verb|]|. Размер знака корня выбирается \LaTeX{}
+автоматически. Если нужен один только знак, используйте \verb|\surd|.
+
+\begin{example}
+  $\sqrt{x}$ \qquad
+  $\sqrt{ x^{2}+\sqrt{y} }$
+  \qquad $\sqrt[3]{2}$\\[3pt]
+  $\surd[x^2 + y^2]$
+\end{example}
+
+Команды \ci{overline} и \ci{underline} создают \textbf{горизонтальные
+  линии} сразу над или под выражением.
+\index{линии!горизонтальные}
+
+\begin{example}
+  $\overline{m+n}$
+\end{example}
+
+Команды \ci{overbrace} и \ci{underbrace} создают
+длинные \textbf{горизонтальные фигурные скобки} сразу над или под
+выражением.
+\index{фигурные скобки!горизонтальные}
+\begin{example}
+  $\underbrace{ a+b+\cdots%
+    +z }_{26}$
+\end{example}
+
+\index{акцент!математический} Для добавления к переменным знаков
+математических акцентов, таких, как маленькие стрелки или знака
+\wi{тильда}, вы можете пользоваться командами, перечисленным в
+таблице~\ref{mathacc}. Широкие <<шляпки>> и тильды, охватывающие
+несколько символов, генерируются командами \ci{widetilde} и
+\ci{widehat}. Символ~<<\verb|'|\index{'@\verb+'+}>> дает знак
+производной.\index{производная}.
+
+% a dash is --
+
+\begin{example}
+  \begin{displaymath}
+    y=x^{2}\qquad y'=2x
+    \qquad y''=2
+  \end{displaymath}
+\end{example}
+
+\textbf{Векторы}\index{векторы} часто указываются добавлением
+маленьких стрелок \wi{стрелки} над переменной. Это делается командой
+\ci{vec}. Для обозначения вектора от $A$ до $B$ полезны две команды
+\ci{overrightarrow} и \ci{overleftarrow}.
+
+\begin{example}
+  \begin{displaymath}
+    \vec a\quad
+    \overrightarrow{AB}
+  \end{displaymath}
+\end{example}
+
+Обычно знак точки, обозначающий умножения, явно не набирается. Однако,
+иногда он полезен, чтобы помочь читателю сгруппировать
+формулу. Используйте для этого \ci{cdot}:
+
+\begin{example}
+\begin{displaymath}
+v = {\sigma}_1 \cdot {\sigma}_2
+    {\tau}_1 \cdot {\tau}_2
+\end{displaymath}
+\end{example}
+
+
+Имена функций типа $\lg$ часто верстаются прямым шрифтом, а не
+курсивом, как переменные. Поэтому \LaTeX{} содержит следующие команды
+для набора имен наиболее важных функций:
+\index{математические!функции}
+
+\begin{tabular}{lllllll}
+\ci{arccos} &   \ci{cos} &    \ci{csc} &   \ci{exp} &   \ci{ker}
+&     \ci{limsup} &  \ci{min} \\
+\ci{arcsin} &   \ci{cosh} &   \ci{deg} &   \ci{gcd} &   \ci{lg} &
+\ci{ln} &      \ci{Pr} \\
+\ci{arctan} &   \ci{cot} &    \ci{det} &   \ci{hom} &   \ci{lim}
+&     \ci{log} &     \ci{sec} \\
+\ci{arg} &      \ci{coth} &   \ci{dim} &   \ci{inf} &
+\ci{liminf} &  \ci{max} &     \ci{sin} \\
+\ci{sinh} & \ci{sup} & \ci{tan} & \ci{tanh}\\
+\end{tabular}
+
+\begin{example}
+\[\lim_{x \rightarrow 0}
+\frac{\sin x}{x}=1\]
+\end{example}
+
+Для функции модуля \wi{функция модуля} есть две команды: \ci{bmod} для
+бинарного оператора <<$a \bmod b$>> и \ci{pmod} для выражений вроде
+<<$x\equiv a \pmod{b}$>>.
+
+\begin{example}
+$a\bmod b$\\
+$x\equiv a \pmod{b}$
+\end{example}
+
+Двухъярусная \textbf{\wi{дробь}} верстается командой
+\ci{frac}\verb|{...}{...}|. Часто предпочтительнее ее форма с косой
+чертой $1/2$, потому что она смотрится лучше при небольшом количестве
+`дробного материала'.
+
+\begin{example}
+  $1\frac{1}{2}$~часа
+  \begin{displaymath}
+    \frac{ x^{2} }{ k+1 }\qquad
+    x^{ \frac{2}{k+1} }\qquad
+    x^{ 1/2 }
+  \end{displaymath}
+\end{example}
+
+Для верстки биномиальных коэффициентов или аналогичных структур можно
+пользоваться командой \ci{binom} из пакета \pai{amsmath}.
+
+\begin{example}
+\begin{displaymath}
+\binom{n}{k}\qquad\mathrm{C}_n^k
+\end{displaymath}
+\end{example}
+
+Для бинарных отношений бывает удобно размещать символы друг над
+другом. Команда \ci{stackrel} набирает символ, заданный первым
+аргументом, шрифтом размера индексов и размещает его над вторым
+аргументом, верстаемым в обычной позиции:
+
+\begin{example}
+\begin{displaymath}
+\int f_N(x) \stackrel{!}{=} 1
+\end{displaymath}
+\end{example}
+
+
+\textbf{Оператор интеграла}\index{оператор!интеграла} печатает
+команда~\ci{int}, \textbf{оператор суммы}\index{оператор!суммы}~---
+команда~\ci{sum}, \textbf{оператор
+  произведения}\index{оператор!произведения}~--- команда~\ci{prod}.
+Верхние и нижние пределы указываются при помощи знаков~<<\verb|^|>>
+и~<<\verb|_|>>, так же, как верхние и нижние
+индексы\footnote{\AmS-\LaTeX{}, кроме того, поддерживает многострочные
+верхние и нижние индексы.}.
+
+\begin{example}
+\begin{displaymath}
+\sum_{i=1}^{n} \qquad
+\int_{0}^{\frac{\pi}{2}} \qquad
+\prod_\epsilon
+\end{displaymath}
+\end{example}
+
+Чтобы получить больший контpоль над pазмещением индексов в сложных
+выpажениях, \pai{amsmath} пpедоставляет еще два инстpумента: команду
+\ci{substack} и окpужение \ei{subarray}:
+
+\begin{example}
+\begin{displaymath}
+\sum_{\substack{0<i<n \\ 1<j<m}}
+   P(i,j) =
+\sum_{\begin{subarray}{l} i\in I\\
+         1<j<m
+      \end{subarray}}     Q(i,j)
+\end{displaymath}
+\end{example}
+
+\medskip
+
+Для \index{скобки}\textbf{скобок} и прочих
+ограничителей\index{ограничители} в \TeX{} существует множество
+символов (скажем, $[\;\langle\;\|\;\updownarrow$). Круглые и
+квадратные скобки можно вводить соответствующими клавишами, фигурные
+скобки~---\verb|\{|, прочие ограничители~--- специальными командами
+(например, \verb|\updownarrow|). Список доступных ограничителей
+смотрите в таблице~\ref{tab:delimiters} на
+странице~\pageref{tab:delimiters}.
+
+\begin{example}
+\begin{displaymath}
+{a,b,c}\neq\{a,b,c\}
+\end{displaymath}
+\end{example}
+
+Если вы поместите перед открывающим ограничителем команду \ci{left},
+или перед закрывающим~--- \ci{right}, то \TeX{} автоматически выберет
+правильный размер ограничителя. Заметьте, что вы должны каждый
+\ci{left} закрывать соответствующим \ci{right}, и что размер
+определяется корректно только если оба они набраны на одной строке.
+Если вы не хотите иметь правого ограничителя, используйте невидимый
+ограничитель `\ci{right.}'!
+
+\begin{example}
+\begin{displaymath}
+1 + \left( \frac{1}{ 1-x^{2} }
+    \right) ^3
+\end{displaymath}
+\end{example}
+
+В некоторых случаях необходимо указать корректный размер
+математического ограничителя\index{математический!ограничитель}
+вручную, для этого есть команды \ci{big}, \ci{Big}, \ci{bigg} и
+\ci{Bigg}, служащие префиксами к большинству команд
+ограничителей.\footnote{Эти команды не работают как ожидается, если
+  используются команды смены размера шрифта, или если указана опция
+  \texttt{11pt} или \texttt{12pt}. Для корректирования этого поведения
+  пользуйтесь пакетами \pai{exscale} или \pai{amsmath}.}
+
+\begin{example}
+$\Big( (x+1) (x-1) \Big) ^{2}$\\
+$\big(\Big(\bigg(\Bigg($\quad
+$\big\}\Big\}\bigg\}\Bigg\}$\quad
+$\big\|\Big\|\bigg\|\Bigg\|$
+\end{example}
+
+Чтобы ввести в формулу \textbf{\wi{три точки}}, есть несколько команд.
+\ci{ldots} верстает точки на базовой линии, \ci{cdots}~---
+центрированные. Кроме того, существуют команды \ci{vdots} для
+вертикальных и \ci{ddots} для диагональных
+точек.\index{точки!вертикальные}\index{точки!горизонтальные}\index{точки!диагональные}
+В разделе~\ref{sec:vert} вы найдете другой пример.
+
+\begin{example}
+\begin{displaymath}
+x_{1},\ldots,x_{n} \qquad
+x_{1}+\cdots+x_{n}
+\end{displaymath}
+\end{example}
+
+
+\section{Математические пробелы}
+
+\index{математический!пробел} Если выбранные \TeX{} пробелы внутри
+формул неудовлетворительны, вы можете их подстраивать с использованием
+команд управления пробелами. Команды для маленьких пробелов: \ci{,}
+для $\frac{3}{18}\:\textrm{quad}$ (\demowidth{0.166em}), \ci{:} для
+$\frac{4}{18}\: \textrm{quad}$ (\demowidth{0.222em}) и \ci{;} для
+$\frac{5}{18}\: \textrm{quad}$ (\demowidth{0.277em}). Экранированный
+символ пробела \verb*.\ . дает средних размелов пробел, а \ci{quad}
+(\demowidth{1em}) и \ci{qquad} (\demowidth{2em}) дают большие пробелы.
+Размер \ci{quad} примерно соответствует ширине буквы `M' в текущем
+шрифте.  Команда~\verb|\!|\cih{"!} производит отрицательный пробел
+размером $-\frac{3}{18}\:\textrm{quad}$ (\demowidth{0.166em}).
+
+\begin{example}
+\newcommand{\ud}{\mathrm{d}}
+\begin{displaymath}
+\int\!\!\!\int_{D} g(x,y)
+  \, \ud x\, \ud y
+\end{displaymath}
+вместо
+\begin{displaymath}
+\int\int_{D} g(x,y)\ud x \ud y
+\end{displaymath}
+\end{example}
+
+Заметьте, что `d' в дифференциале обычно верстается прямым шрифтом.
+
+\AmS-\LaTeX{} включает другой способ тонкой подстройки пробелов между
+несколькими знаками интегралов: команды \ci{iint}, \ci{iiint},
+\ci{iiiint} и \ci{idotsint}. С загруженным пакетом \pai{amsmath}
+предыдущий пример можно набирать так:
+
+\begin{example}
+\newcommand{\ud}{\mathrm{d}}
+\begin{displaymath}
+\iint_{D} \, \ud x \, \ud y
+\end{displaymath}
+\end{example}
+
+Детали смотрите в электронном документе textmath.tex (распространяется
+с \AmS-\LaTeX{}) или в главе 8 \companion{}.
+
+\section{Вертикально расположенный материал}
+\label{sec:vert}
+
+Для верстки \textbf{матриц} пользуйтесь окружением \ei{array}. Его
+работа напоминает окружение \ei{tabular}. Для разрыва строки
+используется команда \verb|\\|.
+
+\begin{example}
+\begin{displaymath}
+\mathbf{X} =
+\left( \begin{array}{ccc}
+x_{11} & x_{12} & \ldots \\
+x_{21} & x_{22} & \ldots \\
+\vdots & \vdots & \ddots
+\end{array} \right)
+\end{displaymath}
+\end{example}
+
+Окружение \ei{array} можно также использовать для верстки выражений,
+имеющих один большой ограничитель, подставляя <<\verb|.|>> в качестве
+невидимого правого ограничителя:
+
+\begin{example}
+\begin{displaymath}
+y = \left\{ \begin{array}{ll}
+ a & \textrm{если $d>c$}\\
+ b+x & \textrm{по утрам}\\
+ l & \textrm{остальное время дня}
+  \end{array} \right.
+\end{displaymath}
+\end{example}
+
+Так же, как в окружении \verb|tabular|, можно рисовать линейки в
+окружении \ei{array}, например, разделяя элементы матрицы:
+
+\begin{example}
+\begin{displaymath}
+\left(\begin{array}{c|c}
+ 1 & 2 \\
+\hline
+3 & 4
+\end{array}\right)
+\end{displaymath}
+\end{example}
+
+
+Для формул, занимающих несколько строк или для систем
+уравнений\index{системы уравнений}
+вместо \ei{equation} пользуйтесь окружениями \ei{eqnarray} и
+\verb|eqnarray*|. В \ei{eqnarray} каждая строка получает отдельный
+номер уравнения. В \verb|eqnarray*| номера не ставятся.
+
+Окружения \ei{eqnarray} и \verb|eqnarray*| работают наподобие таблицы
+из трех столбцов формата \verb|{rcl}|, где средний столбец
+используется для знака равенства, или знака неравенства, или другого
+подходящего знака. Команда \verb|\\| разбивает строки.
+
+\begin{example}
+\begin{eqnarray}
+f(x) & = & \cos x     \\
+f'(x) & = & -\sin x   \\
+\int_{0}^{x} f(y)dy &
+ = & \sin x
+\end{eqnarray}
+\end{example}
+
+Заметьте, что по обеим сторонам средней колонки, знаков равенства,
+слишком много свободного места. Оно может быть уменьшено установкой
+\verb|\setlength\arraycolsep{2pt}|, как в следующем примере.\sloppypar
+
+\index{длинные уравнения} \textbf{Длинные уравнения} не будут
+автоматически разбиваться на правильные части. Автор должен указать,
+где их разбивать и насколько выравнивать. Чаще всего для этого
+используют следующие методы:
+
+\begin{example}
+{\setlength\arraycolsep{2pt}
+\begin{eqnarray}
+\sin x & = & x -\frac{x^{3}}{3!}
+     +\frac{x^{5}}{5!}-{}
+                    \nonumber\\
+ & & {}-\frac{x^{7}}{7!}+{}\cdots
+\end{eqnarray}}
+\end{example}
+
+\begin{example}
+\begin{eqnarray}
+\lefteqn{ \cos x = 1
+     -\frac{x^{2}}{2!} +{} }
+                    \nonumber\\
+ & & {}+\frac{x^{4}}{4!}
+     -\frac{x^{6}}{6!}+{}\cdots
+\end{eqnarray}
+\end{example}
+
+\noindent Команда \ci{nonumber} заставляет \LaTeX{} не генерировать
+номер для этого уравнения.
+
+Такими методами может быть сложно получить правильно выглядящие
+вертикально выровненные уравнения; более мощную альтернативу
+предоставляет пакет \pai{amsmath} (см. окружения \verb|align|,
+\verb|flalign|, \verb|gather|, \verb|multiline| и \verb|split|).
+
+\section{Фантомы}
+
+Мы не можем увидеть пpивидения, но они, тем не менее, все pавно
+занимают свое место в умах некотоpых людей. Так и \LaTeX{} позволяет
+использовать фантомы, невидимые объекты, для реализации интересных
+трюков с размещением видимых объектов.
+
+Когда \LaTeX{} размещает текст по вертикали при помощи команд \verb|^|
+и \verb|_|, он иногда проявляет многовато интеллекта. Командой
+\ci{phantom} вы можете зарезервировать пространство для символов,
+которых на самом деле сверстано не будет. Лучше всего это понять на
+следующих примерах.
+
+\begin{example}
+\begin{displaymath}
+{}^{12}_{\phantom{1}6}\textrm{C}
+\qquad \textrm{versus} \qquad
+{}^{12}_{6}\textrm{C}
+\end{displaymath}
+\end{example}
+
+\begin{example}
+\begin{displaymath} 
+\Gamma_{ij}^{\phantom{ij}k}
+\qquad \textrm{versus} \qquad
+\Gamma_{ij}^{k}
+\end{displaymath}  
+\end{example}
+
+\section{Размер математического шрифта}\label{sec:fontsz}
+
+\index{шрифт!математический, размер} В математическом режиме \TeX{}
+выбирает размер шрифта в зависимости от контекста. Индексы, например,
+верстаются меньшим шрифтом. Если вы хотите добавить к уравнению
+обычный текст, не пользуйтесь командой \verb|\textrm|, так как
+механизм переключения размера работать не будет, потому что
+\verb|\textrm| временно выходит в текстовый режим. Чтобы оставить его
+работающим, используйте команду \verb|\mathrm|.\trfootnote{В
+  зависимости от используемой русификации, у вас могут не работать
+  русские буквы внутри команды \ci{mathrm}, вместо которой может
+  использоваться команда \ci{cyrmathrm}.} Но имейте в виду,
+\ci{mathrm} будет хорошо работать только с короткими элементами.
+Пробелы по-прежнему не активны и акцентированные символы не
+работают.\footnote{При подключении \AmS-\LaTeX{} (пакет \pai{amsmath})
+  команда \ci{textrm} начинает работать с изменением размера.}
+
+\begin{example}
+\begin{equation}
+2^{\textrm{nd}} \quad
+2^{\mathrm{nd}}
+\end{equation}
+\end{example}
+
+Тем не менее, иногда вам может быть нужно указать \LaTeX{} точный
+размер шрифта. В математическом режиме размер устанавливается четырьмя
+командами:
+
+\begin{flushleft}
+  \ci{displaystyle}~($\displaystyle 123$),
+  \ci{textstyle}~($\textstyle 123$),
+  \ci{scriptstyle}~($\scriptstyle 123$) и
+  \ci{scriptscriptstyle}~($\scriptscriptstyle 123$).
+\end{flushleft}
+
+Смена стилей влияет также на способ изображения пределов.
+
+\fvset{xrightmargin=0.52\textwidth}
+
+\begin{example}
+\begin{displaymath}
+\mathop{\mathrm{corr}}(X,Y)=
+ \frac{\displaystyle
+   \sum_{i=1}^n(x_i-\overline x)
+   (y_i-\overline y)}
+  {\displaystyle\biggl[
+ \sum_{i=1}^n(x_i-\overline x)^2
+\sum_{i=1}^n(y_i-\overline y)^2
+\biggr]^{1/2}}
+\end{displaymath}
+\end{example}
+% This is not a math accent, and no maths book would be set this way.
+% mathop gets the spacing right.
+
+\fvset{xrightmargin=0.5\textwidth}
+
+\noindent Это один из примеров, когда нам нужны скобки б\'ольшие, чем
+предоставляемые стандартными  \verb|\left[  \right]|.
+
+
+\section{Теоремы, законы, \ldots{}}
+
+При написании математических документов, вам, вероятно, нужен способ
+верстки <<лемм>>, <<определений>>, <<аксиом>> и аналогичных структур.
+\LaTeX{} поддерживает это командами
+\begin{lscommand}
+\ci{newtheorem}\verb|{|\emph{название}\verb|}[|\emph{счетчик}\verb|]{|%
+         \emph{текст}\verb|}[|\emph{раздел}\verb|]|
+\end{lscommand}
+Аргумент \emph{название}~--- это краткое ключевое слово, используемое
+для идентификации <<теоремы>>. Аргументом \emph{текст} вы определяете
+настоящее название <<теоремы>>, под которым она будет печататься в
+документе.
+
+Аргументы в квадратных скобках необязательны. Оба они используются для
+определения того, как нумеровать <<теорему>>. Аргументом
+\emph{счетчик} вы можете указать \emph{название} предварительно
+объявленной <<теоремы>>. Новая <<теорема>> будет тогда нумероваться в
+той же последовательности. Аргумент \emph{раздел} позволяет вам
+указать раздел, внутри которого вы хотите нумеровать вашу
+<<теорему>>.
+
+После использования в преамбуле документа команды \ci{newtheorem}, вы
+можете пользоваться следующими командами:
+
+\begin{code}
+\verb|\begin{|\emph{название}\verb|}[|\emph{текст}\verb|]|\\
+Это интересная теорема.\\
+\verb|\end{|\emph{название}\verb|}|
+\end{code}
+
+На этом теории должно быть достаточно. Дальнейшие примеры должны
+развеять последнюю тень сомнений, и окончательно убедить вас, что
+окружение \verb|\newtheorem| слишком сложно, чтобы его можно было
+понять:\sloppypar
+
+\begin{example}
+% определения для
+% преамбулы документа
+\newtheorem{law}{Law}
+\newtheorem{jury}[law]{Jury}
+% в теле документа
+\begin{law} \label{law:box}
+Don't hide in the witness box
+\end{law}
+\begin{jury}[The Twelve]
+It could be you! So beware and
+see law~\ref{law:box}\end{jury}
+\begin{law}No, No, No\end{law}
+\end{example}
+
+Теорема <<Jury>> использует тот же счетчик, что и теорема
+<<Law>>. Следовательно, она получит номер в последовательности с
+другими теоремами <<Law>>. Аргумент в квадратных скобках указывает
+заголовок теоремы, или нечто аналогичное.
+
+\begin{example}
+\flushleft
+\newtheorem{mur}{Murphy}[section]
+\begin{mur}
+Если существует два или
+более способа сделать
+нечто, и один их этих
+способов может привести
+к катастрофе, то кто-то
+обязательно это сделает.
+\end{mur}
+\end{example}
+
+Теорема <<Murphy>> получает номер, связанный с номером текущего
+раздела. Вы можете также использовать другую структурную единицу,
+например, главу или подраздел.
+
+
+\section{Полужирные символы}
+\index{полужирные символы}
+
+В \LaTeX{} довольно непросто получить жирные символы; это, вероятно,
+сделано преднамеренно, потому что непрофессионалы слишком часто
+злоупотребляют ими. Команда смены шрифта \verb|\mathbf| дает
+полужирные символы, но они обычные (прямые), тогда как математические
+символы обычно курсивные. Существует команда \ci{boldmath}, но
+\emph{она может использоваться только вне математического режима}. То
+же относится и к символам.
+
+\begin{example}
+\begin{displaymath}
+\mu, M \qquad \mathbf{M} \qquad
+\mbox{\boldmath $\mu, M$}
+\end{displaymath}
+\end{example}
+
+\noindent Заметьте, что запятая тоже полужирная, что может быть
+нежелательным.
+
+Пакет \pai{amsbsy} (включаемый пакетом \pai{amsmath}), равно как и
+пакет \pai{bm} (из набора \texttt{tools}), включает команду
+\ci{boldsymbol}.
+
+\ifx\boldsymbol\undefined\else
+\begin{example}
+\begin{displaymath}
+\mu, M \qquad
+\boldsymbol{\mu}, \boldsymbol{M}
+\end{displaymath}
+\end{example}
+\fi
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "lshort"
+%%% End:
+
+

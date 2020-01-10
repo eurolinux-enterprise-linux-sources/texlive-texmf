@@ -1,0 +1,37 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp74.tex ---
+%% Autor           : Herbert Voss <voss@perce.de>
+%% Datum           : 2005-12-18 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\usepackage{pst-blur}
+\usepackage{pst-char}
+\usepackage{pst-slpe}
+\usepackage{graphicx}
+
+\parindent=0pt
+\pagestyle{empty}
+
+\begin{document}
+
+\DeclareFixedFont{\RM}{T1}{ptm}{b}{n}{3.5cm}
+\DeclareFixedFont{\Rm}{T1}{ptm}{m}{n}{2mm}
+\psset{shadow=true,blur=true,shadowsize=10pt,%
+     blurradius=5pt}
+\begin{pspicture}(\linewidth,3.5cm)
+\psset{fillstyle=ccslopes}
+\resizebox{\linewidth}{!}{\pscharpath{\RM PostScript}}
+\end{pspicture}
+
+\begin{pspicture}(\linewidth,3.5cm)
+\psset{fillstyle=ccslope}
+\rput(0.5\linewidth,1.75cm){\pscharpath{\RM with}}
+\end{pspicture}
+
+\begin{pspicture}(\linewidth,3.5cm)
+\psset{fillstyle=slopes}
+\rput(0.5\linewidth,1.75cm){\pscharpath{\RM PSTricks}}
+\end{pspicture}
+
+\end{document}

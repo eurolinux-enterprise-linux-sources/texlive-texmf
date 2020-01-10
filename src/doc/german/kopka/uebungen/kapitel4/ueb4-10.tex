@@ -1,0 +1,19 @@
+\documentclass{article}
+\usepackage{german}
+\newcounter{num}
+\newenvironment{muster}{\begin{list}{\textbf{Muster \Alph{num}}\hfill}%
+   {\usecounter{num} \setlength{\labelwidth}{20mm}
+    \setlength{\leftmargin}{22mm} \setlength{\rightmargin}{5mm}
+    \setlength{\itemsep}{1ex plus0.5ex minus 0.4ex}
+    \setlength{\listparindent}{1em}
+    \setlength{\parsep}{0ex plus0.5ex} }}
+   {\end{list}}
+\begin{document}
+Die nachfolgende anwendereigene \texttt{muster}-Umgebung zeigt die Anordung
+der ausgegebenen Marke und der linken und rechten Texteinr"uckung: 
+\begin{muster}
+\item ohne Wert.
+\item bei Einsendung des beigef"ugten Gutscheins wird der Betrag von 5.-- DM
+   gutgeschrieben.
+\end{muster}
+\end{document}

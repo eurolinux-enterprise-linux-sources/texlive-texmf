@@ -1,0 +1,144 @@
+\documentclass{article}
+\usepackage{german}
+\setlength{\textwidth}{130mm}
+\begin{document}
+\setlength{\unitlength}{2.0mm}
+\newsavebox{\PROZESS}
+\savebox{\PROZESS}{\begin{picture}(0,0)\thicklines
+                      \put(-6,-3){\framebox(12,6){}}
+                   \end{picture}}
+\newsavebox{\EINAUSGABE}
+\savebox{\EINAUSGABE}{\begin{picture}(0,0)\thicklines
+                         \multiput(-6,-3)(10,0){2}{\line(1,3){2}}
+                         \multiput(-6,-3)(2,6){2}{\line(1,0){10}}
+                       \end{picture}}
+\newsavebox{\IFBOX}
+\savebox{\IFBOX}{\begin{picture}(0,0)\thicklines
+                    \multiput(-5,0)(5,-3){2}{\line(5,3){5}}
+                    \multiput(-5,0)(5,3){2}{\line(5,-3){5}}
+                 \end{picture}}
+\newsavebox{\FUNCTION}
+\savebox{\FUNCTION}{\begin{picture}(0,0)\thicklines
+                       \put(0,0){\oval(12,4)}
+                    \end{picture}}
+\newsavebox{\TTIE}
+\savebox{\TTIE}{\begin{picture}(0,0)\thicklines
+                   \put(0,0){\circle*{0.4}}
+                   \put(-5,0){\vector(1,0){5}}
+                   \put(5,0){\vector(-1,0){5}}
+                   \put(0,0){\line(0,-1){1}}
+                \end{picture}}
+\newsavebox{\LTIE}
+\savebox{\LTIE}{\begin{picture}(0,0)\thicklines
+                   \put(0,2){\vector(0,-1){2}}
+                   \put(0,1.5){\circle*{0.4}}
+                   \put(5,1.5){\vector(-1,0){5}}
+                \end{picture}}
+\newsavebox{\IFTHENELSE}
+\savebox{\IFTHENELSE}{\begin{picture}(0,0)\thicklines
+                         \multiput(-13,0)(26,0){2}{\usebox{\PROZESS}}
+                         \put(0,0){\usebox{\IFBOX}}
+                         \put(0,5){\vector(0,-1){2}}
+                         \put(-5,0){\vector(-1,0){2}}
+                         \put(5,0){\vector(1,0){2}}
+                         \put(0,-4){\usebox{\TTIE}}
+                         \multiput(-13,-3)(26,0){2}{\line(0,-1){1}}
+                         \put(-13,-4){\line(1,0){10}}
+                         \put(13,-4){\line(-1,0){10}}
+                       \end{picture}}
+\newsavebox{\DOWHILE}
+\savebox{\DOWHILE}{\begin{picture}(0,0)\thicklines
+                      \put(0,0){\usebox{\IFBOX}}
+                      \put(5,0){\vector(1,0){2}}
+                      \put(13,0){\usebox{\PROZESS}}
+                      \put(13,3){\line(0,1){1.5}}
+                      \put(0,3){\usebox{\LTIE}}
+                      \put(13,4.5){\line(-1,0){10}}
+                    \end{picture}}
+\newsavebox{\DOUNTIL}
+\savebox{\DOUNTIL}{\begin{picture}(0,0)\thicklines
+                      \put(0,0){\usebox{\PROZESS}}
+                      \put(13,0){\usebox{\IFBOX}}
+                      \put(6,0){\vector(1,0){2}}
+                      \put(13,3){\line(0,1){1.5}}
+                      \put(13,4.5){\line(-1,0){10}}
+                      \put(0,3){\usebox{\LTIE}}
+                    \end{picture}}
+
+\noindent
+\begin{picture}(65,10.5)\footnotesize
+\put(0,8.5){\tt PROZESS}
+\put(6,4){\usebox{\PROZESS}}
+\put(6,4){\makebox(0,0){$+$}}
+\put(16,8.5){\tt EIN/AUSGABE}
+\put(22,4){\usebox{\EINAUSGABE}}
+\put(22,4){\makebox(0,0){$+$}}
+\put(32,8.5){\tt IFBOX}
+\put(37,4){\usebox{\IFBOX}}
+\put(37,4){\makebox(0,0){$+$}}
+\put(46,8.5){\tt FUNCTION}
+\put(52,5){\usebox{\FUNCTION}}
+\put(52,5){\makebox(0,0){$+$}}
+\put(46,0){\tt TTIE}
+\put(57,1){\usebox{\TTIE}}
+\put(60,8.5){\tt LTIE}
+\put(60,5){\usebox{\LTIE}}
+\end{picture}
+
+\noindent
+\begin{picture}(38,11)\footnotesize
+\put(0,9.5){\tt IFTHENELSE}
+\put(19,5){\usebox{\IFTHENELSE}}
+\put(19,5){\makebox(0,0){$+$}}
+\put(6,5){\makebox(0,0){$(+)$}}
+\put(6,3.0){\makebox(0,0)[b]{(-13,0)}}
+\put(32,5){\makebox(0,0){$(+)$}}
+\put(32,3.0){\makebox(0,0)[b]{(13,0)}}
+\end{picture}
+\hfill
+\begin{minipage}[b]{50mm}\small
+Anmerkung:\\
+Das +-Zeichen kennzeichnet den Bezugspunkt f"ur das 
+Gesamtsymbol, (+) den Bezugspunkt des Teilsymbols,
+relativ zu +. LE = 2\,mm
+\end{minipage}
+\noindent
+\begin{picture}(60,12)\footnotesize
+\put(0,10){\tt DOWHILE}
+\put(5,4){\usebox{\DOWHILE}}
+\put(5,4){\makebox(0,0){$+$}}
+\put(18,4){\makebox(0,0){$(+)$}}
+\put(18,2.0){\makebox(0,0)[b]{(13,0)}}
+\put(35,10){\tt DOUNTIL}
+\put(41,4){\usebox{\DOUNTIL}}
+\put(41,4){\makebox(0,0){$+$}}
+\put(54,4){\makebox(0,0){$\scriptstyle(+)$}}
+\put(54,2.5){\makebox(0,0)[b]{\scriptsize(13,0)}}
+\end{picture}
+
+\noindent
+Die vorstehenden Symbole nun zu folgendem Bild zusammengesetzt:
+
+\noindent
+\begin{picture}(65,28)\thicklines
+\put(25,25){\usebox{\FUNCTION}}
+\put(25,23){\vector(0,-1){2}}
+\put(25,18){\usebox{\IFBOX}}
+\put(20,18){\line(-1,0){15}}
+\put(5,18){\line(0,-1){3}}
+\put(5,11){\usebox{\DOWHILE}}
+\put(30,18){\line(1,0){15}}
+\put(45,18){\line(0,-1){3}}
+\put(45,11){\usebox{\IFTHENELSE}}
+\put(45,6){\line(-1,0){16}}
+\put(5,8){\line(0,-1){2}}
+\put(5,6){\line(1,0){16}}
+\put(25,6){\usebox{\TTIE}}
+\put(25,6){\line(0,-1){2}}
+\put(25,2){\usebox{\FUNCTION}}
+\put(35,20){\framebox(30,7){\parbox{58mm}{\footnotesize
+ Bei der Erzeugung von Flu"sdiagrammen werden die Symbole
+ zun"achst ohne Text zusammengef"ugt und der Text
+ erst dann eingef"ugt, wenn das Diagramm stimmt.}}}
+\end{picture}
+\end{document}

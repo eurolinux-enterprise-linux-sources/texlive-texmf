@@ -1,0 +1,62 @@
+%%
+%% This is file `example.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% typedref.dtx  (with options: `example')
+%% 
+%%    Package `typedref' for use with LaTeX2e
+%%    Copyright (C) 2001 Gregory Seidman (email `gseidman@acm.org').
+%%    All rights reserved.  You may not alter the contents of this file unless
+%%    you also change its name. Please make a bona fide attempt to submit
+%%    patches to me before changing the name of this file.
+%% 
+%%    Modified from package `saferef'
+%%    Copyright (C) 1997 James Ashton (email `James.Ashton@anu.edu.au').
+%%    All rights reserved.  You may not alter the contents of this file unless
+%%    you also change its name.
+%% 
+%%    Modifications include proper handling of appendices which are not
+%%    chapters (i.e. in a document class other than book) and compatibility
+%%    with hyperref.
+%% 
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{typedref}
+\newtheorem{theorem}{Theorem}{Theorems}
+\newtheorem{lemma}[theorem]{Lemma}{Lemmas}
+\begin{document}
+\section{The first section}
+\label{zero}
+We'll use the following in \theoremref{one}.
+\begin{equation}
+a = b\label{two}
+\end{equation}
+\begin{theorem}
+\label{one}
+Equation \eqref{two} has nothing to do with \eqref{three} or \eqref{four}.
+See also \lemmaref{six}.
+\begin{align}
+a^2&=b^2+c^2\label{three}\\
+a&=\sqrt{b^2+c^2-2bc\cos A}\label{four}
+\end{align}
+\end{theorem}
+Having had this pointless theorem, why not try for a lemma of similar
+class.
+\section{Another section}
+\label{five}
+\begin{lemma}
+\label{six}
+\theoremref{one} (in \sectionref{zero}) contains two equations.
+While both are simple, \eqref{four} is more complex than \eqref{three}.
+\end{lemma}
+\section{The final section}
+\label{seven}
+This document includes \sectionref{zero,five,seven}.
+\lemmaref{six} is on page \pageref{lemma:six}.
+\end{document}
+\endinput
+%%
+%% End of file `example.tex'.

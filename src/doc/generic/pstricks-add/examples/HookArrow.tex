@@ -1,0 +1,41 @@
+\documentclass[12pt]{article}
+
+\usepackage{pst-node}
+\usepackage{pstricks-add}
+
+\begin{document}
+
+\[
+\begin{psmatrix}
+E&W_i(X)&&Y\\
+&&W_j(X)
+\psset{arrows=->,nodesep=3pt,linewidth=5pt}
+\everypsbox{\scriptstyle}
+\ncline[linecolor=red,arrows=H->,hooklength=5mm,hookwidth=4mm]{1,1}{1,2}       
+%% This should be \hookrightarrow
+\ncline{1,2}{1,4}^{\tilde{t}}
+\ncline{1,2}{2,3}<{W_{ij}}
+\ncline{2,3}{1,4}>{\tilde{s}}
+\end{psmatrix}
+\]
+
+\[
+\begin{psmatrix}
+&&C(K)\\
+&M_i&&M_j\\
+W_i(K)&&&&W_j(K)
+\psset{arrows=->,nodesep=3pt}
+\everypsbox{\scriptstyle}
+\ncline[arrows=->>]{1,3}{2,2}
+\ncline[arrows=->>]{1,3}{2,4}
+\ncline[arrows=<<-,linestyle=dashed]{2,2}{2,4}_{m_{ij}}
+\ncline[linecolor=red,arrows=H->,hooklength=5mm,hookwidth=-2mm]{2,2}{3,1}<{m_i}  
+%% \hookrightarrow with the
+%% "litle tail" directed to the left; the same for the next arrow.
+\ncline{2,4}{3,5}>{m_j}
+\ncline{3,5}{3,1}_{W_{ji}}
+\end{psmatrix}
+\]
+\end{document}
+
+

@@ -1,0 +1,63 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp12.tex ---   beoetigt Donald Arseneau's shapepar.sty ,
+%% Autor           : Herbert Voss <voss@perce.de> (nach einer Idee von
+%%                   Thomas Siegel)
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[ngerman]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{lmodern}          
+\usepackage{shapepar}
+\usepackage{pstricks}
+\usepackage{babel}
+
+\newsavebox\PBox
+\pagestyle{empty}
+
+\begin{document}
+
+\savebox\PBox{
+\begin{minipage}{\linewidth}
+\shapepar{\nutshape}
+Warum ist die Natur so nahezu symmetrisch? Niemand hat
+eine Idee, warum. Das einzige, was wir vorschlagen könnten, ist etwas wie
+dies: Es gibt ein Tor in Japan, ein Tor in Neiko, das die Japaner manchmal
+das schönste Tor in ganz Japan nennen; es wurde zu einer Zeit gebaut, als
+die chinesische Kunst großen Einfluß hatte. Dies Tor ist sehr kunstvoll
+gearbeitet mit zahlreichen Giebeln und schönen Schnitzereien und vielen
+Säulen und Drachenköpfen und Fürsten, die in die Säulen eingemeißelt sind,
+usw. Aber wenn man genau hinschaut, sieht man, daß in dem kunstvollen und
+komplizierten Muster entlang einer der Säulen eines der kleinen
+Musterelemente kopfüber gemeißelt ist; sonst ist alles vollständig
+symmetrisch. Wenn man danach fragt, warum dies so ist, ist die Erklärung,
+daß es kopfüber gemeißelt worden ist, damit die Götter auf die
+Vollkommenheit des Menschen nicht eifersüchtig sind. So machten sie
+absichtlich einen Fehler, damit die Götter nicht eifersüchtig und auf die
+Menschen zornig sein würden. Wir könnten den Gedanken umdrehen und daran
+denken, daß die wahre Erklärung der näherungsweisen Symmetrie der Natur
+diese ist: Gott machte die Gesetze nur ungefähr symmetrisch, damit wir nicht
+auf seine Vollkommenheit eifersüchtig sind!
+
+\end{minipage}
+}
+
+\begin{center}
+\begin{pspicture}(-6,-5.5)(6,5.5)
+ \rput(0,0){\usebox\PBox}
+  \pscustom*{%
+   \psarc(0,1.1){1.1}{270}{450}
+   \psarc(0,0){2.2}{90}{270}
+   \psarcn(0,-1.1){1.1}{270}{450}
+  }
+  \pscircle*(0,-1.1){0.3}
+  \pscircle[fillstyle=solid](0,1.1){0.3}
+%  \psarc(4,4){2.4}{270}{450}
+\end{pspicture}
+
+\vspace{2cm}
+\textit{Richard Feynman}
+\end{center}
+
+\end{document}
+

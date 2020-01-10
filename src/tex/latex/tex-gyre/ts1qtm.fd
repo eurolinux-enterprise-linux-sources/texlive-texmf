@@ -1,0 +1,20 @@
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Termes.txt
+% and README-TeX-Gyre-Termes.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+\ProvidesFile{ts1qtm.fd}[2006/11/01 v1.0 font definition file for TS1/qtm]
+
+\DeclareFontFamily{TS1}{qtm}{}
+\DeclareFontShape{TS1}{qtm}{b}{n}{<->ts1-qtmb}{}
+\DeclareFontShape{TS1}{qtm}{b}{it}{<->ts1-qtmbi}{}
+\DeclareFontShape{TS1}{qtm}{m}{n}{<->ts1-qtmr}{}
+\DeclareFontShape{TS1}{qtm}{m}{it}{<->ts1-qtmri}{}
+\DeclareFontShape{TS1}{qtm}{bx}{n}{<->ssub * qtm/b/n}{}
+\DeclareFontShape{TS1}{qtm}{bx}{it}{<->ssub * qtm/b/it}{}
+\DeclareFontShape{TS1}{qtm}{bx}{sc}{<->ssub * qtm/b/sc}{}
+\DeclareFontShape{TS1}{qtm}{bx}{scit}{<->ssub * qtm/b/scit}{}
+\endinput
+% End of ts1qtm

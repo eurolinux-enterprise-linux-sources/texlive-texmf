@@ -1,0 +1,128 @@
+%%
+%% This is file `dt-sampl.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% datetime.dtx  (with options: `dt-sampl.tex,package')
+%% Copyright (C) 2006 Nicola Talbot, all rights reserved.
+%% If you modify this file, you must change its name first.
+%% You are NOT ALLOWED to distribute this file alone. You are NOT
+%% ALLOWED to take money for the distribution or use of either this
+%% file or a changed version, except for a nominal charge for copying
+%% etc.
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+\documentclass[a4paper]{article}
+
+\usepackage{ifpdf}
+\usepackage{datetime}
+
+\ifpdf
+\pdfinfo{
+  /CreationDate (D:20040501215500)
+  /ModDate (D:\pdfdate)
+}
+\fi
+
+\padzeroes[8]
+
+\newdateformat{dashdate}{\twodigit{\THEDAY}-\twodigit{\THEMONTH}-\THEYEAR}
+\newdateformat{usvardate}{\monthname[\THEMONTH]~\ordinaldate{\THEDAY}, \THEYEAR}
+\newdateformat{mydate}{\ifshowdow \dayofweekname{\THEDAY}{\THEMONTH}{\THEYEAR} \fi
+\THEDAY\ \monthname[\THEMONTH], \THEYEAR}
+\newdateformat{yyyymmdd}{\THEYEAR\twodigit{\THEMONTH}\twodigit{\THEDAY}}
+\newdateformat{ukvardate}{\THEDAY\ \monthname[\THEMONTH]\ \THEYEAR}
+
+\newtimeformat{dottime}{\twodigit{\THEHOUR}.\twodigit{\THEMINUTE}}
+\newtimeformat{dashtime12}{\THEHOURXII-\twodigit{\THEMINUTE}}
+\newtimeformat{hhmm}{\twodigit{\THEHOUR}\twodigit{\THEMINUTE}}
+
+\begin{document}
+
+\section{Date Formats}
+Default: \today.
+
+\begin{tabular}{ll}
+\bfseries Declaration & \bfseries\verb|\today|\\
+\verb|\longdate| & \longdate\today\\
+\verb|\shortdate| & \shortdate\today\\
+\verb|\ddmmyyyydate| & \ddmmyyyydate\today\\
+\verb|\dmyyyydate| & \dmyyyydate\today\\
+\verb|\ddmmyydate| & \ddmmyydate\today\\
+\verb|\dmyydate| & \dmyydate\today\\
+\verb|\textdate| & \textdate\today\\
+\verb|\usdate| & \usdate\today\\
+\verb|\mmddyyyydate| & \mmddyyyydate\today\\
+\verb|\mdyyyydate| & \mdyyyydate\today\\
+\verb|\mmddyydate| & \mmddyydate\today\\
+\verb|\mdyydate| & \mdyydate\today
+\end{tabular}
+
+\section{Time Formats}
+Default: \currenttime.
+
+\begin{tabular}{@{\ttfamily}ll}
+\bfseries\rmfamily Format & \bfseries \verb|\currenttime|\\
+xxivtime & \settimeformat{xxivtime}\currenttime\\
+ampmtime & \settimeformat{ampmtime}\currenttime\\
+oclock & \settimeformat{oclock}\currenttime
+\end{tabular}
+
+\section{Specific Date:}
+
+\begin{tabular}{ll}
+\verb|\longdate| & \longdate\formatdate{1}{3}{2000}\\
+\verb|\shortdate| & \shortdate\formatdate{8}{3}{2000}\\
+\verb|\ddmmyyyydate| & \ddmmyyyydate\formatdate{8}{3}{2000}\\
+\verb|\dmyyyydate| & \dmyyyydate\formatdate{8}{3}{2000}\\
+\verb|\ddmmyydate| & \ddmmyydate\formatdate{8}{3}{2000}\\
+\verb|\dmyydate| & \dmyydate\formatdate{8}{3}{2000}\\
+\verb|\textdate| & \textdate\formatdate{8}{3}{2000}\\
+\verb|\usdate| & \usdate\formatdate{8}{3}{2000}\\
+\verb|\mmddyyyydate| & \mmddyyyydate\formatdate{8}{3}{2000}\\
+\verb|\mdyyyydate| & \mdyyyydate\formatdate{8}{3}{2000}\\
+\verb|\mmddyydate| & \mmddyydate\formatdate{8}{3}{2000}\\
+\verb|\mdyydate| & \mdyydate\formatdate{8}{3}{2000}
+\end{tabular}
+
+\section{Defining New Dates}
+
+\begin{tabular}{ll}
+\verb|\dashdate| & \dashdate\today\\
+\verb|\usvardate| & \usvardate\today\\
+\verb|\ukvardate| & \ukvardate\today\\
+\verb|\mydate| & \mydate\today\\
+\verb|\yyyymmdd| & \yyyymmdd\today\\
+\verb|\dashdate| & \dashdate\formatdate{8}{3}{2000}\\
+\verb|\usvardate| & \usvardate\formatdate{8}{3}{2000}\\
+\verb|\mydate| & \mydate\formatdate{8}{3}{2000}\\
+\verb|\yyyymmdd| & \yyyymmdd\formatdate{8}{3}{2000}
+\end{tabular}
+
+\section{Defining New Times}
+
+\begin{tabular}{@{\ttfamily}ll}
+\bfseries\rmfamily Format & \bfseries \verb|\currenttime|\\
+dottime & \settimeformat{dottime}\currenttime\\
+dashtime12 & \settimeformat{dashtime12}\currenttime\\
+hhmm & \settimeformat{hhmm}\currenttime
+\end{tabular}
+
+\end{document}
+\endinput
+%%
+%% End of file `dt-sampl.tex'.

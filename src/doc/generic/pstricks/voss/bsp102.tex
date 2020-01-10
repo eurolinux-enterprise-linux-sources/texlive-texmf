@@ -1,0 +1,45 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp102.tex ---
+%% Autor           : Herbert Voss <voss@perce.de>
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{article}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pstricks-add}
+
+\parindent=0pt
+\pagestyle{empty}
+\begin{document}
+
+\psset{arrowscale=2,ArrowFill=true}
+\begin{pspicture}(4,4)
+\psset{ArrowInside=-|}
+\psbezier[ArrowInsidePos=0.25,%
+       showpoints=true]{*-*}(2,3)(3,0)(4,2)
+\psset{linestyle=none}
+\psbezier[ArrowInsidePos=0.75](2,3)(3,0)(4,2)
+\end{pspicture}
+%
+\begin{pspicture}(5,6)
+\pnode(3,4){A}\pnode(5,6){B}\pnode(5,0){C}
+\psbezier[ArrowInside=->,%
+  showpoints=true](A)(B)(C)
+\psset{linestyle=none,ArrowInside=-<}
+\psbezier[linecolor=red,ArrowInsideNo=4](A)(B)(C)
+\psset{ArrowInside=-o}
+\psbezier[linecolor=red,ArrowInsidePos=0.1](A)(B)(C)
+\psbezier[linecolor=red,ArrowInsidePos=0.9](A)(B)(C)
+\psset{ArrowInside=-*}
+\psbezier[linecolor=red,ArrowInsidePos=0.3](A)(B)(C)
+\psbezier[linecolor=red,ArrowInsidePos=0.7](A)(B)(C)
+\end{pspicture}
+
+\psset{xunit=0.8}
+\begin{pspicture}(-3,-5)(15,5)
+  \psbezier[ArrowInsideNo=19,%
+      ArrowInside=->,ArrowFill=false,%
+      showpoints=true]{->}(-3,0)(5,-5)(8,5)(15,-5)
+\end{pspicture}
+
+\end{document}

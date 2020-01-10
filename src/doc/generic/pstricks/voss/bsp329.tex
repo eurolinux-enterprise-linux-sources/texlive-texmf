@@ -1,0 +1,15 @@
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\input random
+\usepackage{pst-labo}
+
+\pagestyle{empty}
+\parindent=0pt
+\begin{document}
+
+\psset{unit=0.5cm}
+\pstChauffageBallon[glassType=erlen,tubeRecourbe,recuperationGaz,substance=\pstTournureCuivre]\hspace{3cm}
+\pstChauffageBallon[glassType=becher,aspectLiquide1=Champagne,substance=\pstBullesChampagne]\hspace{.25cm}
+\pstChauffageBallon[glassType=erlen,substance=\pstBullesChampagne,tubeDroit,pince]
+
+\end{document}

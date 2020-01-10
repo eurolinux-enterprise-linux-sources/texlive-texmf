@@ -1,0 +1,343 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Contents: TeX and LaTeX and AMS symbols for Maths
+% $Id: lssym.tex,v 1.1.1.1 2002/02/26 10:04:21 oetiker Exp $
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Список математических символов}
+\label{symbols}
+
+В следующих таблицах вы найдете все символы, известные обычно в
+\emph{математическом режиме}.
+
+
+%
+% Conditional Text in case the AMS Fonts are installed
+%
+Для доступа к символам, перечисленным в
+таблицах~\ref{AMSD}--\ref{AMSNBR}\footnote{Эти таблицы были получены
+  из \texttt{symbols.tex} (автор David~Carlisle) и позже сильно
+  изменены по совету Josef~Tkadlec} в преамбуле документа должен быть
+загружен пакет \pai{amssymb}, и в системе должны быть установлены
+математические шрифты AMS. Если пакеты и шрифты AMS в вашей системе не
+установлены, посмотрите на
+\texttt{\CTAN|macros/latex/required/amslatex|}. Еще более
+полный пеpечень символов можно найти по адpесу
+\texttt{\CTANref|info/symbols/comprehensive|}.
+
+\begin{table}[!h]
+\caption{Акценты математического режима}  \label{mathacc}
+\begin{symbols}{*4{cl}}
+\W{\hat}{a}     & \W{\check}{a} & \W{\tilde}{a} & \W{\acute}{a} \\
+\W{\grave}{a} & \W{\dot}{a} & \W{\ddot}{a}    & \W{\breve}{a} \\
+\W{\bar}{a} &\W{\vec}{a} &\W{\widehat}{A}&\W{\widetilde}{A}\\
+\end{symbols}
+\end{table}
+
+\begin{table}[!h]
+\caption{Строчные греческие буквы}
+\begin{symbols}{*4{cl}}
+ \X{\alpha}     & \X{\theta}     & \X{o}          & \X{\upsilon}  \\
+ \X{\beta}      & \X{\vartheta}  & \X{\pi}        & \X{\phi}      \\
+ \X{\gamma}     & \X{\iota}      & \X{\varpi}     & \X{\varphi}   \\
+ \X{\delta}     & \X{\kappa}     & \X{\rho}       & \X{\chi}      \\
+ \X{\epsilon}   & \X{\lambda}    & \X{\varrho}    & \X{\psi}      \\
+ \X{\varepsilon}& \X{\mu}        & \X{\sigma}     & \X{\omega}    \\
+ \X{\zeta}      & \X{\nu}        & \X{\varsigma}  & &             \\
+ \X{\eta}       & \X{\xi}        & \X{\tau}
+\end{symbols}
+\end{table}
+
+\begin{table}[!h]
+\caption{Прописные греческие буквы}
+\begin{symbols}{*4{cl}}
+ \X{\Gamma}     & \X{\Lambda}    & \X{\Sigma}     & \X{\Psi}      \\
+ \X{\Delta}     & \X{\Xi}        & \X{\Upsilon}   & \X{\Omega}    \\
+ \X{\Theta}     & \X{\Pi}        & \X{\Phi}
+\end{symbols}
+\end{table}
+\clearpage
+
+\begin{table}[!tbp]
+\caption{Бинарные отношения}
+\bigskip
+Вы можете получить соответствующие отрицания добавлением перед
+следующими символами команды \ci{not}.
+\begin{symbols}{*3{cl}}
+ \X{<}           & \X{>}           & \X{=}          \\
+ \X{\leq}или  \verb|\le|   & \X{\geq}или \verb|\ge|   & \X{\equiv}     \\
+ \X{\ll}         & \X{\gg}         & \X{\doteq}     \\
+ \X{\prec}       & \X{\succ}       & \X{\sim}       \\
+ \X{\preceq}     & \X{\succeq}     & \X{\simeq}     \\
+ \X{\subset}     & \X{\supset}     & \X{\approx}    \\
+ \X{\subseteq}   & \X{\supseteq}   & \X{\cong}      \\
+ \X{\sqsubset}$^1$ & \X{\sqsupset}$^1$ & \X{\Join}$^1$    \\
+ \X{\sqsubseteq} & \X{\sqsupseteq} & \X{\bowtie}    \\
+ \X{\in}         & \X{\ni}, \verb|\owns|  & \X{\propto}    \\
+ \X{\vdash}      & \X{\dashv}      & \X{\models}    \\
+ \X{\mid}        & \X{\parallel}   & \X{\perp}      \\
+ \X{\smile}      & \X{\frown}      & \X{\asymp}     \\
+ \X{:}           & \X{\notin}      & \X{\neq}или \verb|\ne|
+\end{symbols}
+\centerline{\footnotesize $^1$Для доступа к этому символу пользуйтесь
+  пакетом \textsf{latexsym}.}
+\end{table}
+
+\begin{table}[!tbp]
+\caption{Бинарные операторы}
+\begin{symbols}{*3{cl}}
+ \X{+}              & \X{-}              & &                 \\
+ \X{\pm}            & \X{\mp}            & \X{\triangleleft} \\
+ \X{\cdot}          & \X{\div}           & \X{\triangleright}\\
+ \X{\times}         & \X{\setminus}      & \X{\star}         \\
+ \X{\cup}           & \X{\cap}           & \X{\ast}          \\
+ \X{\sqcup}         & \X{\sqcap}         & \X{\circ}         \\
+ \X{\vee}, \verb|\lor|     & \X{\wedge}, \verb|\land|  & \X{\bullet}       \\
+ \X{\oplus}         & \X{\ominus}        & \X{\diamond}      \\
+ \X{\odot}          & \X{\oslash}        & \X{\uplus}        \\
+ \X{\otimes}        & \X{\bigcirc}       & \X{\amalg}        \\
+ \X{\bigtriangleup} &\X{\bigtriangledown}& \X{\dagger}       \\
+ \X{\lhd}$^1$         & \X{\rhd}$^1$         & \X{\ddagger}      \\
+ \X{\unlhd}$^1$       & \X{\unrhd}$^1$       & \X{\wr}
+\end{symbols}
+
+\end{table}
+
+\begin{table}[!tbp]
+\caption{Большие операторы}
+\begin{symbols}{*4{cl}}
+ \X{\sum}      & \X{\bigcup}   & \X{\bigvee}   & \X{\bigoplus}\\
+ \X{\prod}     & \X{\bigcap}   & \X{\bigwedge} &\X{\bigotimes}\\
+ \X{\coprod}   & \X{\bigsqcup} & &             & \X{\bigodot} \\
+ \X{\int}      & \X{\oint}     & &             & \X{\biguplus}
+\end{symbols}
+
+\end{table}
+
+\begin{table}[!tbp]
+\caption{Стрелки}
+\begin{symbols}{*3{cl}}
+ \X{\leftarrow}или \verb|\gets|& \X{\longleftarrow}     & \X{\uparrow}          \\
+ \X{\rightarrow}или \verb|\to|& \X{\longrightarrow}    & \X{\downarrow}        \\
+ \X{\leftrightarrow}    & \X{\longleftrightarrow}& \X{\updownarrow}      \\
+ \X{\Leftarrow}         & \X{\Longleftarrow}     & \X{\Uparrow}          \\
+ \X{\Rightarrow}        & \X{\Longrightarrow}    & \X{\Downarrow}        \\
+ \X{\Leftrightarrow}    & \X{\Longleftrightarrow}& \X{\Updownarrow}      \\
+ \X{\mapsto}            & \X{\longmapsto}        & \X{\nearrow}          \\
+ \X{\hookleftarrow}     & \X{\hookrightarrow}    & \X{\searrow}          \\
+ \X{\leftharpoonup}     & \X{\rightharpoonup}    & \X{\swarrow}          \\
+ \X{\leftharpoondown}   & \X{\rightharpoondown}  & \X{\nwarrow}          \\
+ \X{\rightleftharpoons} & \X{\iff}(б\'ольший пробел)& \X{\leadsto}$^1$
+
+\end{symbols}
+\centerline{\footnotesize $^1$Для доступа к этому символу пользуйтесь
+  пакетом \textsf{latexsym}.}
+\end{table}
+
+\begin{table}[!tbp]
+\caption{Ограничители}\label{tab:delimiters}
+\begin{symbols}{*4{cl}}
+ \X{(}            & \X{)}            & \X{\uparrow} & \X{\Uparrow}    \\
+ \X{[}или \verb|\lbrack|   & \X{]}или \verb|\rbrack|  & \X{\downarrow}   & \X{\Downarrow}  \\
+ \X{\{}или \verb|\lbrace|  & \X{\}}или \verb|\rbrace|  & \X{\updownarrow} & \X{\Updownarrow}\\
+ \X{\langle}      & \X{\rangle}  & \X{|}или \verb|\vert| &\X{\|}или \verb|\Vert|\\
+ \X{\lfloor}      & \X{\rfloor}      & \X{\lceil}       & \X{\rceil}      \\
+ \X{/}            & \X{\backslash}   & &% (dual. empty)
+
+\end{symbols}
+\end{table}
+
+\begin{table}[!tbp]
+\caption{Большие ограничители}
+\begin{symbols}{*4{cl}}
+ \Y{\lgroup}      & \Y{\rgroup}      & \Y{\lmoustache}  & \Y{\rmoustache} \\
+ \Y{\arrowvert}   & \Y{\Arrowvert}   & \Y{\bracevert}
+\end{symbols}
+\end{table}
+
+
+\begin{table}[!tbp]
+\caption{Прочие символы}
+\begin{symbols}{*4{cl}}
+ \X{\dots}       & \X{\cdots}      & \X{\vdots}      & \X{\ddots}     \\
+ \X{\hbar}       & \X{\imath}      & \X{\jmath}      & \X{\ell}       \\
+ \X{\Re}         & \X{\Im}         & \X{\aleph}      & \X{\wp}        \\
+ \X{\forall}     & \X{\exists}     & \X{\mho}$^1$      & \X{\partial}   \\
+ \X{'}           & \X{\prime}      & \X{\emptyset}   & \X{\infty}     \\
+ \X{\nabla}      & \X{\triangle}   & \X{\Box}$^1$     & \X{\Diamond}$^1$ \\
+ \X{\bot}        & \X{\top}        & \X{\angle}      & \X{\surd}      \\
+\X{\diamondsuit} & \X{\heartsuit}  & \X{\clubsuit}   & \X{\spadesuit} \\
+ \X{\neg}или \verb|\lnot| & \X{\flat}       & \X{\natural}    & \X{\sharp}
+
+\end{symbols}
+\centerline{\footnotesize $^1$Для доступа к этому символу пользуйтесь
+  пакетом \textsf{latexsym}.}
+\end{table}
+
+\begin{table}[!tbp]
+\caption{Не-математические символы}
+\bigskip
+Эти символы можно использовать и в текстовом режиме.
+\begin{symbols}{*4{cl}}
+\SC{\dag}  & \SC{\S} & \SC{\copyright} & \SC{\textregistered} \\
+\SC{\ddag} & \SC{\P} & \SC{\pounds}    & \SC{\%}              \\
+\end{symbols}
+\end{table}
+
+%
+%
+% If the AMS Stuff is not available, we drop out right here :-)
+%
+
+\begin{table}[!tbp]
+\caption{Ограничители AMS}\label{AMSD}
+\bigskip
+\begin{symbols}{*4{cl}}
+\X{\ulcorner}&\X{\urcorner}&\X{\llcorner}&\X{\lrcorner}\\
+\X{\lvert}&\X{\rvert}&\X{\lVert}&\X{\rVert}
+\end{symbols}
+\end{table}
+
+\begin{table}[!tbp]
+\caption{Буквы греческого и иврита AMS}
+\begin{symbols}{*5{cl}}
+\X{\digamma}     &\X{\varkappa} & \X{\beth} &\X{\gimel} & \X{\daleth}   
+\end{symbols}
+\end{table}
+
+\begin{table}[!tbp]
+\caption{Бинарные отношения AMS}
+\begin{symbols}{*3{cl}}
+ \X{\lessdot}           & \X{\gtrdot}            & \X{\doteqdot}или \verb|\Doteq| \\
+ \X{\leqslant}          & \X{\geqslant}          & \X{\risingdotseq}     \\
+ \X{\eqslantless}       & \X{\eqslantgtr}        & \X{\fallingdotseq}    \\
+ \X{\leqq}              & \X{\geqq}              & \X{\eqcirc}           \\
+ \X{\lll}или \verb|\llless|      & \X{\ggg}или \verb|\gggtr| & \X{\circeq}  \\
+ \X{\lesssim}           & \X{\gtrsim}            & \X{\triangleq}        \\
+ \X{\lessapprox}        & \X{\gtrapprox}         & \X{\bumpeq}           \\
+ \X{\lessgtr}           & \X{\gtrless}           & \X{\Bumpeq}           \\
+ \X{\lesseqgtr}         & \X{\gtreqless}         & \X{\thicksim}         \\
+ \X{\lesseqqgtr}        & \X{\gtreqqless}        & \X{\thickapprox}      \\
+ \X{\preccurlyeq}       & \X{\succcurlyeq}       & \X{\approxeq}         \\
+ \X{\curlyeqprec}       & \X{\curlyeqsucc}       & \X{\backsim}          \\
+ \X{\precsim}           & \X{\succsim}           & \X{\backsimeq}        \\
+ \X{\precapprox}        & \X{\succapprox}        & \X{\vDash}            \\
+ \X{\subseteqq}         & \X{\supseteqq}         & \X{\Vdash}            \\
+ \X{\Subset}            & \X{\Supset}            & \X{\Vvdash}           \\
+ \X{\sqsubset}          & \X{\sqsupset}          & \X{\backepsilon}      \\
+ \X{\therefore}         & \X{\because}           & \X{\varpropto}        \\
+ \X{\shortmid}          & \X{\shortparallel}     & \X{\between}          \\
+ \X{\smallsmile}        & \X{\smallfrown}        & \X{\pitchfork}        \\
+ \X{\vartriangleleft}   & \X{\vartriangleright}  & \X{\blacktriangleleft}\\
+ \X{\trianglelefteq}    & \X{\trianglerighteq}   &\X{\blacktriangleright}
+\end{symbols}
+\end{table}
+
+\begin{table}[!tbp]
+\caption{Стрелки AMS}
+\begin{symbols}{*3{cl}}
+ \X{\dashleftarrow}      & \X{\dashrightarrow}     & \X{\multimap}          \\
+ \X{\leftleftarrows}     & \X{\rightrightarrows}   & \X{\upuparrows}        \\
+ \X{\leftrightarrows}    & \X{\rightleftarrows}    & \X{\downdownarrows}    \\
+ \X{\Lleftarrow}         & \X{\Rrightarrow}        & \X{\upharpoonleft}     \\
+ \X{\twoheadleftarrow}   & \X{\twoheadrightarrow}  & \X{\upharpoonright}    \\
+ \X{\leftarrowtail}      & \X{\rightarrowtail}     & \X{\downharpoonleft}   \\
+ \X{\leftrightharpoons}  & \X{\rightleftharpoons}  & \X{\downharpoonright}  \\
+ \X{\Lsh}                & \X{\Rsh}                & \X{\rightsquigarrow}   \\
+ \X{\looparrowleft}      & \X{\looparrowright}     &\X{\leftrightsquigarrow}\\
+ \X{\curvearrowleft}     & \X{\curvearrowright}    & &                      \\
+ \X{\circlearrowleft}    & \X{\circlearrowright}   & &
+\end{symbols}
+\end{table}
+
+\begin{table}[!tbp]
+\caption{Отрицательные бинарные отношения и стрелки AMS}\label{AMSNBR}
+\begin{symbols}{*3{cl}}
+ \X{\nless}           & \X{\ngtr}            & \X{\varsubsetneqq}  \\
+ \X{\lneq}            & \X{\gneq}            & \X{\varsupsetneqq}  \\
+ \X{\nleq}            & \X{\ngeq}            & \X{\nsubseteqq}     \\
+ \X{\nleqslant}       & \X{\ngeqslant}       & \X{\nsupseteqq}     \\
+ \X{\lneqq}           & \X{\gneqq}           & \X{\nmid}           \\
+ \X{\lvertneqq}       & \X{\gvertneqq}       & \X{\nparallel}      \\
+ \X{\nleqq}           & \X{\ngeqq}           & \X{\nshortmid}      \\
+ \X{\lnsim}           & \X{\gnsim}           & \X{\nshortparallel} \\
+ \X{\lnapprox}        & \X{\gnapprox}        & \X{\nsim}           \\
+ \X{\nprec}           & \X{\nsucc}           & \X{\ncong}          \\
+ \X{\npreceq}         & \X{\nsucceq}         & \X{\nvdash}         \\
+ \X{\precneqq}        & \X{\succneqq}        & \X{\nvDash}         \\
+ \X{\precnsim}        & \X{\succnsim}        & \X{\nVdash}         \\
+ \X{\precnapprox}     & \X{\succnapprox}     & \X{\nVDash}         \\
+ \X{\subsetneq}       & \X{\supsetneq}       & \X{\ntriangleleft}  \\
+ \X{\varsubsetneq}    & \X{\varsupsetneq}    & \X{\ntriangleright} \\
+ \X{\nsubseteq}       & \X{\nsupseteq}       & \X{\ntrianglelefteq}\\
+ \X{\subsetneqq}      & \X{\supsetneqq}      &\X{\ntrianglerighteq}\\[0.5ex]
+ \X{\nleftarrow}      & \X{\nrightarrow}     & \X{\nleftrightarrow}\\
+ \X{\nLeftarrow}      & \X{\nRightarrow}     & \X{\nLeftrightarrow}
+
+\end{symbols}
+\end{table}
+
+\begin{table}[!tbp]
+\caption{Бинарные операторы AMS}
+\begin{symbols}{*3{cl}}
+ \X{\dotplus}        & \X{\centerdot}      & \X{\intercal}      \\
+ \X{\ltimes}         & \X{\rtimes}         & \X{\divideontimes} \\
+ \X{\Cup}или \verb|\doublecup|& \X{\Cap}или \verb|\doublecap|& \X{\smallsetminus} \\
+ \X{\veebar}         & \X{\barwedge}       & \X{\doublebarwedge}\\
+ \X{\boxplus}        & \X{\boxminus}       & \X{\circleddash}   \\
+ \X{\boxtimes}       & \X{\boxdot}         & \X{\circledcirc}   \\
+ \X{\leftthreetimes} & \X{\rightthreetimes}& \X{\circledast}    \\
+ \X{\curlyvee}       & \X{\curlywedge}
+\end{symbols}
+\end{table}
+
+\begin{table}[!tbp]
+\caption{Прочие символы AMS}
+\begin{symbols}{*3{cl}}
+ \X{\hbar}             & \X{\hslash}           & \X{\Bbbk}            \\
+ \X{\square}           & \X{\blacksquare}      & \X{\circledS}        \\
+ \X{\vartriangle}      & \X{\blacktriangle}    & \X{\complement}      \\
+ \X{\triangledown}     &\X{\blacktriangledown} & \X{\Game}            \\
+ \X{\lozenge}          & \X{\blacklozenge}     & \X{\bigstar}         \\
+ \X{\angle}            & \X{\measuredangle}    & \X{\sphericalangle}  \\
+ \X{\diagup}           & \X{\diagdown}         & \X{\backprime}       \\
+ \X{\nexists}          & \X{\Finv}             & \X{\varnothing}      \\
+ \X{\eth}              & \X{\mho}
+\end{symbols}
+\end{table}
+
+
+
+\begin{table}[!tbp]
+\caption{Математические алфавиты}
+\begin{symbols}{@{}*3l@{}}
+Пример & Команда & Требуемый пакет\\
+\hline
+\rule{0pt}{1.05em}$\mathrm{ABCdef}$
+        & \verb|\mathrm{ABCdef}|
+        &       \\
+$\mathit{ABCdef}$
+        & \verb|\mathit{ABCdef}|
+        &       \\
+$\mathnormal{ABCdef}$
+        & \verb|\mathnormal{ABCdef}|
+        &       \\
+$\mathcal{ABC}$
+        & \verb|\mathcal{ABC}|
+        &\pai{euscript} с опцией: \textsf{mathcal}\\
+$\mathscr{ABC}$
+        & \verb|\mathscr{ABC}|
+        &\pai{mathrsfs}\\
+$\mathfrak{ABCdef}$
+        & \verb|\mathfrak{ABCdef}|
+        &\pai{eufrak}                \\
+$\mathbb{ABC}$
+        & \verb|\mathbb{ABC}|
+        &\pai{amsfonts} или \textsf{amssymb}        \\
+\end{symbols}
+\end{table}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "lshort2e"
+%%% End:

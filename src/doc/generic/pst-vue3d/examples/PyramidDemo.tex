@@ -1,0 +1,17 @@
+\documentclass{article}
+\usepackage{pst-vue3d}
+\begin{document}
+    \psset{THETA=30,PHI=30,Dobs=400,Decran=30,fillstyle=solid}
+    \begin{pspicture}(-2.5,-2)(2.5,12)
+    \PyramideThreeD[fracHeight=0.5,A=10](0,0,0){150}%
+    \psset{A=5}
+    \PyramideThreeD(0,0,75){5}%
+    \end{pspicture}%
+	%
+    \begin{pspicture}(-2.5,-2)(2.5,12)
+    \CubeThreeD[A=15,B=15,C=15](0,0,15)%
+    \PyramideThreeD[fracHeight=0.5,A=10](0,0,30){150}%
+    \psset{A=5}
+    \PyramideThreeD(0,0,105){5}%
+    \end{pspicture}%
+\end{document}

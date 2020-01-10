@@ -1,0 +1,32 @@
+% SEMAPHORE ALPHABET FONT       			"README"
+% Font znaku semaforove abecedy
+% Copyright (C) 1998 Vit ZYKA, zyka@cmp.felk.cvut.cz
+
+% Free software under the terms of the GNU General Public License,
+% see semafor.mf file.
+
+Semaphore font sources for METAFONT:
+Driver file
+  semaf.mf	main file
+
+Parametric files - BASE: pillar, SIZE: 10pt
+  smfr10.mf	uppercase
+  smfbf10.mf	bold face
+  smftt10.mf	nonproportional
+  smfsl10.mf	slanted shape
+
+Parametric files - BASE: empty, SIZE: 10pt
+  smfer10.mf, smfebf10.mf, smfett10.mf, smfesl10.mf
+
+Parametric files - BASE: person, SIZE: 10pt
+  smfpr10.mf, smfpbf10.mf, smfptt10.mf, smfpsl10.mf
+
+Semaphore sources for TeX:
+  semafor.tex	  plain TeX font definitions
+  semaf.fd	  LaTeX 2e font definitions, OT1 encoding
+  il2semaf.fd     LaTeX 2e font definitions, IL2 encoding
+
+Example file (semaphore alphabet table, font variant table,
+              font table, and text example)
+  example.tex
+  example.pdf

@@ -1,0 +1,60 @@
+;; Essential add-on for BBDB
+(defun bbdb-create-external ()
+  "Prompt for and create a record.  Hacked from bbdb-read-new-record."
+  (interactive)
+  (let ((name (bbdb-read-string "Name: "))
+(company (bbdb-read-string "Company: "))
+(net (bbdb-split (bbdb-read-string "Network Address: ") ","))
+(addrs
+ (let (L L-tail str addr)
+   (while
+       (not
+(string=
+ ""
+ (setq str
+       (bbdb-read-string
+"Address Description [RET when no more addrs]: "))))
+     (setq addr (make-vector bbdb-address-length nil))
+     (bbdb-record-edit-address addr str)
+     (if L
+ (progn (setcdr L-tail (cons addr nil))
+(setq L-tail (cdr L-tail)))
+       (setq L (cons addr nil)
+     L-tail L)))
+   L))
+(phones
+ (let (L L-tail str)
+   (while
+       (not
+(string=
+ ""
+ (setq str
+       (bbdb-read-string
+"Phone Location [RET when no more phones]: "))))
+     (let* ((phonelist
+     (bbdb-error-retry
+      (bbdb-parse-phone-number
+       (read-string
+"Phone: "
+(and
+ bbdb-default-area-code
+ (format "(%03d) " bbdb-default-area-code))))))
+    (phone (apply 'vector str
+  (if (= 3 (length phonelist))
+      (nconc phonelist '(0))
+    phonelist))))
+       (if L
+   (progn (setcdr L-tail (cons phone nil))
+  (setq L-tail (cdr L-tail)))
+ (setq L (cons phone nil)
+       L-tail L))))
+   L))
+(notes (bbdb-read-string "Additional Comments: " "[M][F]")))
+    (if (string= company "") (setq company nil))
+    (if (string= name "") (setq name nil))
+    (if (string= notes "") (setq notes nil))
+    (bbdb-display-records
+     (list
+      (bbdb-create-internal name company net addrs phones notes)))))
+
+(global-set-key [f12] 'bbdb-create-external)

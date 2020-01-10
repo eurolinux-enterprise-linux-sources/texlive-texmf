@@ -1,0 +1,67 @@
+\documentclass[12pt]{article}% Philippe Esperet
+\usepackage[noxcolor]{pstricks} % To use the "color" package with PSTricks
+\usepackage{multido}
+\usepackage{pst-plot}
+
+\definecolor{MyLightGray}{gray}{.93}
+\newcommand{\curveA}{\psbezier(1.,10.)(1.333,6.667)(1.333,6.667)(2.,5.)}
+\newcommand{\curveB}{\psbezier(2.,5.)(2.4,4.)(2.4,4.)(3.,3.333)}
+\newcommand{\curveC}{\psbezier(3.,3.333)(3.429,2.857)(3.429,2.857)(4.,2.5)}
+\newcommand{\curveD}{\psbezier(4.,2.5)(4.444,2.222)(4.444,2.222)(5.,2.)}
+\newcommand{\curveE}{\psbezier(5.,2.)(5.455,1.818)(5.455,1.818)(6.,1.667)}
+\newcommand{\curveF}{\psbezier(6.,1.667)(6.462,1.538)(6.462,1.538)(7.,1.429)}
+\newcommand{\curveG}{\psbezier(7.,1.429)(7.467,1.333)(7.467,1.333)(8.,1.25)}
+\newcommand{\curveH}{\psbezier(8.,1.25)(8.471,1.176)(8.471,1.176)(9.,1.111)}
+\newcommand{\curveI}{\psbezier(9.,1.111)(9.474,1.053)(9.474,1.053)(10.,1.)}
+
+\def\farbe#1{\ifodd#1blue\else red\fi}
+\def\draw(#1,#2)(#3,#4)#5{%
+  \def\rel{%
+    \begin{pspicture}(#1,#4)(#3,#2) % (x1,y4)(x4,y1)
+      \pscustom[linecolor=yellow,fillstyle=solid,
+                fillcolor={\expandafter\farbe{#5}}]{%
+        \ifcase#5\or\curveA\or\curveB\or\curveC\or\curveD%
+                 \or\curveE\or\curveF\or\curveG\fi
+        \psline(#1,#4)(#1,#2)}      % (x1,y4)(x1,y1)
+    \end{pspicture}}
+    \rput[tl]{0}(#1,#2){\rel}       % Point is (x1,y1)
+    \rput[tl]{0}(0,#2){\rel}}       % Point is (0,y1)
+
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\psset{unit=2.7em}
+\begin{center}
+\begin{pspicture}(-.5,-.5)(10.5,10.5)
+  \SpecialCoor
+  % Gray rectangle on left
+  \psframe*[linecolor=lightgray](0,0)(1,10)
+  % Filling under the curve in more light gray
+  \pscustom[linestyle=none,fillstyle=solid,fillcolor=MyLightGray]{%
+    \psplot{1}{10}{10 x div}
+    \psline(10,0)(1,0)(1,10)}
+  % Union of curves, in bold (in a group to have a local line width)
+  {\psset{linewidth=.04}
+   \curveA\curveB\curveC\curveD\curveE\curveF\curveG\curveH\curveI}
+  % Drawing of the 14 small surfaces
+  \draw(1,10)(2.,5.)1        % (1.,10.)(1.333,6.667)(1.333,6.667)(2.,5.)}
+  \draw(2.,5.)(3.,3.333)2    % (2.,5.)(2.4,4.)(2.4,4.)(3.,3.333)
+  \draw(3.,3.333)(4.,2.5)3   % (3.,3.333)(3.429,2.857)(3.429,2.857)(4.,2.5) 
+  \draw(4.,2.5)(5.,2.)4      % (4.,2.5)(4.444,2.222)(4.444,2.222)(5.,2.) 
+  \draw(5.,2.)(6.,1.667)5    % (5.,2.)(5.455,1.818)(5.455,1.818)(6.,1.667)
+  \draw(6.,1.667)(7.,1.429)6 % (6.,1.667)(6.462,1.538)(6.462,1.538)(7.,1.429)
+  \draw(7.,1.429)(8.,1.25)7  % (7.,1.429)(7.467,1.333)(7.467,1.333)(8.,1.25)
+  % Vertical lines and labels for n=1 and 3
+  \multido{\i=1+1}{8}{%
+    \psline[linestyle=dashed](!\i\space 0)(!\i\space 10 \i\space 1 add div)%
+    \psline[linestyle=dotted]%
+      (!1 10 \i\space div)(!\i\space  1 sub  10 \i\space div)}
+  \uput[d]{0}(1,0){$n=1$}
+  \uput[d]{0}(3,0){$n=3$}
+  \psline{<->}(0,10.5)(0,0)(10.5,0) % Axes
+\end{pspicture}
+\end{center}
+
+\end{document}

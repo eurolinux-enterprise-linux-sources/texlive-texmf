@@ -1,0 +1,47 @@
+\documentclass{article}
+\input tmp.inputs
+\pagestyle{empty}
+\usepackage{amssymb,amsbsy}
+\begin{document}
+\definecolor{lightblue}{rgb}{0,0,.5}
+\definecolor{Navy}{rgb}{0,0,0.5}
+\definecolor{LemonChiffon}{rgb}{1,0.98,0.8}
+\definecolor{ForestGreen}{rgb}{0.13,0.55,0.13}
+\newcommand{\MyNode}[2]{%
+  \Tr{\psshadowbox[fillstyle=solid,fillcolor=#1]{\tiny #2}}}
+\newcommand{\NoeudXt}[1]{\MyNode{ForestGreen}{#1}}
+\newcommand{\NoeudMotif}[1]{\MyNode{Navy}{\textcolor{white}{#1}}}
+\psset{armB=5mm,angleA=90,angleB=-90,levelsep=2cm,treesep=5mm}
+\renewcommand{\psedge}[2]{\ncangle{#2}{#1}}
+\TeXtoEPS
+\begin{pspicture}(-8cm,-9.5cm)(8cm,1cm)
+\rput(0,0){\LARGE\textcolor{red}{Set of Motif widgets classes}}
+\rput(0,-4.8){%
+  \psframebox[fillstyle=solid,fillcolor=LemonChiffon,linearc=5mm,
+             cornersize=absolute]
+    {\pstree{\NoeudXt{Core}}
+    {\pstree{\NoeudMotif{Primitive}}
+            {\pstree{\NoeudMotif{Label}}
+                    {\TC*}
+             \NoeudMotif{Scrollbar}
+             \NoeudMotif{List}
+             \NoeudMotif{Text}
+             \NoeudMotif{ArrowButton}}
+     \pstree{\NoeudXt{Composite}}
+            {\pstree{\NoeudXt{Constraint}}
+                    {\pstree{\NoeudMotif{Manager}}
+                            {\TC*}}}
+     \pstree{\NoeudXt{Shell}}
+            {\pstree{\NoeudXt{OverrideShell}}
+                    {\NoeudMotif{MenuShell}}
+             \pstree{\NoeudXt{WMShell}}
+                    {\pstree{\NoeudXt{VendorShell}}
+                            {\TC*}}}}}}
+\rput(-2,-10){%
+  \psshadowbox[fillstyle=solid,fillcolor=ForestGreen]{Core} Xt Class}
+\rput(2,-10){%
+  \psshadowbox[fillstyle=solid,fillcolor=Navy]{%
+     \textcolor{white}{List}} Motif Class}
+\end{pspicture}
+\endTeXtoEPS
+\end{document}

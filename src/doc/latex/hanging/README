@@ -1,0 +1,31 @@
+    The hanging package facilitates the typesetting of hanging paragraphs.
+It also enables typesetting with hanging punctuation; I don't necessarily
+recommend this.
+
+Changes in version 1.2
+o Option for less aggressive hanging punctuation
+
+Changes in version 1.1
+o Should now work with the ltugboat class
+o Takes options to exclude punctuations characters from being hung
+
+
+    The distribution consists of the following files:
+README (this file)
+hanging.ins
+hanging.dtx
+
+    The distribution is provided under the terms of the LaTeX
+Project Public License (LPPL).
+
+    To install the package:
+o run: latex hanging.ins (which will generate hanging.sty)
+o run: latex hanging.dtx
+o If you want an index then run: makeindex -s gind.ist hanging
+o run: latex hanging.dtx
+o Print hanging.dvi for a hardcopy of the package manual 
+o Move hanging.sty to a location where LaTeX will find it.
+
+2001/03/15
+Peter Wilson
+peter.r.wilson@boeing.com

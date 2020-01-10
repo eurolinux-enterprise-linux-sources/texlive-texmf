@@ -1,0 +1,64 @@
+                        PSTricks current file versions
+                              (June 26, 2004)
+                        ------------------------------
+
+
+latex directory (listed are only the special style files,
+which did more than loading the tex file):
+-------------
+
+-----------------------------------------------
+|     File         |   Version   |    Date    |
+-----------------------------------------------
+| pstricks.sty     | 0.21        | 2004/05/12 |
+| pst-eps.sty      | 0.1         | 2005/05/21 |
+-----------------------------------------------
+
+
+generic directory:
+-----------------
+
+-------------------------------------------
+|     File     |   Version   |    Date    |
+-------------------------------------------
+| dvipsone.con |          97 | 1994/03/29 |
+| pst-3d.tex   |          97 | 1997/03/25 |
+| pst-char.tex | 97 patch  3 | 1999/03/11 |
+| pst-coil.tex | 97 patch  2 | 1998/03/19 |
+| pst-eps.tex  | 97 patch  2 | 2005/05/21 |
+| pst-fill.tex | 97 patch  3 | 2004/06/23 |
+| pst-grad.tex |        1.04 | 2004/06/23 |
+| pst-node.tex | 97 patch 11 | 2000/11/09 |
+| pst-plot.tex | 97 patch  2 | 1999/12/12 |
+| pst-text.tex |          97 | 1997/03/25 |
+| pst-tree.tex | 97 patch  6 | 2000/04/26 |
+| pstricks.con | 97 patch  2 | 1997/04/28 |
+| pstricks.tex |        1.07 | 2005/05/20 |
+| textures.con |          97 | 1997/03/01 |
+| vtex.con     | 97 patch  4 | 1999/11/19 |
+-------------------------------------------
+
+
+dvips directory:
+---------------
+
+-------------------------------------------
+|     File     |   Version   |    Date    |
+-------------------------------------------
+| pst-coil.pro |  97 patch 1 | 1998/06/02 |
+| pst-dots.pro |  97 patch 1 | 1999/12/16 |
+| pst-grad.pro |        1.04 | 2004/06/23 |
+| pst-node.pro |  97 patch 1 | 1997/05/09 |
+| pst-text.pro |  97 patch 1 | 2000/05/02 |
+| pstricks.pro |  97 patch 7 | 2005/05/20 |
+-------------------------------------------
+
+doc directory:
+-------------
+
+-----------------------------------------------
+|     File         |   Version   |    Date    |
+-----------------------------------------------
+| pstricks.bug     | 97 patch  5 | 2000/03/14 |
+| pstnews97-15.tex | 2004        | 2004/05/12 |
+-----------------------------------------------

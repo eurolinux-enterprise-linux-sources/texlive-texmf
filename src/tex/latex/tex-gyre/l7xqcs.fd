@@ -1,0 +1,24 @@
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Schola.txt
+% and README-TeX-Gyre-Schola.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+\ProvidesFile{l7xqcs.fd}[2006/11/01 v1.0 font definition file for L7x/qcs]
+
+\DeclareFontFamily{L7x}{qcs}{}
+\DeclareFontShape{L7x}{qcs}{b}{sc}{<->l7x-qcsb-sc}{}
+\DeclareFontShape{L7x}{qcs}{b}{n}{<->l7x-qcsb}{}
+\DeclareFontShape{L7x}{qcs}{b}{scit}{<->l7x-qcsbi-sc}{}
+\DeclareFontShape{L7x}{qcs}{b}{it}{<->l7x-qcsbi}{}
+\DeclareFontShape{L7x}{qcs}{m}{sc}{<->l7x-qcsr-sc}{}
+\DeclareFontShape{L7x}{qcs}{m}{n}{<->l7x-qcsr}{}
+\DeclareFontShape{L7x}{qcs}{m}{scit}{<->l7x-qcsri-sc}{}
+\DeclareFontShape{L7x}{qcs}{m}{it}{<->l7x-qcsri}{}
+\DeclareFontShape{L7x}{qcs}{bx}{n}{<->ssub * qcs/b/n}{}
+\DeclareFontShape{L7x}{qcs}{bx}{it}{<->ssub * qcs/b/it}{}
+\DeclareFontShape{L7x}{qcs}{bx}{sc}{<->ssub * qcs/b/sc}{}
+\DeclareFontShape{L7x}{qcs}{bx}{scit}{<->ssub * qcs/b/scit}{}
+\endinput
+% End of l7xqcs

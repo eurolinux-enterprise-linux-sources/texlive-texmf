@@ -1,0 +1,38 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{pstricks}
+\pagestyle{empty}
+
+\makeatletter
+\def\La{%
+  L\kern-.36em{%
+  \setbox0\hbox{T}%
+  \vbox to\ht0{%
+    \hbox{$\m@th$%
+      \csname S@\f@size\endcsname
+      \fontsize\sf@size\z@
+      \math@fontsfalse\selectfont A}%
+      \vss%
+    }%
+  }%
+}
+\def\AllTeX{(\La\kern-.075em)\kern-.075em\TeX}
+\makeatother
+
+\begin{document}
+\begin{titlepage}
+\psset{unit=1in,linewidth=2pt}
+\psline(-0.75,2)(-0.75,-\paperheight)
+\psline(-0.25,2)(-0.25,-\paperheight)
+\rput[lb]{90}(-0.3,-0.75\paperheight){\red\Huge\textbf{\AllTeX}}
+\rput[lb]{90}(-0.4,-0.1\paperheight){\red\Huge\textbf{Documentation}}
+
+\vspace*{3cm}
+\centerline{\Huge \textbf{P}ost\textbf{S}cript \textbf{T}ricks}
+
+\vspace{2cm}
+\centerline{\Large Herbert Voﬂ}
+\end{titlepage}
+
+\end{document}

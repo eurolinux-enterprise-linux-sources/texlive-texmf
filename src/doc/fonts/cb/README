@@ -1,0 +1,25 @@
+Currently, for each driver file of the CB font family there is a corresponding
+Type 1 font, which implies that  PS/PDF files become too large when these
+fonts are included. In addition, these fonts were created using a wrong
+encoding vector and so the ToUnicode feature of PDF viewers does not 
+work properly when dealing with PDF files created with these fonts. To
+overcome these problems, it was more than necessary to write down a proper
+encoding vector and, consequently, to regenerate the basic CB fonts (i.e., 
+only the xxxx1000 fonts were generated). Clearly, this option makes things
+a little bit difficult for people willing to write Greek since the old
+font definition files expect various font sizes and not just one. Fortunately,
+this problem disappears when the package type1ec is used. More specifically,
+the following command should appear just after the \documentclass command:
+
+\usepackage[10pt]{type1ec}
+
+Certainly, there are plans to update the various font definition files, but 
+this will happen when the new (virtual) x7 fonts will be ready. 
+
+Apostolos Syropoulos
+Xanthi, Greece
+8 July 2005
+
+PS I would like to thank Werner Lemberg for his help and assistance.
+PPS Comments and/or suggestions should be addressed to 
+apostolo@obelix.ee.duth.gr

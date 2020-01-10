@@ -1,0 +1,66 @@
+cmb10 lm-rep-cmrm lmb10 -r
+cmbx10 lm-rep-cmrm lmbx10 -r
+cmbx12 lm-rep-cmrm lmbx12 -r
+cmbx5 lm-rep-cmrm lmbx5 -r
+cmbx6 lm-rep-cmrm lmbx6 -r
+cmbx7 lm-rep-cmrm lmbx7 -r
+cmbx8 lm-rep-cmrm lmbx8 -r
+cmbx9 lm-rep-cmrm lmbx9 -r
+cmbxsl10 lm-rep-cmrm lmbxo10 -r
+cmbxti10 lm-rep-cmit lmbxi10 -r
+cmcsc10 lm-rep-cmsc lmcsc10 -r
+cmcscsl10 lm-rep-cmsc lmcsco10 -r
+cmdunh10 lm-rep-cmrm lmdunh10 -r
+cminch lm-rep-cmin lmssbx10 -r
+cmitt10 lm-rep-cmitt lmtti10 -r
+cmr10 lm-rep-cmrm lmr10 -r
+cmr12 lm-rep-cmrm lmr12 -r
+cmr17 lm-rep-cmrm lmr17 -r
+cmr5 lm-rep-cmsc lmr5 -r
+cmr6 lm-rep-cmrm lmr6 -r
+cmr7 lm-rep-cmrm lmr7 -r
+cmr8 lm-rep-cmrm lmr8 -r
+cmr9 lm-rep-cmrm lmr9 -r
+cmsl10 lm-rep-cmrm lmro10 -r
+cmsl12 lm-rep-cmrm lmro12 -r
+cmsl8 lm-rep-cmrm lmro8 -r
+cmsl9 lm-rep-cmrm lmro9 -r
+cmsltt10 lm-rep-cmtt lmtto10 -r
+cmss10 lm-rep-cmrm lmss10 -r
+cmss12 lm-rep-cmrm lmss12 -r
+cmss17 lm-rep-cmrm lmss17 -r
+cmss8 lm-rep-cmrm lmss8 -r
+cmss9 lm-rep-cmrm lmss9 -r
+cmssbx10 lm-rep-cmrm lmssbx10 -r
+cmssbxo10 lm-rep-cmrm lmssbo10 -r
+cmssdc10 lm-rep-cmrm lmssdc10 -r
+cmssi10 lm-rep-cmrm lmsso10 -r
+cmssi12 lm-rep-cmrm lmsso12 -r
+cmssi17 lm-rep-cmrm lmsso17 -r
+cmssi8 lm-rep-cmrm lmsso8 -r
+cmssi9 lm-rep-cmrm lmsso9 -r
+cmssq8 lm-rep-cmrm lmssq8 -r
+cmssqi8 lm-rep-cmrm lmssqo8 -r
+cmtcsc10 lm-rep-cmtt lmtcsc10 -r
+cmti10 lm-rep-cmit lmri10 -r
+cmti12 lm-rep-cmit lmri12 -r
+cmti7 lm-rep-cmit lmri7 -r
+cmti8 lm-rep-cmit lmri8 -r
+cmti9 lm-rep-cmit lmri9 -r
+cmtt10 lm-rep-cmtt lmtt10 -r
+cmtt12 lm-rep-cmtt lmtt12 -r
+cmtt8 lm-rep-cmtt lmtt8 -r
+cmtt9 lm-rep-cmtt lmtt9 -r
+cmu10 lm-rep-cmit lmu10 -r
+cmvtt10 lm-rep-cmrm lmvtt10 -r
+
+
+% This file belongs to the Latin Modern package. The work is released under
+% the GUST Font License. See the MANIFEST.txt and README.eng files
+% for the details. For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+% Prepared by Thomas Esser and Staszek Wawrykiewicz (May 14, 2005).
+% Touched by Bogus\l{}aw Jackowski (April 13, 2006).
+% Support for CM fonts in Type1 format:
+% map lines which replace the new cmtext-bsr.map (or parts of an old bsr.map).

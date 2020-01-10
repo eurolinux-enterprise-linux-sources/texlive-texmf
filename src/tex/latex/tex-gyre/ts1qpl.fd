@@ -1,0 +1,20 @@
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Pagella.txt
+% and README-TeX-Gyre-Pagella.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+\ProvidesFile{ts1qpl.fd}[2006/11/01 v1.0 font definition file for TS1/qpl]
+
+\DeclareFontFamily{TS1}{qpl}{}
+\DeclareFontShape{TS1}{qpl}{b}{n}{<->ts1-qplb}{}
+\DeclareFontShape{TS1}{qpl}{b}{it}{<->ts1-qplbi}{}
+\DeclareFontShape{TS1}{qpl}{m}{n}{<->ts1-qplr}{}
+\DeclareFontShape{TS1}{qpl}{m}{it}{<->ts1-qplri}{}
+\DeclareFontShape{TS1}{qpl}{bx}{n}{<->ssub * qpl/b/n}{}
+\DeclareFontShape{TS1}{qpl}{bx}{it}{<->ssub * qpl/b/it}{}
+\DeclareFontShape{TS1}{qpl}{bx}{sc}{<->ssub * qpl/b/sc}{}
+\DeclareFontShape{TS1}{qpl}{bx}{scit}{<->ssub * qpl/b/scit}{}
+\endinput
+% End of ts1qpl

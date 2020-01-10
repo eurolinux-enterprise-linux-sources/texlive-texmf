@@ -1,0 +1,38 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp108.tex ---
+%% Autor           : Herbert Voss <voss@perce.de>
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\usepackage{pst-char}
+\usepackage{pst-grad}
+\usepackage{graphicx}
+
+\parindent=0pt
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+\bgroup
+\DeclareFixedFont{\RM}{T1}{ptm}{b}{n}{3cm}
+\DeclareFixedFont{\Rm}{T1}{ptm}{m}{n}{2mm}
+%\psset{shadow=true,blur=true,shadowsize=10pt,blurradius=5pt}
+
+\psset{fillstyle=gradient,gradbegin=red,gradend=white}
+\begin{pspicture}(\linewidth,3cm)
+\resizebox{\linewidth}{!}{\pscharpath[gradangle=90]{\RM PostScript}}
+\end{pspicture}\\
+\begin{pspicture}(\linewidth,3cm)
+\resizebox{\linewidth}{!}{\pscharpath[gradangle=0]{\RM PostScript}}
+\end{pspicture}\\
+\begin{pspicture}(\linewidth,3cm)
+\resizebox{\linewidth}{!}{\pscharpath[gradmidpoint=0,gradangle=90]{\RM PostScript}}
+\end{pspicture}
+\egroup
+%\figcaption{\texttt{bsp108.tex}: Schattenspiele \ldots}
+
+\end{center}
+
+\end{document}

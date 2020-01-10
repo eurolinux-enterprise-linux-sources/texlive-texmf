@@ -1,0 +1,55 @@
+\documentclass[12pt,ngerman]{article}% bsp302.tex -- H.Voss 2005
+\listfiles
+\usepackage[latin1]{inputenc}
+\usepackage{pstricks}
+\usepackage{pst-3dplot,pstricks-add,babel}
+\parindent=0pt
+
+\def\runter{^{\phantom{x}}}
+\defineTColor{tRot}{red}
+\defineTColor{tCyanl}{cyan!60}
+\defineTColor{tCyan}{cyan}
+\defineTColor{tGelb}{yellow!60}
+\begin{document}
+
+\begin{center}
+\psset{dotscale=0.75, arrowscale=1.2, linewidth=1pt}%
+\begin{pspicture}(-5.4,-2.3)(5.5,4.1)%
+  \psset{xMin=0,yMin=0,zMin=0,Alpha=50, Beta=15,Dx=1,Dy=1,Dz=1,subticks=5,arrowsize=.2}%
+  \pstThreeDLine[arrows=->,linewidth=1.5pt,linecolor=red](0,0,0)(7,0,0)%
+  \pstThreeDLine[arrows=->,linewidth=1.5pt,linecolor=red](0,0,0)(0,5,0)%
+  \pstThreeDLine[arrows=->,linewidth=1.5pt,linecolor=red](0,0,0)(0,0,4)%
+  \pstThreeDPut(6.8,0,-0.3){\color{red}$x_{1}\runter$}%
+  \pstThreeDPut(0,4.8,-0.3){\color{red}$x_{2}\runter$}%
+  \pstThreeDPut(0.6,0,3.8){\color{red}$x_{3}\runter$}%
+  \pstThreeDPlaneGrid[planeGrid=xy,linewidth=0.1pt,linecolor=gray!70,ysubticks=5,xsubticks=7](0,0)(7,5)%
+  \pstThreeDPlaneGrid[planeGrid=xz,linewidth=0.1pt,linecolor=gray!70,ysubticks=4,xsubticks=7](0,0)(7,4)%
+  \pstThreeDPlaneGrid[planeGrid=yz,linewidth=0.1pt,linecolor=gray,ysubticks=4](0,0)(5,4)%
+  \pstThreeDNode(0,0,0){O}  \pstThreeDNode(3,0,0){P1}%
+  \pstThreeDNode(0,3,0){P2} \pstThreeDNode(0,0,3){P3}%
+  \pstThreeDNode(3,0,3){P4} \pstThreeDNode(0,3,3){P5}%
+  \pstThreeDNode(3,3,0){P6} \pstThreeDNode(3,3,3){P7}%
+  \pspolygon[style=tCyanl](O)(P1)(P4)(P3)  \pspolygon[style=tCyanl](O)(P2)(P5)(P3)%
+  \pspolygon[style=tCyanl](O)(P1)(P6)(P2)  \pspolygon[style=tCyanl](P1)(P6)(P7)(P4)%
+  \pspolygon[style=tCyanl](P4)(P7)(P5)(P3) \pspolygon[style=tCyanl](P2)(P6)(P7)(P5)%
+%
+  \pstThreeDNode(6,0,0){A} \pstThreeDNode(0,4,0){B} \pstThreeDNode(0,0,3){C}%
+  \pspolygon[style=tGelb](A)(B)(C)
+%  Schnittpunkte
+  \pstThreeDNode(3,0,1.5){S1}  \pstThreeDNode(3,2,0){S2}%
+  \pstThreeDNode(1.5,3,0){S3}  \pstThreeDNode(0,3,0.75){S4}%
+  \pcline[linecolor=blue!60](S1)(S2)%
+  \pcline[linecolor=blue!60](S2)(S3)%
+  \pcline[linecolor=blue!60](S3)(S4)%
+  \pcline[linecolor=blue!60](S4)(P3)%
+  \pcline[linecolor=blue!60](P3)(S1)%
+  \pspolygon[style=tRot](S1)(S2)(S3)(S4)(P3)%
+  \pcline(P6)(P7)%
+  \pcline(P7)(P4)%
+  \pcline(P7)(P5)%
+\end{pspicture}
+
+Würfel und Ebene $    E:\ 2x_1+3x_2+4x_3=12$
+
+\end{center}
+\end{document}

@@ -1,0 +1,23 @@
+#!/bin/bash
+JOBNAME=`basename ${*##* } .dvi`
+if [ $# -gt 1 ] ; then
+  OPTIONS=${*% *}
+else
+  OPTIONS=""
+fi
+echo -------------------------------------------------------------------
+echo : Calculating offset value
+HEIGHT=`cat ./$JOBNAME.hps | sed -e s/.*PageSize\ \\\[[0-9]*\ \\\\\([0-9]*\\\\\)\\\].*/\\\1/`
+OFFSET=795
+echo : Offset base figure is ${OFFSET}pt
+PT_OFFSET=`echo $OFFSET $HEIGHT-p|dc|sed s/-/_/`
+echo : Required offset in points is ${PT_OFFSET}pt
+CM_OFFSET=`echo 2k$PT_OFFSET 72.27/2.54*p|dc`
+echo : Setting offset to ${CM_OFFSET}cm
+echo : ...
+echo : God only knows why this process is necessary.
+echo : \$\#\&\^\"\=\$\%\@
+echo -------------------------------------------------------------------
+echo dvips $OPTIONS -P372hpplotq -O 2.1cm,${CM_OFFSET}cm -h ./$JOBNAME.hps -o $JOBNAME.ps $JOBNAME.dvi
+dvips $OPTIONS -P372hpplotq -O 2.1cm,${CM_OFFSET}cm -h ./$JOBNAME.hps -o $JOBNAME.ps $JOBNAME.dvi
+echo Wrote PostScript\(TM\) output to $JOBNAME.ps \(I think\).

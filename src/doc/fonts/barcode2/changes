@@ -1,0 +1,18 @@
+This file documents changes to the barcode package.
+Its purpose is to make updating easier.
+
+1998-04-21 fixed wlitf bug
+1998-04-10 switched partly to docstrip-archive:
+	   moved TeX and MF sources into barcodes.dtx,
+	   added barcodes.ins
+	   moved some macros to barcodes.sty (unfinished)
+	   added code 11, so changed bcfaq.tex and examples.tex
+1998-01-24 Added Code 128. Adopted codean.pl to code 128
+	   corrected isbn bug in codean.pl
+           Minor change to eandoc.tex
+           Added code 128 to bcfaq.tex, examples.tex, REAMDE
+1997-11-29 Added version date to examples.tex
+1997-11-08 Changed metrics of WLITF start and stop char
+           to remove the large whitespace.
+1997-11-08 Corrected README file.
+1997-10-09 Released first version of the barcode package.

@@ -1,0 +1,48 @@
+GreeKTeX Ver 3.0[c] Distribution
+
+[doc]
+  Documentation On installation and usage, man pages for unix.
+	grlatex.1		Man Pages for Grlatex package
+	install.tex		Installation Notes (plain TeX)
+	usage.tex		Usage Manual (plain TeX)
+
+[install]
+  Installation scripts for fonts and formats
+	makefonts		Create the KD family of fonts
+
+[latex]
+  Basic Latex files for fomrat building and document styles.
+
+	grart10.sty     grbk10.sty      grbook.sty      grkhyphen.tex
+	grart12.sty     grbk11.sty      greek.sty       grmode.sty
+	grarticle.sty   grbk12.sty      grfonts.tex     lgreek.tex
+
+[tex]
+ Files for building greektex format and greek macros.
+
+	greek.tex		Greek Format Definitions
+	greektex.tex    	Greek Macros for plain TeX
+	grkhyphen.tex		Greek Hyphenation Patterns
+
+[mfinput]
+  MF source code for font building.
+
+	kdaccent.mf     kddigits.mf     kdidigit.mf     kdpunct.mf   
+	kdbase.mf       kdgr10.mf       kdilower.mf     kdsl10.mf
+	kdbf10.mf       kdgr8.mf        kdlig.mf        kdti10.mf
+	kdbf8.mf        kdgr9.mf        kdligcom.mf     kdtt10.mf
+	kdbf9.mf        kdgreek.mf      kdlower.mf      kdupper.mf
+
+
+Important Note:
+^^^^^^^^^^^^^^^
+	If you are building the greek extension of the LaTeX format
+note that the old font coding scheme is used. The package -although it
+will create a proper Format file- will not run properly under the 
+Mittelbach convention for font loading. Hint: Check your lfonts.tex file!
+
+
+K J Dryllerakis
+Logic Programming Group
+Imperial College
+kd@uk.ac.ic.doc

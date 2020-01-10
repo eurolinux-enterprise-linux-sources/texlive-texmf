@@ -1,0 +1,24 @@
+\documentclass[]{article}
+\usepackage{pstricks}
+\usepackage{pst-blur}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\begin{center}
+\begin{pspicture}(8,8)
+  \psset{shadow=true,blur=true,shadowsize=10pt,%
+     blurradius=5pt,linestyle=none,linecolor=lightgray}
+  \psframe[shadow=false](4,4)
+  \pscircle[linestyle=solid](1.6,2.4){1.5}
+  \psframe*[shadow=false](0,4)(4,8)
+  \pscircle[linestyle=solid,fillcolor=yellow,blurbg=lightgray](1.6,6.4){1.5}
+  \psframe*[linecolor=red,shadow=false](4,0)(8,4)
+  \pscircle[linestyle=solid,fillcolor=blue,blurbg=red](5.6,2.4){1.5}
+  \psframe*[linecolor=cyan,shadow=false](4,4)(8,8)
+  \pscircle[linestyle=solid,fillcolor=magenta,blurbg=cyan](5.6,6.4){1.5}
+\end{pspicture}
+\end{center}
+
+\end{document}

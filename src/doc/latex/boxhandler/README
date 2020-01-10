@@ -1,0 +1,28 @@
+  The boxhandler package
+  ======================
+
+This package provides a powerful, yet simple, interface for managing and
+manipulating the captions of boxed objects (e.g., tables and figures).
+In addition to providing wide flexibility in the presentation style of
+the captions, this package, when used in combination with conditionally
+compiled LaTeX source codes, provides the ability to defer or preempt
+the presentation of figures, tables, and their associated lists.  
+
+In this way, one can, for example, by changing a single line of source
+code in the .tex file, change the output of LaTeX from a technical
+report with tables and figures interspersed in the text, to a
+journal-manuscript submission, with figures collected at the end of
+document, as well as lof and lot deferred or preempted.  
+
+These routines for table and figure deferral may also be employed to
+allow all your figure and table definitions to reside in a separate file
+and yet still print out in the proper location in the document.
+
+Run `boxhandler.ins' through LaTeX to produce boxhandler.sty 
+     from boxhandler.dtx.
+Run `boxhandler.dtx' through LaTeX to produce the documentation.
+
+This program can be redistributed and/or modified, with attribution.
+
+                                Steven Segletes <steven@arl.army.mil>
+				29 July 2006

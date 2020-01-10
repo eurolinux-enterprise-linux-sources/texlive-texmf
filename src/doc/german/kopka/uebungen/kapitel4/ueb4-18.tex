@@ -1,0 +1,191 @@
+\documentclass{article}
+\usepackage{a4,german}
+\pagestyle{myheadings} \markright{"Ubungen} 
+
+
+\begin{document}
+\title{"Ubungen}\author{Felix Mustermann\\Institut f"ur den Drucksatz}
+\date{Schreibershof, den \today} \maketitle
+\begin{abstract}
+Der folgende Artikeltext enth"alt eine Inhaltszusammenfassung f"ur
+die drei B"ande der \LaTeX-Buchserie von Helmut Kopka zusammen mit
+einem kurzen "Uberblick "uber deren Entwicklungsgeschichte.
+\end{abstract}
+
+\section{Entwicklungsgeschichte der \LaTeX-Buchserie}
+Der Vorl"aufer dieses Buches mit dem Titel \LaTeX\ -- Eine Einf"uhrung
+erlebte zwischen 1988 und 1993 vier Auflagen \cite{hku}, wobei die vierte
+Auflage mit den Erscheinungsjahren 1992 und 1993 eigentlich aus zwei
+eigenst"andigen Ausgaben bestand, zwischen denen es deutliche
+Textumstellungen und Erg"anzungen gab. Als Erg"anzung zur Einf"uhrung
+erschien 1990 ein zweites Buch mit dem Titel
+\LaTeX-Erweiterungsm"oglichkeiten \cite{hkv}, das zwischen 1990 und 1993 in
+drei jeweils deutlich erweiterten Auflagen herauskam. Dabei kam es zunehmend
+zu "Uberschneidungen zwischen beiden B"uchern, die "uberdies immer 
+volumin"oser wurden und in ihren Erg"anzungen "uber die Zielrichtung der
+Buchtitel hinausgingen. Dies hatte zur Folge, da"s Leser/innen der B"ucher
+auch mit Darstellungsstoff konfrontiert wurden, der dem aktuellen 
+Nutzungsbed"urfnis nicht oder noch nicht zum Zeitpunkt des Einstiegs in 
+\LaTeX\ entsprach.
+
+Auf Anregung des damaligen Pr"asidenten der deutschsprachigen
+\TeX-Anwender"-vereinigung, Joachim Lammarsch, schlug mir der Verlag vor,
+\LaTeX\ in Form einer dreib"andigen Buchserie zu pr"asentieren\footnote{Der
+Vorschlag von Joachim Lammarsch war begleitet von einer konkreten
+Stoffgliederung, die f"ur die vorliegende Buchserie weitgehend "ubernommen
+wurde}: 
+Band 1 -- \LaTeX-Einf"uhrung, Band 2 -- \LaTeX-Erg"anzungen, Band 3 --
+\LaTeX-Erweiterungen. \cite{hk}
+
+\section{Inhaltsbeschreibung von Band 1}
+Der vorliegende Band 1 \cite{hk1} geht weitgehend auf das urspr"ungliche Buch 
+\LaTeX\ -- Eine Einf"uhrung \cite{hku} zur"uck und beschr"ankt sich nun
+auf die Vorstellung des internationalen \LaTeX-Standards, lediglich erg"anzt
+um die Darstellung von german.sty zur Einbindung deutscher 
+Besonderheiten in die \LaTeX-Bearbeitung. Letztere mu"s man f"ur 
+deutschsprachige Anwender, und an diese richtet sich das Buch, als zu
+unserem Standard geh"orend betrachten.\footnote{Die Eigenschaften des
+Anpassungsfile f"ur deutschsprachige Anwendungen \texttt{german.sty} wird
+in Anhang D vorgestellt. Dieser sollte mit seinen ersten drei Abschnitten 
+bereits im Zusammenhang mit Kapitel 2 erarbeitet werden.}
+In bezug auf den internationalen \LaTeX-Standard ist die Vorstellung
+in Band 1 aber vollst"an"-dig. Sie schlie"st somit Bib\TeX\
+und MakeIndex ein, da diese \LaTeX-Erg"anzungen
+vom Programmautor Leslie Lamport selbst stammen oder unter seiner
+aktiven Mithilfe entstanden und von ihm zum Bestandteil des \LaTeX-Gesamtpakets 
+erkl"art wurden.
+
+Unmittelbar nach Drucklegung der 1. Auflage von Band 1 erschien auf den
+"offentlichen \TeX-Fileservern die neue \LaTeXe-Version, zun"achst als
+Probeversion und ausdr"ucklich als solche gekennzeichnet. Nach einer
+halbj"ahrigen Erprobungsphase mit Behebung einer Reihe von Fehlern und
+Schw"achen wurde im Juni 1994 die \LaTeXe-Probeversion zur
+Standard-\LaTeX-Version erkl"art. Die neuen Eigenschaften von \LaTeXe wurden
+deshalb zun"achst in Kapitel 1 von Band 2 nachgetragen. Mit den Neuauflagen
+von Band 1 erscheinen die Grundeigenschaften
+von \LaTeXe\ nunmehr sachgerecht in der Einf"uhrung. 
+
+\section{\LaTeX-Installationshinweise}
+Der Einf"uhrungsband 1 schlie"st ab mit Hinweisen zur \TeX-Installation und der
+Erstellung der erforderlichen Formatfiles im Anhang F. 
+Bei der Zuf"ugung dieses 46seitigen Anhangs befand ich mich in einem Konflikt:
+Er geh"ort im engeren Sinne sicherlich nicht zum Stoffbereich einer 
+\LaTeX-Einf"uhrung. (S.~\cite[Anh. F]{hk1}
+Alle mir bekannten B"ucher "uber \TeX\ und seine Makropakete gehen
+stillschweigend von der Annahme aus, da"s ein lauff"ahiges \TeX-Programm
+mit den erforderlichen Zusatzwerkzeugen im Rechner des Anwenders existiert.
+Dies war in den Anfangsjahren von \TeX\ und \LaTeX\ auch sachgerecht, da
+\TeX\ damals zun"achst in den Rechenzentren der Hochschulen und 
+Forschungsinstitute bereitgestellt wurde. Alle bei der Installation eines
+\TeX-Systems vorausgesetzten Kenntnisse und auftretenden Probleme stellten
+sich nicht dem Anwender, sondern dem entsprechenden Experten des
+Rechenzentrums.
+
+Inzwischen hat sich das Anwenderprofil deutlich ge"andert. Die Mehrzahl
+der \TeX- und \LaTeX-Anwender betreibt das Programm auf einem PC. 
+F"ur nahezu alle Individualrechner (IBM-PCs und kompatible, Atari, Amiga,
+Macintosh und UNIX-Workstations) stehen sowohl kommerzielle wie auch
+kostenlose PD- (Public Domain) oder SW- (Shareware) \TeX-Pakete zur 
+Verf"ugung. Dokumentation und Installationshilfen sind je nach Programmquelle
+unterschiedlich hilfreich. 
+
+Der typische \TeX-Einsteiger will das Programm auf dem eigenen 
+Individualrechner betreiben und die eigenen Kenntnisse auf die 
+Nutzungsbed"urfnisse beschr"anken und nicht mit komplexen Wechselbeziehungen
+zwischen den diversen Programmteilen einer \TeX- und \LaTeX-Installation
+konfrontiert werden. Das Programmsystem wurde vermutlich als Diskettensatz
+beschafft oder von einem Kollegen kopiert, was bei den PD- und SW-Produkten
+auch erlaubt ist. Je nach beigef"ugter Dokumentation und Installationshilfe
+kann sich die Installation f"ur den Einsteiger als schwierige H"urde erweisen.
+Auch wenn die eigentliche Installation ohne Probleme gelingt, meldet das
+Programm eventuell beim ersten Aufruf, da"s es gewisse Teile nicht findet und
+damit die Bearbeitung abbricht.          
+
+Die Ursache f"ur eine solche Meldung kann tats"achlich darin liegen, da"s
+der Diskettensatz f"ur die Installation zwar das ausf"uhrbare \TeX-Programm
+bereitstellt, die f"ur den praktischen Ablauf aber zwingend erforderlichen
+Zusatzwerkzeuge, wie bestimmte Zeichensatzfiles und Makropakete, aus anderen
+Quellen beschafft werden m"ussen, ohne da"s dies in der beigef"ugten
+Dokumentation explizit gesagt wird. H"aufig liegt die Ursache f"ur die
+genannte Fehlermeldung aber darin, da"s bestimmte Programmteile zwar vorhanden
+sind, aber f"ur die Nutzung mit dem beigef"ugten Spezialprogramm INITEX, 
+von dem der Einsteiger bis dahin noch nie etwas geh"ort hat, aufbereitet werden
+m"ussen.\footnote{Bei einem \LaTeX-Bearbeitungsaufruf erwartet das ausf"uhrbare
+Programm die verschiedenen einzubindenden Bestandteile in vorbestimmten
+Verzeichnissen, die das \TeX-Filesystem bilden. F"ur dieses gibt es inzwischen
+einen standardisierten Strukturvorschlag, TDS (\TeX directory structuree),
+der vorgestellt wird und bei der Installation ber"ucksichtigt werden sollte.}
+Ich hoffe, mit dem Anhang F auch dem Anf"anger bei seinem Einstieg in \TeX\
+auf dem eigenen PC behilflich  zu sein.
+
+\section{Die \LaTeX-Folgeb"ande 2 und 3}
+\subsection{Inhaltsbeschreibung von Band 2}
+Band 2 der Buchserie "uber \LaTeX\ \cite{hk2} beginnt mit der Vorstellung von 
+\LaTeX-Erg"anzungen, die in ihrer Wirkung in Zukunft Bestandteil von
+\LaTeX~3 werden und die bereits heute in Form allgemein zug"anglicher
+Erg"anzungspakete genutzt werden k"onnen. Die Standardzeichens"atze einer
+\LaTeX-Installation waren prim"ar auf Anwendungen aus dem
+mathematisch-naturwissenschaft"-lichen Bereich zugeschnitten. 
+Mit der Ausbreitung auch auf geisteswissenschaftliche Anwendungen treten
+zunehmend Anforderungen auf, die damit nicht zu erf"ullen sind. Inzwischen
+existieren f"ur nahezu alle Sprachen und Sonderf"alle, wie z.~B. zur
+Schachdokumentation oder zum Musiknotensatz, geeignete Zeichens"atze.
+Band 2 stellt eine Vielzahl solcher erg"anzender Zeichens"atze vor, wobei sich
+die Erg"anzungen in Richtung \LaTeX~3 als ganz besonders hilfreich erweisen.
+Auch die Einbeziehung von PostScript-Zeichens"atzen in die \LaTeX-Bearbeitung
+wird angesichts der immer h"aufiger verwendeten PostScript-f"ahigen Drucker
+in Kapitel 4 vorgestellt. Die Nutzung von Zeichens"atzen f"ur den Musiknotensatz
+zusammen mit einem geeigneten Erg"anzungspaket wird in  Kapitel 3 beschrieben. 
+
+Band 2 stellt weiterhin die M"oglichkeiten zur Einbindung von Bildern und
+Grafiken vor, die entweder aus v"ollig anderen Programmquellen stammen oder
+mit \TeX-eigenen Mitteln, wie mit PiC\TeX, erzeugt werden.
+Er schlie"st ab mit einer Einf"uhrung in METAFONT in Kapitel 7. Angesichts der
+Vielzahl der vorgestellten Zusatz-Zeichens"atze ist dies eine folgerichtige
+Erg"anzung, da die Installation der Zusatz-Zeichens"atze bei vielen Anwendern
+aus den Quelldateien zu erfolgen hat, womit der Programmaufruf von METAFONT
+mit geeigneten Einstellparametern zwingend notwendig wird.
+Band 2 wendet sich also an Anwender, die "uber die M"oglichkeiten 
+einer Standard-\LaTeX-Installation hinausgehen wollen, ohne hierzu
+in die Tiefen der Programmierung zur Entwicklung von Eigenerweiterungen
+steigen zu m"ussen.
+
+\subsection{Inhaltsbeschreibung von Band 3}
+F"ur solche Entwicklungen ist schlie"slich der Band 3 gedacht \cite{hk3}.
+Er stellt \LaTeX\ in seinen internen Strukturen vor, erg"anzt um eine
+Darstellung der wichtigsten \TeX-Strukturen. Mit diesen Kenntnissen werden dann
+anschlie"send Beispiele f"ur anwendereigene \LaTeX-Erweiterungen vorgestellt.
+Ebenso werden Interna des Bib\TeX-Pro"-gramms angesprochen, aus denen
+der Anwender weitere \textsc{Bib}\TeX-Stilfiles zur variablen Gestaltung
+von Literaturverzeichnissen erstellen kann.
+
+Jede \TeX-Installation kennt weitere  \TeX-Zusatzwerkzeuge, von denen ich hier
+beispielhaft das Programm patgen nenne. Mit diesem Programm kann man
+f"ur jede Sprache ein \TeX-spezifisches Trennmusterfile erstellen,
+indem als Eingabe ein Trennlexikon der entsprechenden Sprache herangezogen
+wird. Band 3 stellt in seinem Anhang alle \TeX-Standard-Zusatzwerkzeuge vor und
+beschreibt deren Anwendung und Eigenschaften.
+
+\begin{thebibliography}{\hspace{1.5cm}}
+\bibitem[lam95]{la} Leslie Lamport. \textsl{Das \LaTeX-Handbuch.}
+    Addison-Wesley-Longman (Deutschland) GmbH. Bonn 1995
+\bibitem[kop93]{hk} Helmut Kopka. \textsl{\LaTeX, Band 1--3.} 
+    Addison-Wesley-Longman (Deuschland) GmbH. Bonn 1996--2000
+\bibitem[kop00]{hk1} Band 1: \textsl{\LaTeX-Einf"uhrung.} 3., "uberarbeitete
+    Auf"|lage, 2000
+\bibitem[kop96a]{hk2} Band 2: \textsl{\LaTeX-Erg"anzungen.} 2. "uberarbeitete
+    Auf"|lage, 1996\footnote{Dieser Band wird gegen Ende dieses Jahre ebenfalls
+    in "uberarbeiteter Form in 3. Auf"|lage erscheinen.}
+\bibitem[kop96b]{hk3} Band 3: \textsl{\LaTeX-Erweiterungen.} 1966
+\bibitem[kop88]{hku} \textsl{\LaTeX\ -- Eine Einf"uhrung.} 1.--4. Auf"|l.,
+    Vorl"aufer zu Band 1.
+\bibitem[kop90]{hkv} \textsl{\LaTeX-Erweiterungsm"oglichkeiten.} 
+    1.--3. Auf"|l., Vorl"aufer zu Band 2 und 3.
+\bibitem[abd93]{ab} Rames Abdelhamid. \textsl{Das Vieweg \LaTeX-Buch.}
+    Vieweg, Braunschweig, 1993
+\bibitem[knu91]{kn} Donald E. Knuth. \textsl{Computers and Typesetting
+    Vol A--E.} Addison Wesley Longman, Inc., Reading, MA,1987--1991
+\bibitem[knu91a]{kna} Vol. A: \textsl{The \TeX book.} 11. ed. 1991
+\bibitem[knu91b]{knb} Vol. B: \textsl{The Program.} 4. ed. 1991
+\end{thebibliography}
+\end{document}

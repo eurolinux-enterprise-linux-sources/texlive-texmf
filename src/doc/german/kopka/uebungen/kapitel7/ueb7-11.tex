@@ -1,0 +1,17 @@
+\documentclass{article}
+\usepackage{german}
+\newcounter{num}
+\newenvironment{varlist}[2]
+   {\begin{list}{\textrm{#1 #2{num}:}}{\usecounter{num}%
+       \setlength{\labelsep}{5mm}
+       \settowidth{\leftmargin}{\textrm{#1 #2{num}:}}
+       \addtolength{\leftmargin}{1cm}}}
+   {\end{list}}
+\begin{document}
+\noindent Vorangehender "au"serer Text
+\begin{varlist}{Muster}{\Alph}
+   \item ohne Wert
+   \item mit beigef"ugtem Gutschein
+\end{varlist}
+\end{document}
+ 

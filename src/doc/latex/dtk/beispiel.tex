@@ -1,0 +1,268 @@
+%%*****************************************************************************
+%% $Id: beispiel.tex,v 1.4 2001/10/21 15:17:13 gene Exp $
+%%*****************************************************************************
+%% Author: Gerd Neugebauer
+%%-----------------------------------------------------------------------------
+%%
+%% Dies ist ein Beispieldokument zu einem Artikel für "`Die TeXnische
+%% Kom"odie"'. Dieses soll die Struktur aufzeigen, die solch ein Artikel
+%% haben sollte. Au"serdem sind hier die speziellen Makros im Einsatz
+%% zu sehen und es werden einige Regeln vermittelt, die es zu beachten
+%% gilt.
+%%
+%% Diese Datei enthält nur den eigentlichen Artikel. Diese Datei kann
+%% nicht alleine von LaTeX bearbeitet werden. Hierzu ist der Treiber
+%% in der Datei beispiel.ltx notwendig. Die Übersetzung des Beitrags
+%% geschieht mit
+%%
+%%	latex beispiel.ltx
+%%
+%%-----------------------------------------------------------------------------
+
+%%-----------------------------------------------------------------------------
+%% Die ben"otigten Pakete k"onnen hier noch einmal deklariert werden.
+%% Diese werden hier gebraucht, da die Pr"aambel sich in der
+%% Treiber-Datei befindet, die nicht zur Produktion der
+%% Vereinszeitschrift eingesetzt wird.
+% \NeedPackage{multicol}
+\NeedPackage{booktabs}
+%%
+%% Das Paket german/ngerman wird automatisch geladen und sollte nicht
+%% explizit angefordert werden. 
+%%
+%% Regel: Es sollten so wenig wie m"oglich zus"atzliche Pakete
+%%        angefordert werden, da diese mit anderen Paketen in Konflikt
+%%        geraten k"onnten, die in anderen Artikeln unbedingt
+%%        ben"otigt werden.
+%% Regel: Es sollten nicht unn"otig viele Kommandos oder Umgebungen
+%%        definiert werden (aus demselben Grund). N"otigenfalls
+%%        sollte die Definition im Artikel und nicht in der Pr"aambel
+%%        geschehen. 
+%% Regel: Es darf kein spezielles inputencoding verwendet werden. Die
+%%        Eingabe muss reines ASCII sein.
+%%        Bei Bedarf kann als letzter Schritt die Umwandlung der
+%%        Sonderzeichen in pures ASCII erfolgen (z.B. mit recode)
+%%
+
+%%-----------------------------------------------------------------------------
+%% Angabe des Titels der Arbeit.
+\title{Der Titel, der auch so lang sein kann, dass er nicht mehr in die
+  Kopfzeile passt}
+
+%%-----------------------------------------------------------------------------
+%% Angabe der Autoren. Mehrere Autoren sind durch \and getrennt.
+%% Die Vornamen m"oglichst nicht abk"urzen.
+\author{A. Utor\and J.E. Mand}
+
+%%-----------------------------------------------------------------------------
+%% Angabe der Adressen der Autoren. Jeder Autor ist mit einer eigenen
+%% \address-Anweisung vertreten.
+%% Das erste Argument enth"alt (Titel und) Vornamen.
+%% Das zweite Argument enth"alt die restlichen Namensbestandteile
+%% (hiernach wird sortiert).
+%% Das dritte Argument enth"at die Adresse. Die Bestandteile der
+%% Adresse sind durch \\ voneinander getrennt.
+\address{A.}{Utor}{Eine Stra"se 11\\11111 Irgendwo}
+\address{J.E.}{Mand}{Weiter Weg 22\\99999 Hinterm Berg}
+
+%%-----------------------------------------------------------------------------
+%% Hier wird der Titel gesetzt.
+\maketitle
+
+%%-----------------------------------------------------------------------------
+%% Die Definition von lokalen Makros und Umgebungen erfolgt hier.
+\newcommand{\bs}{\symbol{`\\}}
+
+%%-----------------------------------------------------------------------------
+%% Falls der Titel sehr lang ist, muss hier eine kurze Fassung f"ur die
+%% Kopfzeile angegeben werden. Ansonsten kann diese Anweisung wegfallen.
+\markboth{Der Kurztitel}{Der Kurztitel}
+
+%%-----------------------------------------------------------------------------
+\begin{abstract}
+  Der Abstract enth"alt eine kurze Zusammenfassung der Problemstellung,
+  die in dem Artikel behandelt wird. Hier soll der Leser einen Hinweis
+  bekommen, ob der Artikel interessant ist, oder erst sp"ater gelesen
+  werden kann.
+\end{abstract}
+
+\section{Einleitung}
+
+In der Einleitung sollte das Problem motiviert werden, das in diesem
+Artikel behandelt wird. Wir behandeln hier das Vorbereiten von
+Artikeln f"ur \DTK. Normalerweise wird das etwas l"anger ausfallen.
+
+\section{Jetzt geht's los}
+
+Es k"onnen alle \LaTeX-Konstrukte verwendet werden, die im
+\texttt{article}-Style definiert sind. Dabei sind allerdings einige
+Einschr"ankungen zu beachten.
+
+\begin{itemize}
+\item Die Abschnitte sind nicht nummeriert. Deshalb macht es keinen
+  Unterschied, ob \verb|\section| oder \verb|\section*| verwendet
+  wird. Der Einfachheit halber sollte deshalb \verb|\section| benutzt
+  werden. Analoges gilt f"ur Unterabschnitte etc.
+\item Die Papiergr"o"se ist DIN A5. Das muss ber"ucksichtigt werden, wenn
+  Figuren oder Tabellen entworfen werden.
+\item Es d"urfen keine globalen Parameter umdefiniert werden, da dies
+  andere Artikel st"oren k"onnte. Insbesondere ist die Schriftgr"o"se
+  festgelegt.
+\item Es sollten keine Randnotizen (\verb|\marginpar|) benutzt werden
+  (Es ist einfach kein ausreichender Rand vorhanden).
+\end{itemize}
+
+Die Makros in der Tabelle~\ref{tab:logos} stehen zus"atzlich zur
+Verf"ugung und sollten an den entsprechenden Stellen auch benutzt
+werden.
+\begin{table}[t]
+  \begin{center}
+    \caption{Logos in dtk.cls}\label{tab:logos}
+
+    \begin{tabular}{ll}\toprule
+      \emph{Marko}		& \emph{Ergebnis}\\\midrule
+      \texttt{\bs AMSLaTeX}	& \AMSLaTeX	\\
+      \texttt{\bs AMSTeX}	& \AMSTeX	\\
+      \texttt{\bs AMS}		& \AMS		\\
+      \texttt{\bs BibTeX}	& \BibTeX	\\
+      \texttt{\bs dante}	& \dante	\\
+      \texttt{\bs Dante}	& \Dante	\\
+      \texttt{\bs DTK}		& \DTK		\\
+      \texttt{\bs emTeX}	& \emTeX	\\
+      \texttt{\bs eTeX}		& \eTeX		\\
+      \texttt{\bs LAmSTeX}	& \LAmSTeX	\\
+      \texttt{\bs LaTeXTeX}	& \LaTeXTeX	\\
+      \texttt{\bs LaTeXe}	& \LaTeXe	\\
+      \texttt{\bs MF}		& \MF		\\
+      \texttt{\bs MP}		& \MP		\\
+      \texttt{\bs MakeIndex}	& \MakeIndex	\\
+      \texttt{\bs NTS}		& \NTS		\\
+      \texttt{\bs PS}		& \PS		\\
+      \texttt{\bs PiCTeX}	& \PiCTeX	\\
+      \texttt{\bs PubliCTeX}	& \PubliCTeX	\\
+      \texttt{\bs SliTeX}	& \SliTeX	\\
+      \texttt{\bs TeXXeT}	& \TeXXeT	\\
+      \texttt{\bs TeXeT}	& \TeXeT	\\\bottomrule
+    \end{tabular}
+  \end{center}
+\end{table}
+
+Beim Setzen von Verzeichnisnamen, E-Mail-Adressen, URLs und "ahnlichem
+tritt oft das Problem auf, dass diese nicht getrennt werden k"onnen,
+wenn sie in \verb|\texttt| gesetzt sind. Zu diesem Zweck wurde von
+dieser Klasse das Makro \verb|\Path| bereitgestellt, das sein Argument
+in der Nichtproportionalschrift setzt und die Trennung an gewissen
+Stellen erlaubt. Damit ist es dann m"oglich, auch lange URLs wie die
+folgende zu setzen:
+\Path{http://www.gerd-neugebauer.de/software/TeX/}.
+
+Bei dieser Gelegenheit sind die Tilde \verb|~| und der Unterstrich
+\verb|_| keine aktiven Zeichen mehr und k"onnen damit direkt
+eingegeben werden.
+
+Leider ist \verb|\Path| fragil. Das hei"st, dass es in Argumenten von
+anderen Makros unerwartete Resultate liefern kann und somit dort nicht
+gebraucht werden sollte.
+
+
+\section{Tabellen}
+
+\begin{enumerate}
+\item Tabellen sollten normalerweise als Floats ausgef"uhrt werden.
+  Damit ist es f"ur \LaTeX{} m"oglich, einen geeigneten Ort f"ur deren
+  Plazierung zu finden. In der Regel sollte als Plazierungsargument
+  \verb|[tp]| angegeben werden.
+\item Tabellen sollten eine Unterschrift (\verb|\caption|) tragen und
+  "uber eine Referenz im laufenden Text verankert werden.
+\item Auf "uberfl"ussigen Schmuck, wie Rahmen und Linien sollte
+  verzichtet werden. Meistens kann man "uber angemessene Formatierung
+  bessere Ergebnisse erreichen als durch zus"atzliche Linien.
+\item Die mit \verb|\label| vergebenen Namen sind lokal f"ur jeden
+  Artikel. Hier braucht keine R"ucksicht auf andere Artikel genommen zu
+  werden. 
+\end{enumerate}
+
+Ein Beispiel ist in der Tabelle~\ref{tab:logos} zu sehen.
+
+
+\section{Goldene Regeln}
+
+In diesem Abschnitt werden Regeln f"ur den Satz deutscher Texte
+gesammelt. Diese sind von allgemeinerem Interesse. Die Erfahrung hat
+gezeigt, dass diese Regeln trotzdem nicht allgemein bekannt sind, oder
+angewendet werden.
+
+\begin{enumerate}
+\item Es gilt die deutsche Rechtschreibung, wie sie im Duden
+  festgelegt ist! Seit der Ausgabe 1/2000 wird die 21. Auf\/lage des
+  Duden zu Grunde gelegt.
+\item Die Satzzeichen Punkt, Komma, Semikolon, Ausrufezeichen und
+  Fragezeichen folgen ohne Zwischenraum auf das davorstehende Wort.
+\item Bei Abk"urzungen folgt nach einem inneren Punkt ein kleiner
+  Zwischenraum:
+  z.\,B. wird als \verb|z.\,B.| eingegeben.
+
+  Am Anfang eines Satzes werden Abk"urzungen ausgeschrieben. Im
+  Allgemeinen ist es ratsam, Abkürzungen nur sehr sparsam einzusetzen.
+  So kann man "`z.\,B."' immer durch "`beispielsweise"' ersetzen.
+\item Hervorhebungen erfolgen mit \verb|\emph|. \verb|\textbf| ist f"ur
+  Hervorhebungen \emph{nicht}\/ zu\-l"assig!
+\item Die Gedankenstriche -- werden als \verb|--| eingegeben. Davor
+  und danach ist ein Leerraum zu lassen.
+\item Ein Bereich von Zahlen wird mit \verb|--| gebildet. Hierbei sind
+  davor und danach \emph{keine}\/ Leerzeichen einzuf"ugen:
+  21--34
+\item Bindestriche zwischen Worten werden mit \verb|-| eingegeben.
+  Davor und danach sind keine Leerzeichen zul"assig.
+\end{enumerate}
+
+
+\section{Literatur}
+
+Literatur sollte mit \BibTeX{} verwaltet werden.
+
+\begin{itemize}
+\item Es git einen speziellen \BibTeX-Style \texttt{dtk.bst}, der mit
+  der Klasse \verb|dtk.cls| verteilt wird. Dieser sollte verwendet
+  werden. 
+\item Die Literatur muss in einer \BibTeX-Datei gesammelt sein. Diese
+  muss denselben Basisnamen haben wie das eigentliche Dokument. 
+\item Alternativ kann die Literatur in dem Dokument direkt angegeben
+  werden. In diesem Fall k"onnen die Beipiele am Ende dieses Dokuments
+  oder in der Zeitschrift "`\DTK"' "ur das Aussehen dienen. Davon wird
+  allerdings dringend abgeraten.
+\end{itemize}
+
+An dieser Stelle kommen einige Beispiele f"ur Literaturzitate.  Eine
+Kurzbeschreibung der Klasse und deren Entstehung wurde in
+\cite{neugebauer:klasse} ver"offentlicht.
+
+Angefangen hat alles mit einigen B"uchern von Donald Knuth
+\cite{knuth:texbook,knuth:mfbook}. Der Klassiker zu \LaTeX{} stammt
+von Leslie Lamport \cite{lamport:latex.2}. Neuerdings gibt es den
+"`Companion"' \cite{companion}. Schlie"slich sollen auch noch B"ucher auf
+Deutsch nicht verschwiegen werden \cite{kopka:latex,kopka:latex2}.
+
+Schlie"slich muss auch noch die \TeX-Directory-Structure
+\cite{twg:tds} erw"ahnt werden, da das ein Beipiel f"ur eine Referenz
+ins CTAN enth"alt.
+
+
+\section{Zusammenfassung}
+
+Hier sollte noch einmal ein Resum\'e gezogen werden. Auch ein Ausblick
+oder eine Diskussion von offenen Problemen kann hier erfolgen.
+
+Eine letzte Bitte sei hier noch angebracht. Das Dokument, das zur
+Ver"offentlichung f"ur "`\DTK"' eingereicht wird, sollte m"oglichst
+ohne Fehler durch \LaTeX{} bearbeitet werden k"onnen. Dazu z"ahlen
+auch "`l"a"sliche S"unden"' wie overfull/underfull Boxes.
+
+\bibliography{beispiel}
+
+\endinput%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Local Variables: 
+% mode: latex
+% TeX-master: "beispiel.ltx"
+% End: 

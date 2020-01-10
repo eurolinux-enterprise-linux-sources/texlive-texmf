@@ -1,0 +1,74 @@
+\documentclass{article}
+\pagestyle{empty}
+\usepackage{arrayjob}
+\usepackage{multido}
+\usepackage{pstricks}
+\usepackage{pst-char}
+% Manuel Luque
+% Denis Girou
+\input{random} % Donald Arseneau
+\DeclareFixedFont{\Rm}{T1}{ptm}{m}{n}{4cm}
+
+\newarray\colorCyan
+\newarray\colorMagenta
+\newarray\colorYellow
+\expandarrayelementtrue
+\psset{dimen=middle}
+\makeatletter
+\def\GraphicBackground(#1,#2){%
+% #1 = horizontal size, #2 = vertical size
+\multido{\iLineMOne=\z@+\@ne,\iLine=\@ne+\@ne}{#1}{%
+  \multido{\iColumnMOne=\z@+\@ne,\iColumn=\@ne+\@ne}{#2}{%
+    \setrandim{\pst@dima}{\z@}{0.4pt}%
+    \global\colorCyan(\iLine,\iColumn)={\pointless\pst@dima}
+    \setrandim{\pst@dimb}{\z@}{0.4pt}%
+    \global\colorMagenta(\iLine,\iColumn)={\pointless\pst@dimb}
+    \setrandim{\pst@dimc}{\z@}{0.4pt}%
+    \global\colorYellow(\iLine,\iColumn)={\pointless\pst@dimc}
+    \definecolor{MyColor}{cmyk}{\pointless\pst@dima,\pointless\pst@dimb,\pointless\pst@dimc,0}%
+    \psframe[fillstyle=solid,fillcolor=MyColor,linestyle=none]%
+      (\iLineMOne,\iColumnMOne)(\iLine,\iColumn)}}}
+
+\def\TextTransparent(#1,#2,#3)(#4,#5)#6{%
+% #1, #2, #3 = cyan, magenta and yellow components of the color filter,
+% #4, #5 = horizontal and vertical indices,
+% #6 = text
+  \checkcolorCyan(#4,#5)%
+  \pst@dima\cachedata pt
+  \advance\pst@dima by #1pt
+  \ifdim\pst@dima>\@ne pt\pst@dima=\@ne pt\fi
+  \checkcolorMagenta(#4,#5)%
+  \pst@dimb=\cachedata pt
+  \advance\pst@dimb by #2pt
+  \ifdim\pst@dimb>\@ne pt\pst@dimb=\@ne pt\fi
+  \checkcolorYellow(#4,#5)%
+  \pst@dimc=\cachedata pt
+  \advance\pst@dimc by #3pt
+  \ifdim\pst@dimc>\@ne pt\pst@dimc=\@ne pt\fi
+  \definecolor{MyColor}{cmyk}{\pointless\pst@dima,\pointless\pst@dimb,\pointless\pst@dimc,0}
+  #6%
+}
+
+\def\TestText(#1,#2,#3)(#4,#5)#6#7{%
+% #1, #2, #3 = cyan, magenta and yellow components of the color filter,
+% #4 = horizontal size, #5 = vertical size, #6 = random seed, #7 = text
+\definecolor{ColorFilter}{cmyk}{#1,#2,#3,0}%
+\dataheight=#4\relax
+\begin{pspicture}(#4,#5)
+  \randomi=#6\relax
+  \GraphicBackground(#4,#5)%
+  \multido{\iLineMOne=\z@+\@ne,\iLine=\@ne+\@ne}{#4}{%
+    \multido{\iColumnMOne=\z@+\@ne,\iColumn=\@ne+\@ne}{#5}{%
+      \psclip{\psframe[linestyle=none](\iLineMOne,\iColumnMOne)(\iLine,\iColumn)}
+        \TextTransparent(#1,#2,#3)(\iLine,\iColumn){%
+          \rput(0,0){\pscharpath[linestyle=none,fillstyle=solid,fillcolor=MyColor]{#7}}}
+      \endpsclip}}
+\end{pspicture}}
+
+\makeatother
+
+\begin{document}
+
+\TestText(0.8,0.1,0.1)(8,6){574214204}{\rput[lb]{37}(2.5,-1){\bf\Rm\protect\TeX}}
+
+\end{document}

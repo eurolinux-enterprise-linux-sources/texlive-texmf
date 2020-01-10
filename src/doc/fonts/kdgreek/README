@@ -1,0 +1,134 @@
+		 GreeKTeX Ver 3.1 Distribution
+		 -----------------------------
+
+		   	K J Dryllerakis
+		   Logic Programming Group
+		   Imperial College,London
+		        kd@doc.ic.ac.uk
+
+What it is:
+	GreekTeX is a complete package for typesetting greek
+	(modern or ancient) texts within the framework of 
+	plain TeX or LaTeX. It supplies a set of fonts based
+	on the excellent ones originally developed by
+	Sylvio Levi in the States and the modifications made
+	thereafter by Haralambous in France. 
+	The approach adopted is different from both the
+	previous ones since it uses full 256 character fonts 
+	and ligatures as the principal method of accenting
+	or "breathing" letters. This makes the macros more
+	robust and easier to use within TeX and LaTeX 
+	environments.
+
+------------------------------------------------------------------------
+Note: Two different packages are included in this distribution. (Both
+      based on the same set of fonts).
+	* greektex : an extension of plain tex 
+	* grlatex  : an extension of LaTeX for greek texts.
+------------------------------------------------------------------------
+
+What it Includes:
+	> a complete set of fonts (regular,bold,italic)
+	> for working with plain tex a file to be included
+	  which will import the macros and fonts needed
+	  to add greek texts within your normal documents
+	  (greektex.tex)
+	> for working with an extension of plain tex 
+	  a set of macros allowing the usage of greek
+	  within specific environments and hyphenation
+	  patterns for the greek langugage. Choosing
+	  to use this option will mean that you will develop
+	  the formatting of your text by yourself.
+	  (command greektex)
+	> for working with  LaTeX a style option that allows
+	  entering greek text within specific environments
+	  (all standard latex command still work e.g. font
+	  size changing). For typesetting texts mainly in
+	  greek a new format file which combines the greek
+	  enviroment with hyphenation patters and an optional
+	  global greek mode.
+	  (command grlatex)
+	> A set of utilities that allow the conversion of extended
+	  ASCII greek ISO character files to a format understandable
+	  by grektex and grlatex. (filter as C-source or emTeX filter
+	  table for use with texconv)
+
+
+------------------------------------------------------------------------
+See the Installation Guide (file INSTALL) on how to install the
+package (what else)!
+------------------------------------------------------------------------
+
+Distribution Tree:
+
+[doc]
+  Documentation On installation and usage, man pages for unix.
+	grlatex.1		Man Pages for grLaTeX package
+	install.tex		Installation Notes (plain TeX only)
+	usage.tex		Usage Manual (plain TeX only)
+
+[latex]
+  Basic Latex files for fomrat building and document styles.
+
+	grart10.sty     grbk10.sty      grbook.sty      grkhyphen.tex
+	grart12.sty     grbk11.sty      greek.sty       grmode.sty
+	grarticle.sty   grbk12.sty      grfonts.tex     lgreek.tex
+
+[tex]
+ Files for building greektex format and greek macros.
+
+	greek.tex		Greek Format Definitions
+	greektex.tex    	Greek Macros for plain TeX
+	grkhyphen.tex		Greek Hyphenation Patterns
+
+[mfinput]
+  MF source code for font building.
+
+	kdaccent.mf     kddigits.mf     kdidigit.mf     kdpunct.mf   
+	kdbase.mf       kdgr10.mf       kdilower.mf     kdsl10.mf
+	kdbf10.mf       kdgr8.mf        kdlig.mf        kdti10.mf
+	kdbf8.mf        kdgr9.mf        kdligcom.mf     kdtt10.mf
+	kdbf9.mf        kdgreek.mf      kdlower.mf      kdupper.mf
+
+[emtex]
+	grlatex.bat		Batch file for grlatex
+	greektex.bat		Batch file for greektex
+	greek.asc		Map of ISO greek codes for use with
+				texconv
+	greek.tcp		binary form of the previous file
+	c_gralatex.bat		Batch file for ISO converted grlatex
+	c_grtex.bat		Batch file for ISO converted greektex
+	kdgreek.mfj		MFJob file for creating the kd fonts
+
+[utils]
+	ascii2grtex.c		a unix C-filter for transforming
+				ISO standard greek documents to
+				greekTeX compatible form.
+
+[unix]
+	greektex		shell script for greektex
+	grlatex			shell script for grlatex
+	newfont			shell script to create new fonts
+
+------------------------------------------------------------------------
+Differnces from the Previous release
+	* Fixed font bugs in ligatures and added some more characters
+	  according to suggestions by J"org Knappen  (J"org, thanks for 
+	  your comments and fixes)
+	* Integrated Unix and Dos Release
+------------------------------------------------------------------------
+
+Important Note:
+^^^^^^^^^^^^^^^
+	If you are building the greek extension of the LaTeX format
+note that the old font coding scheme is used. The package -although it
+will create a proper Format file- will not run properly under the 
+Mittelbach convention for font loading. In order to check
+which on you have see your lfonts.tex file! (To make sure that
+you do not have to retrieve the standard lfonts.tex I have included in
+the latex directory -- please note the copyright notices for this file).
+
+
+Hope you enjoy the package. Please send any comments or bug reports
+to kd@doc.ic.ac.uk
+------------------------------------------------------------------------

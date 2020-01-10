@@ -1,0 +1,4383 @@
+%--------------------------------------------------------------------
+%--------------------------------------------------------------------
+% examdoc.tex
+%
+% This is the documentation for the exam documentclass, 
+% by Philip Hirschhorn.
+%
+% The exam documentclass itself is in the file exam.cls.
+
+
+%%% Copyright (c) 1997, 2000, 2004 Philip S. Hirschhorn
+%
+% This program may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.2
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.2 or later is part of all distributions of LaTeX 
+% version 1999/12/01 or later.
+%
+% This program consists of the files exam.cls and examdoc.tex
+
+% The user documentation for exam.cls is in the file examdoc.tex.
+
+
+%%% Philip Hirschhorn
+%%% Department of Mathematics
+%%% Wellesley College
+%%% Wellesley, MA 02481
+%%% psh@math.mit.edu
+
+% The newest version of this documentclass should always be available
+% from my web page: http://www-math.mit.edu/~psh/
+
+
+%--------------------------------------------------------------------
+%--------------------------------------------------------------------
+
+\documentclass[12pt]{exam}
+%\usepackage{hyperref}
+
+\newcommand{\docversion}{2.2}
+\newcommand{\docdate}{August 14, 2004}
+%\newcommand{\docdate}{\today}
+
+%--------------------------------------------------------------------
+%
+% Changes from version 2.01 onward are described in the comments
+% near the beginning of the file exam.cls.
+%
+%--------------------------------------------------------------------
+%
+% The only change from version 2.0 to version 2.01 is that this
+% documentclass (and its accompanying documentation) is now 
+% explicitly distributed under the LaTeX Project Public License.
+%
+%--------------------------------------------------------------------
+%---------------------------------------------------------------------
+\newenvironment{example}%
+   {\bigskip\filbreak
+    \subsubsection{Example:}
+   }%
+   {}
+
+
+\def\samplehead#1#2#3#4{%
+  \begin{trivlist}
+     \item[]
+     \leavevmode
+     \hbox to \textwidth{%
+         \rlap{\parbox[b]{\textwidth}{\raggedright#1\strut}}%
+         \hfil\parbox[b]{\textwidth}{\centering#2\strut}\hfil
+         \llap{\parbox[b]{\textwidth}{\raggedleft#3\strut}}%
+  }% hbox
+  #4
+  \end{trivlist}
+}
+
+\def\samplefoot#1#2#3#4{%
+  \begin{trivlist}
+     \item[]
+     \leavevmode
+     #1
+     \vskip 3pt
+
+     \hbox to \textwidth{%
+         \rlap{\parbox[t]{\textwidth}{\raggedright#2}}%
+         \hfil\parbox[t]{\textwidth}{\centering#3}\hfil
+         \llap{\parbox[t]{\textwidth}{\raggedleft#4}}%
+  }% hbox
+  \end{trivlist}
+}
+
+
+
+\makeatletter
+\@ifundefined{AmS}{\def\AmS{{\protect\the\textfont\tw@
+  A\kern-.1667em\lower.5ex\hbox{M}\kern-.125emS}}}
+  {}
+\makeatother
+
+
+%---------------------------------------------------------------------
+%---------------------------------------------------------------------
+%---------------------------------------------------------------------
+%---------------------------------------------------------------------
+
+\begin{document}
+
+\title{Using the exam document class}
+
+\author{Philip Hirschhorn\\
+Department of Mathematics\\
+Wellesley College\\
+Wellesley, MA 02481\\
+psh@math.mit.edu\\[\bigskipamount]
+Copyright \copyright~1994, 1997, 2000, 2004 Philip Hirschhorn\\
+   All rights reserved}
+
+\date{\docdate}
+
+\maketitle
+
+\begin{center}
+  \small
+  This is the documentation for version~\docversion{} of the
+  \verb"exam" document class. 
+\end{center}
+
+\tableofcontents
+
+\section{Introduction}
+
+The file \verb"exam.cls" provides the \verb"exam" document class,
+which attempts to make it easy for even a \LaTeX{} novice to prepare
+exams.  Most of what's done by the \verb"exam" document class can also
+be accomplished by using \verb"fancyheadings.sty", adjusting \LaTeX's
+page layout parameters (perhaps by using \verb"fullpage.sty"), and
+making careful use of the \verb"list" environment, but the \verb"exam"
+document class tries to make all this as simple as possible.
+
+Specifically, \verb"exam.cls" sets the page layout so that there are
+one inch margins all around (no matter what size paper you're using)
+and provides commands that make it easy to format questions, create
+very flexible headers and footers, and change the margins.  In
+particular:
+\begin{itemize}
+\item The class will automatically format and number the questions,
+  parts of questions, subparts of questions, and subsubparts of
+  questions, while making it easy to refer to specific questions by
+  number in any special directions you need to print on the exam.
+\item You can include the point value of each question (or part, or
+  subpart, or subsubpart), with your choice of having the point values
+  printed at the beginning of the text of the question, opposite that
+  in the left margin, opposite that in the right margin, or in the
+  right margin opposite the end of the question.
+\item The class will add up the total points for each question (and
+  all of its parts, subparts, and subsubparts) and the total points on
+  each page, and make those totals available in macros.  You can also
+  have the class print a grading table indexed either by question
+  number or by page number.
+\item You can specify the header in three parts: The left head, the
+  center head, and the right head.  The left head is left justified,
+  the center head is centered, and the right head is right justified,
+  and one or all of these can be omitted.
+\item The footer is also specified in three parts: Left justified,
+  centered, and right justified.
+\item The header and footer for the first page can be different from
+  the ones used on other pages.
+\item Both headers and footers can contain more than one line.  To
+  accommodate headers and footers with many lines, simple commands are
+  provided to increase the parts of the page devoted to the header
+  and/or footer, and these commands can give one amount of space on
+  the first page and a different amount of space on all other pages.
+\item Macros are defined to enable you to state in the header and/or
+  footer the total number of pages in the exam, and to change the
+  header and/or footer that appears on the \emph{last} page of the
+  exam.
+\item Macros are defined so that the headers and footers can vary
+  depending on whether the current page begins a new question or
+  continues a question that started on an earlier page (and, if one
+  continues onto the current page, to say what the number of that
+  question is).  Macros are also defined so that the headers and
+  footers can vary depending on whether a question is complete on the
+  current page or continues on to the next page (and, if one
+  continues, to say what the number of that question is).
+\item You can have a horizontal rule at the base of the header and/or
+  at the top of the footer.
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\section{License}
+
+\begin{itemize}
+\item This work may be distributed and/or modified under the conditions of
+  the \LaTeX{} Project Public License, either version~1.3 of this
+  license or (at your option) any later version.  The latest version
+  of this license is in \verb"http://www.latex-project.org/lppl.txt"
+  and version 1.3 or later is part of all distributions of \LaTeX{}
+  version 2003/12/01 or later.
+\item This work has the LPPL maintenance status
+  ``author-maintained''.
+\item This work consists of the files exam.cls and examdoc.tex.
+\end{itemize}
+
+
+%---------------------------------------------------------------------
+\section{The \texttt{documentclass} command}
+
+To use the \verb"exam" document class, you should specify \verb"exam"
+as your main document class.  For example, if you want to use
+12~point type, then your \verb"documentclass" command should be
+%
+\begin{center}
+\verb"\documentclass[12pt]{exam}"
+\end{center}
+%
+If you would also like to use some of the features of \AmS-\LaTeX,
+then you should use the commands
+%
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\documentclass[12pt]{exam}"\\
+    \verb"\usepackage{amsmath}"
+  \end{tabular}
+\end{center}
+%
+If you will be typing solutions into the exam (see
+section~\ref{sec:solutions}) and you'd like the solutions to be
+printed on the next run of \LaTeX, you should include the document
+class option \verb"answers", as in
+\begin{center}
+  \verb"\documentclass[answers]{exam}"
+\end{center}
+or
+\begin{center}
+  \verb"\documentclass[answers,12pt]{exam}"
+\end{center}
+This is optional, though; you can accomplish the same thing by giving
+the command \verb"\printanswers" (see section~\ref{sec:solutions}).
+
+
+
+%--------------------------------------------------------------------
+\section{Asking for the student's name}
+
+This isn't anything specific to the \verb"exam" document class, but
+it's worth mentioning because it isn't obvious.  If you're leaving
+space for the answers on the question pages (see
+section~\ref{sec:LeaveSpace}), then you'll probably also want to leave
+space for the student's name.  If you type
+%
+\begin{verbatim}
+\begin{center}
+  \fbox{\fbox{\parbox{5.5in}{\centering
+        Answer the questions in the spaces provided on the
+        question sheets.  If you run out of room for an answer,
+        continue on the back of the page.}}}
+\end{center}
+
+\vspace{0.1in}
+
+\hbox to \textwidth{Name and section:\enspace\hrulefill}
+
+\vspace{0.2in}
+
+\hbox to \textwidth{Instructor's name:\enspace\hrulefill}
+\end{verbatim}
+%
+after the \verb"\begin{document}" command and before the
+\verb"\begin{questions}" command (see section~\ref{sec:Questions}),
+then you'll get\\
+\noindent
+\parbox{\textwidth}{
+\begin{center}
+  \fbox{\fbox{\parbox{5.5in}{\centering
+        Answer the questions in the spaces provided on the
+        question sheets.  If you run out of room for an answer,
+        continue on the back of the page.}}}
+\end{center}
+
+\vspace{0.1in}
+
+\hbox to \textwidth{Name and section:\enspace\hrulefill}
+
+\vspace{0.2in}
+
+\hbox to \textwidth{Instructor's name:\enspace\hrulefill}
+}
+
+
+%---------------------------------------------------------------------
+\section{Questions}
+\label{sec:Questions}
+
+To type the questions in the exam, you use the \verb"questions"
+environment.  Each question is then begun with the command
+\verb"\question", and the questions will be numbered automatically.
+
+For example, if you type
+%
+\begin{verbatim}
+\begin{questions}
+
+\question
+Why is there air?
+
+\question
+
+How much wood would a woodchuck chuck if a woodchuck could chuck
+wood?
+
+\question
+Compute $\displaystyle\int_0^1 x^2 \, dx$.
+\end{questions}
+\end{verbatim}
+%
+then you'll get
+%
+\begin{questions}
+
+\question
+Why is there air?
+
+\question
+
+How much wood would a woodchuck chuck if a woodchuck could chuck
+wood?
+
+\question
+Compute $\displaystyle\int_0^1 x^2 \, dx$.
+\end{questions}
+
+\bigskip
+
+As the above example illustrates, you can leave blank lines between
+the \verb"\question" command and the actual beginning of the
+question, or before the first \verb"\question" command in the
+environment, and they will be ignored.
+
+
+%---------------------------------------------------------------------
+\subsection{Questions with parts and subparts (and subsubparts)}
+
+If you want a question to have several parts, then you use the
+\verb"parts" environment.  For example, if you type
+%
+\begin{verbatim}
+\begin{questions}
+\question
+Why is there air?
+
+\question
+What if there were no air?
+
+\begin{parts}
+\part
+Describe the effect on the balloon industry.
+
+\part
+Describe the effect on the aircraft industry.
+\end{parts}
+
+\question
+
+\begin{parts}
+\part
+Define the universe.  Give three examples.
+
+\part
+If the universe were to end, how would you know?
+
+\end{parts}
+
+
+\end{questions}
+\end{verbatim}
+%
+then you'll get
+\begin{questions}
+\question
+Why is there air?
+
+\question
+What if there were no air?
+
+\begin{parts}
+\part
+Describe the effect on the balloon industry.
+
+\part
+Describe the effect on the aircraft industry.
+\end{parts}
+
+\question
+
+\begin{parts}
+\part
+Define the universe.  Give three examples.
+
+\part
+If the universe were to end, how would you know?
+
+\end{parts}
+
+
+\end{questions}
+
+\bigskip
+
+The above example illustrates several things:
+%
+\begin{itemize}
+\item
+Parts of a question should be put into a \verb"parts" environment.
+
+\item
+If a question begins with a \verb"parts" environment, then the first
+part will appear on the same line with the question number.
+
+\item
+You can leave blank lines before and after the \verb"\part" command,
+and they will be ignored.
+\end{itemize}
+
+
+\bigskip
+
+There is also a \verb"subparts" environment, and even a
+\verb"subsubparts" environment, and they work just as you would
+expect.  For example, if you type
+%
+\begin{verbatim}
+\begin{questions}
+\question
+\begin{parts}
+\part
+What do you do with a drunken sailor?
+
+\part
+Is your answer different if it is before noon?
+  
+\end{parts}
+
+\question
+This is the second question.
+
+\begin{parts}
+\part
+This is a part.
+
+\part
+This is also a part.
+
+\begin{subparts}
+\subpart
+This is a subpart.
+
+\subpart
+This is a periscope.
+
+\subpart
+This is a pair of diving planes.
+
+\subpart
+\begin{subsubparts}
+\subsubpart
+This is a subsubpart.
+
+\subsubpart
+The lower surface of a diving plane?
+
+\subsubpart
+The ocean floor, perhaps?
+
+\end{subsubparts}
+\end{subparts}
+
+\part
+It's sad to be apart.
+
+\end{parts}
+
+\question
+\begin{parts}
+\part
+\begin{subparts}
+\subpart
+This is a subpart.
+
+\subpart
+This is another subpart.
+\end{subparts}
+\part
+This is another part.
+
+\end{parts}
+
+
+\end{questions}
+\end{verbatim}
+%
+then you'll get
+\begin{questions}
+\question
+\begin{parts}
+\part
+What do you do with a drunken sailor?
+
+\part
+Is your answer different if it is before noon?
+  
+\end{parts}
+
+\question
+This is the second question.
+
+\begin{parts}
+\part
+This is a part.
+
+\part
+This is also a part.
+
+\begin{subparts}
+\subpart
+This is a subpart.
+
+\subpart
+This is a periscope.
+
+\subpart
+This is a pair of diving planes.
+
+\subpart
+\begin{subsubparts}
+\subsubpart
+This is a subsubpart.
+
+\subsubpart
+The lower surface of a diving plane?
+
+\subsubpart
+The ocean floor, perhaps?
+
+\end{subsubparts}
+\end{subparts}
+
+\part
+It's sad to be apart.
+
+\end{parts}
+
+\question
+\begin{parts}
+\part
+\begin{subparts}
+\subpart
+This is a subpart.
+
+\subpart
+This is another subpart.
+\end{subparts}
+\part
+This is another part.
+
+\end{parts}
+
+
+\end{questions}
+
+
+%---------------------------------------------------------------------
+\subsection{Point values for the questions}
+\label{sec:points}
+
+Each of the commands \verb"\question", \verb"\part", \verb"\subpart"
+and \verb"\subsubpart" take an optional argument, which is the number
+of points for that question, part, subpart, or subsubpart.  (By
+default, the point values are enclosed in parentheses, but the
+parentheses can be replaced with either square brackets or a box; for
+this, see section~\ref{sec:Boxed}.)
+
+The default is that the point value will be inserted at the beginning
+of the question (or part, or subpart, or subsubpart) in parentheses,
+but
+\begin{itemize}
+\item the command \verb"\pointsinmargin" will cause the point values
+  to be set in the left margin,
+\item the command \verb"\pointsinrightmargin" will cause the point
+  values to be set in the right margin, and
+\item the commands \verb"\nopointsinmargin" and
+  \verb"\nopointsinrightmargin" are equivalent, and either of them
+  will  revert to the default situation.
+\end{itemize}
+All of these print the point values on the first line of the question
+(or part, or subpart, or subsubpart).  There is also a way to print
+the point values on the \emph{last} line of the question (or part,
+etc.); for this, see section~\ref{sec:DrpPts}.
+
+\medbreak
+
+For example, if you type
+%
+\begin{verbatim}
+\begin{questions}
+\question[20]
+Why is there air?
+
+
+\question
+What if there were no air?
+
+\begin{parts}
+\part[10]
+Describe the effect on the balloon industry.
+
+\part[10]
+Describe the effect on the aircraft industry.
+\end{parts}
+
+\end{questions}
+\end{verbatim}
+%
+then, with the default setup, you'll get
+\nopointsinmargin
+\begin{questions}
+\question[20]
+Why is there air?
+
+
+\question
+What if there were no air?
+
+\begin{parts}
+\part[10]
+Describe the effect on the balloon industry.
+
+\part[10]
+Describe the effect on the aircraft industry.
+\end{parts}
+
+\end{questions}
+(To change the word ``points'', see the commands described in
+section~\ref{sec:pointname}.)
+
+\bigskip
+If you give the command \verb"\pointsinmargin", then the above input
+will produce instead
+\pointsinmargin
+\begin{questions}
+\question[20]
+Why is there air?
+
+
+\question
+What if there were no air?
+
+\begin{parts}
+\part[10]
+Describe the effect on the balloon industry.
+
+\part[10]
+Describe the effect on the aircraft industry.
+\end{parts}
+
+\end{questions}
+(To have a word (e.g., ``points'') inside the parentheses with the
+point values, see the \verb"\marginpointname" command in
+section~\ref{sec:pointname}.)
+
+
+\bigskip 
+
+If you give the command \verb"\pointsinrightmargin", then the above
+input will produce instead
+\pointsinrightmargin
+\begin{questions}
+\question[20]
+Why is there air?
+
+
+\question
+What if there were no air?
+
+\begin{parts}
+\part[10]
+Describe the effect on the balloon industry.
+
+\part[10]
+Describe the effect on the aircraft industry.
+\end{parts}
+
+\end{questions}
+
+%--------------------------------------------------------------------
+\subsubsection{Half points}
+\label{sec:Half}
+
+The point values of questions, parts, subparts, and subsubparts can
+include half points.  To specify half points, you either type 
+\begin{center}
+  \verb"\half"
+\end{center}
+immediately following the integer part of the point value or just type
+\verb"\half" as the entire point value. That is, the valid point
+values and their (default) printed appearances are:
+\begin{center}
+  \begin{tabular}{@{\extracolsep{0.1in}}rccccccc}
+    Typed:& \verb"0"& \verb"\half"& \verb"1"& \verb"1\half"& \verb"2"&
+      \verb"2\half"& $\cdots$\\[1ex]
+    Printed:& 0& \half& 1& 1\half& 2& 2\half& $\cdots$
+  \end{tabular}
+\end{center}
+If you prefer, you can cause the fraction \half{} to be printed as
+\makeatletter
+\horiz@half.
+\makeatother
+To do this, you give the command
+\begin{center}
+  \verb"\usehorizontalhalf"
+\end{center}
+after which the printed appearance of half point values will be
+\usehorizontalhalf
+\begin{center}
+  \begin{tabular}{@{\extracolsep{0.1in}}rccccccc}
+    Typed:& \verb"0"& \verb"\half"& \verb"1"& \verb"1\half"& \verb"2"&
+      \verb"2\half"& $\cdots$\\[1ex]
+    Printed:& 0& \half& 1& 1\half& 2& 2\half& $\cdots$
+  \end{tabular}
+\end{center}
+If you want to return to using the default appearance, you can do that
+by giving the command
+\begin{center}
+  \verb"\useslantedhalf"
+\end{center}
+\useslantedhalf
+
+
+
+%--------------------------------------------------------------------
+\subsubsection{Surrounding the points: Parentheses, brackets, or a box}
+\label{sec:Boxed}
+
+If you prefer having the points enclosed in brackets, instead of in
+parentheses, give the command
+\begin{center}
+  \verb"\bracketedpoints"
+\end{center}
+For example, if you give the command \verb"\bracketedpoints", then the
+questions typed above will produce
+%
+\nopointsinmargin
+\bracketedpoints
+\begin{questions}
+\question[20]
+Why is there air?
+
+
+\question
+What if there were no air?
+
+\begin{parts}
+\part[10]
+Describe the effect on the balloon industry.
+
+\part[10]
+Describe the effect on the aircraft industry.
+\end{parts}
+
+\end{questions}
+%
+
+If you prefer having the points enclosed in a box, instead of in
+parentheses, give the command
+\begin{center}
+  \verb"\boxedpoints"
+\end{center}
+For example, if you give the command \verb"\boxedpoints", then the
+questions typed above will produce
+%
+\nopointsinmargin
+\boxedpoints
+\begin{questions}
+\question[20]
+Why is there air?
+
+
+\question
+What if there were no air?
+
+\begin{parts}
+\part[10]
+Describe the effect on the balloon industry.
+
+\part[10]
+Describe the effect on the aircraft industry.
+\end{parts}
+
+\end{questions}
+%
+If you give the commands \verb"\boxedpoints" and
+\verb"\pointsinmargin", then the above questions will produce
+\boxedpoints
+\pointsinmargin
+\begin{questions}
+\question[20]
+Why is there air?
+
+
+\question
+What if there were no air?
+
+\begin{parts}
+\part[10]
+Describe the effect on the balloon industry.
+
+\part[10]
+Describe the effect on the aircraft industry.
+\end{parts}
+
+\end{questions}
+%
+If you give the commands \verb"\bracketedpoints" and
+\verb"\pointsinrightmargin", then the above questions will produce
+%
+\bracketedpoints
+\pointsinrightmargin
+\begin{questions}
+\question[20]
+Why is there air?
+
+
+\question
+What if there were no air?
+
+\begin{parts}
+\part[10]
+Describe the effect on the balloon industry.
+
+\part[10]
+Describe the effect on the aircraft industry.
+\end{parts}
+
+\end{questions}
+Other combinations of these commands will produce similar effects.
+
+If you want to switch back and forth between formats during the exam,
+you can do so by giving one of the commands
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\boxedpoints"\\
+    \verb"\bracketedpoints"\\
+    \verb"\noboxedpoints"\\
+    \verb"\nobracketedpoints"
+  \end{tabular}
+\end{center}
+whenever you want to switch.  (The commands
+\verb"\nobracketedpoints" and \verb"\noboxedpoints" are equivalent;
+they both return to the default of putting parentheses around the
+points.)
+
+If you want a word automatically inserted following the point values
+when using either \verb"\pointsinmargin" or
+\verb"\pointsinrightmargin", see the
+  \verb"\marginpointname" command
+in section~\ref{sec:pointname}.
+
+
+
+%---------------------------------------------------------------------
+\subsubsection{Using a substitute for the word ``points''}
+\label{sec:pointname}
+
+With the default setup, the number of points is inserted before the
+text of the question followed by the word ``point'' if the number of
+points is 1 and by the word ``points'' otherwise.  That is, the
+default is \verb"\nopointsinmargin" and \verb"\noboxedpoints" (see
+sections \ref{sec:points} and \ref{sec:Boxed}), and if you type
+\nopointsinmargin \noboxedpoints
+\begin{verbatim}
+\begin{questions}
+\question[1]
+This is a short question.
+
+\question[5]
+This is a much longer question, requiring much more thought.
+\end{questions}
+\end{verbatim}
+then you'll get
+\begin{questions}
+\question[1]
+This is a short question.
+
+\question[5]
+This is a much longer question, requiring much more thought.
+\end{questions}
+The way this is achieved is:
+\begin{itemize}
+\item There is a command 
+  \begin{center}
+    \verb"\points"
+  \end{center}
+  whose default definition expands to the word `point' if the number
+  of points is 1 and to `points' otherwise.  (This behavior can be
+  modified by the command \verb"\pointpoints"; see below.)
+\item There is a command 
+  \begin{center}
+    \verb"\pointname{Text}"
+  \end{center}
+  that causes `Text' to be inserted following the number of points of
+  a question, part, subpart, or subsubpart.  The default setup is the
+  result of the command
+  \begin{center}
+    \verb"\pointname{ \points}"
+  \end{center}
+  (Note the single space before the command \verb"\points".)
+\end{itemize}
+
+
+
+You can modify this setup by using the command \verb"\pointname", but
+there is also a command
+\begin{center}
+  \verb"\pointpoints{SingularText}{PluralText}"
+\end{center}
+that changes the behavior of the \verb"\points" command so that it
+expands to `SingularText' if the number of points is 1 and to
+`PluralText' otherwise.  (The default is the result of the command
+\verb"\pointpoints{point}{points}".)  Thus, if you give the
+command
+%
+\begin{center}
+  \verb"\pointpoints{Punkt}{Punkte}"
+\end{center}
+%
+then typing the questions above would result in
+%
+\pointpoints{Punkt}{Punkte}
+\begin{questions}
+\question[1]
+This is a short question.
+
+\question[5]
+This is a much longer question, requiring much more thought.
+\end{questions}
+%
+and if you give the command
+%
+\begin{center}
+  \verb"\pointpoints{mark}{marks}"
+\end{center}
+%
+then typing the questions above would result in
+%
+\pointpoints{mark}{marks}
+\begin{questions}
+\question[1]
+This is a short question.
+
+\question[5]
+%
+This is a much longer question, requiring much more thought.
+\end{questions}
+There is a shortcut for that; the command
+\begin{center}
+  \verb"\marksnotpoints"
+\end{center}
+expands to \verb"\pointpoints{mark}{marks}".
+
+
+\bigskip
+
+For example, if you give the command
+%
+\begin{center}
+\verb"\pointname{\%}"
+\end{center}
+%
+and then type
+%
+\begin{verbatim}
+\question[25]
+Where, oh where, has my little dog gone?
+\end{verbatim}
+%
+then you'll get
+\pointname{\%}
+\nopointsinmargin
+\noboxedpoints
+\begin{questions}
+\question[25]
+Where, oh where, has my little dog gone?
+\end{questions}
+\pointname{ \points}
+%
+
+Similarly, the command \verb"\marginpointname" can be used to affect
+the text set with the number of points when \verb"\pointsinmargin" or
+\verb"\pointsinrightmargin" is in effect.  For example, if you give
+the commands
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\pointsinmargin"\\
+    \verb"\marginpointname{\%}"
+  \end{tabular}
+\end{center}
+and then type
+\begin{verbatim}
+\question[25]
+Where, oh where, has my little dog gone?
+\end{verbatim}
+then you'll get
+\pointsinmargin
+\noboxedpoints
+\marginpointname{\%}
+\begin{questions}
+\question[25]
+Where, oh where, has my little dog gone?
+\end{questions}
+unless, of course, you've also given the command \verb"\boxedpoints"
+(see section~\ref{sec:Boxed}), in which case you'll get
+%
+\pointsinmargin
+\boxedpoints
+\marginpointname{\%}
+\begin{questions}
+\question[25]
+Where, oh where, has my little dog gone?
+\end{questions}
+If you give the commands
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\marksnotpoints"\\
+    \verb"\marginpointname{ \points}"
+  \end{tabular}
+\end{center}
+then the above will print
+\noboxedpoints
+\marginpointname{ \points}
+\marksnotpoints
+\begin{questions}
+\question[25]
+Where, oh where, has my little dog gone?
+\end{questions}
+\nopointsinmargin
+\marginpointname{}
+\pointpoints{point}{points}
+
+
+
+
+
+Using the default is equivalent to giving the command
+\begin{center}
+  \verb"\marginpointname{}"
+\end{center}
+
+%--------------------------------------------------------------------
+\subsubsection{Using \texttt{marginpointname} and enlarging the
+  margins}
+
+The default margins are not very large, and so if you use
+\verb"\marginpointname" (see section~\ref{sec:pointname}) to place any
+words along with the point values in the margin, you may run out of
+room.  The solution to this problem is to enlarge the margins by using
+the \verb"\extrawidth" command with a negative argument to
+\emph{decrease} the width of the text, and thus \emph{increase} the
+width of the margins.  For example, the commands
+\begin{center}
+  \begin{tabular}{ll}
+    \verb"\extrawidth{-1in}"\\
+    \verb"\marginpointname{ \points}"
+  \end{tabular}
+\end{center}
+will increase each of the left and right margins by one half inch,
+which will easily leave room for the word ``points''.  (See
+section~\ref{sec:pagesize} for a discussion of the \verb"\extrawidth"
+command.)
+%---------------------------------------------------------------------
+\subsubsection{Questions that begin with a parts environment}
+
+One thing to keep in mind is that \emph{only one point value can
+  appear on a line, and it will be the last one to be placed there}.
+This matters only if a question begins with a parts environment, or if
+a part begins with a subparts environment, or if a subpart begins with
+a subsubparts environment.  In any of these cases, the question number
+and part number (or the part number and subpart number, etc.) will
+appear on the same line, and if both of these commands include an
+optional point value, \emph{only the last one given will be used}.
+For example, if you type
+%
+\begin{verbatim}
+\begin{questions}
+\question[10]
+\begin{parts}
+\part[5]
+Who put the ``bop'' in the ``bop, sh-bop sh-bop''?
+
+\part[5]
+Who put the ``ram'' in the ``rama, rama ding-dong''?
+\end{parts}
+\end{questions}
+\end{verbatim}
+%
+then you'll get
+%
+\noboxedpoints
+\marginpointname{}
+\begin{questions}
+\question[10]
+\begin{parts}
+\part[5]
+Who put the ``bop'' in the ``bop, sh-bop sh-bop''?
+
+\part[5]
+Who put the ``ram'' in the ``rama, rama ding-dong''?
+\end{parts}
+\end{questions}
+%
+Notice that the 10~points for the entire question are never mentioned
+anywhere, since they would have appeared on the same line with the
+5~points for the first part, and the 5~points for the part were placed
+later.  This is true whether \verb"\pointsinmargin",
+\verb"\pointsinrightmargin", or \verb"\nopointsinmargin" is in effect.
+In addition, if you've given the command \verb"\addpoints" (see
+section~\ref{sec:Count}), then this question will have 20~points
+assigned to it (10 for the question itself plus 5 for each of the two
+parts) even though the 10 for the question itself will not be printed.
+
+
+%--------------------------------------------------------------------
+\subsubsection{Printing the points at the end of the question}
+\label{sec:DrpPts}
+
+Instead of having the point value of a question (or part, or subpart,
+or subsubpart) printed on the first line of a question, you can have
+it printed in the right margin opposite the \emph{last} line, or even
+opposite a blank line following the paragraph.  This is done with the
+\begin{center}
+  \verb"\pointsdroppedatright"
+  \quad and \quad
+  \verb"\droppoints"
+\end{center}
+commands.
+
+If you give the command
+\begin{center}
+  \verb"\pointsdroppedatright"
+\end{center}
+then point values are not printed until you give the command
+\verb"\droppoints" (and they're not printed at all if you don't give
+the command \verb"\droppoints").  The only exception to this rule is
+that if you've given a \verb"\qformat" command (see
+section~\ref{sec:qformat}), then question number lines are printed as
+specified by the argument to the \verb"\qformat" command even if you
+have given the command \verb"\pointsdroppedatright".
+
+The command \verb"\droppoints" should be given only at the end of a
+paragraph or between paragraphs; if you give it within a paragraph, it
+causes the paragraph to end.  \verb"\droppoints" prints the point
+value in the right margin, formatted as it is when you give the
+command \verb"\pointsinrightmargin", except that the points appear
+opposite the last line of the paragraph (or, if the command
+\verb"\droppoints" is given between paragraphs, then additional
+vertical space is left between the paragraphs and the points are
+printed opposite the blank space).  Thus, the formatting can be
+changed by giving the commands \verb"\bracketedpoints",
+\verb"\boxedpoints", or \verb"\marginpointname" (see
+section~\ref{sec:pointname}).  The command \verb"\droppoints" actually
+works this way even if one of the commands
+\begin{center}
+  \verb"\nopointsinmargin", \verb"\pointsinmargin", or
+  \verb"\pointsinrightmargin"
+\end{center}
+is in effect, but if you use it that way the points will appear twice
+on the page, which is probably not what you want.
+
+
+For example, if you give the command \verb"\pointsdroppedatright" and
+then type
+\begin{verbatim}
+\begin{questions}
+\question[10]
+Describe the implications of the Michelson-Morley ink drop experiment
+for the use of punctuation marks such as colons and semicolons that
+require multiple drops of ink.
+\droppoints
+
+\question[10]
+Prove that the second dual of a finite dimensional real vector space
+is naturally isomorphic to the given vector space, except when the
+weapon chosen is a single shot pistol.\droppoints
+
+\end{questions}
+\end{verbatim}
+then you'll get
+\pointsdroppedatright
+\begin{questions}
+\question[10]
+Describe the implications of the Michelson-Morley ink drop experiment
+for the use of punctuation marks such as colons and semicolons that
+require multiple drops of ink.
+\droppoints
+
+\question[10]
+Prove that the second dual of a finite dimensional real vector space
+is naturally isomorphic to the given vector space, except when the
+weapon chosen is a single shot pistol.\droppoints
+
+\end{questions}
+
+If you type
+\begin{verbatim}
+\begin{questions}
+\question[10]
+Describe the implications of the Michelson-Morley ink drop experiment
+for the use of punctuation marks such as colons and semicolons that
+require multiple drops of ink.
+
+\droppoints
+
+\question[10]
+Prove that the second dual of a finite dimensional real vector space
+is naturally isomorphic to the given vector space, except when the
+weapon chosen is a single shot pistol.
+
+\droppoints
+\end{questions}
+\end{verbatim}
+then you'll get
+\begin{questions}
+\question[10]
+Describe the implications of the Michelson-Morley ink drop experiment
+for the use of punctuation marks such as colons and semicolons that
+require multiple drops of ink.
+
+\droppoints
+
+\question[10]
+Prove that the second dual of a finite dimensional real vector space
+is naturally isomorphic to the given vector space, except when the
+weapon chosen is a single shot pistol.
+
+\droppoints
+\end{questions}
+\nopointsinmargin
+
+%--------------------------------------------------------------------
+\subsubsection{Adding up the points for each question}
+
+
+If you give the command \verb"\addpoints" (see
+section~\ref{sec:Count}), then you can use the command
+\begin{center}
+  \verb"\droptotalpoints"
+\end{center}
+to put into the right margin the total number of points for the
+current question (including the points for all parts, subparts, and
+subsubparts).  The command \verb"\droptotalpoints" should be given
+only at the end of a paragraph or between paragraphs; if you give it
+within a paragraph, it causes the paragraph to end.
+\verb"\droptotalpoints" prints the total points for the current
+question in the right margin, formatted by default as:
+\par\nobreak\medskip
+%  \leavevmode\unskip\nobreak\hfill
+\makeatletter
+  \leavevmode\nobreak\hfill
+  \rlap{%\hskip\rightmargin  % Defined by the list environment
+        \hskip\@rightmargin % Defined by exam.cls
+        \hskip-\rightpointsmargin
+        \llap{Total for Question 2: 25}%
+  }% rlap
+\makeatother
+  \par
+\medskip
+\noindent
+(Note: The number of points is followed by the value of
+\verb"\marginpointname", which by default is empty.)
+
+You can change the format used by the \verb"\droptotalpoints" command
+with the
+\begin{center}
+  \verb"\totalformat"
+\end{center}
+command.  It takes one argument, and that argument becomes the command
+to print the total points, right justified a distance of
+\verb"\rightpointsmargin" from the right edge of the paper.  The
+argument can contain the command
+\begin{center}
+  \begin{tabular}{ll}
+    \verb"\totalpoints"& to print the number of points, and\\
+    \verb"\thequestion"& to print the question number.
+  \end{tabular}
+\end{center}
+(\verb"\totalpoints" expands to
+\verb"\pointsofquestion{\arabic{question}}"; see
+section~\ref{sec:pointsofq} for a discussion of the
+\verb"\pointsofquestion" command.)  For example, if you give the
+command
+\begin{center}
+  \verb"\totalformat{Question \thequestion: \totalpoints \points}"
+\end{center}
+then the total points will be printed in the format
+\begin{center}
+  Question 2: 25 points
+\end{center}
+and if you give the command
+\begin{center}
+\verb"\totalformat{\fbox{Total: \totalpoints}}"
+\end{center}
+then the total points will be printed as
+\begin{center}
+  \fbox{Total: 25}
+\end{center}
+
+Thus, if you've given the commands 
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\addpoints"\\
+    \verb"\bracketedpoints"\\
+    \verb"\pointdroppedatright"
+  \end{tabular}
+\end{center}
+and you type
+\begin{verbatim}
+\question
+\begin{parts}
+\part[10]
+In no more than one paragraph, explain why the earth is round.
+\droppoints
+\part[10]
+Explain what changes to the van Allen radiation belt are needed to
+make the earth into a regular icosahedron?
+\droppoints
+\end{parts}
+\droptotalpoints
+\end{verbatim}
+then you'll get
+\addpoints
+\pointsdroppedatright
+\bracketedpoints
+\begin{questions}
+\question
+\begin{parts}
+\part[10]
+In no more than one paragraph, explain why the earth is round.
+\droppoints
+\part[10]
+Explain what changes to the van Allen radiation belt are needed to
+make the earth into a regular icosahedron?
+\droppoints
+\end{parts}
+  \leavevmode\unskip\nobreak\hfill
+\makeatletter
+  \rlap{\hskip\rightmargin  % Defined by the list environment
+        \hskip\@rightmargin % Defined by exam.cls
+        \hskip-\rightpointsmargin
+        \llap{Total for Question 1: 20}%
+  }% rlap
+\makeatother
+  \par
+%\droptotalpoints
+\end{questions}
+\noaddpoints
+\nopointsinmargin
+\nobracketedpoints
+If you've also given the command
+\begin{center}
+  \verb"\totalformat{Total for Question \thequestion: [\totalpoints]}"
+\end{center}
+then you'll get
+\addpoints
+\pointsdroppedatright
+\bracketedpoints
+\begin{questions}
+\question
+\begin{parts}
+\part[10]
+In no more than one paragraph, explain why the earth is round.
+\droppoints
+\part[10]
+Explain what changes to the van Allen radiation belt are needed to
+make the earth into a regular icosahedron?
+\droppoints
+\end{parts}
+%\droptotalpoints
+  \leavevmode\unskip\nobreak\hfill
+\makeatletter
+  \rlap{\hskip\rightmargin  % Defined by the list environment
+        \hskip\@rightmargin % Defined by exam.cls
+        \hskip-\rightpointsmargin
+        \llap{Total for Question 1: [20]}%
+  }% rlap
+\makeatother
+  \par
+\end{questions}
+\noaddpoints
+\nopointsinmargin
+\nobracketedpoints
+
+
+
+If you want to switch back and forth between these formats during the
+exam, you can do so by giving one of the commands
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\pointsinmargin"\\
+    \verb"\pointsinrightmargin"\\
+    \verb"\nopointsinmargin"
+  \end{tabular}
+\end{center}
+whenever you want to switch.
+
+%--------------------------------------------------------------------
+\subsubsection{Margin sizes when using \texttt{pointsinmargin} and
+  \texttt{pointsinrightmargin}}
+
+
+\begin{itemize}
+\item If you give the command \verb"\pointsinmargin", then the points
+  are printed right justified in the left margin, with the right edge
+  a distance of \verb"\marginpointsep" from the left edge of the text
+  area.  The default value of \verb"\marginpointsep" is the result of
+  the command
+  \begin{center}
+    \verb"\setlength{\marginpointssep}{5pt}"
+  \end{center}
+  and you can change it by giving a new \verb"\setlength" command.
+  
+\item If you give the command \verb"\pointsinrightmargin", then the
+  points are printed right justified in the right margin, with the
+  right edge a distance of \verb"\rightpointsmargin" from the right
+  edge of the paper.  The default value of \verb"\rightpointsmargin"
+  is the result of the command
+  \begin{center}
+    \verb"\setlength{\rightpointsmargin}{1cm}"
+  \end{center}
+  and you can change it by giving a new \verb"\setlength" command.
+\end{itemize}
+
+
+
+%--------------------------------------------------------------------
+\subsubsection{Custom question number lines}
+\label{sec:qformat}
+
+The default setup is for the question number to appear in the left
+margin and for the text of the question to begin on that line.  It's
+possible to change this so that the text of the question starts on the
+line following the question number, and the format of the line
+containing the question number is determined by the user.  This is
+done using the \verb"\qformat" command.  (There is also a
+\verb"\noqformat" command, which reverts to the default setup.)
+
+To use the \verb"\qformat" command, you give the command
+\begin{center}
+  \verb"\qformat{Format specification}"
+\end{center}
+where `Format specification' must contain some stretchability (e.g.,
+at least one \verb"\hfill" or \verb"\dotfill" or \verb"\hrulefill" or
+\ldots) and can contain the commands
+\begin{itemize}
+\item \verb"\thequestion", which expands to the question number, and
+\item \verb"\thepoints", which expands to the number of points
+  followed by the value of the last \verb"\pointname" command (if
+  points are specified for the question) or to nothing (if no points
+  were specified).  (For a discussion of the \verb"\pointname"
+  command, see section~\ref{sec:pointname})
+\end{itemize}
+For example, if you give the commands
+\pointname{ \points}
+\pointpoints{point}{points}
+%
+\begin{verbatim}
+\qformat{Question \thequestion \dotfill \thepoints}
+\begin{questions}
+\question[10]
+What did Billy Joe MacAllister throw off the Tallahatchie Bridge?
+\end{questions}
+\end{verbatim}
+%
+then you'll get
+\qformat{Question \thequestion \dotfill \thepoints}
+\begin{questions}
+\question[10]
+What did Billy Joe MacAllister throw off the Tallahatchie Bridge?
+\end{questions}
+%
+\medskip
+If you instead use the command
+\begin{verbatim}
+\qformat{\textbf{Question \thequestion}\quad (\thepoints)\hfill}
+\end{verbatim}
+then you'll get
+\begin{questions}
+\qformat{\textbf{Question \thequestion}\quad (\thepoints)\hfill}
+\question[10]
+What did Billy Joe MacAllister throw off the Tallahatchie Bridge?
+\end{questions}
+%
+\medskip
+If you instead use the command
+\begin{verbatim}
+\qformat{\hfill Question \thequestion\hfill (\thepoints)}
+\end{verbatim}
+then you'll get
+\begin{questions}
+\qformat{\hfill Question \thequestion\hfill (\thepoints)}
+\question[10]
+What did Billy Joe MacAllister throw off the Tallahatchie Bridge?
+\end{questions}
+\noqformat
+
+%--------------------------------------------------------------------
+\subsubsection{Adding up the points for each question}
+\label{sec:adding}
+
+You can also combine \verb"\qformat" with the \verb"\pointsofquestion"
+command (see section~\ref{sec:pointsofq}): If you assign points only
+to parts, subparts, and subsubparts of questions, but none to the
+questions themselves, and you give the commands
+\begin{verbatim}
+\addpoints
+\qformat{Question \thequestion\dotfill
+         \emph{(\pointsofquestion{\arabic{question}} \points)}}
+\end{verbatim}
+then you can type
+%
+\begin{verbatim}
+\question
+\begin{parts}
+\part[10]
+In no more than one paragraph, explain why the earth is round.
+\part[10]
+What changes to the van Allen radiation belt are needed to make the
+earth into a regular icosahedron?
+\end{parts}
+\end{verbatim}
+and you'll get
+%
+\nopointsinmargin
+\qformat{Question \thequestion\dotfill
+         \emph{(20 \points)}}
+\begin{questions}
+\question
+\begin{parts}
+\part[10]
+In no more than one paragraph, explain why the earth is round.
+\part[10]
+What changes to the van Allen radiation belt are needed to make the
+earth into a regular icosahedron?
+\end{parts}
+\end{questions}
+\noqformat
+
+
+%--------------------------------------------------------------------
+\subsection{Counting the questions and adding up the points}
+\label{sec:Count}
+
+The \verb"exam" document class automatically counts the numbers of
+questions, parts, and subparts, and makes these numbers available as
+the macros
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\numquestions"\\
+    \verb"\numparts"\\
+    \verb"\numsubparts"\\
+    \verb"\numsubsubparts"
+  \end{tabular}
+\end{center}
+These numbers are also printed on the screen when you run \LaTeX, and
+they are placed into the \verb".log" file as well.  If you have more
+than one \verb"questions" environment (for example, if your exam has
+several parts, with the questions in each part numbered beginning with
+``1''), then \verb"\numquestions" will hold the total number of
+questions on the exam.
+
+If you give the command
+\begin{center}
+  \verb"\addpoints"
+\end{center}
+then the class will add the total number of points that you've given
+to all of the questions, parts, and subparts of the exam, and make
+that total available in the macro
+\begin{center}
+  \verb"\numpoints"
+\end{center}
+(If you do give the command \verb"\addpoints", then the total number
+of points will also be displayed on the screen when you run \LaTeX,
+and placed into the \verb".log" file as well.)  Thus, if you give the
+command \verb"\addpoints" (after the \verb"\documentclass" command and
+before the \verb"\begin{document}" command), and then type
+\begin{verbatim}
+\begin{center}
+  This exam has \numquestions\ questions, for a total of \numpoints\ 
+  points.
+\end{center}
+\end{verbatim}
+after the \verb"\begin{document}" command, then you'll get
+\begin{center}
+  This exam has 8 questions, for a total of 120 points.
+\end{center}
+
+
+\emph{Warning}: If you give the command \verb"\addpoints", your point
+values for questions, parts, and subparts must not contain anything
+other than digits.  For example, if you \emph{don't} give the command
+\verb"\addpoints", then you can type
+\begin{center}
+  \verb"\question[10\%]"
+\end{center}
+with no problems, but this will cause errors if you've given the
+command \verb"\addpoints".  The correct way to accomplish what you
+want is to give the command \verb"\marginpointname{\%}" or
+\verb"\pointname{\%}" and then type \verb"\question[10]" (see
+section~\ref{sec:pointname}). 
+
+If you want to temporarily turn off the adding of points (for example,
+if you list both the total points for each question and the points for
+each part, but you don't want to count the points twice), you can give
+the command
+\begin{center}
+  \verb"\noaddpoints"
+\end{center}
+to turn off the adding of points, and the command \verb"\addpoints" to
+turn it back on.
+
+If you give the command \verb"\addpoints", then you can also use the
+command \verb"\gradetable" to print a grading table (see
+section~\ref{sec:Gradetable}) or the command \verb"\pointsofquestion"
+to list the total points for individual questions of the exam (see
+section~\ref{sec:pointsofq}).
+
+%---------------------------------------------------------------------
+\subsection{Referring to specific questions by number (cross
+  references)}
+
+You can use the standard \LaTeX{} commands \verb"\label" and
+\verb"\ref" to refer to questions (or parts, or subparts, or
+subsubparts) by number.  For example, if you type
+%
+\begin{verbatim}
+The first question is question number~\ref{ques:first}.
+Question number~\ref{ques:second} has both a good part
+(part~\ref{part:good}) and a bad part (part~\ref{part:bad}).
+
+\begin{questions}
+\question
+\label{ques:first}
+This is the first question.
+
+\question
+\label{ques:second}
+\begin{parts}
+\part
+\label{part:good}
+This is the good part.
+
+\part
+\label{part:bad}
+This is the \emph{bad} part.
+\end{parts}
+
+\question
+Is there a question?
+\end{questions}
+\end{verbatim}
+%
+then you'll get:
+
+\medskip
+
+The first question is question number~\ref{ques:first}.
+Question number~\ref{ques:second} has both a good part
+(part~\ref{part:good}) and a bad part (part~\ref{part:bad}).
+
+\begin{questions}
+\question
+\label{ques:first}
+This is the first question.
+
+\question
+\label{ques:second}
+\begin{parts}
+\part
+\label{part:good}
+This is the good part.
+
+\part
+\label{part:bad}
+This is the \emph{bad} part.
+\end{parts}
+
+\question
+Is there a question?
+\end{questions}
+
+
+
+\bigskip
+
+As with all other cross references in \LaTeX, you'll have to run your
+file through \LaTeX{} \emph{twice} to be sure that all the cross
+references are correct.
+
+
+%---------------------------------------------------------------------
+\subsection{Including special instructions for a group of questions}
+\label{sec:uplevel}
+
+There are two commands provided for including special instructions
+for specific questions: \verb"\uplevel" and \verb"\fullwidth".  These
+commands allow you to give instructions that will be set with the
+left indentation appropriate for the scope of the instructions.
+
+For example, if you are inside of a parts environment, and you want
+to give directions for the next few parts, then those directions
+should be indented to the level of the question of which they are
+parts, i.e., up one level.  If you type
+%
+\begin{verbatim}
+\begin{questions}
+\question
+Why did you come to Casablanca?
+
+\question
+\begin{parts}
+\part
+Why, Oh why, Oh why, Oh; why did I ever leave Ohio?
+
+\uplevel{The following two parts should be answered in classical
+Greek:}
+\part
+Why do birds sing?
+
+\part
+Why do fools fall in love?
+
+\end{parts}
+\end{questions}
+\end{verbatim}
+%
+then you'll get
+\begin{questions}
+\question
+Why did you come to Casablanca?
+
+
+\question
+\begin{parts}
+\part
+Why, Oh why, Oh why, Oh; why did I ever leave Ohio?
+
+\uplevel{The following two parts should be answered in classical
+Greek:}
+\part
+Why do birds sing?
+
+\part
+Why do fools fall in love?
+
+\end{parts}
+\end{questions}
+
+
+
+
+\bigskip
+If you want to give instructions for a group of questions, then the
+indenting for those instructions should be to the outer left margin,
+i.e., up one level.  For example, if you type
+%
+\begin{verbatim}
+\begin{questions}
+\question
+Approximate $\displaystyle \int_0^1 \sin x^2 \, dx$ within $.001$ of
+its true value.
+
+\uplevel{Questions \ref{exact-start} through~\ref{exact-end} should
+be evaluated completely, not just approximated.}
+
+\question
+\label{exact-start}
+$\displaystyle \int_0^1 \frac{x^2 \, dx}{\sqrt{1-x^2}}$
+
+\question
+$\displaystyle \int_0^1 \frac{1}{1+x^2}\, dx$
+
+\question
+\label{exact-end}
+$\displaystyle \int_0^{\frac{\pi}{2}} \sin^3 x \cos x \, dx$
+\end{questions}
+\end{verbatim}
+%
+you'll get
+\begin{questions}
+\question
+Approximate $\displaystyle \int_0^1 \sin x^2 \, dx$ within $.001$ of
+its true value.
+
+\uplevel{Questions \ref{exact-start} through~\ref{exact-end} should
+be evaluated completely, not just approximated.}
+
+\question
+\label{exact-start}
+$\displaystyle \int_0^1 \frac{x^2 \, dx}{\sqrt{1-x^2}}$
+
+\question
+$\displaystyle \int_0^1 \frac{1}{1+x^2}\, dx$
+
+\question
+\label{exact-end}
+$\displaystyle \int_0^{\frac{\pi}{2}} \sin^3 x \cos x \, dx$
+\end{questions}
+
+
+
+
+
+
+\bigskip
+If you want to give instructions that use the full width of the page
+(rather than just going up one level of indentation), then use the
+\verb"\fullwidth" command.  For example, if you type
+%
+\begin{verbatim}
+\begin{questions}
+\question
+This is the first question.
+
+\question
+\begin{parts}
+\part
+This is the first part.
+
+\part
+This is the second part.
+\begin{subparts}
+\subpart
+This is a subpart.
+
+\fullwidth{When you finish this exam, you should go back and
+reexamine your work, both on the earlier part of this exam and in
+your life up until the day of this exam, for any errors that you may
+have made.}
+
+\subpart
+This is another subpart.
+\end{subparts}
+\end{parts}
+\end{questions}
+\end{verbatim}
+%
+then you'll get
+\begin{questions}
+\question
+This is the first question.
+
+\question
+\begin{parts}
+\part
+This is the first part.
+
+\part
+This is the second part.
+\begin{subparts}
+\subpart
+This is a subpart.
+
+\fullwidth{When you finish this exam, you should go back and
+reexamine your work, both on the earlier part of this exam and in
+your life up until the day of this exam, for any errors that you may
+have made.}
+
+\subpart
+This is another subpart.
+\end{subparts}
+\end{parts}
+\end{questions}
+
+
+
+
+
+%---------------------------------------------------------------------
+\subsection{Naming the parts of a long exam}
+
+There are two ways of naming the parts of a long exam.  The first way
+uses the \verb"\fullwidth" and \verb"\uplevel" commands (see
+section~\ref{sec:uplevel}), and the other way uses the standard
+\verb"\part" and \verb"\section" commands.
+
+
+
+
+\subsubsection{Using \texttt{fullwidth} and \texttt{uplevel}}
+
+To place a section name in the exam, just use a \verb"\fullwidth"
+command (see section~\ref{sec:uplevel}) and include whatever font
+changing commands that you want to use.  For example, if you type
+%
+\begin{verbatim}
+\begin{questions}
+\question
+Is there, is there balm in Gilead?
+
+\fullwidth{\Large\bf Essay questions}
+
+\question
+Explain how the cooling of matter in the centuries following the big
+bang has influenced the British parliamentary system of government.
+
+\fullwidth{\Large\bf Laboratory questions}
+
+\question
+In the cabinet below your laboratory bench you will find a single
+edged razor blade, several C-clamps, and a bottle of whiskey.  Remove
+your appendix.  Do not suture until your work has been inspected.
+\end{questions}
+\end{verbatim}
+%
+then you'll get
+%
+\begin{questions}
+\question
+Is there, is there balm in Gilead?
+
+\fullwidth{\Large\bf Essay questions}
+
+\question
+Explain how the cooling of matter in the centuries following the big
+bang has influenced the British parliamentary system of government.
+
+\fullwidth{\Large\bf Laboratory questions}
+
+\question
+In the cabinet below your laboratory bench you will find a single
+edged razor blade, several C-clamps, and a bottle of whiskey.  Remove
+your appendix.  Do not suture until your work has been inspected.
+\end{questions}
+
+
+
+
+
+
+\subsubsection{Using the standard sectioning commands}
+
+The exam documentclass is built upon the standard article
+documentclass, and so the sectioning commands used with the article
+documentclass can be used here as well.  In particular, you can give
+the commands \verb"\part", \verb"\part*", \verb"\section", and
+\verb"\section*".  The definitions made in \verb"exam.cls" ensure that
+if a \verb"\part" command appears \emph{outside of a parts
+  environment} it will be interpreted as a sectioning command, while
+if it appears \emph{inside} of a parts environment, it will be
+interpreted as beginning a new part of a question.
+
+
+
+You can give these commands in the middle of a questions environment
+so as not to interrupt the numbering of the questions, or you can end
+a questions environment, give a sectioning command, and then start a
+new questions environment (which would reset the question counter
+to start again with number~1).  If you give any of these commands
+while inside of a questions environment, then the section titles will
+be indented to the same extent that questions are indented, unless
+they are given as the argument of a \verb"\fullwidth" or
+\verb"\uplevel" command.  These
+commands have the advantage, however, that the unstarred versions
+provide automatic numbering of the parts (or sections).
+%---------------------------------------------------------------------
+\subsection{Leaving space for the answers}
+\label{sec:LeaveSpace}
+
+%--------------------------------------------------------------------
+\subsubsection{Leaving blank space}
+\label{sec:BlankSpace}
+
+To leave a specific amount of blank space on the page for the answer
+to a question, you should use the \verb"\vspace*" command.  For
+example, the command \verb"\vspace*{1in}" inserts one inch of vertical
+space after the line in which it appears.  (If it appears in between
+paragraphs, then it inserts the space right there.)  You can also use
+the \verb"\vspace" command, the difference being that any space
+inserted by \verb"\vspace" will be deleted if it occurs at the top
+of a new page, whereas space inserted by \verb"\vspace*" will never
+be deleted.
+
+If you want to equally distribute the blank space among the questions
+on the page, then just put \verb"\vspace*{\fill}" after each question
+on the page and use \verb"\newpage" to end the page.
+
+You can also leave blank space (when solutions are not being printed)
+by including an optional argument with the \verb"solution"
+environment; see section~\ref{sec:SolSpace}.
+
+%--------------------------------------------------------------------
+\subsubsection{Printing lined space for answers}
+\label{sec:FillLines}
+
+You can print blank lines with the command
+\begin{center}
+  \verb"\fillwithlines{length}"
+\end{center}
+which fills vertical space of height \verb"length" with horizontal
+lines that run the length of the current line.  That is, they extend
+from the current left margin (which depends on whether we're in a
+question, part, subpart, or subsubpart) to the right margin.
+
+\medskip
+
+For example, if you type
+\begin{verbatim}
+\begin{questions}
+\question
+In no more than one paragraph, explain why the earth is round.
+
+\fillwithlines{1in}
+
+\question
+\begin{parts}
+\part
+What changes to the van Allen radiation belt are needed to make the
+earth into a regular icosahedron?
+
+\fillwithlines{1in}
+
+\part
+Where should the field generator be constructed if you want one of the
+vertices to be located at the Royal Observatory at Greenwich?
+
+\fillwithlines{1in}
+
+\end{parts}
+\end{questions}
+\end{verbatim}
+then you'll get
+\begin{questions}
+\question
+In no more than one paragraph, explain why the earth is round.
+
+\fillwithlines{1in}
+
+\question
+\begin{parts}
+\part
+What changes to the van Allen radiation belt are needed to make the
+earth into a regular icosahedron?
+
+\fillwithlines{1in}
+
+\part
+Where should the field generator be constructed if you want one of the
+vertices to be located at the Royal Observatory at Greenwich?
+
+\fillwithlines{1in}
+
+\end{parts}
+\end{questions}
+
+\medskip
+The distance between the lines is \verb"\linefillheight", the default
+value of which is set with the command
+\begin{center}
+  \verb"\setlength\linefillheight{.25in}"
+\end{center}
+That value can be changed by giving a new \verb"\setlength" command.
+The thickness of the lines is \verb"\linefillthickness", the default
+value of which is set with the command
+\begin{center}
+  \verb"\setlength\linefillthickness{0.1pt}"
+\end{center}
+and that value can also be changed by giving a new \verb"\setlength"
+command.
+
+\medskip
+
+If you want to fill the remaining space on the page with lines, you
+should give the commands
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\fillwithlines{\fill}"\\
+    \verb"\newpage"
+  \end{tabular}
+\end{center}
+If you want to equally distribute the space for answers among the
+questions on the page, then just put \verb"\fillwithlines{\fill}"
+after each question on the page and use \verb"\newpage" to end the
+page.
+
+You can also insert lined space (when solutions are not being printed)
+by including an optional argument with the \verb"solutionorlines"
+environment; see section~\ref{sec:SolSpace}.
+
+%--------------------------------------------------------------------
+\subsubsection{Short answer questions}
+\label{sec:ShortAns}
+
+
+The exam class can print answer lines for short answer questions.  The
+command
+\begin{center}
+  \verb"\answerline"
+\end{center}
+leaves blank vertical space of length \verb"\answerskip" and then
+inserts a horizontal line of length \verb"\answerlinelength" at the
+right margin, preceded by the number of the current question, part,
+subpart, or subsubpart.  The default values of \verb"\answerskip" and
+\verb"\answerlinelength" are set by the commands
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\setlength\answerskip{2ex}"\\
+    \verb"\setlength\answerlinelength{1in}"
+  \end{tabular}
+\end{center}
+and these can be changed by giving new \verb"\setlength" commands.
+If you use the command \verb"\answerline" outside of a
+\verb"questions" environment, then the number before the line will be
+omitted.
+
+For example, if you type
+\begin{verbatim}
+\begin{questions}
+\question
+Who's buried in Grant's tomb?
+\answerline
+
+\question
+What was the color of George Washington's white horse?
+\answerline
+
+\question
+Which is heavier: A pound of feathers, or a pound of lead?
+\answerline
+\end{questions}
+\end{verbatim}
+then you'll get
+\begin{questions}
+\question
+Who's buried in Grant's tomb?
+\answerline
+
+\question
+What was the color of George Washington's white horse?
+\answerline
+
+\question
+Which is heavier: A pound of feathers, or a pound of lead?
+\answerline
+\end{questions}
+and if you type
+\begin{verbatim}
+\begin{questions}
+\question
+Answer the following questions on the lines at the right:  
+\begin{parts}
+\part
+Who's buried in Grant's tomb? \answerline
+  
+\part
+\begin{subparts}
+\subpart
+What light through yonder window breaks? \answerline
+
+\subpart
+To be, or not to be; that is the question? \answerline
+\end{subparts}
+  
+\part
+What was the color of George Washington's white horse? \answerline
+\end{parts}
+\end{questions}
+\end{verbatim}
+then you'll get
+\begin{questions}
+\question
+Answer the following questions on the lines at the right:  
+\begin{parts}
+\part
+Who's buried in Grant's tomb? \answerline
+  
+\part
+\begin{subparts}
+\subpart
+What light through yonder window breaks? \answerline
+
+\subpart
+To be, or not to be; that is the question? \answerline
+\end{subparts}
+  
+\part
+What was the color of George Washington's white horse? \answerline
+\end{parts}
+\end{questions}
+
+
+%--------------------------------------------------------------------
+\subsection{Multiple choice questions}
+\label{sec:MulChc}
+
+There are two environments for listing the possible answers to a
+multiple choice question:
+\begin{itemize}
+\item The \verb"choices" environment creates a list with the choices
+  as the items in the list.
+\item The \verb"oneparchoices" environment lists all of the choices in
+  a single paragraph (that is a continuation of the paragraph
+  preceding the environment unless you leave a blank line before
+  beginning the environment).
+\end{itemize}
+Both of these environments use upper case letters (i.e., ``A'', ``B'',
+``C'', \ldots) to label the choices; to change this, see
+section~\ref{sec:CustNumb}.
+
+%--------------------------------------------------------------------
+\subsubsection{The \texttt{choices} environment}
+\label{sec:choices}
+
+For example, if you type
+\begin{verbatim}
+\begin{questions}
+\question
+One of these things is not like the others; one of these things is not
+the same.  Which one is different?
+\begin{choices}
+\choice
+John
+
+\choice
+Paul
+
+\choice
+George
+
+\choice
+Ringo
+
+\choice
+Socrates
+
+\end{choices}
+    
+\end{questions}
+\end{verbatim}
+Then you'll get
+\begin{questions}
+\question
+One of these things is not like the others; one of these things is not
+the same.  Which one is different?
+\begin{choices}
+\choice
+John
+
+\choice
+Paul
+
+\choice
+George
+
+\choice
+Ringo
+
+\choice
+Socrates
+
+\end{choices}
+    
+\end{questions}
+
+%--------------------------------------------------------------------
+\subsubsection{The \texttt{oneparchoices} environment}
+
+If instead of the \verb"choices" environment in the example of
+section~\ref{sec:choices} you use a \verb"oneparchoices" environment,
+then you'll get
+\begin{questions}
+\question
+One of these things is not like the others; one of these things is not
+the same.  Which one is different?
+\begin{oneparchoices}
+\choice
+John
+
+\choice
+Paul
+
+\choice
+George
+
+\choice
+Ringo
+
+\choice
+Socrates
+
+\end{oneparchoices}
+    
+\end{questions}
+If you insert a blank line before the \verb"\begin{oneparchoices}",
+  then you'll get
+\begin{questions}
+\question
+One of these things is not like the others; one of these things is not
+the same.  Which one is different?
+
+\begin{oneparchoices}
+\choice
+John
+
+\choice
+Paul
+
+\choice
+George
+
+\choice
+Ringo
+
+\choice
+Socrates
+
+\end{oneparchoices}
+    
+\end{questions}
+
+
+
+%--------------------------------------------------------------------
+\subsection{Including solutions}
+\label{sec:solutions}
+
+
+ 
+There are two environments for printing solutions to the problems:
+\begin{center}
+  \begin{tabular}{rll}
+    The& \verb"solution"& environment, and\\
+    the& \verb"solutionorlines"& environment.
+  \end{tabular}
+\end{center}
+If you use these environments without any optional arguments, then
+they are identical: They either print the solution or nothing at all.
+Whether or not solutions are printed is controlled by the two commands
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\printanswers"\\
+    \verb"\noprintanswers"
+  \end{tabular}
+\end{center}
+Using these commands, you can print the solutions for the entire exam
+or for only certain parts of it.  The default is that solutions are
+\emph{not} printed.  There is also an \verb"answers" option to the
+exam documentclass, used as in
+\begin{center}
+  \verb"\documentclass[answers]{exam}"
+\end{center}
+that is equivalent to giving the command \verb"\printanswers" at the
+beginning of the document.
+
+Both of these environments can take an optional argument, which is an
+amount of space to be inserted when solutions are not being printed.
+If this optional argument is used and solutions are not being printed,
+then:
+\begin{itemize}
+\item The \verb"solution" enviroment inserts that amount of blank
+  space, and
+\item the \verb"solutionorlines" environment inserts that amound of
+  space with ruled lines, as if you had given a \verb"\fillwithlines"
+  command (see section~\ref{sec:FillLines}).
+\end{itemize}
+
+By default, the solution is printed inside of a box (i.e., an
+\verb"\fbox"), and if the solution is broken across pages, then each
+piece is enclosed in a box.  There is also a \verb"\shadedsolutions"
+command to instead have the solution printed in a \verb"\colorbox"
+(i.e., printed on a shaded background); for this, you must load the
+\verb"color" package and your printer must be capable of printing
+color, or at least grayscale (see section~\ref{sec:shaded}).
+
+\medskip
+
+For example, if you type
+\begin{verbatim}
+\begin{questions}
+\question Did you mutter something?
+
+\begin{solution}
+  Once upon a midnight dreary, while I pondered, weak and weary, Over
+  many a quaint and curious volume of forgotten lore--- While I
+  nodded, nearly napping, suddenly there came a tapping, As of some
+  one gently rapping, rapping at my chamber door.  ``\,'Tis some
+  visitor,'' I muttered, ``tapping at my chamber door--- Only this and
+  nothing more.''
+\end{solution}
+\end{questions}
+\end{verbatim}
+and you've given the command \verb"\printanswers" or used the
+documentclass option \verb"answers", then you'll get
+\bigskip
+\begin{questions}
+\question Did you mutter something?
+
+\begin{TheSolution}
+  Once upon a midnight dreary, while I pondered, weak and weary, Over
+  many a quaint and curious volume of forgotten lore--- While I
+  nodded, nearly napping, suddenly there came a tapping, As of some
+  one gently rapping, rapping at my chamber door.  ``\,'Tis some
+  visitor,'' I muttered, ``tapping at my chamber door--- Only this and
+  nothing more.''
+\end{TheSolution}
+\end{questions}
+\bigskip
+
+The result would be exactly the same if the above \verb"solution"
+environment were replaced by a \verb"solutionorlines" environment.
+
+By default, the solution is printed in a box whose width equals that
+of the text of the current question (or part, or subpart, or
+subsubpart).  That is, the indentation at the left of the solution
+equals the current level of indentation.  You can change this by
+enclosing the \verb"solution" or \verb"solutionorlines" environment in
+the argument of a \verb"\fullwidth" or \verb"\uplevel" command.  For
+example, if you type
+\begin{verbatim}
+\begin{questions}
+\question Did you mutter something?
+
+
+\fullwidth{\begin{solution}
+  Once upon a midnight dreary, while I pondered, weak and weary, Over
+  many a quaint and curious volume of forgotten lore--- While I
+  nodded, nearly napping, suddenly there came a tapping, As of some
+  one gently rapping, rapping at my chamber door.  ``\,'Tis some
+  visitor,'' I muttered, ``tapping at my chamber door--- Only this and
+  nothing more.''
+\end{solution}}
+\end{questions}
+\end{verbatim}
+and you've given the command \verb"\printanswers" or used the
+documentclass option \verb"answers", then you'll get
+\bigskip
+\begin{questions}
+\question Did you mutter something?
+
+
+\fullwidth{\begin{TheSolution}
+  Once upon a midnight dreary, while I pondered, weak and weary, Over
+  many a quaint and curious volume of forgotten lore--- While I
+  nodded, nearly napping, suddenly there came a tapping, As of some
+  one gently rapping, rapping at my chamber door.  ``\,'Tis some
+  visitor,'' I muttered, ``tapping at my chamber door--- Only this and
+  nothing more.''
+\end{TheSolution}}
+\end{questions}
+
+
+
+For both of these environments, if solutions are not being printed
+then the contents of the environment are ignored.  If, however, you
+use the optional argument to the \verb"solution" environment (see
+section~\ref{sec:SolSpace}), then the requested amount of blank space
+will be inserted when the solution isn't printed, and if you use the
+optional argument to the \verb"solutionorlines" environment, then the
+requested amount of lined space will be inserted when solutions are
+not being printed.  For all of this, see section~\ref{sec:SolSpace}.
+
+
+%--------------------------------------------------------------------
+\subsubsection{Printing the solution on a shaded background}
+\label{sec:shaded}
+
+If you load the \verb"color" package with the command
+\begin{center}
+  \verb"\usepackage{color}"
+\end{center}
+in the preamble of your document, then you can give the command
+\begin{center}
+  \verb"\shadedsolutions"
+\end{center}
+This will cause solutions to be printed on a shaded background, which
+by default is a light gray.  (Most laser printers can at least print
+grayscale when printing with the correct driver.)  If you want to
+change the color of the shading, you can do so by redefining the color
+\verb"ShadeColor".  For example, if you give the command
+\begin{center}
+  \verb"\definecolor{SolutionColor}{rgb}{0.8,0.9,1}"
+\end{center}
+then the solutions will be printed on a light blue background
+(assuming that your printer is capable of producing that color).
+
+If you want to switch back to printing solutions inside of an
+\verb"\fbox", you can do so by giving the command
+\begin{center}
+  \verb"\framedsolutions"
+\end{center}
+which returns you to the default situation.
+
+
+%--------------------------------------------------------------------
+\subsubsection{Customizing the heading of the solution}
+\label{sec:SolCust}
+
+
+The word ``\textbf{Solution:}'' that you see at the beginning of the
+solutions printed by the \verb"solution" and \verb"solutionorlines"
+environment cans be changed by redefining the command
+\verb"\solutiontitle".  The default value was created by the command
+\begin{center}
+\verb"\newcommand{\solutiontitle}{\noindent\textbf{Solution:}\enspace}"
+\end{center}
+If, for example, you give the command
+\begin{center}
+\verb"\renewcommand{\solutiontitle}{\noindent\textbf{Solution:}\par\noindent}"
+\end{center}
+then the \verb"solution" environment above would print
+\renewcommand{\solutiontitle}{\noindent\textbf{Solution:}\par\noindent}
+\par\bigskip
+\begin{questions}
+\question Did you mutter something?
+
+\begin{TheSolution}
+  Once upon a midnight dreary, while I pondered, weak and weary, Over
+  many a quaint and curious volume of forgotten lore--- While I
+  nodded, nearly napping, suddenly there came a tapping, As of some
+  one gently rapping, rapping at my chamber door.  ``\,'Tis some
+  visitor,'' I muttered, ``tapping at my chamber door--- Only this and
+  nothing more.''
+\end{TheSolution}
+\end{questions}
+\renewcommand{\solutiontitle}{\noindent\textbf{Solution:}\enspace}
+
+
+\bigskip
+
+The appearance of the \verb"solution" and \verb"solutionorlines"
+environments can actually be totally customized, if you're up to
+defining a \LaTeX{} environment.  The appearance of the solution typed
+into either a \verb"solution" or \verb"solutionorlines" environment is
+defined by an environment called \verb"TheSolution", and you can
+change the definition of \verb"TheSolution" with a
+\verb"\renewenvironment" command.  That is, the \verb"solution"
+environment decides whether the command \verb"\printanswers" has been
+given and, if so, it feeds the contents of the \verb"solution"
+environment into a \verb"TheSolution" environment.  (The behavior of a
+\verb"solutionorlines" environment is similar.)  If you use
+\verb"\renewenvironment" to change the definition of the
+\verb"TheSolution" environment, you'll be changing the way the
+solution is printed.  For the default definition of the
+\verb"TheSolution" environment, see the file \verb"exam.cls".
+
+
+
+%--------------------------------------------------------------------
+\subsubsection{Leaving blank space for the answers when solutions aren't
+  printed}
+\label{sec:SolSpace}
+
+Both the \verb"solution" and \verb"solutionorlines" environments take
+an optional argument:
+\begin{itemize}
+\item In a \verb"solution" environment this is an amount of blank
+  space to be left when the solutions are not being printed, and
+\item in a \verb"solutionorlines" environment this is an amount of
+  lined space to be left when the solutions are not being printed
+\end{itemize}
+For example, if you type
+\begin{verbatim}
+\begin{solution}[2in]
+  Once upon a midnight dreary, while I pondered, weak and weary, Over
+  many a quaint and curious volume of forgotten lore--- While I
+  nodded, nearly napping, suddenly there came a tapping, As of some
+  one gently rapping, rapping at my chamber door.  ``\,'Tis some
+  visitor,'' I muttered, ``tapping at my chamber door--- Only this and
+  nothing more.''
+\end{solution}
+\end{verbatim}
+then there will be 2 inches of blank space inserted when solutions are
+not being printed, and if you type
+\begin{verbatim}
+\begin{solutionorlines}[2in]
+  Once upon a midnight dreary, while I pondered, weak and weary, Over
+  many a quaint and curious volume of forgotten lore--- While I
+  nodded, nearly napping, suddenly there came a tapping, As of some
+  one gently rapping, rapping at my chamber door.  ``\,'Tis some
+  visitor,'' I muttered, ``tapping at my chamber door--- Only this and
+  nothing more.''
+\end{solutionorlines}
+\end{verbatim}
+then there will be 2 inches of lined space inserted (as if you had
+given a \verb"\fillwithlines" command; see
+section~\ref{sec:FillLines}) when solutions are not being printed.
+
+
+
+
+%--------------------------------------------------------------------
+\subsection{Customizing the numbers}
+\label{sec:CustNumb}
+
+The default setup is that:
+\begin{questions}
+  \question Question numbers are arabic, and are followed by a period.
+  \begin{parts}
+    \part Part numbers are lower case letters, and are enclosed in
+    parentheses.
+    \begin{subparts}
+      \subpart Subpart numbers are lower case roman, and are followed
+      by a period.
+      \begin{subsubparts}
+        \subsubpart Subsubpart numbers are greek, and are followed by
+        a right parenthesis.
+        \begin{choices}
+          \choice Choices are upper case letters, and are followed by
+          a period.
+        \end{choices}
+      \end{subsubparts}
+    \end{subparts}
+  \end{parts}
+\end{questions}
+All of this can be changed.
+
+\bigskip
+
+To change the type of numbering, you would redefine the commands
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\thequestion"\\
+    \verb"\thepartno"\\
+    \verb"\thesubpart"\\
+    \verb"\thesubsubpart"\\
+    \verb"\thechoice"
+  \end{tabular}
+\end{center}
+(Note: The second one listed there is \verb"\thepartno", \emph{not}
+\verb"\thepart".  The command \verb"\thepart" refers to the counter
+used in the article documentclass standard sectioning command
+\verb"\part".)  The numbering commands available are
+\begin{center}
+  \begin{tabular}{ll}
+    \verb"\arabic"& Regular arabic integers\\
+    \verb"\alph"& Lower case letters\\
+    \verb"\Alph"& Upper case letters\\
+    \verb"\roman"& Lower case roman numbers\\
+    \verb"\Roman"& Upper case roman numbers\\
+    \verb"\greeknum"& Greek letters
+  \end{tabular}
+\end{center}
+and any of these can be applied to the counters \verb"question",
+\verb"partno", \verb"subpart", \verb"subsubpart", and \verb"choice".
+(The \verb"\greeknum" command is defined by the exam documentclass,
+but all of the others are standard \LaTeX{} commands.)
+
+For example, to have questions numbered using upper case roman numbers
+and parts numbered using upper case letters, you would give the
+commands
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\renewcommand\thequestion{\Roman{question}}"\\
+    \verb"\renewcommand\thepartno{\Alph{partno}}"
+  \end{tabular}
+\end{center}
+
+\bigskip
+
+
+The ``decorations'' around the numbers (i.e., the periods, or
+parentheses, or \ldots) are determined by the commands
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\questionlabel"\\
+    \verb"\partlabel"\\
+    \verb"\subpartlabel"\\
+    \verb"\subsubpartlabel"\\
+    \verb"\choicelabel"
+  \end{tabular}
+\end{center}
+the default definitions of which are:
+\begin{center}
+  \begin{tabular}{l}
+    \verb"\newcommand\questionlabel{\thequestion.}"\\
+    \verb"\newcommand\partlabel{(\thepartno)}"\\
+    \verb"\newcommand\subpartlabel{\thesubpart.}"\\
+    \verb"\newcommand\subsubpartlabel{\thesubsubpart)}"\\
+    \verb"\newcommand\choicelabel{\thechoice.}"
+  \end{tabular}
+\end{center}
+You can change any of these by giving \verb"\renewcommand" commands to
+redefine them.
+
+
+%--------------------------------------------------------------------
+\section{Grading tables}
+\label{sec:Gradetable}
+
+\newlength\cwidth
+
+The exam documentclass can print a ``grading table'', indexed either
+by question number or by page numer.  That is, you can print
+\begin{itemize}
+\item a table listing the question numbers and the total points
+  possible for each question (including all of its parts, subparts,
+  and subsubparts) and leaving space for you to fill in (by hand) the
+  points earned on each question, or
+\item a table listing each page that has at least one question, part,
+  subpart, or subsubpart with points assigned to it, the total number
+  of points possible on that page, and leaving space for you to fill
+  in (by hand) the points earned on that page.
+\end{itemize}
+In order to use this feature you must give the command
+\verb"\addpoints" (see section~\ref{sec:Count}), and there must be
+only one \verb"questions" environment in the entire exam.  In
+addition, you must run \LaTeX{} \emph{twice} after making any changes
+to the file in order to make sure that the point values are correct on
+a grading table indexed by question number, and \emph{at least three
+  times} for a grading table indexed by page number.  (Since the table
+appears on the third run of \LaTeX{}, and the space it occupies can
+change the page on which each question falls, it may take a fourth run
+of \LaTeX{} for the table to have the points per page correct.)
+
+\medbreak
+
+The command to create a grading table is 
+\begin{center}
+  \verb"\gradetable",
+\end{center}
+and it takes two optional arguments:
+\begin{enumerate}
+\item The first optional argument should be either \verb"[v]" or
+  \verb"[h]", to choose between a vertically oriented table or a
+  horizontally oriented table, and
+\item the second optional argument should be either \verb"[questions]"
+  or \verb"[pages]", to choose between a table indexed by question
+  number or a table indexed by page number.
+\end{enumerate}
+Thus,
+\begin{itemize}
+\item \verb"\gradetable[v][questions]" prints a vertically oriented
+  table indexed by question number,
+\item \verb"\gradetable[h][questions]" prints a horizontally oriented
+  table indexed by question number,
+\item \verb"\gradetable[v][pages]" prints a vertically oriented table
+  indexed by page number, and
+\item \verb"\gradetable[h][pages]" prints a horizontally oriented
+  table indexed by page number.
+\end{itemize}
+If you leave out the optional arguments (i.e., if you give the command
+\verb"\gradetable") you'll get a vertically oriented table indexed by
+question number.
+
+For example, if the exam has 8 questions, each worth a total of 15
+points, and you type
+\begin{verbatim}
+\begin{center}
+  \gradetable[v][questions]
+\end{center}
+\end{verbatim}
+then you'll get
+\begin{center}
+  \cwidth=2em
+  \renewcommand\arraystretch{1.5}
+  \begin{tabular}{|c|c|c|}
+    \hline
+    Question& Points& Score\\
+    \hline
+    1& 15& \hbox to \cwidth{\hfill}\\
+    \hline
+    2& 15& \hbox to \cwidth{\hfill}\\
+    \hline
+    3& 15& \hbox to \cwidth{\hfill}\\
+    \hline
+    4& 15& \hbox to \cwidth{\hfill}\\
+    \hline
+    5& 15& \hbox to \cwidth{\hfill}\\
+    \hline
+    6& 15& \hbox to \cwidth{\hfill}\\
+    \hline
+    7& 15& \hbox to \cwidth{\hfill}\\
+    \hline
+    8& 15& \hbox to \cwidth{\hfill}\\
+    \hline
+    Total:& 120&\\
+    \hline
+  \end{tabular}
+\end{center}
+and if you type
+\begin{verbatim}
+\begin{center}
+  \gradetable[h][questions]
+\end{center}
+\end{verbatim}
+then you'll get
+\begin{center}
+  \cwidth=2em
+  \renewcommand\arraystretch{1.5}
+  \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+    \hline
+    Question:& 1& 2& 3& 4& 5& 6& 7& 8& Total\\
+    \hline
+    Points:&
+    15&
+    15&
+    15&
+    15&
+    15&
+    15&
+    15&
+    15&
+    120\\
+    \hline
+    Score:&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \\
+    \hline
+  \end{tabular}
+\end{center}
+The number of points listed for a question is the sum of the point
+values for that question and all of its parts, subparts, and
+subsubparts.
+
+If those 8 questions are distributed two to a page on each of pages 2
+through 5 and if you type
+\begin{verbatim}
+\begin{center}
+  \gradetable[v][pages]
+\end{center}
+\end{verbatim}
+then you'll get
+\begin{center}
+  \cwidth=2em
+  \renewcommand\arraystretch{1.5}
+  \begin{tabular}{|c|c|c|}
+    \hline
+    Page& Points& Score\\
+    \hline
+    2& 30& \hbox to \cwidth{\hfill}\\
+    \hline
+    3& 30& \hbox to \cwidth{\hfill}\\
+    \hline
+    4& 30& \hbox to \cwidth{\hfill}\\
+    \hline
+    5& 30& \hbox to \cwidth{\hfill}\\
+    \hline
+    Total:& 120&\\
+    \hline
+  \end{tabular}
+\end{center}
+and if you type
+\begin{verbatim}
+\begin{center}
+  \gradetable[h][pages]
+\end{center}
+\end{verbatim}
+then you'll get
+\begin{center}
+  \cwidth=2em
+  \renewcommand\arraystretch{1.5}
+  \begin{tabular}{|l|c|c|c|c|c|}
+    \hline
+    Page:& 2& 3& 4& 5& Total\\
+    \hline
+    Points:&
+    30&
+    30&
+    30&
+    30&
+    120\\
+    \hline
+    Score:&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}
+    \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\medskip 
+
+\noindent \emph{Warning:} If you have a large number of questions on
+the exam, then these tables can easily become too large to fit on the
+page!  If this becomes a problem, then you can use the
+\verb"\pointsofquestion" command (see section~\ref{sec:pointsofq}) or
+the \verb"\pointsonpage" command (see section~\ref{sec:pointsonp}) to
+create a custom \verb"tabular" environment that has more rows (or
+columns) than the tables produced by the \verb"gradingtable" command.
+
+%--------------------------------------------------------------------
+\subsection{Customizing the table}
+\label{sec:CustTable}
+
+There are three ways in which you can customize the default appearance
+of the grading tables:
+\begin{itemize}
+\item You can change the words (and the fonts) that appear in the
+  table.
+\item You can change the width of the cells that are left blank for
+  you to write in the scores.
+\item You can change the value of \verb"\baselinestretch" used for the
+  table.
+\end{itemize}
+For vertical grading tables:
+\begin{center}
+\begin{tabular}{l@{\qquad}l}
+Command& Effect\\
+\verb"\vqword{text}"& substitutes \verb"text" for ``Question''\\
+\verb"\vpgword{text}"& substitutes \verb"text" for ``Page''\\
+\verb"\vpword{text}"& substitutes \verb"text" for ``Points''\\
+\verb"\vsword{text}"& substitutes \verb"text" for ``Score''\\
+\verb"\vtword{text}"& substitutes \verb"text" for ``Total:''
+\end{tabular}
+\end{center}
+For horizontal grading tables:
+\begin{center}
+\begin{tabular}{l@{\qquad}l}
+Command& Effect\\
+\verb"\hqword{text}"& substitutes \verb"text" for ``Question:''\\
+\verb"\hpgword{text}"& substitutes \verb"text" for ``Page:''\\
+\verb"\hpword{text}"& substitutes \verb"text" for ``Points:''\\
+\verb"\hsword{text}"& substitutes \verb"text" for ``Score:''\\
+\verb"\htword{text}"& substitutes \verb"text" for ``Total''
+\end{tabular}
+\end{center}
+For both vertical and horizontal grading tables:
+\begin{center}
+  \begin{tabular}{l@{\qquad}l}
+    \verb"\cellwidth{length}"& changes the width of the blank cells to
+    \verb"length"\\
+    \verb"\gradetablestretch{number}"& uses \verb"number" as the
+    \verb"\baselinestretch"
+  \end{tabular}
+\end{center}
+If you don't use any of these commands then you get the default
+values, which are defined by the commands
+\begin{center}
+\begin{tabular}{l@{\qquad}l@{\qquad}l}
+  \verb"\hqword{Question:}"& \verb"\vqword{Question}"&
+                             \verb"\cellwidth{2em}"\\
+  \verb"\hpgword{Page:}"&    \verb"\vpgword{Page}"&
+                           \verb"\gradetablestretch{1.5}"\\
+  \verb"\hpword{Points:}"& \verb"\vpword{Points}"\\
+  \verb"\hsword{Score:}"& \verb"\vsword{Score}"\\
+  \verb"\htword{Total}"& \verb"\vtword{Total:}"
+\end{tabular}
+\end{center}
+
+\medskip
+For example, if you type
+\begin{verbatim}
+\begin{center}
+  \hqword{Aufgabe Nr.:}
+  \hpword{Punktzahl:}
+  \htword{\textbf{Summe}}
+  \hsword{Davon erreicht:}
+  \cellwidth{2.2em}
+  \gradetable[h]
+\end{center}
+\end{verbatim}
+then you'll get
+\begin{center}
+  \cwidth=2.2em
+  \renewcommand\arraystretch{1.5}
+  \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+    \hline
+    Aufgabe Nr.:& 1& 2& 3& 4& 5& 6& 7& 8& \textbf{Summe}\\
+    \hline
+    Punktzahl:&
+    15&
+    15&
+    15&
+    15&
+    15&
+    15&
+    15&
+    15&
+    120\\
+    \hline
+    Davon erreicht:&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \hbox to \cwidth{\hfill}&
+    \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
+
+%--------------------------------------------------------------------
+\subsection{\texttt{pointsofquestion}}
+\label{sec:pointsofq}
+
+If you give the command \verb"\addpoints" (see
+section~\ref{sec:Count}), then you can use the
+\begin{center}
+  \verb"\pointsofquestion"
+\end{center}
+command.  This command takes one argument, which must be the number of
+a question on the exam, and it prints the total number of points for
+that question.  That is:
+\begin{quote}
+  \verb"\pointsofquestion{1}" prints the sum of the point values for
+  question 1 and all of its parts, subparts, and subsubparts.
+
+  \verb"\pointsofquestion{2}" prints the sum of the point values for
+  question 2 and all of its parts, subparts, and subsubparts.
+
+  Etc.
+\end{quote}
+The \verb"\pointsofquestion" command is used by the \verb"\gradetable"
+command (see section~\ref{sec:Gradetable}), and it can be used to
+create a grading table using \LaTeX's \verb"tabular" environment when
+the tables produced using the \verb"\gradetable" command either don't
+fit on the page or are unsuitable for some other reason.  It can also
+be used in a \verb"\qformat" command to list the total number of
+points of all parts, subparts, and subsubparts of a question on the
+line with the question number (see section~\ref{sec:adding}).
+
+
+%--------------------------------------------------------------------
+
+\subsection{\texttt{pointsonpage}}
+\label{sec:pointsonp}
+
+If you give the command \verb"\addpoints" (see
+section~\ref{sec:Count}), then you can use the \verb"\pointsonpage"
+command.  This command takes one argument, which must be the number of
+a page of the exam, and it prints the total number of points for all
+the questions, parts, subparts, and subsubparts on that page.  That
+is:
+\begin{quote}
+  \verb"\pointsonpage{1}" prints the sum of the point values for
+  all questions, etc., on page 1,
+
+  \verb"\pointsonpage{2}" prints the sum of the point values for
+  all questions, etc., on page 2,
+
+  Etc.
+\end{quote}
+This command can be used, e.g., inside of a \verb"tabular" environment
+to print a custom grading table (if the grading tables that can be
+printed using the \verb"\gradetable" command (see
+section~ref{sec:Gradetable}) are somehow unsuitable).  It can also be
+used in headers and footers to print on each page the total number of
+points available on that page; for example, the command
+\begin{verbatim}
+  \runningfooter{}
+                {}
+                {Points earned: \hbox to 1in{\hrulefill}
+                 out of a possible \pointsonpage{\thepage} points}
+\end{verbatim}
+(see section~\ref{sec:runningfooter}) will produce the footer
+\samplefoot{}{}{}{Points earned: \hbox to 1in{\hrulefill} out of a
+  possible 20 points} on all pages after the first.  (For another
+example, see section~\ref{sec:PtsPgEx}) 
+
+\textbf{Caution:} The command \verb"\pointsonpage{\thepage}" will only
+work reliably in headers and footers, since \verb"\thepage" will only
+work reliably in headers and footers.
+
+
+%--------------------------------------------------------------------
+%\section{Changing the page size}
+\section{Changing the page margins}
+\label{sec:pagesize}
+
+The exam documentclass arranges things so that you get one inch
+margins at the top, bottom, and sides no matter what size paper you
+use, as long as you use the corresponding documentclass option
+(\verb"a4paper", \verb"a5paper", \verb"b5paper", \verb"letterpaper",
+\verb"legalpaper", \verb"executivepaper", or \verb"landscape").  If
+you want to change the size of these margins, commands are provided to
+change the size of the printed area.
+
+To change the width of the printed area, you would use the
+\verb"\extrawidth" command.  The \verb"\extrawidth" command takes one
+argument and enlarges the width of the printed area by the amount of
+the argument.  It keeps the printed area centered as it changes its
+width.  If the argument is negative, then the width of the printed
+area is decreased.
+
+For example, to enlarge the left and right margins by one half inch
+each, you would use the command
+\begin{center}
+  \verb"\extrawidth{-1in}"
+\end{center}
+since the printed region must shrink by one inch to allow an
+additional one half inch on both sides.  To decrease the left and
+right margins to three quarters of an inch each, you would use the
+command 
+\begin{center}
+  \verb"\extrawidth{.5in}"
+\end{center}
+since the printed region must grow by one half inch to decrease both
+margins by one quarter of an inch.
+
+To change the height of the printed area, you must choose whether the
+top or the bottom of the printed area (or possibly both) should move.
+The commands for this are principally intended to allow additional
+room for large headers and footers, and so they are called
+\verb"\extraheadheight" and \verb"\extrafootheight".  For a full
+description of these commands, see section~\ref{sec:extra-room}.
+
+To move the top of the printed region (and any header that's present)
+downwards, you use the command \verb"\extraheadheight".  This command
+takes one argument and moves the top of the text and the header down
+by this amount (keeping the distance between header and text
+constant).  Thus, to increase the top margin by three quarters of an
+inch, you would give the command
+\begin{center}
+  \verb"\extraheadheight{.75in}"
+\end{center}
+To decrease the top margin by one half inch, you would give the
+command 
+\begin{center}
+  \verb"\extraheadheight{-.5in}"
+\end{center}
+The \verb"\extraheadheight" command takes an optional argument to
+provide a top margin on the first page that's different from that on
+all other pages.  For an explanation of this, see
+section~\ref{sec:extra-room}.
+
+
+To move the bottom of the printed region (and any footer that's
+present) upwards, you use the command \verb"\extrafootheight".  This
+command takes one argument, and moves the bottom of the text and the
+footer up by this amount (keeping the distance between footer and text
+constant).  Thus, to increase the bottom margin by three quarters of an
+inch, you would give the command
+\begin{center}
+  \verb"\extrafootheight{.75in}"
+\end{center}
+To decrease the bottom margin by one half inch, you would give the
+command
+\begin{center}
+  \verb"\extrafootheight{-.5in}"
+\end{center}
+The \verb"\extrafootheight" command takes an optional argument to
+provide a bottom margin on the first page that's different from that
+on all other pages.  For an explanation of this, see
+section~\ref{sec:extra-room}.
+
+
+%--------------------------------------------------------------------
+%---------------------------------------------------------------------
+\section{Headers and footers}
+\label{sec:headfoot}
+
+The following sections explain all of the technicalities of the
+commands that deal with headers and footers.  There are a number of
+things to explain here, and so you may find it easier to skip this
+section and instead look at the examples in
+sections~\ref{sec:beginexamples} through~\ref{sec:endexamples} (on
+pages~\pageref{sec:beginexamples} through~\pageref{sec:endexamples}).
+You can then refer back to the technical sections for the full story
+on whatever isn't clear from the examples.  All of the commands
+described in this section should be given after the
+\verb"\documentclass" command and before the \verb"\begin{document}"
+command.
+  
+It's also important to remember that if you use a \verb"coverpages"
+environment (described in section~\ref{sec:coverpages}), then the
+commands described here affect only the pages in the main section of
+the exam, and not the pages of the \verb"coverpages" environment.
+There are commands for headers and footers in cover pages that are
+analogous to the commands described in this section; for that, see
+section~\ref{sec:Coverhdft}.
+
+
+
+%---------------------------------------------------------------------
+\subsection{Page styles: Headers and/or footers}
+
+It's the \verb"\pagestyle" command that determines whether the exam
+will have headers, footers, both, or neither.  The contents of the
+header and footer are specified using the commands described in
+sections~\ref{sec:header} through~\ref{sec:rules}, but it's the
+\verb"\pagestyle" command that determines whether the header and
+footer that you construct will actually be placed onto the page.  The
+\verb"\pagestyle" command should be given after the
+\verb"\documentclass" command and before the \verb"\begin{document}"
+  command.
+
+To have both a header and a footer, give the command
+%
+\begin{center}
+\verb"\pagestyle{headandfoot}"
+\end{center}
+%
+If you want every page to have a header but no footer, give the
+command
+%
+\begin{center}
+\verb"\pagestyle{head}"
+\end{center}
+%
+To give every page a foot but no head, give the command
+%
+\begin{center}
+\verb"\pagestyle{foot}"
+\end{center}
+%
+Finally, to omit both the header and the footer from the page, give
+the command
+%
+\begin{center}
+\verb"\pagestyle{empty}"
+\end{center}
+
+
+\bigskip
+
+
+As is true in all \LaTeX{} document classes, you can change the page
+style used on a single page by giving the command
+%
+\begin{center}
+\verb"\thispagestyle{somestyle}"
+\end{center}
+%
+somewhere on that page (where \verb"somestyle" is the style that you
+want to use on that page).  This is most often needed if you use the
+\verb"\maketitle" command, since that command inserts a
+\verb"\thispagestyle{plain}" immediately following the title.  If you
+use the \verb"\maketitle" command and you want the entire document to
+use \verb"\pagestyle{headandfoot}", then you'll need to put the
+command \verb"\thispagestyle{headandfoot}" immediately after the
+\verb"\maketitle" command to override the \verb"\thispagestyle{plain}"
+that is inserted by \verb"\maketitle".
+ 
+
+%---------------------------------------------------------------------
+\subsection{The three parts of the header} 
+\label{sec:header}
+The header is specified in three parts:
+%
+\begin{itemize}
+\item
+One part to be left justified.
+
+\item
+One part to be centered.
+
+\item
+One part to be right justified.
+\end{itemize}
+%
+There are two different ways in which you can specify the three parts
+of the header.  The first uses the single command \verb"\header" to
+specify all three parts of the header, or the commands
+\verb"\firstpageheader" and \verb"\runningheader" to specify a
+different header for the first page (see
+section~\ref{sec:runningheader}). The second uses the commands
+\verb"\lhead", \verb"\chead", and \verb"\rhead", each of which takes
+an optional argument to specify a different header for the first page
+(see section~\ref{sec:lhead}).  All of these commands should be given
+after the \verb"\documentclass" command and before the
+\verb"\begin{document}" command.
+
+
+
+%--------------------------------------------------------------------
+\subsubsection{Using \texttt{header}, \texttt{firstpageheader} and
+    \texttt{runningheader}}
+\label{sec:runningheader}
+
+
+The command \verb"\header{Text 1}{Text 2}{Text 3}" puts ``Text~1''
+into the left justified header, ``Text~2'' into the centered header
+and ``Text~3'' into the right justified header on every page.  If you
+want the header on the first page to be different from that on the
+other pages, then you should use the commands \verb"\firstpageheader"
+and \verb"\runningheader", which also take three arguments and affect
+either the first page or all pages except the first.
+
+
+For example, to put the header
+\samplehead{Math 115}{Second Exam}{July 4, 1776}{}
+on every page of the exam, you would give the command
+%
+\begin{verbatim}
+\header{Math 115}{Second Exam}{July 4, 1776}
+\end{verbatim}
+
+If you want to have different header on the first page from the header
+on all other pages, you would use the commands \verb"\firstpageheader"
+and \verb"\runningheader" instead of \verb"\header".
+For example, if you want the above header for the first
+page, but on all pages after the first you want to have the header
+\samplehead{Math 115}{Second Exam (Continued)}{July 4, 1776}{}
+then you would give the commands
+%
+\begin{verbatim}
+\firstpageheader{Math 115}{Second Exam}{July 4, 1776}
+\runningheader{Math 115}{Second Exam (Continued)}{July 4, 1776}
+\end{verbatim}
+
+
+You can leave one or more of the three parts empty.  To have the
+header
+\samplehead{Math 115}{Second Exam}{July 4, 1776}{}
+on the first page, with the header
+\samplehead{Math 115}{}{Second Exam (Continued)}{}
+on all other pages, you would give the commands
+%
+\begin{verbatim}
+\firstpageheader{Math 115}{Second Exam}{July 4, 1776}
+\runningheader{Math 115}{}{Second Exam (Continued)}
+\end{verbatim}
+%
+
+Any of the three parts of the header can have multiple lines.  To
+specify where the line breaks should go, you just type \verb"\\". 
+Thus, to have the header
+\samplehead{\bf\large Math 115\\Professor Hilbert}{}
+       {\bf\large First Exam\\July 4, 1776}{}
+appear on every page, you would give the command
+%
+\begin{verbatim}
+\header{\bf\large Math 115\\Professor Hilbert}%
+       {}%
+       {\bf\large First Exam\\July 4, 1776}
+\end{verbatim}
+
+
+%--------------------------------------------------------------------
+\subsubsection{Using \texttt{lhead}, \texttt{chead} and \texttt{rhead}}
+\label{sec:lhead}
+
+The command \verb"\lhead{Text}" puts ``Text'' into the left justified
+part of the header on every page.  The command
+\verb"\lhead[Text 1]{Text 2}" puts ``Text~1'' into the left justified
+header on the first page and ``Text~2'' into the left justified header
+on all other pages.  The commands \verb"\chead" and \verb"\rhead" have
+similar effects on the centered and right justified parts of the
+header.
+
+
+For example, to put the header 
+\samplehead{Math 115}{Second Exam}{July 4, 1776}{}
+on every page of the exam, you would give the commands
+%
+\begin{verbatim}
+\lhead{Math 115}
+\chead{Second Exam}
+\rhead{July 4, 1776}
+\end{verbatim}
+
+If you want any of the three parts to have a special version to be
+used only on the first page, then you just include that special
+version as an optional argument (enclosed in square brackets) to the
+command.  For example, if you want the above header for the first
+page, but on all pages after the first you want to have the header
+\samplehead{Math 115}{Second Exam (Continued)}{July 4, 1776}{}
+then you would give the commands
+%
+\begin{verbatim}
+\lhead{Math 115}
+\chead[Second Exam]{Second Exam (Continued)}
+\rhead{July 4, 1776}
+\end{verbatim}
+
+
+You can leave one or more of the three parts empty.  To have the
+header
+\samplehead{Math 115}{Second Exam}{July 4, 1776}{}
+on the first page, with the header
+\samplehead{Math 115}{}{Second Exam (Continued)}{}
+on all other pages, you would give the commands
+%
+\begin{verbatim}
+\pagestyle{headandfoot}
+\lhead{Math 115}
+\chead[Second Exam]{}
+\rhead[July 4, 1776]{Second Exam Continued)}
+\end{verbatim}
+%
+
+Any of the three parts of the header can have multiple lines.  To
+specify where the line breaks should go, you just type \verb"\\". 
+Thus, to have the header
+\samplehead{\bf\large Math 115\\Professor Hilbert}{}
+       {\bf\large First Exam\\July 4, 1776}{}
+appear on every page, you would give the commands
+%
+\begin{verbatim}
+\lhead{\bf\large Math 115\\Professor Hilbert}
+\chead{}
+\rhead{\bf\large First Exam\\July 4, 1776}
+\end{verbatim}
+
+
+%---------------------------------------------------------------------
+\subsubsection*{Leaving extra room for multiple line headers}
+
+See section~\ref{sec:extra-room} for a description of the
+\verb"\extraheadheight" command.
+
+
+%---------------------------------------------------------------------
+
+\subsection{The three parts of the footer}
+\label{sec:footer}
+
+The footer is composed of three parts, the whole setup being similar
+to that for the header (see section~\ref{sec:header}).  There are two
+different ways in which you can specify the three parts of the footer.
+The first uses the single command \verb"\footer" to specify all three
+parts of the footer, or the commands \verb"\firstpagefooter" and
+\verb"\runningfooter" to specify a different footer for the first page
+(see section~\ref{sec:runningfooter}).  The second uses the commands
+\verb"\lfoot", \verb"\cfoot", and \verb"\rfoot", each of which takes
+an optional argument to specify a different footer for the first page
+(see section~\ref{sec:lfoot}).  All of these commands should be given
+after the \verb"\documentclass" command and before the
+\verb"\begin{document}" command.
+
+%--------------------------------------------------------------------
+\subsubsection{Using \texttt{footer}, \texttt{firstpagefooter}
+   and \texttt{runningfooter}}
+\label{sec:runningfooter}
+
+The command \verb"\footer{Text 1}{Text 2}{Text 3}" puts ``Text~1''
+into the left justified footer, ``Text~2'' into the centered footer
+and ``Text~3'' into the right justified footer on every page.  If you
+want the footer on the first page to be different from that on the
+other pages, then you should use the commands \verb"\firstpagefooter"
+and \verb"\runningfooter", which also take three arguments and affect
+either the first page or all pages except the first.
+
+
+For example, to have an empty footer on the first page and the footer
+\samplefoot{}{}{Page 3 of 5}{}
+on all pages after the first, you would give the commands
+%
+\begin{verbatim}
+\firstpagefooter{}{}{}
+\runningfooter{}{Page \thepage\ of \numpages}{}
+\end{verbatim}
+%
+(For an explanation of the \verb"\numpages" command, see
+section~\ref{sec:numpages}.)  
+
+
+
+%--------------------------------------------------------------------
+\subsubsection{Using \texttt{lfoot}, \texttt{cfoot} and \texttt{rfoot}}
+\label{sec:lfoot}
+
+The command \verb"\lfoot{Text}" puts ``Text'' into the left justified
+part of the footer on every page.  The command
+\verb"\lfoot[Text 1]{Text 2}" puts ``Text~1'' into the left justified
+footer on the first page and ``Text~2'' into the left justified footer
+on all other pages.  The commands \verb"\cfoot" and \verb"\rfoot" have
+similar effects on the centered and right justified parts of the
+footer. 
+
+
+For example, to have an empty footer on the first page and the footer
+\samplefoot{}{}{Page 3 of 5}{}
+on all pages after the first, you would give the commands
+%
+\begin{verbatim}
+\lfoot{}
+\cfoot{}
+\rfoot[]{Page \thepage\ of \numpages}
+\end{verbatim}
+%
+(For an explanation of the \verb"\numpages" command, see
+section~\ref{sec:numpages}.)  
+
+
+
+%---------------------------------------------------------------------
+\subsubsection*{Leaving extra room for multiple line footers}
+
+See section~\ref{sec:extra-room} for a description of the
+\verb"\extrafootheight" command.
+
+
+
+
+%---------------------------------------------------------------------
+\subsection{Leaving extra room for multiple line headers and footers}
+\label{sec:extra-room}
+
+\subsubsection*{Headers}
+If you specify more than one or two lines for any part of the header,
+then you may want to move the header down slightly so that it doesn't
+run off of the top of the paper.  The command for this is
+\verb"\extraheadheight".  You can also use the \verb"\extraheadheight"
+command to adjust the size of the text area.  The
+\verb"\extraheadheight" command never changes the distance between the
+header and the text.
+
+For example, to move the header and the text a half inch
+down from the top of the page, you would give the command
+%
+\begin{center}
+\verb"\extraheadheight{.5in}"
+\end{center}
+%
+You can also specify a negative distance to \verb"extraheadheight" to
+move the header up closer to the top of the paper.  For example, the
+command
+%
+\begin{center}
+\verb"\extraheadheight{-.25in}"
+\end{center}
+%
+moves the header one quarter inch closer to the top of the paper.
+
+If you want to have a different value for \verb"\extraheadheight" on
+the first page from that on the pages after the first, then use the
+same syntax as in the \verb"\lhead", \verb"\chead", and \verb"\rhead"
+commands: Include an optional argument giving the extra head height
+for the first page, and the required argument will apply only to
+those pages after the first.  For example, the command
+%
+\begin{center}
+\verb"\extraheadheight[.5in]{.25in}"
+\end{center}
+%
+gives a half inch of extra head height on the first page and a
+quarter inch of extra head height on all pages after the first. 
+If you say
+%
+\begin{center}
+\verb"\extraheadheight[.5in]{}"
+\end{center}
+%
+then this will be interpreted as if it was
+%
+\begin{center}
+\verb"\extraheadheight[.5in]{0in}"
+\end{center}
+%
+Note that the braces \emph{must} appear.
+
+
+If you give an \verb"\extraheadheight" command, it should be after the
+\verb"\documentclass" command but before the \verb"\begin{document}"
+command.  The \verb"\extraheadheight" command can also be used to
+change the size of the text region (see section~\ref{sec:pagesize}).
+
+
+
+
+\subsubsection*{Footers}
+To leave extra room for multiple line footers, you use the command
+\verb"\extrafootheight".  Thus, to move the footer one half inch
+higher up on the paper, you would give the command
+%
+\begin{center}
+\verb"\extrafootheight{.5in}"
+\end{center}
+%
+If you wanted to move the footer an eighth of an inch lower down on
+the paper, you would give the command
+%
+\begin{center}
+\verb"\extrafootheight{-.125in}"
+\end{center}
+
+If you want to have a different value for \verb"\extrafootheight" on
+the first page from that on the pages after the first, then use the
+same syntax as in the \verb"\lfoot", \verb"\cfoot", and \verb"\rfoot"
+commands: Include an optional argument giving the extra foot height
+for the first page, and the required argument will apply only to
+those pages after the first.  For example, the command
+%
+\begin{center}
+\verb"\extrafootheight[.5in]{.25in}"
+\end{center}
+%
+gives a half inch of extra foot height on the first page and a
+quarter inch of extra foot height on all pages after the first. 
+If you say
+%
+\begin{center}
+\verb"\extrafootheight[.5in]{}"
+\end{center}
+%
+then this will be interpreted as if it was
+%
+\begin{center}
+\verb"\extrafootheight[.5in]{0in}"
+\end{center}
+%
+Note that the braces \emph{must} appear.
+
+
+If you give an \verb"\extrafootheight" command, it should be after the
+\verb"\documentstyle" command but before the \verb"\begin{document}"
+command.  The \verb"\extrafootheight" command can also be used to
+change the size of the text region (see section~\ref{sec:pagesize}).
+
+
+
+
+
+
+%---------------------------------------------------------------------
+\subsection{Horizontal rules}
+\label{sec:rules}
+
+The \verb"exam" document class make it easy to put a horizontal rule
+under the header and one above the footer.  It is also easy to do
+this for the pages after the first page without affecting the first
+page.
+
+\begin{itemize}
+\item
+The command \verb"\runningheadrule" puts a horizontal rule below the
+header on all pages after the first.
+
+\item
+The command
+\verb"\firstpageheadrule" puts a rule under the header of only the
+first page.
+
+\item
+The command \verb"\headrule" is equivalent to the two
+commands \verb"\firstpageheadrule" and \verb"\runningheadrule".
+
+\item
+The command \verb"\runningfootrule" puts a horizontal rule above the
+footer on all pages after the first.
+
+\item
+The command
+\verb"\firstpagefootrule" puts a rule above the footer of only the
+first page.
+
+\item
+The command \verb"\footrule" is equivalent to the two
+commands \verb"\firstpagefootrule" and \verb"\runningfootrule".
+
+\end{itemize}
+%
+For example, to have the header
+\samplehead{Math 115}{First Exam}{July 4, 1776}{}
+on the first page, with the header
+\samplehead{Math 115}{First Exam}{July 4, 1776}{\hrule}
+on all pages after the first, give the commands
+%
+\begin{verbatim}
+\runningheadrule
+\lhead{Math 115}
+\chead{First Exam}
+\rhead{July 4, 1776}
+\end{verbatim}
+
+
+\bigskip
+
+To have no footer on the first page, and the footer
+\samplefoot{\hrule}{}{Page 3 of 5}{}
+on all pages after the first, you would give the commands
+%
+\begin{verbatim}
+\runningfootrule
+\lfoot{}
+\cfoot[]{Page \thepage\ of \numpages}
+\rfoot{}
+\end{verbatim}
+
+
+
+
+
+
+%---------------------------------------------------------------------
+\subsection{Listing the number of pages in the exam}
+\label{sec:numpages}
+
+The \verb"exam" document class defines the command \verb"\numpages"
+so that it will expand to the number of pages in the exam.  Thus, to
+have the footer
+\samplefoot{}{}{Page \thepage\ of \numpages}{}
+you should give the commands
+%
+\begin{verbatim}
+\lfoot{}
+\cfoot{Page \thepage\ of \numpages}
+\rfoot{}
+\end{verbatim}
+%
+For a description of the commands \verb"\lfoot", \verb"\cfoot", and
+\verb"\rfoot", see section~\ref{sec:footer}.
+
+As with all other cross referencing commands in \LaTeX, you'll have to
+run the file through \LaTeX{} \emph{twice} to be sure that
+\verb"\numpages" is correct.
+
+%---------------------------------------------------------------------
+\subsection{Treating the last page differently}
+\label{sec:lastpage}
+
+If you want to vary the text that appears in the header or footer on
+the last page of the exam, you  should use the command
+\verb"\iflastpage".  The command
+%
+\begin{center}
+\verb"\iflastpage{Text 1}{Text 2}"
+\end{center}
+%
+expands to `Text~1' on the last page, and to `Text~2' on all
+pages before the last.  Thus, to have the footer
+\samplefoot{}{}{Please go on to the next page\ldots}{}
+on all pages before the last page, and the footer
+\samplefoot{}{}{End of exam}{}
+on the last page, you would give the commands
+%
+\begin{verbatim}
+\lfoot{}
+\cfoot{\iflastpage{End of exam}{Please go on to the next page\ldots}}
+\rfoot{}
+\end{verbatim}
+%
+For a description of the commands \verb"\lfoot", \verb"\cfoot", and
+\verb"\rfoot", see section~\ref{sec:footer}.
+
+As with all other cross referencing commands in \LaTeX, you'll have to
+run the file through \LaTeX{} \emph{twice} to be sure that
+\verb"\iflastpage" correctly detects the last page.
+
+%--------------------------------------------------------------------
+\subsection{Treating odd and even numbered pages differently}
+
+If you'd like odd and even numbered pages to be treated differently
+(perhaps because you'll be printing onto both sides of the paper), you
+should use the \verb"\oddeven" command.
+
+The \verb"\oddeven" command takes two arguments.  If the current page
+number is odd it expands to the first argument; otherwise, it expands
+to the second argument.
+
+For example, to have the page number printed in the right head on odd
+numbered pages and in the left head on even numbered pages, you would
+use the commands
+\begin{center}
+\begin{verbatim}
+\rhead{\oddeven{\thepage}{}}
+\lhead{\oddeven{}{\thepage}}
+\chead{}
+\end{verbatim}
+\end{center}
+If you wanted the footer of the even numbered pages to be empty and
+the footer of the odd numbered pages to contain the message ``Please
+continue\dots'', except that the last page of the exam should have an empty
+footer whether its page number is even or odd, then you would use the
+commands 
+\begin{center}
+\begin{verbatim}
+\lfoot{}
+\rfoot{}
+\cfoot{\oddeven{\iflastpage{}{Please continue\dots}}{}}
+\end{verbatim}
+\end{center}
+(see section~\ref{sec:lastpage} for an explanation of
+\verb"\iflastpage"). 
+
+Although the \verb"\oddeven" command can be used anywhere in the
+document (i.e., not just in headers and footers), it is reliable only
+in headers and footers.  This is because \LaTeX{} generally processes
+more text than can fit on the current page before it outputs a page.
+When the \verb"\oddeven" command is encountered it will act as though
+it will appear on the current page whether it appears on that page or
+on the following page.
+
+%--------------------------------------------------------------------
+\subsection{Questions that span multiple pages}
+\label{sec:QuesSpan}
+
+The exam document class provides the commands \verb"\ifcontinuation",
+\verb"\ContinuedQuestion", \verb"\ifincomplete" and
+\verb"\IncompleteQuestion" to enable headers and footers that announce
+whether this page is continuing a question begun on an earlier page
+(and, if so, the number of that question) and whether the question at
+the bottom of this page continues onto the next page (and, if so, the
+number of that question).  
+
+\emph{These commands are only guaranteed to work in headers and
+  footers.}  If you use any of them elsewhere, they may be fooled by
+\LaTeX's practice of typesetting a bit too much material to fit on a
+page before it chooses the pagebreak and ships out the page.  They
+also assume that there is only one \verb"questions" environment in the
+entire exam.
+
+There is also a command \verb"\nomorequestions" to mark the point at
+which the last question ends, which can be useful if you want to
+include supplementary material (e.g., tables or figures) at the end of
+the exam but you don't want that material to be described as
+continuing the last question.
+
+\medskip
+
+In more detail:
+\begin{itemize}
+\item \verb"\ifcontinuation{Text 1}{Text 2}"\\
+  Expands to `Text 1' if this page begins with a part, subpart or
+  subsubpart of a question begun on an earlier page, and expands to
+  `Text 2' if this page begins with a new question.
+  
+  More specifically, it expands to `Text 2' if either
+  \begin{itemize}
+  \item a question begins on this page before any part, subpart, or
+    subsubpart begins, or
+  \item The current page is later than a page with the
+    \verb"\nomorequestions" command
+  \end{itemize}
+  and otherwise it expands to `Text 1'.
+
+\item \verb"\ContinuedQuestion"\\
+  If this page does begin with a continuation of a question begun on
+  an earlier page, then \verb"\ContinuedQuestion" expands to the
+  number of that question.
+  
+  More specifically, \verb"\ContinuedQuestion" expands to a positive
+  number if either
+  \begin{itemize}
+  \item this page doesn't contain the beginning of any question, part,
+    subpart, or subsubpart, or
+  \item this page has a part, subpart, or subsubpart that appears
+    before any question appears,
+  \end{itemize}
+  in which case \verb"\ContinuedQuestion" expands to the number of the
+  last question begun before this page.
+  
+\item \verb"\ifincomplete{Text 1}{Text 2}"\\
+  Expands to \verb"Text 1" if we have not yet encountered a
+  \verb"\nomorequestions" command and if the last question begun on or
+  before this page has a part, subpart, or subsubpart that begins on a
+  later page. Otherwise, it expands to \verb"Text 2".
+  
+\item \verb"\IncompleteQuestion"\\
+  If the last question begun on or before this page has a part,
+  subpart, or subsubpart that begins on a later page, then this
+  expands to the number of that question.
+  
+\item \verb"\nomorequestions"\\
+  No page following the page on which this command was given will be
+  considered to continue a question from an earlier page.  Thus, if
+  you give this command after the last question is complete, then you
+  can include extra material (e.g., tables for use on the exam)
+  without having those pages labelled as continuing the last question
+  on the exam.
+\end{itemize}
+
+\medskip
+
+Thus, to have the header
+\samplehead{}{First Exam}{Page 4}{}
+%
+on all pages that begin a new question and the header
+\samplehead{Question 6 continues\ldots}{First Exam}{Page 4}{}
+%
+on all pages that continue a question begun on a previous page, you
+would give the commands
+\begin{verbatim}
+\lhead{\ifcontinuation{Question \ContinuedQuestion\ continues\ldots}{}}
+\chead{First Exam}
+\rhead{Page \thepage}
+\end{verbatim}
+(See section~\ref{sec:lhead} for an explanation of \verb"\lhead",
+\verb"\chead" and \verb"\rhead".)
+
+\medskip
+
+To have the footer
+\samplefoot{\hrule}{}{Question 3 continues\ldots}{}
+%
+on all pages that end with a question that will be continued onto the
+next page, the footer
+\samplefoot{\hrule}{}{End of Exam}{}
+%
+on the last page, and the footer
+\samplefoot{\hrule}{}{Exam continues\ldots}{}
+%
+on all other pages, you would give the commands
+\begin{verbatim}
+\footrule
+\lfoot{}
+\newcommand\continues{\ifincomplete{\incompletemessage}{Exam continues\ldots}}
+\newcommand\incompletemessage{Question \IncompleteQuestion\ continues\ldots}
+\cfoot{\iflastpage{End of Exam}{\continues}}
+\rfoot{}
+\end{verbatim}
+(See section~\ref{sec:lfoot} for an explanation of \verb"\lfoot",
+\verb"\cfoot" and \verb"\rfoot", and section~\ref{sec:lastpage} for an
+explanation of \verb"\iflastpage").
+
+
+
+
+
+
+%--------------------------------------------------------------------
+\subsection{Examples}
+
+\begin{example}
+\label{sec:beginexamples}
+To have the header
+\samplehead{Math 115}{First Exam}{July 4, 1776}{}
+on the first page, the header
+\samplehead{Math 115}{First Exam, Page 2 of 5}{July 4, 1776}{\hrule}
+on all pages after the first, and no footer on any page, give the
+commands
+%
+\begin{verbatim}
+\pagestyle{head}
+\runningheadrule
+\firstpageheader{Math 115}{First Exam}{July 4, 1776}
+\runningheader{Math 115}%
+              {First Exam, Page \thepage\ of \numpages}%
+              {July 4, 1776}
+\end{verbatim}
+%
+Alternatively, you could give the commands
+%
+\begin{verbatim}
+\pagestyle{head}
+\runningheadrule
+\lhead{Math 115}
+\chead[First Exam]{First Exam, Page \thepage\ of \numpages}
+\rhead{July 4, 1776}
+\end{verbatim}
+%
+\end{example}
+
+%--------------------------------------------------------------------
+
+\begin{example}
+To have the header
+\samplehead{Math 115}{First Exam}{July 4, 1776}{}
+on the first page, no header on the pages after the first, no footer
+on the first page, and the footer
+\samplefoot{\hrule}{Math 115}{First Exam}{Page 2 of 5}
+on all pages after the first, give the commands
+%
+\begin{verbatim}
+\pagestyle{headandfoot}
+\runningfootrule
+\firstpageheader{Math 115}{First Exam}{July 4, 1776}
+\runningheader{}{}{}
+\firstpagefooter{}{}{}
+\runningfooter{Math 115}{First Exam}{Page \thepage\ of \numpages}
+\end{verbatim}
+%
+Alternatively, you could give the commands
+\begin{verbatim}
+\pagestyle{headandfoot}
+\runningfootrule
+\lhead[Math 115]{}
+\chead[First Exam]{}
+\rhead[July 4, 1776]{}
+\lfoot[]{Math 115}
+\cfoot[]{First Exam}
+\rfoot[]{Page \thepage\ of \numpages}
+\end{verbatim}
+%
+\end{example}
+
+%--------------------------------------------------------------------
+
+\begin{example}
+To have the header
+\samplehead{\large\bf Mathematics 115\\
+            First Exam, July 4, 1776}%
+           {}{\large\bf Name:\enspace\hbox to 2in{\hrulefill}}{}
+on the first page, the header
+\samplehead{\large\bf Mathematics 115\\
+            First Exam, July 4, 1776}%
+           {}{}{}
+on all pages after the first, an empty foot on the first page, and
+the footer
+\samplefoot{}{}{Page 2}{}
+on all pages after the first, give the commands
+%
+\begin{verbatim}
+\pagestyle{headandfoot}
+\firstpageheader{\large\bf Mathematics 115\\
+                 First Exam, July 4, 1776}%
+                {}{\large\bf Name:\enspace\hbox to 2in{\hrulefill}}
+\runningheader{\large\bf Mathematics 115\\
+               First Exam, July 4, 1776}{}{}
+\firstpagefooter{}{}{}
+\runningfooter{}{Page \thepage}{}
+\end{verbatim}
+%
+Alternatively, you could give the commands
+\begin{verbatim}
+\pagestyle{headandfoot}
+\lhead{\large\bf Mathematics 115\\ First Exam, July 4, 1776}
+\chead{}
+\rhead[\large\bf Name:\enspace\hbox to 2in{\hrulefill}]{}
+\lfoot{}
+\cfoot[]{Page \thepage}
+\rfoot{}
+\end{verbatim}
+\end{example}
+
+%--------------------------------------------------------------------
+
+\begin{example}
+To have the header
+\samplehead{}{Wellesley College\\
+              Second Semester Final Examination, Spring 1993\\
+              Mathematics 115}{}{}
+on the first page, the header
+\samplehead{}{Wellesley College\\
+              Second Semester Final Examination, Spring 1993\\
+              Mathematics 115 (Continued)}{}{}
+on all pages after the first, the footer
+\samplefoot{}{}{Page 3 of 10}{Please go on to the next page\ldots}
+on all pages \emph{except the last} page, and the footer
+\samplefoot{}{}{Page 10 of 10}{End of exam.}
+on the last page, give the commands
+%
+\begin{verbatim}
+\pagestyle{headandfoot}
+\extraheadheight{.25in}
+\firstpageheader{}{Wellesley College\\
+                   Second Semester Final Examination, Spring 1993\\
+                   Mathematics 115}{}
+\runningheader{}{Wellesley College\\
+                 Second Semester Final Examination, Spring 1993\\
+                 Mathematics 115 (Continued)}{}
+\footer{}{Page \thepage\ of \numpages}%
+   {\iflastpage{End of exam.}{Please go on to the next page\ldots}}
+\end{verbatim}
+%
+Alternatively, you could give the commands
+\begin{verbatim}
+\pagestyle{headandfoot}
+\extraheadheight{.25in}
+\lhead{}
+\chead[Wellesley College\\
+       Second Semester Final Examination, Spring 1993\\
+       Mathematics 115]
+      {Wellesley College\\
+       Second Semester Final Examination, Spring 1993\\
+       Mathematics 115 (Continued)}
+\rhead{}
+\lfoot{}
+\cfoot{Page \thepage\ of \numpages}
+\rfoot{\iflastpage{End of exam.}{Please go on to the next page\ldots}}
+\end{verbatim}
+
+\end{example}
+
+%--------------------------------------------------------------------
+
+\begin{example}
+To have the header
+\samplehead{}{Wellesley College\\
+              Second Semester Final Examination, Spring 1993\\
+              Mathematics 115}{}{}
+on the first page, the header
+\samplehead{Mathematics 115 (Continued)}{}{Spring, 1993}{}
+on all pages after the first, the footer
+\samplefoot{}{}{Page 3 of 10}{Please go on to the next page\ldots}
+on all pages \emph{except the last} page, and the footer
+\samplefoot{}{}{Page 10 of 10}{End of exam.}
+on the last page, give the commands
+%
+\begin{verbatim}
+\pagestyle{headandfoot}
+\extraheadheight[.25in]{}
+\firstpageheader{}{Wellesley College\\
+                   Second Semester Final Examination, Spring 1993\\
+                   Mathematics 115}{}
+\runningheader{Mathematics 115}{}{Spring, 1993}
+\footer{}{Page \thepage\ of \numpages}%
+   {\iflastpage{End of exam.}{Please go on to the next page\ldots}}
+\end{verbatim}
+%
+Alternatively, you could give the commands
+\begin{verbatim}
+\pagestyle{headandfoot}
+\extraheadheight[.25in]{}
+\lhead[]{Mathematics 115}
+\chead[Wellesley College\\
+       Second Semester Final Examination, Spring 1993\\
+       Mathematics 115]{}
+\rhead[]{Spring, 1993}
+\lfoot{}
+\cfoot{Page \thepage\ of \numpages}
+\rfoot{\iflastpage{End of exam.}{Please go on to the next page\ldots}}
+\end{verbatim}
+\end{example}
+
+%--------------------------------------------------------------------
+
+\begin{example}
+To have the header
+%
+\samplehead{Math 115}{First Exam}{July 4, 1776}{}
+on the first page, the header
+%
+\samplehead{Question 3 continues\ldots}{First Exam}{Page 3 of 10}{\hrule}
+on all pages after the first that continue a question begun on an
+earlier page, the header
+%
+\samplehead{}{First Exam}{Page 3 of 10}{\hrule}
+on all pages after the first that don't continue a question begun on
+an earlier page, the footer
+%
+\samplefoot{}{}{}{Question 6 continues on the next page\ldots}
+%
+on all pages whose last question continues onto the following page,
+and no footer on pages that don't have a question that continues onto
+the following page, give the commands
+%
+\begin{verbatim}
+\pagestyle{headandfoot}
+\runningheadrule
+\newcommand\continuedmessage{%
+  \ifcontinuation{Question \ContinuedQuestion\ continues\ldots}{}%
+}
+\firstpageheader{Math 115}{First Exam}{July 4, 1776}
+\runningheader{\continuedmessage}%
+              {First Exam}%
+              {Page \thepage\ of \numpages}%
+\footer{}%
+       {}%
+       {\ifincomplete{Question \IncompleteQuestion\ continues
+                      on the next page\ldots}{}}
+\end{verbatim}
+%
+Alternatively, you could give the commands
+%
+\begin{verbatim}
+\pagestyle{headandfoot}
+\runningheadrule
+\newcommand\continuedmessage{%
+  \ifcontinuation{Question \ContinuedQuestion\ continues\ldots}{}%
+}
+\lhead[Math 115]{\continuedmessage}
+\chead[First Exam]{First Exam}
+\rhead[July 4, 1776]{Page \thepage\ of \numpages}
+\lfoot{}
+\cfoot{}
+\rfoot{\ifincomplete{Question \IncompleteQuestion\ continues
+                     on the next page\ldots}{}}
+\end{verbatim}
+%
+\end{example}
+
+%--------------------------------------------------------------------
+\begin{example}
+\label{sec:PtsPgEx}
+  
+To have the header
+%
+\samplehead{Math 115}{Second Exam}{July 4, 1776}{}
+%
+on the first page, the header
+%
+\samplehead{Second Exam}{}{July 4, 1776}{}
+%
+on all pages after the first, no footer on the first page, and the
+footer
+%
+\samplefoot{}{Page 3 of 5}{}{Points earned: \hbox to .5in{\hrulefill}\\
+               out of a possible 20 points}
+%
+on all pages after the first, give the commands
+\begin{verbatim}
+\pagestyle{headandfoot}
+\firstpageheader{Math 115}{Second Exam}{July 4, 1776}
+\runningheader{Second Exam}{}{July 4, 1776}
+\runningfooter{Page \thepage\ of \numpages}
+              {}
+              {Points earned: \hbox to .5in{\hrulefill}\\
+               out of a possible \pointsonpage{\thepage} points}
+\end{verbatim}
+%
+Alternatively, you could give the commands
+%
+\begin{verbatim}
+\pagestyle{headandfoot}
+\lhead[Math 115]{Second Exam}
+\chead[Second Exam]{}
+\rhead{July 4, 1776}
+\lfoot[]{Page \thepage\ of \numpages}
+\cfoot{}
+\rfoot[]{Points earned: \hbox to .5in{\hrulefill}\\
+               out of a possible \pointsonpage{\thepage} points}
+\end{verbatim}
+%
+\end{example}
+
+%--------------------------------------------------------------------
+
+\begin{example}
+\label{sec:endexamples}
+
+To have the header
+%
+\samplehead{Math 115}{Second Exam}{July 4, 1776}{}
+%
+on the first page, the header
+%
+\samplehead{}{Second Exam}{July 4, 1776}{}
+%
+on all odd numbered pages after the first, the header
+%
+\samplehead{Question 3 continues\ldots}{Math 115}{}{}
+%
+on all even numbered pages that continue a question begun on an
+earlier page, the header
+%
+\samplehead{}{Math 115}{}{}
+%
+on all even numbered pages that don't continue a question begun on an
+earlier page, the footer
+%
+\samplefoot{}{}{}{Page 5 of 10\\Question 6 continues\ldots}
+%
+on all odd numbered pages that have a question that continues onto the
+following page, the footer
+%
+\samplefoot{}{}{}{Page 5 of 10}
+%
+on all odd numbered pages that don't have a question that continues
+onto the following page, and the footer
+%
+\samplefoot{}{Page 4 of 10}{}{}
+%
+on all even numbered pages, give the commands
+\begin{verbatim}
+\pagestyle{headandfoot}
+\newcommand\continuedmessage{%
+  \ifcontinuation{Question \ContinuedQuestion\ continues\ldots}{}%
+}
+\newcommand\oddrightfoot{%
+  \ifincomplete{Page \thepage\ of \numpages\\
+                Question \IncompleteQuestion\ continues\ldots}%
+                {Page \thepage\ of \numpages}
+}
+\firstpageheader{Math 115}{Second Exam}{July 4, 1776}
+\runningheader{\oddeven{}{\continuedmessage}}%
+              {\oddeven{Second Exam}{Math 115}}%
+              {\oddeven{July 4, 1776}{}}
+\footer{\oddeven{}{Page \thepage\ of \numpages}}%
+       {}%
+       {\oddeven{\oddrightfoot}{}}
+\end{verbatim}
+%
+Alternatively, you could give the commands
+%
+\begin{verbatim}
+\pagestyle{headandfoot}
+\newcommand\continuedmessage{%
+  \ifcontinuation{Question \ContinuedQuestion\ continues\ldots}{}%
+}
+\newcommand\oddrightfoot{%
+  \ifincomplete{Page \thepage\ of \numpages\\
+                Question \IncompleteQuestion\ continues\ldots}%
+                {Page \thepage\ of \numpages}
+}
+\lhead[Math 115]{\oddeven{}{\continuedmessage}}
+\chead{\oddeven{Second Exam}{Math 115}}
+\rhead{\oddeven{July 4, 1776}{}}
+\lfoot{\oddeven{}{Page \thepage\ of \numpages}}
+\cfoot{}
+\rfoot{\oddeven{\oddrightfoot}{}}
+\end{verbatim}
+
+\end{example}
+
+
+%--------------------------------------------------------------------
+%--------------------------------------------------------------------
+\section{Cover pages}
+\label{sec:coverpages}
+
+
+There is a \verb"coverpages" environment that allows you to have one
+or more pages before page~1 of the exam.  By default, there are no
+headers or footers printed on the coverpages, but if you put the page
+number into the headers and/or footers (using the commands described
+in section~\ref{sec:Coverhdft}), the page numbers of cover pages are
+printed in roman numerals.
+
+The \verb"coverpages" environment must begin and end \emph{before} the
+beginning of the \verb"questions" environment.  You begin the
+environment with the command
+\begin{center}
+  \verb"\begin{coverpages}"
+\end{center}
+and you end it with the command
+\begin{center}
+  \verb"\end{coverpages}"
+\end{center}
+In between those two commands you can put whatever you want, except
+that you are not allowed to begin the \verb"questions" environment
+until you've ended the \verb"coverpages" environment.  The command
+\verb"\begin{coverpages}" sets the page number to 1 and causes any
+page numbers printed (using the commands described in
+section~\ref{sec:Coverhdft}) to appear as roman numerals.  The command
+\verb"\end{coverpages}" causes the current page to end, sets the page
+number of the following page to 1, and changes page numbering back to
+arabic numerals.
+
+%--------------------------------------------------------------------
+\subsection{Headers and footers}
+\label{sec:Coverhdft}
+
+By default, there are no headers or footers on the cover pages.  If
+you'd like to have headers and/or footers on the cover pages, there
+are commands to create them that are completely analogous to the
+commands described in section~\ref{sec:headfoot} for headers and/or
+footers in the main part of the document.  The commands for headers
+and footers in coverpages and the corresponding commands for the main
+exam pages are:
+
+\begin{center}
+  \begin{tabular}{l@{\qquad\qquad}l}
+\multicolumn{1}{l}{Cover Pages Commands}& Main Pages Commands\\[\medskipamount]
+\verb"\coverheader"&\verb"\header"\\
+\verb"\coverrunningheader"&\verb"\runningheader"\\
+\verb"\coverfirstpageheader"&\verb"\firstpageheader"\\[\medskipamount]
+
+\verb"\coverlhead"&\verb"\lhead"\\
+\verb"\coverchead"&\verb"\chead"\\
+\verb"\coverrhead"&\verb"\rhead"\\[\medskipamount]
+
+\verb"\coverfooter"&\verb"\footer"\\
+\verb"\coverrunningfooter"&\verb"\runningheader"\\
+\verb"\coverfirstpagefooter"&\verb"\firstpageheader"\\[\medskipamount]
+
+\verb"\coverlfoot"&\verb"\lfoot"\\
+\verb"\covercfoot"&\verb"\cfoot"\\
+\verb"\coverrfoot"&\verb"\rfoot"\\[\medskipamount]
+
+\verb"\coverextraheadheight"&\verb"\extraheadheight"\\
+\verb"\coverextrafootheight"&\verb"\extrafootheight"
+  \end{tabular}
+\end{center}
+The commands \verb"\coverlhead", \verb"\coverchead",
+\verb"\coverrhead", \verb"\coverlfoot", \verb"\covercfoot",
+\verb"\coverrfoot", \verb"\coverextraheadheight", and
+\verb"\coverextrafootheight" all all take the same optional arguments
+(for special treatment of page number 1) as the corresponding commands
+for the main pages.  For an explanation of these commands, see
+section~\ref{sec:headfoot}.
+
+
+
+
+% The following is necessary to avoid warnings, since we have multiple
+% questions environments in this documentation file:
+\makeatletter
+\@pointschangedfalse
+\makeatother
+
+
+
+
+\end{document}
+%--------------------------------------------------------------------
+%--------------------------------------------------------------------
+%--------------------------------------------------------------------

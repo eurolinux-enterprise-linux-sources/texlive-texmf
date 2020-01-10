@@ -1,0 +1,3 @@
+# XeTeX-based formats using etex, eplain, and latex macros
+xetex	xetex	-	-etex xetex.ini
+xelatex	xetex	language.dat	-etex xelatex.ini

@@ -1,0 +1,4 @@
+This folder contains the afm file and pfa (printer fount ascii) files 
+matching the Mac system versions of Marvosym kept elsewhere.  They are 
+included because some deeply disturbed people might be able to find a use 
+for them.

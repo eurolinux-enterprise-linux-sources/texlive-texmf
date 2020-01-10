@@ -1,0 +1,32 @@
+\documentclass[a4paper]{article}% Lars Kotthoff 2005
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{pstricks,pst-plot,pstricks-add}
+\pagestyle{empty}
+\begin{document}
+
+\pstScalePoints(1,1){ log }{ ln }  % log e y scale
+
+\psset{xunit=3.5cm,yunit=2cm}
+\begin{pspicture}(2.5,-.5)(7,-6)
+  \psaxes[axesstyle=frame,xticksize=0 -4.5,yticksize=0 3,%
+    logLines=all,subticks=10,xsubticksize=0 -4.5,ysubticksize=0 3,%
+    Ox=3,Oy=-1,ylogBase=e,xlogBase=10]{->}(3,-1)(6,-5.5)
+  \readdata{\one}{12-1.txt}
+  \listplot[linewidth=2pt,linecolor=red]{\one}
+  \readdata{\two}{12-2.txt}
+  \listplot[linestyle=dashed,linewidth=2pt,linecolor=blue]{\two}
+  \readdata{\three}{12-3.txt}
+  \listplot[linestyle=dotted,linewidth=2pt,linecolor=magenta]{\three}
+  \psframe[fillcolor=white,fillstyle=solid,framearc=.2](4.65,-2.9)(5.7,-4)
+  \uput[0](6,-1){$x$}
+  \uput[-90](3,-5.5){$f(x)$}
+  \psline[linecolor=red](4.7,-3.15)(5.1,-3.15)
+  \rput[lc](5.4,-3.15){$f(x)=\frac{\pi(x)}{x}$}
+  \psline[linecolor=blue,linestyle=dashed,linewidth=2pt](4.7,-3.45)(5.1,-3.45)
+  \rput[lc](5.4,-3.45){$f(x)=\frac{t(x)}{x}$}
+  \psline[linecolor=magenta,linestyle=dotted,linewidth=2pt](4.7,-3.75)(5.1,-3.75)
+  \rput[lc](5.4,-3.75){$f(x)=\frac{g(x)}{x}$}
+\end{pspicture}
+
+\end{document}

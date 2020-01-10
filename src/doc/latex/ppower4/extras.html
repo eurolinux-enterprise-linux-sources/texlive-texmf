@@ -1,0 +1,239 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+
+
+
+<html>
+  <head>
+    <title>PPower4 Homepage, Extras</title>
+  </head>
+
+  <body background="http://www-sp.iti.informatik.tu-darmstadt.de/icons/background.gif" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0" bgcolor="white" text="black">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+      <tr>
+        <td rowspan="2" align="left" valign="top" bgcolor='#0D2676'>
+          <font size="-1" color="white"><img src="http://www-sp.iti.informatik.tu-darmstadt.de/icons/tudlogo-small.gif"
+alt="Technische Universität Darmstadt">
+<br>
+<font face="Arial,Helvetica, sans-serif">
+&nbsp;FB Informatik<br>
+&nbsp;<font size="-2">FG Systemprogrammierung</font>
+</font>&nbsp;</font>
+        </td>
+
+        <td width="100%" bgcolor='#4DB8B3' valign="middle" align="center">
+          <font face="Arial, Helvetica, sans-serif">
+            <font size="+2"><b>PPower4</b></font><br>
+            <font size="+1">This is the homepage of PPower4</font><br>
+            <font size="+1">(P^4, Pdf Presentation Post Processor)</font>
+          </font>
+        </td>
+      </tr>
+
+      <tr>
+        <td align = "center" valign="middle" bgcolor=#4DB8B3>
+          <font face="Arial, Helvetica, sans-serif" size="+1" color="#0D2676"><b>Extras</b></font>
+        </td>
+      </tr>
+
+    </table>
+
+<!-- Seitenanfang -->
+
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="left"  valign="top">
+          <img src="http://www-sp.iti.informatik.tu-darmstadt.de/icons/space165x1.gif">
+        </td>
+        <td align="right" valign="top">
+          &nbsp;
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" valign="top">
+          <table border="0" cellpadding="5" cellspacing="0" bgcolor='#4DB8B3'>    <!-- In einer eigenen Tabelle -->
+
+
+            <tr><td valign="top">
+              <font face="Arial, Helvetica, sans-serif" size="2" link="white">
+                <a href="index.html">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </font>
+            </td><td></td></tr>
+
+	    <tr><td valign="top">
+              <font face="Arial, Helvetica, sans-serif" size="2" link="white">
+                <a href="news.html">News</a>
+              </font>
+            </td><td></td></tr>
+
+	    <tr><td valign="top">
+              <font face="Arial, Helvetica, sans-serif" size="2" link="white">
+                  <a href="features.html">Features</a>
+              </font>
+            </td><td></td></tr>
+
+            <tr><td valign="top">
+              <font face="Arial, Helvetica, sans-serif" size="2" link="white">
+                <a href="download.html">Download</a>
+              </font>
+            </td><td></td></tr>
+
+            <tr><td valign="top">
+              <font face="Arial, Helvetica, sans-serif" size="2" link="white">
+                Extras
+              </font>
+            </td><td></td></tr>
+
+          </table>
+          <table>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td></tr>
+          </table>
+
+        </td>
+
+        <td width="100%" valign="top">
+          <font color="#000000">
+
+<!-- HIER BEGINNT DER INHALT -->
+
+    <p>
+    <b>Frequently asked questions concerning PPower4</b>
+    </p>
+
+    <ul>
+      <li><strong>Q:</strong> Do I need a full Java implementation to
+      run PPower4?<br>
+	<strong>A:</strong> No, it is sufficient for running PPower4,
+	to install the Java Runtime Environment (JRE) and then call
+	<code>jre</code> instead of <code>java</code>
+      </li>
+      <li><strong>Q:</strong> I would like to find the whole set of
+      options for <code>pdfpagetransition</code>.
+      <br>
+	<strong>A:</strong> This is a matter of the transition effect
+	for PDF files, described in section 6.4.1.4 of the
+	<a
+	href="http://partners.adobe.com/asn/developer/acrosdk/docs.html#filefmtspecs">PDF reference manual</a> by Adobe.<br>
+	<a href="mailto:dongen@cs.ucc.ie">Marc van Dongen</a> has kindly
+	prepared some additional <a href="pagetrans.tex">commands</a>
+	to access the effects and agreed to publish these. Thanks!<br>
+	For transition effects between partial builds of a page refer
+	to <a href="extension.pdf">the extensions demo</a>.
+      </li>
+      <li><strong>Q:</strong> Can I use thumbnails with PPower4?<br>
+	<strong>A:</strong> Together with the development of our new
+	PDF processing library we have created a <a
+	    href="pdfthumb">program</a> to add 
+	thumbnails to PDF files. It needs to run GhostScript as a
+	subprocess. This is still only available for Unix
+	users.
+      </li>
+      <li><strong>Q:</strong> If I run LaTeX on my document and your
+		examples I get an error about an undefined control
+		sequence <code>\pauselevel</code>.<br>
+	<strong>A:</strong> Make sure that there is no outdated
+		version of <code>pause.sty</code> in your installation
+		(probably from the <code>pdfslide</code> package).
+      </li>
+      <li><strong>Q:</strong> Is there a list of planned enhancements?
+      <br>
+	<strong>A:</strong>
+	No, all current developments are released now.
+      </li>
+      <li><strong>Q:</strong> Is there an archive of the mailing list?<br>
+	<strong>A:</strong> Yes, you find it (while supplies last;-)
+	<a href="http://www.mail-archive.com/ppower4%40iti.informatik.tu-darmstadt.de/">here</a>,
+	hosted by <a href="http://www.mail-archive.com/">mail-archive.com</a>.
+	Archiving was started on December 7, 1999. Earlier messages
+	are recorded only as far as they made it into my personal log.
+      </li>
+      <li><strong>Q:</strong> You have used the <code>foils.sty</code>
+	in your documents. I can find such a file neither in my TeX
+	distribution nor on CTAN. Where do I get this file?
+      <br>
+	<strong>A:</strong> <code>foils.sty</code> is created from
+	<code>foiltex.dtx</code>, which can be found on CTAN. Watch out 
+	for the copyright. It is in the nonfree tree.<br>
+	It is not necessary to have <code>foils.sty</code> for running
+	PPower4. Just some examples refer to this style.
+      </li>
+    </ul>
+    <b>Problems and possible solutions</b>
+    <ul>
+      <li><strong>Q:</strong> When I look at the demo,  the reader
+      comes up in full screen mode and then freezes...return and page
+      down do not work.
+	<br>
+	<strong>A:</strong> Make sure that the reader application has
+	the keyboard input focus. Maybe you have to download the demo
+	files to local disk, then start the reader and select the demo
+	document from the "File" menu.
+      </li>
+      <li><strong>Q:</strong> I tried to compile <code>exm2.tex</code> but the
+        background is still white.
+      <br>
+	<strong>A:</strong> To have background colors you must run
+	the post processor first and then view the resulting output pdf.
+      </li>
+      <li><strong>Q:</strong> I tried to use gradient background, but
+        my initial monochrome background is still there.
+      <br>
+	<strong>A:</strong> To have gradient colors you must run
+	the post processor and then view the resulting output
+	pdf. <br>But beware: if you use the pagecolor macro from
+	pdftex.def, the post processor does not remove that and it
+	sticks to the page covering any post processor added backgrounds.
+      </li>
+      <li><strong>Q:</strong> When I typeset fractions, the bar is
+        written in a different color.<br>
+	<strong>A:</strong> This problem is independent of PPower4.
+	It seems to be resolved in versions 4.05 of Acrobat Reader.
+	Time to update your version?
+      </li>
+      <li><strong>Q:</strong> I get this message error when trying to
+      execute <code>ppower4.bat</code>:<br><code>
+C:\xxx>C:\xxx\jdk1.2.2\jre\bin\java.exe&nbsp;-jar&nbsp;C:\xxx\pp4p.jar<br>
+count&nbsp;=&nbsp;0,&nbsp;total&nbsp;=&nbsp;76<br>
+Exception&nbsp;in&nbsp;thread&nbsp;"main"&nbsp;java.lang.NoClassDefFoundError: de/tu_darmstadt/sp/pp4/PPower4</code><br>
+	<strong>A:</strong> Most probably the file
+	<code>pp4p.jar</code> was damaged during download. Check the
+	file size, because most damages will lead to different
+	lengths.
+      </li>
+    </ul>
+    <hr>
+    &nbsp;You have more questions? Check the <a
+    href="http://www.mail-archive.com/ppower4%40iti.informatik.tu-darmstadt.de/">archived entries</a> of 
+	    the mailing list. Or ask on the
+    <a href="mailto:ppower4@iti.informatik.tu-darmstadt.de">mailing
+    list,</a> but make sure that you are subscribed to it.<br>
+    &nbsp;You found an error in this list? Please write to the
+    <a href="mailto:guntermann@iti.informatik.tu-darmstadt.de">maintainer.</a><br>
+    <p>
+    Thank you!<p>
+
+
+	  </font>
+      </td>
+    </tr>
+  </table>
+  <!-- Untere Leiste -->
+
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr bgcolor="#0D2676">
+      <td align="right">
+	<a href="mailto:guntermann@iti.informatik.tu-darmstadt.de"><img src="http://www-sp.iti.informatik.tu-darmstadt.de/icons/at.gif" border="0" alt="Feedback"></a>
+      </td>
+    </tr>
+  </table>
+ </body>
+</html>
+
+
+
+

@@ -1,0 +1,367 @@
+
+                       THE LICENCE OF CSTeX
+   ==============================================================
+   Petr Olsak                                       Dec. 12. 1998
+
+Preamble
+--------
+ 
+The CSTeX package is build from sub-packages (we'll call modules).
+Each module can be authorized by different author(s) and licensed by
+different licence. The aim of this document is to distinguish between
+"required" modules (if these modules are not installed, the whole
+package cannot be called CSTeX) and "optional" modules (usually
+distributed with some implementation of TeX and CSTeX).  A good news
+is, that all "required" modules are licensed by license compatible
+with common licenses of free software. The "optional" modules may or
+may not have this feature.
+
+This document quotes the sources of the original (Czech and/or English)
+license texts for each module. This document itself is translated into
+Czech (see license.cz file). However, only the English original of this
+document (this file) has the legal power.
+
+Notice: The "current administrator" of CSTeX is Petr Olsak 
+(email: olsak@math.feld.cvut.cz). He reserves the right to find his
+successor. In exceptional cases, for instance if the current
+administrator cannot do his work on CSTeX any more, the CSTUG (Czech
+and Slovak users group, http://www.cstug.cz) has a right to find next
+administrator.
+
+This document can be changed in future, if some new authors and
+packages for CSTeX occurs. Only the current administrator can do some
+changes of this document. The license notices of each package have to be
+compatible with the wish of its authors.
+
+The "CTAN:" means "Comprehensive TeX Archive Network" and it is 
+one of the following public ftp sites:
+
+ftp://ctan.tug.org/tex-archive
+ftp://ftp.tex.ac.uk/tex-archive
+ftp://ftp.dante.de/tex-archive
+ftp://ftp.cstug.cz/pub/tex/CTAN 
+
+The "CSTEX:" means "CSTeX ftp site" and it is 
+one of the following public ftp sites:
+
+ftp://math.feld.cvut.cz/pub/cstex        (primary server)
+ftp://ftp.cstug.cz/pub/tex/local/cstex   (mirror)
+
+
+--------------------------------------------------------------------
+
+I. The "required" modules
+=========================
+
+1. TeX, METAFONT, Computer Modern, plain.
+   author: Donald Knuth
+   license: The program for "TeX/METAFONT/Computer Modern" is in
+            the public domain and users may freely incorporate the
+            algorithms from public source codes in their own programs.
+	    However, use of the name "TeX/METAFONT/Computer Modern"
+            is restricted to software systems that agree exactly with
+            the programs maintained by author. For more details see
+            CTAN:/systems/knuth/tex/tex.web and volumes B, D and E
+            of Computers & Typesetting.
+   notice:  use TRIP/TRAP test for validating your implementation of
+            TeX/METAFONT programs.
+   source:  CTAN:/systems/knuth
+
+2. The implementation package of "TeX/METAFONT/drivers/supports" into an
+   operating system. The CSTeX can be combined with any implementation package
+   (commercial or free). See the paragraph III for more details.
+   notice:  Some dvi to PostScript convertor is needed. The Rokicki's dvips
+            is recommended. It is free software.
+
+3. CSfonts (Czech and Slovak fonts derived from Computer Modern)
+   authors: Petr Novak, Karel Horak, Lada Lhotka, Petr Olsak
+   emails: <Petr.Novak@internet.cz>, <horakk@math.cas.cz> 
+           <lhotka@jcu.cz>, <olsak@math.feld.cvut.cz>
+   license: GPL
+   source:  CSTEX:/web2c/csfonts.tar.gz
+
+4a czhyphen.tex (Czech hyphenation patterns for TeX)
+   author: Pavel Sevecek
+   email:  <pavel@lingea.cz>
+   license: GPL
+   included in: CSTEX:/web2c/csplain.tar.gz
+
+4b skhyphen.tex (Slovak hyphenation patterns for TeX)
+   author: Hanka Chlebikova
+   email:  <chlebikj@dcs.fmph.uniba.sk>
+   license: GPL
+   included in: CSTEX:/web2c/csplain.tar.gz   
+
+5. czech.sty, slovak.sty (The standard styles for Czech/Slovak languages)
+   authors: Oldrich Ulrych, Karel Horak, Petr Olsak, Jaroslav Snajdr
+   emails:  <ulrych@karlin.mff.cuni.cz>, <horakk@math.cas.cz>,
+            <olsak@math.feld.cvut.cz>, <snajdr5@students.zcu.cz>
+   license: GPL
+   included in: CSTEX:/web2c/csplain.tar.gz 
+
+6. csplain (the TeX format derived from plain)
+   author: Petr Olsak
+   email:  <olsak@math.feld.cvut.cz>
+   license: GPL with appendix
+   appendix: You can do any changes in this software for your own
+             usage. However, you cannot distribute the changed
+             software under the same name "csplain".  Only the current
+             administrator of CSTeX can do official changes to
+             csplain.
+   notice:   see the cstrip.tex for validating of csplain format in 
+             your TeX implementation.
+   source:   CSTEX:/web2c/csplain.tar.gz
+
+7. LaTeX (the macro package for TeX)
+   authors: Leslie Lamport, LaTeX 2e team
+   license: see the COPYRIGHT notice in src/latex.ltx, for example.
+   source:  CTAN:/macros/latex
+
+8. csLaTeX (the extension of LaTeX for Czech and Slovak languages)
+   authors: Jiri Zlatuska, Zdenek Wagner, Jaroslav Snajdr
+   emails:  <zlatuska@muni.cz>, <wagner@beba.cesnet.cz>,
+            <snajdr5@students.zcu.cz>
+   license: GPL
+   source:  http://home.zcu.cz/~snajdr5/cslatex/
+
+9. cspsfonts (The usage of the standard PS fonts in Czech/Slovak languages)
+   authors: Petr Olsak, Zdenek Wagner
+   emails:  <olsak@math.feld.cvut.cz>, <wagner@beba.cesnet.cz>
+   license: GPL
+   source:  CSTEX:/web2c/cspsfonts.tar.gz
+ 
+You can find the complete text of GPL in the file lic-gpl.eng.
+
+
+II. The "optional" packages
+===========================
+
+-- The implementation of CSfont in Type1 format derived from BaKoMa fonts
+   author: Petr Olsak
+   email: <olsak@math.feld.cvut.cz>
+   author of BaKoMa fonts: Basil K. Malyshev <malyshev@mx.ihep.su>
+   license: The same, as BaKoMa license: The author of BaKoMa fonts
+            grants to any individual or non-commercial organization
+            the right to use and to make an unlimited number of copies
+            of full package or selected fonts when this is done
+            WITHOUT CHARGE and has attached the file BaKoMa-CM.Fonts
+            with licence agreement. This fonts cannot be sold or
+            distributed with any commercial product or used in any
+            commercial organization without additional agreement with
+            author of BaKoMa fonts.  If you want to charge a small fee
+            via distribution these fonts or any derivations from this
+            fonts, you should contact the author of BaKoMa fonts.  
+            See BaKoMa-CM.Fonts file in cspdftexlib.tag.gz.
+   source: CSTEX:/web2c/cspdftexlib.tar.gz 
+
+-- The program MNU (for menu configuration for DOS)
+   author: Petr Olsak
+   email: <olsak@math.feld.cvut.cz>
+   license: Free, but without source codes and without any warranty.
+   source: CSTEX:/emtex/mnu.zip
+               
+-- The program a2ac (adds composites and kerns in afm files)
+   author: Petr Olsak
+   email: <olsak@math.feld.cvut.cz>
+   license: GPL
+   source:  ftp://math.feld.cvut.cz/pub/olsak/a2ac
+
+-- enctex (a simple patch of TeX for re-encoding ability)
+   author: Petr Olsak
+   license: GPL
+   comment: The resulting program cannot be called TeX after enctex patch
+            is applied. See the Knuth's license for TeX.
+            The name "a program derived from TeX using enctex"
+            is recommended.
+   source:  ftp://math.feld.cvut.cz/pub/olsak/enctex
+            CSTEX:/web2c/enctex.tar.gz
+
+-- csindex (a simple extension of makeindex program)
+   author of makeindex: Pehong Chen <phc@renoir.berkeley.edu>
+   authors of csindex: Zdenek Wagner (for DOS, OS2), Zdenek Salvet (for Linux)
+   emails:  <wagner@beba.cesnet.cz>, <salvet@ics.muni.cz> 
+   license: see the COPYING file in csindex-*.tar.gz
+   source:  CSTEX:/web2c/csindex-*.tar.gz
+
+-- csbibtex (a simple extension of bibtex program for DOS)
+   author of bibtex: Oren Patashnik <patashnik@score.stanford.edu>
+   author of csbibtex: Petr Novotny <novotny@earn.cvut.cz>
+   license: Copying of this file is authorized only if either
+        (1) you make absolutely no changes to your copy, including name, or
+        (2) if you do make changes, you name it something other than
+        btxbst.doc, plain.bst, unsrt.bst, alpha.bst, and abbrv.bst.
+   source: CSTEX:/emtex/bibtex.zip
+
+-- csuvodlat (a Czech translation "LaTeX strucny popis" of a german original)
+   authors o original: Hubert Partl, Elisabeth Schlegl, Irene Hyna
+   author of translation: Pavel Sykora <sykora@fsid.cvut.cz>
+   license: You may copy and distribute this text in unchanged
+            electronic form, you can print this text but you cannot
+            distribute the hardcopy form of this text.
+   source: CSTEX:/web2c/csuvodlat.tar.gz         
+
+-- CSED (the text editor for DOS)
+   author: Pavel Sevecek
+   email: <pavel@lingea.cz>   
+   license: NON FREE. However, the members of CSTUG can use this
+            software without any charges. See smlcsed.tex for
+            more details.
+   source:  NONE in publics sites. Please, contact the CSTUG.
+
+-- texspell (The spell checker, cz, sk, eng. dictionaries + program for DOS)
+   authors: Janus Drozd, Jan Hajic, Jan Hric 1991-92 
+   license: NON FREE. Only CSTUG has the right to distribute this
+            program only for its members. Copying of texspell, its
+            dictionaries and its documentation by another subject, for
+            another subject or using this program by another subject is
+            interpreted as a breaking of author's copyright. Authors
+            nor CSTUG give no warranty for this program. See the file
+            emtex\doc\programs\smlouva.cs for more details.
+   source:  NONE in public sites. Please, contact the CSTUG.
+
+-- qedit (the text editor for DOS)
+   licensed by: SemWare, 4343 Shallowford Rd, Suite C3A, Marietta, USA
+   version: v2.15 August 1991, Shareware version.
+   license: NON FREE. If you continue using qedit beyond a 30-day trial
+            period, you MUST PURCHASE a license for it. Along with
+            licensed copy of the software, you will receive a printed,
+            bound manual, and you will be entitled to free technical
+            support and low-cost updates.
+   notice:  This shareware version of qedit is distributed as one option
+            of the text editor for DOS implementation of TeX with CSTeX.
+            It is not alone option, of course.
+   source:  CSTEX:/emtex/qedit.zip
+
+-- te (the simple text editor for DOS)
+   author:  Peter Sawatzki, Buchenhof 3, D-5800 Haagen 1, Germany
+   version: 28. Nov. 1989
+   license: free, but without source codes and without warranty.
+   source:  CSTEX:/emtex/te.zip
+
+-- vlnka (replaces spaces by tie in places where no-break is recommended)
+   author:  Oldrich Ulrych, Stepan Kasal
+   license: Program is in public domain including Pascal source codes.
+   source:  CSTEX:/emtex/tie.zip
+
+-- vlna (replaces spaces by tie in places where no-break is recommended)
+   author:  Petr Olsak
+   email:   olsak@math.feld.cvut.cz
+   license: Program is free including WEB source codes.
+   source:  ftp://math.feld.cvut.cz/pub/olsak/vlna
+
+-- cstocs2 (converts the czech/slovak text between different encodings)
+   author:  Josef Tkadlec
+   email:   tkadlec@math.feld.cvut.cz
+   license: Program is free including Pascal source codes, without warranty.
+   source:  CSTEX:/emtex/cstocs2.zip
+
+-- dvicopy (the dvi to dvi procesor includes the virtual fonts)
+   author:  Peter Breitenlohner
+   email:   <peb@dmumpiwh.mppmu.mpg.de>
+   license: GPL
+   source:  CSTEX:/emtex/dvicopy.zip
+   notice:  The DOS binary is used here for usage in emTeX implementation.
+   source codes in: CSTEX:/web2c/texk*.tar.gz
+
+-- dviout (the dvi to dvi processor handles with names of fonts)
+   author:  Oldrich Ulrych
+   email:   <ulrych@karlin.mff.cuni.cz>
+   license: Free including Pascal source codes.
+   source:  CSTEX:/emtex/dviout.zip
+
+-- pmCSTeX (user interface for emTeX + CSTeX + EPM editor for OS2)
+   author:  Petr Mikulik
+   email:   mikulik@sci.muni.cz
+   license: Free software
+   source:  CSTEX:/emtex/os2.zip
+
+-- dviwin (dvi viewer for MS Windows)
+   author:  Hippocrates Sendoukas
+   email:   <isendo@leon.nrcps@ariadne-t.gr>
+   license: The author of this software grants to any individual or
+            non-commercial organization the right to use and to make an
+            unlimited number of copies of this software. Commercial
+            entities may use the software for an evaluation period of
+            two weeks. Any further use requires a license from the
+            author. See emtex\doc\win\dviwin.wri for more details.
+   source in: CSTEX:/emtex/texwin.zip
+
+-- TeXtelmExtel (the user interface for TeX in MS Windows)
+   author:  Andreas Krebs
+   email:   <krebs@edvz.sbg.ac.at>
+   license: Free software. See emtex\doc\win\texmex.wri, section 1.4
+            for more details and author's answers the question
+            "Why Freeware".
+   source in: CSTEX:/emtex/texwin.zip
+
+-- MS Windows support of emTeX + CSTeX packed in zip archive
+   author: Josef Krob
+   email:  jokr@phil.muni.cz
+   license: see the dviwin and TeXtelmExtel licenses. These programs are
+            used in this archive.
+   source:  CSTEX:/emtex/texwin.zip
+
+
+III The implementation packages of TeX available on CSTeX ftp site
+==================================================================
+
+1. web2c (for C compiler including sources, binaries for many platforms)
+   authors: Karl Berry, Olaf Weber 
+   emails:  <kb@cs.umb.edu>, <Olaf.Weber@cwi.nl> 
+   license: GPL, see COPYING* files in texk-*/ source tree.     
+   source:  CTAN:/systems/web2c
+   files:   texk-*.tar.gz, texmflib-*.tar.gz, etexlib-2.0.tar.gz,
+            omegalib-1.5.tar.gz, pdftexlib-0.12f.tar.gz.
+   note:    this package includes more sub-packages from different
+            authors (eTeX, pdfTeX, LaTex, omega, ...) See the
+            appropriate license files in these sub-packages.
+
+1a cstex/web2c (ready to install CSTeX with web2c from TeX sources)
+   author: Petr Olsak 
+   email:  <olsak@math.feld.cvut.cz>
+   license: See above for licenses of individual modules.
+   source:  CSTEX:/web2c
+   note:    All archive files of "OS independent" modules of CSTeX
+            are *primary* distributed in this directory in tar.gz
+            format. They are the following archive files: csfonts,
+            csplain, cslatex-*, cspsfonts, cspdftexlib, enctex,
+            csindex-*, csuvodlat.
+
+2. emTeX for DOS or OS/2 or (but somewhat bad choice) for MS Win.
+   author: Eberhard Mattes
+   email:  <mattes@azu.informatik.uni-stuttgart.de>
+   license: Software written by Eberhard Mattes which is part of the
+            emTeX distribution may be used without restrictions.
+            This software  may only be distributed in UNCHANGED
+            and COMPLETE form, including all the files listed in
+            README.ENG's `Distribution files' section, and only if
+            this is done WITHOUT CHARGE (you are allowed to omit some
+            or all of the *.fli files). See emtex\doc\english\readme.eng
+            section 6 for more details.
+   source:  CTAN:/systems/os2/emtex
+   files:   see emtex\doc\english\readme.eng section 4.
+
+2a cstex/emtex (ready to install CSTeX with emTeX + user interface for DOS)
+   author: Petr Olsak 
+   email:  <olsak@math.feld.cvut.cz>
+   license: See above for licenses of individual modules.
+            The install program and the user interface for DOS is based
+            on program MNU (see above) and DOS batches. They are free
+            software.
+   source:  CSTEX:/emtex
+   note:    see the @ctimne.txt file for more details.
+
+3. teTeX for UNIX (derived from web2c)
+   author: Thomas Esser
+   email: <te@informatik.uni-hannover.de>
+   license: GPL
+   source:  CTAN:/systems/unix/teTeX
+
+3a cstex/tetex-rpm (ready to install CSTeX with teTeX from *rpm packages)
+   author: Michal Choura
+   email:  <Michal.Choura@bigfoot.com>
+   license: See above for licenses of individual modules.
+   source:  CSTEX:/tetex-rpm
+
+
+

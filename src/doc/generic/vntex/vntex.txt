@@ -1,0 +1,328 @@
+vntex-3.1.5
+
+This file is part of VnTeX.  License: LPPL, version 1.3 or newer,
+see: http://www.latex-project.org/lppl.txt 
+
+Authors: Han The Thanh <HanTheThanh@gmx.net> and 
+	 Reinhard Kotucha <Reinhard.Kotucha@web.de>
+
+The primary site of VnTeX is 
+
+    http://vntex.org
+
+There is a mailing list (very low traffic) for questions about
+VnTeX and typesetting Vietnamese.  To subscribe to the list, visit
+
+    http://lists.sourceforge.net/lists/listinfo/vntex-users
+
+
+I. Typesetting Vietnamese
+*************************
+
+Editor
+======
+In order to typeset Vietnamese you need an editor in which you can
+write Vietnamese.  This is highly system-dependent.  The good news 
+is that VnTeX supports most popular encodings used for Vietnamese
+like VISCII, TCVN or UTF8.  VNI is however not supported (and will
+not be).  In most cases, you can use your favourite editor or TeX shell
+(like WinEDT, Texniccenter, Emacs, VIM, ...) with a Vietnamese font.
+
+
+Typesetting with LaTeX
+======================
+Some examples and hints for a quick start:
+
+
+* The simplest case:
+  ________________________________________________________
+  \documentclass{report}
+  \usepackage[viscii]{vietnam} % use VISCII input encoding
+
+  \begin{document}
+  <...text in VISCII encoding...>
+  \end{document}
+  ________________________________________________________
+
+  vietnam.sty has the following options:
+
+  viscii       use VISCII input encoding
+  mviscii      use MVISCII input encoding
+  tcvn         use TCVN input encoding
+  vps	       use VPS input encoding
+  utf8	       use UTF8 input encoding (LaTeX)
+  utf8x        use UTF8 input encoding (ucs package)
+  noinputenc   do not load the inputenc package (use of TCX is assumed)
+  nocaptions   do not define Vietnamese captions
+
+
+* Use babel instead of vietnam package:
+  ________________________________________________________
+  \documentclass{report}
+  \usepackage[utf8]{inputenc} % other encoding as `viscii'
+                              % or `tcvn' can be used
+                              % instead of utf8
+  \usepackage[vietnam]{babel}
+
+  \begin{document}
+  <...text in utf8 encoding...>
+  \end{document}
+  ________________________________________________________
+
+
+* TCX is useful if you want to able to read Vietnamese characters in
+  messages about overfull/underfull boxes and the like.  VnTeX comes
+  with two TCX tables: viscii-t5 and tcvn-t5.  This implies that you
+  can use TCX only with VISCII or TCVN input encoding.  Using TCX
+  excludes using inputenc:
+
+  ________________________________________________________
+  %& -translate-file=viscii-t5
+  \documentclass{report}
+  \usepackage[noinputenc]{vietnam}
+
+  \begin{document}
+  <...text in VISCII encoding...>
+  \end{document}
+  ________________________________________________________
+
+  The very first line says that the option `-translate-file=viscii-t5'
+  is passed to TeX when compiling the document.  It has the same effect
+  as you run:
+
+     latex -translate-file=viscii-t5 foo.tex
+
+  Using TCVN is similar.
+
+
+Typesetting with plain TeX
+==========================
+UTF8 input encoding is not supported by plain TeX.  Otherwise it is
+quite similar to LaTeX:
+
+* Use with plainenc and plnfss packages:
+  ________________________________________________________
+  \input t5code
+  \input plnfss
+  \input plainenc
+
+  \fontencoding{T5}
+  \inputencoding{viscii} % or any other encoding except utf8
+  \setfontencoding{T5}
+  \selectfont
+
+  <...text in VISCII encoding...>
+  \bye
+  ________________________________________________________
+
+
+* Use with TCX:
+  ________________________________________________________
+  %& -translate-file=viscii-t5
+  \input t5code
+  \input plnfss
+
+  \setfontencoding{T5}
+  \selectfont
+
+  <...text in VISCII encoding...>
+  \bye
+  ________________________________________________________
+
+
+Use with texinfo
+================
+TCX is required:
+  ________________________________________________________
+  %& -translate-file=viscii-t5
+  \def\fontprefix{vn}
+  \input t5code.tex
+  \input texinfo
+
+  <...text in VISCII encoding...>
+  ________________________________________________________
+
+plainenc and plnfss are not part of the VnTeX distribution any more but
+it is very likely that they are part of the TeX system you are using. 
+
+If you have a plnfss which does not support Vietnamese, please install
+
+    http://vntex.org/download/vntex-support/plnfss.zip
+
+
+Use with tex4ht
+===============
+In order to create HTML documents from LaTeX sources, run
+
+   tex4ht "html,uni-html4,charset=utf8" yourfile.tex
+
+You cannot use TCX with tex4ht.
+
+
+There are some test files for VnTeX in the tests subdirectory.
+Please read the file README in this directory.
+
+
+II. Vietnamese Fonts
+********************
+
+VnTeX provides a lot of Vietnamese fonts.  If you do not specify any
+font (as in the examples above) you get Vietnamese Computer Modern.
+This is an extension to Donald Knuth's Computern Modern Fonts designed
+by Han The Thanh.
+
+VnTeX provides Vietnamese characters for some free fonts donated by
+URW and Bitstream as well as the Microsoft core fonts.
+
+To get an overview, look at:
+
+   http://vntex.org/fontsamples
+
+There are many fonts, but most of them do not provide support for
+mathematics.  If you have to typeset math formulas, you are restricted
+to Computer Modern, Latin Modern, Times and Palatino.
+
+Latin Modern (Boguslaw Jackowski and Janusz M. Nowacki) is an
+extension to Computer Modern which supports (almost) all latin
+languages.  It provides even different accents for Vietnamese
+uppercase and lowercase letters.
+
+
+We describe how to use fonts with LaTeX first.  A description of
+plnfss (plain TeX) is given below.
+
+To use Latin Modern instead of VNR, simply
+
+   \usepackage{lmodern}
+   \usepackage[viscii]{vietnam}
+
+For Antikwa Torunska, do
+
+    \usepackage{anttor}
+    \usepackage[viscii]{vietnam}
+   
+... or use inputenc and babel instead of vietnam.
+
+It is recommended to specify a roman font, a sans serif font and a
+typewriter font separately.  You do not have to specify all of them.
+It makes sense, for instance, not to specify a typewriter font -- you
+get Computer Modern Typewriter then, which is by far the best
+typewriter font you can get today.
+
+\renewcommand\sfdefault{uag}   VnURWGothicL     (AvantGarde)
+\renewcommand\rmdefault{ubk}   VnURWBookmanL    (Bookman)
+\renewcommand\ttdefault{ucr}   VnNimbusMonL     (Courier)
+\renewcommand\sfdefault{uhv}   VnNimbusSanL     (Helvetica)
+\renewcommand\rmdefault{unc}   VnCenturySchL    (New Century Schoolbok)
+\usepackage{mathpazo}          VnURWPalladioL   (Palatino)
+\usepackage{mathptm}           VnNimbusRomNo9L  (Times)
+
+There is also a real small caps font for VnURWPalladioL, made by Ralf Stubner
+and extended by Han The Thanh.  There are still some support files missing.
+
+By default, you get the faked small caps but you can use real small caps with
+some restrictions.  To make use of it, put the following macro definition
+into the preamble of your document:
+
+\newcommand{\textfplsc}[1]{\bgroup\usefont{T5}{fpl}{m}{sc}#1\egroup}
+
+You can use it like this:
+
+	some text \textfplsc{some text in small caps} some text 
+
+The macro argument should not contain any numbers because they will appear
+as oldstyle numbers, but you cannot use oldstyle numbers with other font
+shapes in T5 encoding (Vietnamese) yet.  This problem will be fixed in a
+future release.
+
+
+If you have to typeset mathematics, there are very few fonts available:
+
+    * Computer Modern:	do nothing
+    * Latin Modern:     \usepackage{lmodern}
+    * Palatino:	        \usepackage{mathpazo}
+    * Times:    	\usepackage{mathptm}
+
+The other fonts do not support mathematics.
+
+If you are using Windows, you also can use the fonts provided by
+Microsoft:
+
+\renewcommand\sfdefault{ma1}  ArialMT           (Arial)
+\renewcommand\ttdefault{mcr}  CourierNewPSMT	(Courier)
+\renewcommand\rmdefault{lpr}  PalatinoLinotype	(Palatino)
+\renewcommand\rmdefault{mns}  TimesNewRomanPSMT	(Times New Roman)
+\renewcommand\sfdefault{jth}  Tahoma            (Tahoma)
+\renewcommand\sfdefault{jvn}  Verdana           (Verdana)
+
+None of the Microsoft fonts supports mathematics.  Though the quality of 
+the fonts is quite high, not much care had been taken in the design of
+Vietnamese accents.  See:
+
+	http://vntex.org/fontsamples
+
+Unless someone insists that you use these fonts, you can use
+	
+  * VnNimbusMonL    instead of CourierNewPSMT    (Courier)
+  * VnNimbusSanL    instead of ArialMT           (Helvetica/Arial)
+  * VnNimbusRomNo9L instead of TimesNewRomanPSMT (Times/Times New Roman)
+  * VnURWPalladioL  instead of PalatinoLinotype  (Palatino)
+
+
+If you are using plain TeX, you can use plnfss.tex to select fonts.
+
+Instead of 
+
+  \renewcommand\rmdefault{...}
+  \renewcommand\sfdefault{...}
+  \renewcommand\ttdefault{...}
+
+you have to select fonts like this:
+
+  \setrmdefault{...}
+  \setsfdefault{...}
+  \setttdefault{...}
+
+See the plnfss documentation for more details.
+
+
+III. Known Problems
+*******************
+
+* To use amsart.cls (and other AMS LaTeX document classes) with Unicode you
+  must add the following lines right before `\begin{document}':
+
+    \def\firstofone#1{#1}
+    \let\uppercase\firstofone
+    \let\MakeUppercase\firstofone
+
+  This completely disables LaTeX's uppercasing commands which might cause
+  bad secondary effects.  Note that this problem is not specific to
+  Vietnamese but affects any multibyte encoding.
+
+* In order to use VnTeX with Prosper, you have to install
+
+     http://vntex.org/download/vntex-support/prosper-vn.zip
+
+* In order to use VnTeX with Foiltex, you have to install
+
+     http://vntex.org/download/vntex-support/foiltex-vn.zip
+
+* If have an old version of LaTeX which does not support utf8, you have to
+  use ucs.sty.  If ucs.sty is not present on your system you can install 
+
+     http://vntex.org/download/vntex-support/ucs-vn.zip
+
+  We keep this file as long as ucs is unmaintained.  If a maintainer is
+  found you better download a fresh ucs distribution from the original site.
+
+  This is a small subset of the ucs package which supports Vietnamese only.
+  You can invoke it with \usepackage[utf8x]{inputenc}.
+
+  Instead of installing ucs we recommend to update LaTeX.  The latest version
+  can be downloaded from
+
+     ftp://dante.ctan.org/tex-archive/macros/latex/base.zip  (Germany)
+     ftp://cam.ctan.org/tex-archive/macros/latex/base.zip    (United Kingdom)
+     ftp://tug.ctan.org/tex-archive/macros/latex/base.zip    (USA)
+

@@ -1,0 +1,514 @@
+%%
+%% This is file `tplists.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% texpower-addons.dtx  (with options: `tplists')
+%% 
+%% --------------------------------------------------------------
+%% TeXPower bundle - dynamic online presentations with LaTeX
+%% Copyright (C) 1999-2004 Stephan Lehmke
+%% 
+%% This program is free software; you can redistribute it and/or
+%% modify it under the terms of the GNU General Public License
+%% as published by the Free Software Foundation; either version 2
+%% of the License, or (at your option) any later version.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%% GNU General Public License for more details.
+%% --------------------------------------------------------------
+%% 
+%% The list of all files belonging to the TeXPower bundle is
+%% given in the file `00readme.txt'.
+%% 
+% ===============================================================================
+% File:      tplists.sty
+%
+% Function:  The package provides dynamic lists. The following
+%            environments/lists are available
+%            1) 'stepenum', 'stepitem', 'stepeqlist', 'stepcompactenum'
+%               'stepcompactitem' and 'stepcompacteqlist'.
+%            2) 'flipenum', 'flipitem', 'flipeqlist', 'flipcompactenum',
+%               'flipcompactitem',  and 'flipcompacteqlist'
+%            3) 'dimenum', 'dimitem', 'dimeqlist', 'dimcompactenum',
+%               'dimcompactitem',  and 'dimcompacteqlist'
+%            where 'step' is short for stepped, 'flip' for flipped and
+%            'dim' for dimmed. The packages 'paralist' and 'eqlist'
+%            must be loaded before this package to use the *eqlist and
+%            *compact* lists.
+%
+% Usage:     The package is loaded in the normal fashion, eg:
+%              \usepackage{tplists}
+%            The following options exist:
+%              pausestep - makes step* lists use \pause
+%            The package works better (the lists look better) if TeXPower
+%            uses colors.
+%
+%            All lists (except *eqlist) takes an optional parameter
+%            adding to the indent of the list. Note that dim* and
+%            flip* lists do not nest, and that step* lists inside
+%            dim*/flip* will behave as a dim*/flip* list respectively.
+%
+%            Example:
+%
+%              \documentclass[a4paper]{article}
+%              \usepackage[darkbackground,display]{texpower}
+%              \usepackage{tplists}
+%              \begin{document}
+%              \begin{flipitem}[2cm]
+%                \item Before
+%                  \begin{enumerate}[1cm]
+%                    \item An item
+%                    \item Another item
+%                   \end{enumerate}
+%                \item After
+%              \end{flipitem}
+%              \end{document}
+%
+%            (The normal 'itemize' and 'enumerate' lists are modified
+%            so they accept the optional parameter and work nested
+%            with the new lists.)
+%
+% Issues:    The step* lists use \vstep (as default) which give weird results with
+%            structured backgrounds. Using the pausestep option fixes this, but then
+%            you can't nest step* lists inside dim* or flip* lists.
+%            There are also some unresolved problems when using french babel.
+%
+% History:   2003/10/03 v0.1:
+%              * first public release
+%            2003/10/04 v0.1a:
+%              * removed redefinition of eqlist (since it doesn't work)
+%            2003/10/07 v0.1b:
+%              * corrected some typos in this documentation
+%              * added option pausestep
+%              * made dim* (and all variants of flip*) lists work without
+%                colors by using boldface for active items.
+%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tplists}%
+  [2003/10/07 v0.1b Dynamic Lists using TeXPower]
+
+%% Packages
+\RequirePackage{texpower}
+% Compact enum/item.
+\newboolean{tpl@paralist}
+\@ifpackageloaded{paralist}{\setboolean{tpl@paralist}{true}}{}
+% Lists with equal indentation.
+\newboolean{tpl@eqlist}
+\@ifpackageloaded{eqlist}{\setboolean{tpl@eqlist}{true}}{}
+
+%% Options
+% Use \pause for steplists (too avoid problems with structured backgrounds).
+\newboolean{tpl@pausestep}
+\DeclareOption{pausestep}{\setboolean{tpl@pausestep}{true}}
+
+\ProcessOptions
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                  %
+%  Flipped/dimmed/stepped itemize/enumerate/eqlist environment.    %
+%                                                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% '\iftpl@instepenv' indicates if we are in some kind of stepped list
+% environment. '\iftpl@indimenv' / '\tpl@inflipenv' indicates that we are
+% using one of the stepwise environments from texpower (that doesn't
+% nest). '\iftpl@inpausestepenv' indicates that we are in a stepped
+% list that uses \pause.
+
+% using 'tpl@' as prefix for internals.
+\newif\iftpl@instepenv \tpl@instepenvfalse
+\newif\iftpl@inpausestepenv \tpl@inpausestepenvfalse
+\newif\iftpl@indimenv  \tpl@indimenvfalse
+\newif\iftpl@inflipenv \tpl@inflipenvfalse
+\let\oldenumerate=\enumerate
+\let\olditemize=\itemize
+\let\endoldenumerate=\endenumerate
+\let\endolditemize=\enditemize
+\ifthenelse{\boolean{tpl@eqlist}}{%
+\let\oldeqlist=\eqlist
+\let\endoldeqlist=\endeqlist
+}{}
+\ifthenelse{\boolean{tpl@paralist}}{%
+\let\oldcompactenum=\compactenum
+\let\oldcompactitem=\compactitem
+\let\endoldcompactenum=\endcompactenum
+\let\endoldcompactitem=\endcompactitem
+}{}
+
+%%% Defining \tpl@collect@body - command used to scan the list
+%%% environments. Definition borrowed from 'amsmath.sty' - slightly
+%%% modified to allow for 'long' arguments
+\let\tpl@nx\noexpand
+\let\tpl@xp\expandafter
+\newtoks\tpl@emptytoks
+\newtoks\tpl@envbody
+\long\def\tpl@addto@envbody#1{\global\tpl@envbody\tpl@xp{\the\tpl@envbody#1}}
+\def\tpl@collect@body#1{%
+  \tpl@envbody{\tpl@xp#1\tpl@xp{\the\tpl@envbody}}%
+  \edef\tpl@process@envbody{\the\tpl@envbody\tpl@nx\end{\@currenvir}}%
+  \tpl@envbody\tpl@emptytoks \def\begin@stack{b}%
+  \begingroup
+  \tpl@xp\let\csname\@currenvir\endcsname\tpl@collect@@body
+  \edef\tpl@process@envbody{\tpl@xp\tpl@nx\csname\@currenvir\endcsname}%
+  \tpl@process@envbody
+}
+\long\def\tpl@push@begins#1\begin#2{%
+  \ifx\end#2\else b\tpl@xp\tpl@push@begins\fi
+}
+\long\def\tpl@collect@@body#1\end#2{%
+  \edef\begin@stack{\tpl@push@begins#1\begin\end \tpl@xp\@gobble\begin@stack}%
+  \ifx\@empty\begin@stack
+    \endgroup
+    \@checkend{#2}%
+    \tpl@addto@envbody{#1}%
+  \else
+    \tpl@addto@envbody{#1\end{#2}}%
+  \fi
+  \tpl@process@envbody
+}
+
+%%% Defining command '\tpl@addmargin' used to add a length to
+%%% the leftmargin of the current level in a list.
+\def\tpl@addmargin#1{%
+  \advance\@listdepth 1
+  \addtolength{\csname leftmargin\romannumeral\@listdepth\endcsname}{#1}
+  \advance\@listdepth -1
+}
+
+%%% Defining a flipped step command.
+\ifthenelse{\boolean{TPcolor}}% Can we use colors?
+{% Yes. In this case highlighting is implemented by switching color.
+  \def\tpl@flipstep% Note that \tpl@flipstep takes no argument.
+  {%
+    \step{\ifthenelse{\boolean{firstactivation}}%
+      {\color{textcolor}}%
+      {\color{inactivecolor}}%
+    }%
+    }%
+}
+{% No. In this case highlighting is implemented by putting the item in boldface.
+  \def\tpl@flipstep
+  {%
+    \step{\ifthenelse{\boolean{firstactivation}}%
+    {\bfseries}{\mdseries}}
+    }%
+  }
+
+%%% Defining a dimmed step command.
+\ifthenelse{\boolean{TPcolor}}% Can we use colors?
+{% Yes. In this case highlighting is implemented by using \dstep
+  \def\tpl@dimstep% Note that \tpl@flipstep takes no argument.
+  {%
+    \dstep
+    }%
+}
+{% No. In this case highlighting is implemented by putting the item in boldface.
+  \def\tpl@dimstep
+  {%
+    \step{\bfseries}
+    \ifthenelse{\boolean{active}}{}{\mdseries}%
+    }%
+  }
+
+%%% Defining flipped stepped - itemize / enumerate / eqlist
+%%% compact itemize / compact enumerate / compact eqlist - environments.
+\newenvironment{flipitem}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \tpl@collect@body\@flipitem}%
+ {\global\@ignoretrue}
+\newenvironment{flipenum}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \tpl@collect@body\@flipenum}%
+ {\global\@ignoretrue}
+\ifthenelse{\boolean{tpl@eqlist}}{%
+\newenvironment{flipeqlist}[1][0cm]{%
+  \tpl@collect@body\@flipeqlist}%
+ {\global\@ignoretrue}
+\newenvironment{flipcompacteqlist}[1][0cm]{%
+  \tpl@collect@body\@flipcompacteqlist}%
+ {\global\@ignoretrue}
+}{}
+\ifthenelse{\boolean{tpl@paralist}}{%
+\newenvironment{flipcompactitem}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \tpl@collect@body\@flipcompactitem}%
+ {\global\@ignoretrue}
+\newenvironment{flipcompactenum}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \tpl@collect@body\@flipcompactenum}%
+ {\global\@ignoretrue}
+}{}
+
+\newcommand\@fliplist[2]{%
+  \iftpl@indimenv
+    \PackageError{tplists}{%
+      dim* and flip* environments do NOT nest}{%
+      Do not continue! Type 'q' to stop and fix the nested list.
+    }
+  \else\iftpl@instepenv
+    \begin{#1}
+    \let\hidestepcontents=\displaystepcontents
+    \renewcommand{\item}{\tpl@flipstep\tpl@origitem}%
+    #2
+    \end{#1}%
+  \else
+    \iftpl@inpausestepenv\let\liststepwise=\stepwise\fi
+    \liststepwise[\let\hidestepcontents=\displaystepcontents]{%
+      \begin{#1}
+      \iftpl@inpausestepenv\else
+        \iftpl@instepenv\else\let\tpl@origitem=\item\fi
+      \fi
+      \tpl@instepenvtrue
+      \tpl@inflipenvtrue
+      \renewcommand{\item}{\tpl@flipstep\tpl@origitem}%
+      #2
+      \step{}
+      \end{#1}}
+  \fi\fi
+}
+
+\newcommand\@flipitem[1]{%
+ \@fliplist{olditemize}{#1}}
+\newcommand\@flipenum[1]{%
+ \@fliplist{oldenumerate}{#1}}
+\ifthenelse{\boolean{tpl@eqlist}}{%
+\newcommand\@flipeqlist[1]{%
+ \@fliplist{oldeqlist}{#1}}
+\newcommand\@flipcompacteqlist[1]{%
+ \@fliplist{compacteqlist}{#1}}
+}{}
+\ifthenelse{\boolean{tpl@paralist}}{%
+\newcommand\@flipcompactitem[1]{%
+ \@fliplist{oldcompactitem}{#1}}
+\newcommand\@flipcompactenum[1]{%
+ \@fliplist{oldcompactenum}{#1}}
+}{}
+
+%%% Defining dimmed stepped - itemize / enumerate / eqlist /
+%%% compact itemize / compact enumerate / compact eqlist - environments.
+\newenvironment{dimitem}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \tpl@collect@body\@dimitem}%
+ {\global\@ignoretrue}
+\newenvironment{dimenum}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \tpl@collect@body\@dimenum}%
+ {\global\@ignoretrue}
+\ifthenelse{\boolean{tpl@eqlist}}{%
+\newenvironment{dimeqlist}[1][0cm]{%
+  \tpl@collect@body\@dimeqlist}%
+ {\global\@ignoretrue}
+\newenvironment{dimcompacteqlist}[1][0cm]{%
+  \tpl@collect@body\@dimcompacteqlist}%
+ {\global\@ignoretrue}
+}{}
+\ifthenelse{\boolean{tpl@paralist}}{%
+\newenvironment{dimcompactitem}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \tpl@collect@body\@dimcompactitem}%
+ {\global\@ignoretrue}
+\newenvironment{dimcompactenum}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \tpl@collect@body\@dimcompactenum}%
+ {\global\@ignoretrue}
+}{}
+
+\newcommand\@dimlist[2]{%
+  \iftpl@inflipenv
+    \PackageError{tplists}{%
+      dim* and flip* environments do NOT nest}{%
+      Do not continue! Type <q> to stop and fix the nested list.
+    }
+  \else\iftpl@instepenv
+    \begin{#1}
+    \renewcommand{\item}{\tpl@dimstep\tpl@origitem}%
+    #2
+    \end{#1}%
+  \else
+    \iftpl@inpausestepenv\let\liststepwise=\stepwise\fi
+    \liststepwise{%
+      \begin{#1}
+      \iftpl@inpausestepenv\else
+        \iftpl@instepenv\else\let\tpl@origitem=\item\fi
+      \fi
+      \tpl@instepenvtrue
+      \tpl@indimenvtrue
+      \renewcommand{\item}{\tpl@dimstep\tpl@origitem}%
+      #2
+      \end{#1}}
+  \fi\fi
+}
+
+\newcommand\@dimitem[1]{%
+ \@dimlist{olditemize}{#1}}
+\newcommand\@dimenum[1]{%
+ \@dimlist{oldenumerate}{#1}}
+\ifthenelse{\boolean{tpl@eqlist}}{%
+\newcommand\@dimeqlist[1]{%
+ \@dimlist{oldeqlist}{#1}}
+\newcommand\@dimcompacteqlist[1]{%
+ \@dimlist{compacteqlist}{#1}}
+}{}
+\ifthenelse{\boolean{tpl@paralist}}{%
+\newcommand\@dimcompactitem[1]{%
+ \@dimlist{oldcompactitem}{#1}}
+\newcommand\@dimcompactenum[1]{%
+ \@dimlist{oldcompactenum}{#1}}
+}{}
+
+%%% Defining stepped - itemize / enumerate / eqlist /
+%%% compact itemize / compact enumerate / compact eqlist - environments.
+\newenvironment{stepitem}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \tpl@collect@body\@stepitem}%
+ {\global\@ignoretrue}
+\newenvironment{stepenum}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \tpl@collect@body\@stepenum}%
+ {\global\@ignoretrue}
+\ifthenelse{\boolean{tpl@eqlist}}{%
+\newenvironment{stepeqlist}[1][0cm]{%
+  \tpl@collect@body\@stepeqlist}%
+ {\global\@ignoretrue}
+\newenvironment{stepcompacteqlist}[1][0cm]{%
+  \tpl@collect@body\@stepcompacteqlist}%
+ {\global\@ignoretrue}
+}{}
+\ifthenelse{\boolean{tpl@paralist}}{%
+\newenvironment{stepcompactitem}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \tpl@collect@body\@stepcompactitem}%
+ {\global\@ignoretrue}
+\newenvironment{stepcompactenum}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \tpl@collect@body\@stepcompactenum}%
+ {\global\@ignoretrue}
+}{}
+
+\ifthenelse{\boolean{tpl@pausestep}}{%
+% Using \pause for step* lists
+\newcommand\@steplist[2]{%
+  \iftpl@inflipenv
+    \PackageError{tplists}{%
+      flip* followed by step* environment does NOT work \MessageBreak
+      when the pausestep option is used}{%
+      Do not continue! Type <q> to stop and fix the nested list.
+    }
+  \else\iftpl@indimenv
+    \PackageError{tplists}{%
+      dim* followed by step* environment does NOT work \MessageBreak
+      when the pausestep option is used}{%
+      Do not continue! Type <q> to stop and fix the nested list.
+    }
+  \else
+    \begin{#1}
+      \iftpl@inpausestepenv\else\let\tpl@origitem=\item\fi
+      \tpl@inpausestepenvtrue
+      \renewcommand{\item}{\pause\tpl@origitem}%
+      #2
+    \end{#1}
+  \fi\fi
+}
+}{
+% Using \liststepwise for step* lists
+\newcommand\@steplist[2]{%
+  \iftpl@inflipenv
+    \begin{#1}
+    \renewcommand{\item}{\tpl@flipstep\tpl@origitem}
+    #2
+    \end{#1}%
+  \else\iftpl@indimenv
+    \begin{#1}
+    \renewcommand{\item}{\dstep\tpl@origitem}%
+    #2
+    \end{#1}%
+  \else\iftpl@instepenv
+    \begin{#1}
+    \renewcommand{\item}{\vstep\tpl@origitem}%
+    #2
+    \end{#1}%
+  \else
+    \liststepwise{%
+      \begin{#1}
+      \iftpl@instepenv\else\let\tpl@origitem=\item\fi
+      \tpl@instepenvtrue
+      \renewcommand{\item}{\vstep\tpl@origitem}%
+      #2
+      \end{#1}}
+  \fi\fi\fi
+}
+}
+
+\newcommand\@stepitem[1]{%
+ \@steplist{olditemize}{#1}}
+\newcommand\@stepenum[1]{%
+ \@steplist{oldenumerate}{#1}}
+\ifthenelse{\boolean{tpl@eqlist}}{%
+\newcommand\@stepeqlist[1]{%
+ \@steplist{oldeqlist}{#1}}
+\newcommand\@stepcompacteqlist[1]{%
+ \@steplist{compacteqlist}{#1}}
+}{}
+\ifthenelse{\boolean{tpl@paralist}}{%
+\newcommand\@stepcompactitem[1]{%
+ \@steplist{oldcompactitem}{#1}}
+\newcommand\@stepcompactenum[1]{%
+ \@steplist{oldcompactenum}{#1}}
+}{}
+
+%%% Defining compact eqlist
+\newenvironment{compacteqlist}[1][0cm]{%
+  % \tpl@addmargin{#1}
+  \begin{eqlist}[\parsep0pt\itemsep0pt]}%
+ {\end{eqlist}}
+
+
+%%% Redefining enumerate and itemize to handle changes made by
+%%% introducing steps and leftmargini-option.
+\renewenvironment{enumerate}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \begin{oldenumerate}
+    \iftpl@instepenv
+      \renewcommand{\item}{\tpl@origitem}%
+    \fi
+ }%
+ {\end{oldenumerate}}
+
+\renewenvironment{itemize}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \begin{olditemize}
+    \iftpl@instepenv
+      \renewcommand{\item}{\tpl@origitem}%
+    \fi
+ }%
+ {\end{olditemize}}
+
+%%% Redefining compactenum and compactitem to handle changes made by
+%%% introducing steps and leftmargini-option.
+\ifthenelse{\boolean{tpl@paralist}}{%
+\renewenvironment{compactenum}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \begin{oldcompactenum}
+    \iftpl@instepenv
+      \renewcommand{\item}{\tpl@origitem}%
+    \fi
+ }%
+ {\end{oldcompactenum}}
+
+\renewenvironment{compactitem}[1][0cm]{%
+  \tpl@addmargin{#1}
+  \begin{oldcompactitem}
+    \iftpl@instepenv
+      \renewcommand{\item}{\tpl@origitem}%
+    \fi
+ }%
+ {\end{oldcompactitem}}
+}{}
+\endinput
+%%
+%% End of file `tplists.sty'.

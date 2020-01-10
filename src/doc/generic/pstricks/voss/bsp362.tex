@@ -1,0 +1,18 @@
+\documentclass[12pt]{article}
+\usepackage{pstricks}
+\usepackage{pstricks-add}
+\pagestyle{empty}
+\parindent=0pt
+\begin{document}
+
+\def\pshlabel#1{\footnotesize#1}\def\psvlabel#1{\footnotesize#1}
+\psset{unit=1.5cm}
+\begin{pspicture}[plotpoints=200](-0.5,-3)(10,2.5) 
+  \psStep[algebraic,fillstyle=solid,fillcolor=yellow](0.001,9.5){40}{2*sqrt(x)*cos(ln(x))*sin(x)}
+  \psStep[algebraic,StepType=Riemann,fillstyle=solid,fillcolor=blue](0.001,9.5){40}{2*sqrt(x)*cos(ln(x))*sin(x)}
+  \psaxes{->}(0,0)(0,-2.75)(10,2.5)
+  \psplot[algebraic,linecolor=white]{0.001}{9.75}{2*sqrt(x)*cos(ln(x))*sin(x)}
+  \uput[90](6,1.2){$f(x)=2\cdot\sqrt{x}\cdot\cos{(\ln{x})}\cdot\sin{x}$}
+\end{pspicture}
+
+\end{document}

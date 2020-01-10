@@ -1,0 +1,99 @@
+\documentclass{scrartcl}
+\usepackage[ansinew]{inputenc}
+%\usepackage[german]{babel}
+\usepackage{german}
+\usepackage[OneColumn]{minutes}
+%\usepackage{minutes}
+
+% ----------------------------------------------------------------
+\begin{document}
+
+\begin{Minutes}{Tagesordnung der Mitgliederversammlung vom ?}
+%\subtitle{}
+\moderation{?}
+\minutetaker{?}
+\participant{Siehe Anwesenheitsliste
+%\enclosure{Anwesenheitsliste}{Anwesenheitsliste}
+}
+%\missing{}
+\maketitle
+
+\topic{Begrüßung und Feststellung der Beschlußfähigkeit}
+% Beschlußfähigkeit nach Satzung
+
+\topic{Wahl der Versammlungsleitung}
+
+\topic{Genehmigung des letzten Protokolls}
+
+\topic{Berichte des Vorstandes}
+\subtopic{Rückblick auf das letzte Jahr}
+\subtopic{Bericht des Vorstandes}
+\subtopic{Bericht des Schatzmeister/Kassenwart}
+\subtopic{Bericht des Kassenprüfers}
+
+\subtopic{Aussprache und Entlastung des Vorstandes}
+
+
+\Onevote{Entlastung des Vorstandes }{}{}{}
+
+\topic{Neuwahlen}
+%\subtopic{Wahlverfahren}
+%\begin{Vote}
+%\vote{Abstimmung per Handzeichen}{}{}{}
+%\vote{Blockwahl}{}{}{}
+%\end{Vote}
+
+\subtopic{Wahl des Vorstandes}
+Zur Wahl als neuer Vorstand stehen:
+\begin{itemize}
+  \item ??
+%  \item 
+%  \item 
+\end{itemize}
+
+\begin{Vote}
+\vote{Abstimmung über den neuen Vorstand}{}{}{}
+\vote{Annahme der Wahl durch den neuen Vorstand}{}{}{}
+\end{Vote}
+
+\subtopic{Wahl der Kassenprüfer}
+\begin{Vote}
+\vote{? als Kassenprüfer}{}{}{}
+\vote{Annahme der Wahl der Kassenprüferin}{}{}{}
+\end{Vote}
+
+%\subtopic{Wahl weiterer Ämter}
+
+%\topic{Satzungsänderungen}
+
+\topic{Verabschiedung des Haushaltsplans}
+\Onevote{Annahme des Haushaltsplanes}{}{}{}
+
+\topic{Anträge}
+
+\topic{Verschiedenes}
+
+\end{Minutes}
+
+% ----------------------------------------------------------------
+\newpage\thispagestyle{empty}
+\newcounter{nummer}
+\newcommand{\oneline}{
+\stepcounter{nummer}
+\arabic{nummer}\rule{0mm}{8mm}&&&&\\\hline
+}
+
+\begin{minipage}{\textwidth}
+\begin{tabular}{|r|p{5cm}|*{2}{|p{5mm}}|p{5cm}|}\hline
+\multicolumn{5}{|c|}{\bf Anwesenheitsliste}\\\hline\hline
+Nr. & Name, Vorname & \multicolumn{2}{l|}{Mitglied} & Unterschrift\\
+                    && ja & nein &\\\hline
+%% \loop in tabular klappt nicht
+%\oneline\oneline\oneline\oneline\oneline
+\oneline\oneline\oneline\oneline\oneline\oneline\oneline\oneline\oneline\oneline
+\oneline\oneline\oneline\oneline\oneline\oneline\oneline\oneline\oneline\oneline
+\end{tabular}
+\end{minipage}
+
+\end{document}
+% ----------------------------------------------------------------

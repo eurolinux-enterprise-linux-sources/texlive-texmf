@@ -1,0 +1,60 @@
+\documentclass[12pt]{article} % Chris Sangwin 2004-06-23
+\usepackage{pstricks} 
+\usepackage{pst-plot}  
+\usepackage{multido}
+\usepackage[nomessages]{fp}
+\pagestyle{empty}
+\parindent=0pt
+%
+\newwrite\DataFileA
+\newwrite\DataFileB
+%
+\newcommand{\DataFileNameA}{MyCurveA.dat}
+\newcommand{\DataFileNameB}{MyCurveB.dat}
+%
+\def\Xpsz{6}
+\def\Ypsz{6}
+
+\newcommand{\PerCalc}[2]{%
+  \def\ix{#1}\def\iy{#2}%
+  \FPeval{\iY}{\Ypsz * \iy / (\iy + 1.0)}  % Calculates Y-coordinate
+  \FPeval{\iX}{(\Ypsz - \iY)* \ix / \Xpsz} % Calculates X-coordinate
+}% End perspective calculate
+
+\begin{document}
+
+\begin{pspicture}(-6,0)(6,6) 
+  \multido{\I=-6+1}{13}{\psline(0,6)(\I,0)}
+
+  % The horizontal perspective grid
+  \multido{\IR=0+1}{13}{%
+    \PerCalc{-6.0}{\IR}
+    \FPneg{\iXX}{\iX}                         % Exploits symmetry 
+    \psline[linecolor=red](\iXX,\iY)(\iX,\iY)}% End of the horizontal grid
+
+  \immediate\openout\DataFileA=\DataFileNameA
+  \immediate\openout\DataFileB=\DataFileNameB
+
+  \multido{\IRx=0+1}{90}{%
+    \FPeval{\Ry}{ (\IRx * \IRx) / 30.0 }   % Defines the quadratic
+    \PerCalc{\IRx}{\Ry}
+    \immediate\write\DataFileA{(\iX,\iY)}
+    \FPneg{\iXX}{\iX} % Exploits symmetry - so we'll have to loose this...
+    \immediate\write\DataFileB{(\iXX,\iY)}}
+
+  \immediate\closeout\DataFileA
+  \immediate\closeout\DataFileB
+
+  \readdata{\MyCurve}{\DataFileNameA}
+  \dataplot[plotstyle=curve,%
+	showpoints=true,%
+	linecolor=green,linewidth=1.5pt]{\MyCurve}
+
+  \readdata{\MyCurve}{\DataFileNameB}
+  \dataplot[plotstyle=curve,%
+	showpoints=true,%
+	linecolor=blue,linewidth=1.5pt]{\MyCurve}
+\end{pspicture}
+
+\end{document}
+

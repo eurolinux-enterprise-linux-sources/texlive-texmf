@@ -1,0 +1,289 @@
+\magnification=\magstep1
+\input vertex
+\input ppt.sty
+
+\topmatter 
+ \title{Ver\TeX\ User's Manual} 
+ \author{Hal R. Varian}
+ \affil{University of Michigan} 
+ \abstract{This documentation describes Ver\TeX, a package of \TeX\ 
+macros that will produce beautiful working papers, and allow you to
+simulate final versions in a variety of journal styles.} 
+ \keywords{\TeX, typesetting, economics} 
+ \address{Prof. Hal R. Varian, Department of Economics, University of
+Michigan, Ann Arbor, MI 48109, U.S.A.\ \  Internet address: {\tt
+Hal\_Varian@UM.CC.UMICH.EDU}}
+ \thanks{Thanks to Kari Gluski, the participants of {\tt tex:forum},
+the members of the Economics Department at the University of Michigan,
+and all the \TeX\ hackers who made this work possible.} \date{August,
+1986}
+ \version{\today} 
+ \prelim 
+ \endtopmatter 
+ \document
+
+There are several \TeX\ macro packages already available, so why  is one
+more necessary?  Basically I felt that there was a need  for a simple,
+flexible package that added a minimum amount  to {\tt PLAIN.TEX}, and yet
+still provided useful features for writing technical reports.  
+
+Ver\TeX\ will help you to {\bf V}isualize {\bf E}conomics {\bf R}eports
+using \TeX.  Ver\TeX\ will produce nice looking preprints and will aid in
+formatting your bibliography, but it will also produce simulated journal
+styles for a variety of economics journals.  It is very easy to add new
+journal styles to Ver\TeX for someone who knows a little bit of \TeX.
+
+\section Ver\TeX\ Commands
+
+The easiest way to show you Ver\TeX's commands is to show you the
+start of this paper.  It looks like something like this:
+
+\verbatim/
+\magnification=\magstep1
+\input vertex
+\input ppt.sty
+
+\topmatter 
+ \title{Ver\TeX\ User's Manual} 
+ \author{Hal R. Varian}
+ \affil{University of Michigan} 
+ \abstract{This documentation describes Ver\TeX, a package of \TeX\ 
+macros that will produce beautiful working papers, and allow you to
+simulate final versions in a variety of journal styles.} 
+ \keywords{\TeX, typesetting, economics} 
+ \address{Prof. Hal R. Varian, Department of Economics, University of
+Michigan, Ann Arbor, MI 48109, U.S.A.\ \  Internet address: {\tt
+Hal\_Varian@UM.CC.UMICH.EDU}}
+ \thanks{Thanks to Kari Gluski, the participants of {\tt tex:forum},
+the members of the Economics Department at the University of Michigan,
+and all the \TeX\ hackers who made this work possible.} \date{August,
+1986}
+ \version{\today} 
+ \prelim 
+ \endtopmatter 
+ \document
+
+There are several \TeX\ macro packages already available, so why  is
+one more necessary?  Basically I felt that there was a need  for a
+simple, flexible package that added a minimum amount  to {\tt
+PLAIN.TEX}, and yet still provided useful features for writing
+technical reports./
+
+\bigskip
+
+That's pretty simple, isn't it?  The only extra feature that you need to
+know is that you can put \verbatim/\cr/ into the \verbatim/\title/ macro if
+you want to split the title into two or more lines, as in
+ $$\verbatim/\title{A very, very, very, very \cr very long title}/$$
+
+If there are two authors of a paper, use the commands
+ $$\verbatim/\authortwo{The Name}\affiltwo{The University}/$$
+The \verbatim/\thanks/ should come {\it before\/} the \verbatim/\author/
+and \verbatim/\title/ keywords, if the style you are using attaches the
+thanks as a footnote to the author or title.
+
+What if there are more than two authors?  In that case you are on your
+own, except in the preprint style.  There you can do something like:
+
+\verbatim/\author{A. Winken \cr {\it MIT} \cr B. Blinken \cr 
+  {\it University of California} \cr {\rm and} \cr C. Nod \cr 
+  {\it University of Michigan}}/
+
+This will set the authors and affiliations up the way you want them.
+Be sure to leave the \verbatim/\affil/ box out if you do this trick.
+I intend to provide better support for multi-authored papers in the
+next release of Ver\TeX.
+
+When you want to start a new section, you type
+ $$\verbatim/\section title of the section \par/$$
+and when you want to start a subsection you type
+ $$\verbatim/\subsection title of the subsection \par/$$
+Ver\TeX\ will handle the section numbers for you, automatically numbering
+each section as required.  
+
+You can enter footnotes by using the construction  
+  $$\verbatim/\fnote{This is a footnote}/$$ and you get a
+footnote.\fnote{Like this!}  If at the end of your document, you type
+\verbatim/\PrintEndNotes/, \TeX\ will print out an end page with all your
+footnotes on it, for those journals who just have to have it.  
+
+If you want the paper to be double spaced, put \verbatim#\doublespace#
+between \verbatim#\endtopmatter# and \verbatim#\document#.  This way the
+cover will come out single spaced and the document will come out double
+spaced, which is what people usually want.
+
+If you are in doublespace mode and want to put a paragraph in single
+spaced mode for some reason, type \verbatim#\singlespace#.  The document
+will now revert to single spaced mode until you enter \verbatim#\doublespace#
+again.
+
+One common reason to want to use single spacing in a doublespaced document
+is for long quotes.  Ver\TeX\ provides this via the command
+\verbatim/\quote/, as in \verbatim/\quote{Four score and seven $\ldots$}/.
+
+\section Extra Goodies for Math and Figures
+
+But there are more goodies in Ver\TeX.  For example, you can attach {\it
+names\/} to equations, and have \TeX\ automatically number (and renumber!)
+them for you.  To use this feature you type something like the following
+when you first introduce an equation:
+ $$\verbatim/$$e=mc^2\eqno\Equation\Einstein$$/$$
+and then when you want to reference it, you say 
+ $$\ldots\verbatim/as in equation (\Einstein)./$$
+The same sort of thing works with figures.  When you first reference a
+figure, called, say \verbatim/\MonaLisa/, you type
+\verbatim/\Fig\MonaLisa/.  \TeX\ will assign the next figure number to it
+and enter ``Figure 2'' (or whatever) in the text.  At the end of the
+paragraph, or roughly where you want the figure to appear, you
+type 
+ $$\verbatim/\Figure\MonaLisa{2in}{The great painting Mona Lisa.}/$$
+The three arguments to the \verbatim/\Figure/ macro are: (1) the
+figure name, (2) the vertical size of the figure, and (3) the 
+caption for the figure.  \TeX\ will insert the figure using the
+\verbatim/\midinsert/ command, so it will appear on the page you
+ask for it if there is room, and otherwise float to the top of the
+next page.
+
+There are couple of things about equation and figure names that are worth 
+pointing out.  First, \TeX\ does not allow you to use {\it numbers\/} as
+part of a name.  Thus names like \verbatim/\Eq1/ and \verbatim/\Eq2/ are
+not allowed. However, you can {\it reuse\/} names as often as you wish. 
+You can refer to an equation as \verbatim/\A/ in one section of the paper
+and later on redefine \verbatim/\A/ to refer to another equation.  I find
+it  convenient to use rather long descriptive names like
+\verbatim/\FirstOrderCondition/ for equations that I refer to throughout the
+paper and use short names like \verbatim/\A/ for equations that I only
+refer to once or twice.
+
+There a couple of handy math commands.  You can type \verbatim/\text{for all}/ 
+if you want ``for all'' to appear in math mode.  You can type
+\verbatim/\D{f(x)}{x_i}/ to get 
+ $$\D{f(x)}{x_i}$$ and
+\verbatim/d{f(x)}{x_i}/ to get $\d{f(x)}{x_i}$. 
+
+The command \verbatim/\proof/ sets a nice {\it Proof.}   The command
+\verbatim/\qed/ gives you a box: \qed  The command \verbatim/\proclaim/
+works the same as described in {\it The \TeX book}, but the style has been
+changed slightly.
+
+The command  \verbatim/\today/ gives today's date nicely spelled out, like:
+\today.
+
+To get verbatim \TeX\ listings, use the construction 
+ 
+ $$\verbatim/\verbatim#This will appear verbatim#/$$
+
+Any convenient symbols can be used as a delimiter in place of the
+\verbatim/#/ signs.
+
+\section References
+
+Ver\TeX\ has nice way to deal with references.  You type something 
+like the following:
+
+\verbatim/
+
+\ref \by{Afriat, S.} \paper{The Construction of a Utility Function from 
+Expenditure Data} \jour{International Economic Review} \vol{8}
+\yr{1967} \pages{67--77}\endref
+
+\ref \by{Afriat, S.} \paper{On the Constructability of Consistent Price 
+Indices Between Several Periods Simultaneously} \inbook{Essays in 
+the Theory and Measurement of Consumer Behavior in Honor of Sir 
+Richard Stone}\editor{A. Deaton} \publ{Cambridge University Press} 
+\publaddr{Cambridge, England}\yr{1984}\endref
+
+\ref \by{Browning, M.}\paper{A Non-Parametric Test of the Life-Cycle 
+Rational Expectations Hypothesis} \paperinfo{Princeton University 
+Discussion Paper 64} \yr{1984}\endref
+
+\ref \by{Varian, H.} \paper{Nonparametric Test of Models of Consumer 
+Behavior}\jour{Review of Economic Studies} \vol{50} \yr{1982b} \no{3}
+\pages{99--110}\endref
+
+\ref \by{Varian, H.} \book{Microeconomic Analysis} \publ{W.
+W. Norton \& Co.} \publaddr{New York} \yr{1984}\endref
+/
+\medskip
+
+and you will get a nice typeset output like:
+
+\bigskip
+
+\ref \by{Afriat, S.} \paper{The Construction of a Utility Function from 
+Expenditure Data} \jour{International Economic Review} \vol{8} 
+\yr{1967} \pages{67--77}\endref
+
+\ref \by{Afriat, S.} \paper{On the Constructability of Consistent Price Indices
+Between Several Periods Simultaneously} \inbook{Essays in the Theory and
+Measurement of Consumer Behavior in Honor of Sir Richard Stone}
+\editor{A. Deaton} \publ{Cambridge University Press} \publaddr{Cambridge,
+England}\yr{1984}\endref
+
+\ref \by{Browning, M.}\paper{A Non-Parametric Test of the Life-Cycle Rational 
+Expectations Hypothesis} \paperinfo{Princeton University Discussion Paper 64}
+\yr{1984}\endref
+
+\ref \by{Varian, H.} \paper{Nonparametric Test of Models of Consumer
+Behavior} \jour{Review of Economic Studies} \vol{50} \yr{1982b} \no{3}
+\pages{99--110}\endref
+
+\ref \by{Varian, H.} \book{Microeconomic Analysis} \publ{W.
+W. Norton \& Co.} \publaddr{New York} \yr{1984}\endref
+
+\medskip
+
+The reference macros are quite complicated and are still being fixed; use
+them at your own risk.  Currently if you omit a field that is
+require---like leaving out the page numbers or something like
+that---Ver\TeX\ will sometimes print out excess commas and other
+punctuation.  Eventually this will be fixed, but for now it is better to
+put in a dummy value, like \verbatim#\pages{???}# or something like that.
+
+If you have a fancy reference that doesn't fit one of the above models,
+just use the \verbatim#\ref# macro to start the reference.  You'll get
+the right hanging indentation and inter-reference spacing that way.
+
+Refer to the file \verbatim#vertex.hst# for the history of revisions to
+Ver\TeX.  If you add some peachy macros of your own, I strongly suggest
+that you put them in a separate file.  Then as new revisions of Ver\TeX\
+come out, you won't have to modify them in any way.
+
+Ver\TeX\ is in the public domain; please feel free to distribute it however
+you want, as long as you indicate the original author.
+
+\section Journals
+
+Want to get published quick?  Then use Ver\TeX's journal simulation
+feature.  Instead of using the command \verbatim\input ppt.sty\ use
+the style files:
+
+\medskip
+
+\verbatim\jpe.sty\ --- for the {\it Journal of Polemical Economy}.
+
+\verbatim\jep.sty\ --- for the {\it Journal of Economic Perspectives}.
+
+\verbatim\jet.sty\ --- for the {\it Journal of Economic Theorems}.
+
+\verbatim\aer.sty\ --- for the {\it Armenian Economic Review}.
+
+\verbatim\ecnmet.sty\ --- for {\it Economagica}.
+
+\verbatim\restud.sty\ --- for {\it Review for Economic Students}.
+
+\verbatim\qje.sty\ --- for the {\it Quartered Journal of Economics}.
+
+\medskip
+
+When you use one of these styles, Ver\TeX\ will automatically adjust the
+style of the document and the style of the references to be more-or-less
+consistent with the journal style.  Some fine tuning may be needed, but 
+the output generally looks pretty good.
+
+If you want to see a small sample of each output, \TeX\ the file {\tt
+vertest.tex}.
+
+\enddocument
+
+\bye

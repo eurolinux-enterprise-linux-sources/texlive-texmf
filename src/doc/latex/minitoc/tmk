@@ -1,0 +1,444 @@
+#! /bin/csh
+# set x
+# set verbose
+set UN=`whoami`.tmk
+set RD=/tmp/$UN
+if ( -d $RD ) then
+else
+   mkdir -m 755 $RD
+endif
+set TEXMFDIR=texmf
+set TEXMF=$RD/$TEXMFDIR
+echo "BIB files"
+if ( -d $TEXMF ) then
+else
+   mkdir -m 755 $TEXMF
+endif
+if ( -d $TEXMF/bibtex ) then
+else
+   mkdir -m 755 $TEXMF/bibtex
+endif
+if ( -d $TEXMF/bibtex/bib ) then
+else
+   mkdir -m 755 $TEXMF/bibtex/bib
+endif
+if ( -d $TEXMF/bibtex/bib/minitoc ) then
+   \rm -rf $TEXMF/bibtex/bib/minitoc
+endif
+mkdir -m 755 $TEXMF/bibtex/bib/minitoc
+foreach i ( fminitoc.bib minitoc.bib )
+   cp $i $TEXMF/bibtex/bib/minitoc
+   chmod 744 $TEXMF/bibtex/bib/minitoc/$i
+end
+#
+echo "BST files"
+if ( -d $TEXMF/bibtex/bst ) then
+else
+   mkdir -m 755 $TEXMF/bibtex/bst
+endif
+if ( -d $TEXMF/bibtex/bst/minitoc ) then
+   \rm -rf $TEXMF/bibtex/bst/minitoc
+endif
+mkdir -m 755 $TEXMF/bibtex/bst/minitoc
+foreach i ( en-mtc.bst fr-mtc.bst)
+   cp $i $TEXMF/bibtex/bst/minitoc
+   chmod 744 $TEXMF/bibtex/bst/minitoc/$i
+end
+#
+echo "SCRIPT files"
+if ( -d $TEXMF/scripts ) then
+else
+   mkdir -m 755 $TEXMF/scripts
+endif
+if ( -d $TEXMF/scripts/minitoc ) then
+   \rm -rf $TEXMF/scripts/minitoc
+endif
+mkdir -m 755 $TEXMF/scripts/minitoc
+foreach i ( emk fmk imk pmk rmk tmk )
+   cp $i $TEXMF/scripts/minitoc
+   chmod 755 $TEXMF/scripts/minitoc/$i
+end
+#
+echo "DVIPS files"
+if ( -d $TEXMF/dvips ) then
+else
+   mkdir -m 755 $TEXMF/dvips
+endif
+if ( -d $TEXMF/dvips/minitoc ) then
+   \rm -rf $TEXMF/dvips/minitoc
+endif
+mkdir -m 755 $TEXMF/dvips/minitoc
+cp duplex2v.pro $TEXMF/dvips/minitoc
+chmod 744 $TEXMF/dvips/minitoc/duplex2v.pro
+#
+echo "INDEXING files"
+if ( -d $TEXMF/makeindex ) then
+else
+   mkdir -m 755 $TEXMF/makeindex
+endif
+if ( -d $TEXMF/makeindex/minitoc ) then
+   \rm -rf $TEXMF/makeindex/minitoc
+endif
+mkdir -m 755 $TEXMF/makeindex/minitoc
+foreach i ( fminitoc.ist minitoc.ist )
+   cp $i $TEXMF/makeindex/minitoc
+   chmod 744 $TEXMF/makeindex/minitoc/$i
+end
+#
+echo "LATEX files"
+if ( -d  $TEXMF/tex ) then
+else
+   mkdir -m 755 $TEXMF/tex
+endif
+if ( -d $TEXMF/tex/latex ) then
+else
+   mkdir -m 755 $TEXMF/tex/latex
+endif
+if ( -d $TEXMF/tex/latex/minitoc ) then
+   \rm -rf $TEXMF/tex/latex/minitoc
+endif
+mkdir -m 755 $TEXMF/tex/latex/minitoc
+foreach i ( \
+UKenglish.mld \
+USenglish.mld \
+acadian.mld \
+acadien.mld \
+afrikaan.mld \
+afrikaans.mld \
+albanian.mld \
+american.mld \
+arab.mld \
+arab2.mld \
+arabi.mld \
+arabic.mld \
+armenian.mld \
+australian.mld \
+austrian.mld \
+bahasa.mld \
+bahasai.mld \
+bahasam.mld \
+bangla.mld \
+basque.mld \
+bicig.mld \
+bicig2.mld \
+bicig3.mld \
+bithe.mld \
+brazil.mld \
+brazilian.mld \
+breton.mld \
+british.mld \
+bulgarian.mld \
+bulgarianb.mld \
+buryat.mld \
+buryat2.mld \
+canadian.mld \
+canadien.mld \
+castillan.mld \
+castillian.mld \
+catalan.mld \
+chinese1.mld \
+chinese1.mlo \
+chinese2.mld \
+chinese2.mlo \
+croatian.mld \
+czech.mld \
+danish.mld \
+devanagari.mld \
+dutch.mld \
+english.mld \
+english1.mld \
+english2.mld \
+esperant.mld \
+esperanto.mld \
+estonian.mld \
+ethiopia.mld \
+ethiopian.mld \
+ethiopian2.mld \
+farsi1.mld \
+farsi1.mlo \
+farsi2.mld \
+farsi2.mlo \
+farsi3.mld \
+finnish.mld \
+finnish2.mld \
+francais.mld \
+french.mld \
+french1.mld \
+french2.mld \
+frenchb.mld \
+frenchle.mld \
+frenchpro.mld \
+galician.mld \
+german.mld \
+germanb.mld \
+germanb2.mld \
+greek-mono.mld \
+greek-polydemo.mld \
+greek-polykatha.mld \
+greek.mld \
+guarani.mld \
+hangul-u8.mld \
+hangul-u8.mlo \
+hangul1.mld \
+hangul1.mlo \
+hangul2.mld \
+hangul2.mlo \
+hangul3.mld \
+hangul3.mlo \
+hangul4.mld \
+hangul4.mlo \
+hanja-u8.mld \
+hanja-u8.mlo \
+hanja1.mld \
+hanja1.mlo \
+hanja2.mld \
+hanja2.mlo \
+hebrew.mld \
+hebrew2.mld \
+hindi-modern.mld \
+hindi.mld \
+hungarian.mld \
+icelandic.mld \
+indon.mld \
+indonesian.mld \
+interlingua.mld \
+irish.mld \
+italian.mld \
+italian2.mld \
+japanese.mld \
+japanese.mlo \
+japanese2.mld \
+japanese2.mlo \
+japanese3.mld \
+japanese3.mlo \
+japanese4.mld \
+japanese4.mlo \
+japanese5.mld \
+japanese5.mlo \
+japanese6.mld \
+japanese6.mlo \
+kannada.mld \
+khalkha.mld \
+latin.mld \
+latin2.mld \
+latvian.mld \
+letton.mld \
+lithuanian.mld \
+lowersorbian.mld \
+lsorbian.mld \
+magyar.mld \
+magyar2.mld \
+magyar3.mld \
+malay.mld \
+malayalam-keli.mld \
+malayalam-omega.mld \
+malayalam-omega.mlo \
+malayalam-rachana.mld \
+malayalam-rachana2.mld \
+manju.mld \
+meyalu.mld \
+minitoc.sty \
+mongol.mld \
+mtcmess.sty \
+mtcoff.sty \
+mtcpatchmem.sty \
+naustrian.mld \
+newzealand.mld \
+ngerman.mld \
+ngermanb.mld \
+ngermanb2.mld \
+norsk.mld \
+norsk2.mld \
+nynorsk.mld \
+nynorsk2.mld \
+polish.mld \
+polish2.mld \
+polski.mld \
+portuges.mld \
+portuguese.mld \
+romanian.mld \
+romanian2.mld \
+romanian3.mld \
+russian-cca.mld \
+russian-cca.mlo \
+russian-cca1.mld \
+russian-cca1.mlo \
+russian-lh.mld \
+russian-lh.mlo \
+russian-lhcyralt.mld \
+russian-lhcyralt.mlo \
+russian-lhcyrkoi.mld \
+russian-lhcyrkoi.mlo \
+russian-lhcyrwin.mld \
+russian-lhcyrwin.mlo \
+russian.mld \
+russian2m.mld \
+russian2o.mld \
+russianb.mld \
+russianc.mld \
+samin.mld \
+scottish.mld \
+serbian.mld \
+serbianc.mld \
+slovak.mld \
+slovene.mld \
+spanish.mld \
+spanish2.mld \
+spanish3.mld \
+spanish4.mld \
+swedish.mld \
+swedish2.mld \
+thai.mld \
+thai.mlo \
+turkish.mld \
+uighur.mld \
+uighur2.mld \
+uighur3.mld \
+ukraineb.mld \
+ukrainian.mld \
+uppersorbian.mld \
+usorbian.mld \
+vietnam.mld \
+vietnamese.mld \
+welsh.mld \
+xalx.mld \
+xalx2.mld \
+xalx3.mld \
+)
+   cp $i $TEXMF/tex/latex/minitoc
+   chmod 744 $TEXMF/tex/latex/minitoc/$i
+end
+#
+## echo "TPM file"
+## if ( -d $TEXMF/tpm ) then
+## else
+##    mkdir -m 755 $TEXMF/tpm
+## endif
+## cp minitoc.tpm $TEXMF/tpm/minitoc.tpm
+## chmod 744 $TEXMF/tpm/minitoc.tpm
+#
+echo "DOCUMENTATION files"
+if ( -d $TEXMF/doc ) then
+else
+   mkdir -m 755 $TEXMF/doc
+endif
+if ( -d $TEXMF/doc/latex ) then
+else
+   mkdir -m 755 $TEXMF/doc/latex
+endif
+if ( -d $TEXMF/doc/latex/minitoc ) then
+   \rm -rf $TEXMF/doc/latex/minitoc
+endif
+mkdir -m 755 $TEXMF/doc/latex/minitoc
+foreach i ( \
+INSTALL \
+README \
+TODO \
+CATALOG \
+fminitoc.lan \
+fminitoc.pdf \
+lamed.eps \
+lamed.pdf \
+lamed.tex \
+minitoc.bug \
+minitoc.l \
+minitoc.lan \
+minitoc.pdf \
+minitoc.pre \
+minitoc.sum \
+franc.sty \
+frbib.sty \
+frnew.sty \
+)
+   cp $i $TEXMF/doc/latex/minitoc
+end
+echo "EXAMPLE files"
+mkdir -m 755 $TEXMF/doc/latex/minitoc/examples
+foreach i ( \
+mtc-2c.pdf \
+mtc-2c.tex \
+mtc-2nd.pdf \
+mtc-2nd.tex \
+mtc-add.pdf \
+mtc-add.tex \
+mtc-add.bib \
+mtc-ads.pdf \
+mtc-ads.tex \
+mtc-amm.pdf \
+mtc-amm.tex \
+mtc-apx.pdf \
+mtc-apx.tex \
+mtc-art.pdf \
+mtc-art.tex \
+mtc-bk.pdf \
+mtc-bk.tex \
+mtc-bo.pdf \
+mtc-bo.tex \
+mtc-ch0.pdf \
+mtc-ch0.tex \
+mtc-cri.pdf \
+mtc-cri.tex \
+mtc-fo1.pdf \
+mtc-fo1.tex \
+mtc-fo2.pdf \
+mtc-fo2.tex \
+mtc-gap.pdf \
+mtc-gap.tex \
+mtc-hi1.pdf \
+mtc-hi1.tex \
+mtc-hi2.pdf \
+mtc-hi2.tex \
+mtc-hia.pdf \
+mtc-hia.tex \
+mtc-hir.pdf \
+mtc-hir.tex \
+mtc-hop.pdf \
+mtc-hop.tex \
+mtc-liv.pdf \
+mtc-liv.tex \
+mtc-mem.pdf \
+mtc-mem.tex \
+mtc-mm1.pdf \
+mtc-mm1.tex \
+mtc-mu.pdf \
+mtc-mu.tex \
+mtc-sbf.pdf \
+mtc-sbf.tex \
+mtc-scr.pdf \
+mtc-scr.tex \
+mtc-syn.pdf \
+mtc-syn.tex \
+mtc-tbi.pdf \
+mtc-tbi.tex \
+mtc-tlc.pdf \
+mtc-tlc.tex \
+mtc-tsf.pdf \
+mtc-tsf.tex \
+)
+cp $i $TEXMF/doc/latex/minitoc/examples
+end
+#
+echo "SOURCE files"
+if ( -d $TEXMF/source ) then
+else
+   mkdir -m 755 $TEXMF/source
+endif
+if ( -d $TEXMF/source/latex ) then
+else
+   mkdir -m 755 $TEXMF/source/latex
+endif
+if ( -d $TEXMF/source/latex/minitoc ) then
+   \rm -rf $TEXMF/source/latex/minitoc
+endif
+mkdir -m 755 $TEXMF/source/latex/minitoc
+foreach i ( fminitoc.dtx minitoc.dtx minitoc.ins )
+   cp $i $TEXMF/source/latex/minitoc
+   chmod 744 $TEXMF/source/latex/minitoc/$i
+end
+#
+echo "MINITOC-TEXMF.ZIP"
+set WD=`pwd`
+cd $RD/$TEXMFDIR
+\rm -f minitoc-texmf.zip
+zip -r minitoc-texmf.zip * -i \*
+cd $WD

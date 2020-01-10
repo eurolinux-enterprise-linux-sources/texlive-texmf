@@ -1,0 +1,36 @@
+%%% 2004-05-22
+
+ENGREC 1 2004-05-20
+
+This bundle should contain
+
+% the package itself
+engrec.sty  
+% bilingual OnlyDescription documentation
+engrec.pdf
+% for *nix make
+Makefile    
+% sources
+engrec.dtx  
+engrec.ins 
+% CTAN-ware
+engrec.xml 
+engrec.tpm 
+% english only part 
+README      % this file
+Changes     
+% french only part
+LISEZMOI    
+Changements 
+
+Description:
+Two macros  \engrec and \EnGrec to enumerate, for example
+some lists, with lower case or upper case greek letters. 
+They have the syntax of \alph.
+
+For *nix users:
+make help
+for help!
+
+-- 
+Yvon Henel, le TeXnicien de surface

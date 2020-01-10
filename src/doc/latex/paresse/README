@@ -1,0 +1,45 @@
+%%% 2005-03-01
+This bundle should contain 
+Makefile
+english-paresse.dtx
+english-paresse.ins
+english-paresse.pdf
+example-fourier.pdf
+example-fourier.tex
+example.pdf
+example.tex
+exemple-fourier.pdf
+exemple-fourier.tex
+exemple.pdf
+exemple.tex
+LISEZMOI
+README
+paresse.dtx
+paresse.ins
+paresse.pdf
+paresse.sty
+paresse.xml
+
+This package provides a means of typing "easily" greek letters
+with the least possible effort ;) It takes care only of the
+letters which have a macro name as \alpha or \Omega.
+
+If you're running a *nix, you can use the provided Makefile.
+For help type 'make help'.
+
+You can obtain the doc 
+(complete with commented code if \OnlyDescription is commented out) 
+with english-paresse.dtx. 
+
+Just latex (or pdflatex) it once then
+  makeindex -s gind english-paresse
+  makeindex -s gglo -o english-paresse.gls english-paresse.glo
+then latex (or pdflatex) it once again.
+
+Or use the provided Makefile and type 'make englishdoc'.
+
+Happy TeXing and all that. 
+
+-- 
+Le \TeX nicien de surface
+Yvon.Henel@wanadoo.fr

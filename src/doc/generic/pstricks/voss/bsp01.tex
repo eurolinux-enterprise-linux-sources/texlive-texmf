@@ -1,0 +1,24 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bsp01.tex ---
+%% Autor           : Herbert Voss <voss@perce.de>
+%% Datum           : 2004-04-25 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{article}
+\usepackage{pstricks}
+\usepackage{pst-slpe}
+\usepackage{multido}
+
+\parindent=0pt
+\pagestyle{empty}
+\begin{document}
+
+\def\radiusI{4}
+\def\radiusII{0.5}
+\begin{pspicture}(-\radiusI,-\radiusI)(\radiusI,\radiusI)
+  \multido{\in=0+36,\im=25+36}{10}{%
+    \ifodd\im\pswedge[fillstyle=radslopes](0,0){\radiusI}{\in}{\im}\fi
+  }
+  \pscircle*[linecolor=white](0,0){\radiusII}
+\end{pspicture}
+
+\end{document}

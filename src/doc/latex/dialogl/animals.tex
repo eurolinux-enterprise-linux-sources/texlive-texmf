@@ -1,0 +1,217 @@
+%   Animals   (in TeX, no less!!!)
+%
+%   This is the program that uses a binary tree of questions to
+%   guess the type of animal of which the user is thinking.
+%
+%   Andrew Marc Greene, March-April 1988
+%
+%%% modified May 1991, Michael Downes:
+%%%   ---removed path names to leave bare file names
+%%%   ---added animals2.tex so that you can repeat without
+%%%      restarting TeX
+%%%   ---added code so that lowercase and uppercase user
+%%%      responses will both be recognized.
+%
+%   Moral support (i.e., ``You can't do that!  Show us!'')
+%   provided by the Student Information Processing Board
+%   of MIT.
+%
+% Instructions on running this program:
+%
+%     tex animals
+%
+% Think of an animal.  The program will try to guess your animal.
+%
+% You will be asked a whole bunch of yes/no questions.  This is a
+% spartan implementation, so answer with a capital Y or N.  When
+% the program finishes going through its tree, it will either have
+% guessed your animal or it will ask you to enter a question that
+% it can ask to differentiate between your animal and its guess.
+% It will then ask you which one is `yes.'
+
+% Here's where I declare all my variables, etc.
+%
+% ``curcode'' is the current index into the data file.
+% ``temp'' is a temporary holding variable.
+% ``lc'' is a loop counter
+% ``ifamg'' is a general-purpose flag.  amg are my initials.
+% ``ifreploop'' controls loop repetitions.
+% ``ifmainlooprep'' controls repetitions of the main loop.
+% ``inp'' is the input file.
+% ``outp'' is the output file.
+% ``amgY'' and ``amgN'' are character constants.  Why I did it this way I
+%                        don't remember.
+%
+\newcount\curcode\curcode=1\newcount\temp\temp=0\newcount\lc
+\newif\ifamg\newif\ifyn\newif\ifreploop\newif\ifmainlrep
+\newread\inp\newwrite\outp\def\foo{}
+\def\amgY{Y}\def\amgN{N}
+
+% The data file consists of records stored in the following format:
+%
+% Record Number <newline>
+% Question <newline>
+% If-Yes-Goto-Record Number <newline>
+% If-No-Goto-Record Number <newline>
+%
+% The following routine scans the data file until it reaches the
+% record requested in \curcode
+%
+\def\Scan{%
+{\loop
+ \global\read\inp to \foo
+ \ifnum\foo=\curcode\amgfalse\else\amgtrue\fi
+ \ifamg\read\inp to \foo\read\inp to \foo\read\inp to \foo
+\repeat}}
+
+% The following routine displays the question and waits for a Y or N
+% answer
+%
+\def\Query{%
+{\read\inp to \foo
+\immediate\write16{}%
+\message{\foo}%
+\GetYN
+\ifyn
+  \read\inp to \foo\global\curcode=\foo\read\inp to \foo
+\else
+  \read\inp to \foo\read\inp to \foo\global\curcode=\foo
+\fi
+}}
+
+% The following routines deal with the user's input.
+% \vread (verbatim read) ignores <newline>s and makes <space>s normal
+% \GetYN gets input and repeats until it gets a Y or N response.
+%
+\def\vread#1{{\catcode`\^^M=9\catcode`\ =12\global\read-1 to #1}}
+\def\first#1#2\end{#1}
+%
+\def\GetYN{%
+{\loop
+\vread{\bar}%
+\edef\bar{\uppercase{\def\noexpand\bar{%
+  \expandafter\first\bar\empty\end}}}\bar
+\reploopfalse
+\if Y\bar\global\yntrue\else
+ \if N\bar\global\ynfalse\else\replooptrue\fi\fi
+\ifreploop
+\immediate\write16{Hey, you!  Answer Y or N, please.}%
+\message{Please enter Y or N --> }%
+\repeat
+}}
+
+% The following routine is called if the ``Goto-Record'' is -1,
+% meaning that the program didn't guess correctly and is clueless.
+% It gets the new animal and the differentiating question, and
+% modifies the data file.  Actually, it makes a modified copy of
+% the file, then copies the temporary new one over the old outdated
+% one.
+%
+\def\NewAnimal{
+\immediate\write16{Well, I'm stumped.  What animal did you have in mind?}
+\vread{\usersanimal}
+\immediate\write16{OK.  What question would let me tell the difference?}
+\vread{\userquery}
+\immediate\write16{Is the answer to that question Yes or No if I ask about}
+\message{\usersanimal? }
+\GetYN
+\curcode=-1
+\Scan
+\read\inp to \lastcode\lc=\lastcode
+\closein\inp
+%
+% Open up the files.  These names are system-dependent.   *FLAG*
+%
+\openin\inp=animal.dat
+\ifeof\inp \errmessage{Unable to open animal.dat!}\fi
+\immediate\openout\outp=newaniml.dat
+%
+% Read through the inp file, copying all records that don't need to
+% be changed, outputting modified versions of the changed ones (and
+% discarding the old), and appending the new records.
+%
+{\loop
+ \read\inp to \foo
+ \amgtrue
+ \ifnum\foo=\temp\amgfalse\fi
+ \ifnum\foo=-1 \amgfalse\fi
+ \ifamg\immediate\write\outp{\foo}%
+  \read\inp to \foo\immediate\write\outp{\foo}%
+  \read\inp to \foo\immediate\write\outp{\foo}%
+  \read\inp to \foo\immediate\write\outp{\foo}%
+  \amgtrue
+ \else\ifnum\foo=\temp
+  \immediate\write\outp{\foo}%
+  \immediate\write\outp{\userquery}%
+  \immediate\write\outp{\number\lc}%
+  \global\advance\lc by 1
+  \immediate\write\outp{\number\lc}%
+  \read\inp to \animal\read\inp to \foo\read\inp to \foo
+  \amgtrue
+ \else
+  \lc=\lastcode
+  \ifyn\WriteUsers\WriteAnimal
+  \else\WriteAnimal\WriteUsers
+  \amgfalse\fi
+ \fi\fi
+ \ifamg
+\repeat}
+\closein\inp
+\immediate\write\outp{-1}
+\immediate\write\outp{\number\lc}
+\immediate\closeout\outp
+%
+% Now copy the temporary file over the original one
+%
+% These filenames are also system-dependent.           *FLAG*
+%
+\openin\inp=newaniml.dat
+\ifeof\inp \errmessage{Unable to open newaniml.dat!}\fi
+\immediate\openout\outp=animal.dat
+{\endlinechar=-1
+  \loop
+  \read\inp to \foo
+  \immediate\write\outp{\foo}
+  \amgtrue
+  \ifeof\inp\amgfalse\fi
+ \ifamg\repeat}
+\immediate\closeout\outp
+}
+%
+% This routine is called by NewAnimal and writes the record for
+% the user's new animal
+%
+\def\WriteUsers{
+\immediate\write\outp{\number\lc}
+\immediate\write\outp{Is it \usersanimal?}
+\immediate\write\outp{0}
+\immediate\write\outp{-1}
+\global\advance\lc by 1 }
+
+% This one writes the modified old animal
+%
+\def\WriteAnimal{
+\immediate\write\outp{\number\lc}
+\immediate\write\outp{\animal}
+\immediate\write\outp{0}
+\immediate\write\outp{-1}
+\global\advance\lc by 1 }
+
+% Now we get into the main routine.
+% It simply repeats the scan-query loop until it gets a 0 (right answer)
+% or a -1 (wrong answer, I'm stumped), and calls the appropriate routine.
+%
+\def\maybecontinue{\input animals2.tex
+  \maybecontinue}
+
+\maybecontinue
+
+% Ah, the joys of a job well-done.  We can now exit to the system, knowing
+% that the world is a slightly better place for our efforts.
+%
+% The following line of code, probably the most profound in the entire
+% program, sums up this philosophy of life in four characters.  The
+% Puritan work ethic is embodied in this amazingly meaning-laden
+% command designed by Donald Knuth.
+
+\end

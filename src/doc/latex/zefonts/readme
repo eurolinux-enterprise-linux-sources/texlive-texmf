@@ -1,0 +1,29 @@
+
+The `ze' fonts (virtual T1 fonts)
+version 2.1
+
+by Robert Fuster (rfuster\@ mat.upv.es)
+        Departament de Matem\`atica Aplicada
+        Universitat Polit\`ecnica de Val\`encia
+        46071 Val\`encia (Spain)
+
+        June 24, 1997
+        September 17, 1998
+        July 17, 2000
+
+    The `zd' fonts by Constantin Kahn (kahn@math.uni-hannover.de)
+    are virtual T1 encoded Computer Modern fonts based on (OT1) Computer
+    Modern, Times, and Helvetica fonts, intended for simulate `dc'
+    fonts. (Waine Sullivan's `dm' fonts are another approach to
+    the substitution of `dc' fonts by virtual ones.)
+
+    Because `dc' fonts are now obsolete, I've adapted the Kahn's package to
+    `ec' fonts. The resulting virtual fonts are named according to the ec
+    fonts names, changing `ec' by `ze' (zerm1000.vf simulates ecrm1000, and
+    so on).
+
+    Another virtual T1 encoded Computer Modern fonts are the almost european
+    (`am') fonts, by Lars Engebretsen (enge@nada.kth.se). The main difference
+    between `am' and `ze' fonts is that almost european fonts only use
+    Computer Modern fonts to simulate the European Modern and, then,
+    more characters are lost.

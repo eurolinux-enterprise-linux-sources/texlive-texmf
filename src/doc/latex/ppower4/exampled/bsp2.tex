@@ -1,0 +1,52 @@
+\documentclass[30pt,landscape]{foils}
+\usepackage[english,german]{babel}  % language support
+\usepackage[latin1]{inputenc}       % allow Latin1 characters
+\usepackage[pdftex]{color}
+\usepackage[pdftex]{geometry}
+\geometry{headsep=3ex,hscale=0.9}
+\usepackage{hyperref}
+\hypersetup{pdftitle={PPower4Beispiel},
+  pdfsubject={Ein Beispiel zur Anwendung von PPower4},
+  pdfauthor={Klaus Guntermann, FG Systemprogrammierung,
+   TU Darmstadt <guntermann@iti.informatik.tu-darmstadt.de>},
+  pdfkeywords={pdftex, acrobat},
+  pdfpagemode={FullScreen}
+  }
+\usepackage{pause}
+\usepackage{background}
+\usepackage{pp4slide}
+\begin{document}
+\definecolor{bgblue}{rgb}{0.04,0.39,0.53}
+\vpagecolor{bgblue}
+
+\foilhead{Ein Beispiel mit verlaufendem Hintergrund}
+\begin{itemize}
+\item Aufzählungen\pause
+  \begin{itemize}
+  \item werden geschachtelt\pause
+  \item und mit  Symbolen markiert
+    \hypertarget{Anfang}{} %Markierung irgendwo auf der Seite
+    \begin{itemize}
+    \item auch in dieser Tiefe\pause
+    \end{itemize}
+  \item auf verschiedenen Ebenen\pause
+  \end{itemize}
+\item mit Formeln wie $\sum_{i=0}^\infty a_i\cdot x^i$
+
+\end{itemize}
+
+\foilhead{Andere Seitenübergänge}
+\hypersetup{pdfpagetransition=Dissolve}
+\begin{itemize}
+\item Anderen Seitenübergang einschalten\pause
+\item Aber auch explizit wieder ausschalten
+\end{itemize}
+
+\foilhead[2ex]{Das war's schon}
+\hypersetup{pdfpagetransition=R}
+\begin{center}
+Das soll als Beispiel reichen.
+
+Auf Wunsch geht es \hyperlink{Anfang}{zurück} zum Anfang.
+\end{center}
+\end{document}

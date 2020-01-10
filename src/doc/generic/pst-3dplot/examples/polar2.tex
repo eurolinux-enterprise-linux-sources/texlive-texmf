@@ -1,0 +1,81 @@
+\listfiles
+\documentclass[a4paper]{article}%  Herbert Voss 2004-10-06
+\usepackage{pstricks}
+\usepackage{pstricks-add}
+\usepackage{multido}
+\def\func{%
+    const0 x sin dup mul 3 mul div neg /p exch def
+    p abs sqrt neg /r exch def
+    const1 2.0 div neg /q exch def
+    p 0 lt {
+      p dup mul p mul q dup mul add 0 le {
+        q r 3 exp div arccos 
+        3 div cos r dup add neg mul
+      }{
+        q r 3 exp div arch
+        3 div cosh r dup add neg mul
+      } ifelse
+    }{
+      q r 3 exp div arsh
+      3 div sinh r dup add neg mul      
+    } ifelse
+}
+\begin{document}
+\textbf{Dynamical flow around a cylinder}
+\[
+\left(r^2-\frac{c_1}{r}\right)\sin^2\theta=c_0
+\]
+
+which is the same as
+
+\[
+r^3-\frac{c_0}{\sin^2\theta}\cdot r-c_1=0
+\]
+
+which can be solved by the formula of Cardano:
+
+\[
+r^3+3pr+2q=0
+\]
+
+\bigskip
+\begin{pspicture*}(-5,-2.5)(5,2.5)
+  \pstVerb{
+    /e 2.718281828459045 def
+    /arccos { dup dup mul neg 1.0 add sqrt exch atan } def
+    /sinh { dup e exch exp exch neg e exch exp sub 2 div } def
+    /cosh { dup e exch exp exch neg e exch exp add 2 div } def
+    /arsh { dup dup mul 1 add sqrt add ln } def
+    /arch { dup dup mul 1 sub sqrt add ln } def
+  }
+  \psaxes(0,0)(-5,-2.5)(5,2.5)
+  \pscircle[linecolor=red]{1}
+  \psset{plotpoints=100,linewidth=0.05pt,polarplot=true,linecolor=blue}
+  \multido{\rA=0.005+0.05}{5}{
+    \psplot{1}{179}{%
+      /const0 \rA\space def 
+      /const1 1.0 def % cylinder radius
+      \func
+    }
+    \psplot{181}{359}{%
+      /const0 \rA\space def 
+      /const1 1.0 def % cylinder radius
+      \func
+    }%
+  }
+  \multido{\rA=0.03+0.25}{20}{
+    \psplot{1}{179}{%
+      /const0 \rA\space def 
+      /const1 1.0 def % cylinder radius
+      \func
+    }
+    \psplot{181}{359}{%
+      /const0 \rA\space def 
+      /const1 1.0 def % cylinder radius
+      \func
+    }%
+  }
+\end{pspicture*}
+
+\end{document}
+

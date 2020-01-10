@@ -1,0 +1,64 @@
+
+
+csb10 lm-rep-csrm lmb10
+csbx10 lm-rep-csrm lmbx10
+csbx12 lm-rep-csrm lmbx12
+csbx5 lm-rep-csrm lmbx5
+csbx6 lm-rep-csrm lmbx6
+csbx7 lm-rep-csrm lmbx7
+csbx8 lm-rep-csrm lmbx8
+csbx9 lm-rep-csrm lmbx9
+csbxsl10 lm-rep-csrm lmbxo10
+csbxti10 lm-rep-csrm lmbxi10
+cscsc10 lm-rep-cssc lmcsc10
+csdunh10 lm-rep-cssc lmdunh10
+csinch lm-rep-csin lmssbx10
+csitt10 lm-rep-cstt lmtti10
+csr10 lm-rep-csrm lmr10
+csr12 lm-rep-csrm lmr12
+csr17 lm-rep-csrm lmr17
+csr5 lm-rep-cssc lmr5
+csr6 lm-rep-csrm lmr6
+csr7 lm-rep-csrm lmr7
+csr8 lm-rep-csrm lmr8
+csr9 lm-rep-csrm lmr9
+cssl10 lm-rep-csrm lmro10
+cssl12 lm-rep-csrm lmro12
+cssl8 lm-rep-csrm lmro8
+cssl9 lm-rep-csrm lmro9
+cssltt10 lm-rep-cstt lmtto10
+csss10 lm-rep-csrm lmss10
+csss12 lm-rep-csrm lmss12
+csss17 lm-rep-csrm lmss17
+csss8 lm-rep-csrm lmss8
+csss9 lm-rep-csrm lmss9
+csssbx10 lm-rep-csrm lmssbx10
+csssdc10 lm-rep-csrm lmssdc10
+csssi10 lm-rep-csrm lmsso10
+csssi12 lm-rep-csrm lmsso12
+csssi17 lm-rep-csrm lmsso17
+csssi8 lm-rep-csrm lmsso8
+csssi9 lm-rep-csrm lmsso9
+csssq8 lm-rep-csrm lmssq8
+csssqi8 lm-rep-csrm lmssqo8
+cstcsc10 lm-rep-cstt lmtcsc10
+csti10 lm-rep-csrm lmri10
+csti12 lm-rep-csrm lmri12
+csti7 lm-rep-csrm lmri7
+csti8 lm-rep-csrm lmri8
+csti9 lm-rep-csrm lmri9
+cstt10 lm-rep-cstt lmtt10
+cstt12 lm-rep-cstt lmtt12
+cstt8 lm-rep-cstt lmtt8
+cstt9 lm-rep-cstt lmtt9
+csu10 lm-rep-csrm lmu10
+csvtt10 lm-rep-cstt lmvtt10
+% This file belongs to the Latin Modern package. The work is released under
+% the GUST Font License. See the MANIFEST.txt and README.eng files
+% for the details. For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+% Prepared by Thomas Esser and Staszek Wawrykiewicz (May 14, 2005).
+% Touched by Bogus\l{}aw Jackowski (April 13, 2006).
+% Support for CS (Czech and Slovak) text fonts in Type1 format:
+% map lines which replace the new cstext.map (or parts of an old cs.map).

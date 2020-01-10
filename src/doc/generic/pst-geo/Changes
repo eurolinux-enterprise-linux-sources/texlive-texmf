@@ -1,0 +1,15 @@
+..... pst-map2d.tex
+1.07  2005-11-11  fix introduced bug with loading xkey
+1.06  2005-11-10  using pst-xkey instead of pst-key
+
+..... pst-map2dII.tex
+0.81  2005-11-10  using pst-xkey instead of pst-key
+
+..... pst-map3d.tex
+1.03  2005-11-10  using pst-xkey instead of pst-key
+
+..... pst-map3dII.tex
+0.23  2005-11-10  using pst-xkey instead of pst-key
+
+
+

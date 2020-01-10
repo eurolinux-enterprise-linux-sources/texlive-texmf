@@ -1,0 +1,51 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[dvipsnames]{pstricks}
+\usepackage{pst-xkey}
+
+\makeatletter
+\define@key[psset]{}{stain}{\def\psk@stain{#1}}
+\define@key[psset]{}{step}{\def\psk@step{#1}}
+\psset{stain=20,step=0.25}% 
+%
+\def\psCStain{\pst@object{psCStain}}
+\def\psCStain@i(#1)#2{%
+  \leavevmode
+  \pst@killglue
+  \begingroup
+    \use@par
+    \pscircle*(#1){#2}
+    \init@pscode%
+    \pst@getcoor{#1}\pst@tempa%
+    \pssetlength\pst@dimc{#2}%
+    \def\pst@linetype{4}%
+    \addto@pscode{%    
+    rrand srand
+    /getRandInt { rand 2147483647 div \psk@stain\space mul } def
+    \pst@tempa\space translate 
+    /radius \pst@number\pst@dimc \psk@dimen CLW mul sub def
+    newpath
+    0 radius moveto
+    0 \psk@step\space 360 {
+      /angle exch def
+      radius getRandInt add dup angle cos mul exch angle sin mul
+      lineto
+    } for
+    closepath fill
+  }%
+  \pst@stroke
+  \use@pscode
+  \endgroup
+  \ignorespaces%
+}
+\makeatother
+\pagestyle{empty}
+\parindent=0pt
+\begin{document}
+
+\begin{pspicture}(7,2)
+  \psCStain[linecolor=red](3.5,1){0.5}
+  \psCStain(1,1){0.25}
+  \psCStain[linecolor=Goldenrod,step=1](6,1){0.25}
+\end{pspicture}
+
+\end{document}

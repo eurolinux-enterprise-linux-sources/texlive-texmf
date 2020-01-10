@@ -1,0 +1,27 @@
+Die Loesungsfiles der gestellten Uebungsaufgaben aus Kapitel 2 der
+LaTeX-Einfuehrung tragen die Grundnamen ueb2-n und ueb2-nx.tex mit n=1, 2
+und 3 fuer die Uebungen 2.1 bis 2.3. Der anschliessende Buchstabe x steht
+bei n=1 und 2 fuer a bis d, womit verschiedene Loesungsalternativen angeboten
+werden, und zwar fuer x=a mit Eingabetexten in Standardnotation fuer Umlaute
+und das sz als "u sowie "s gemaess german.sty. Die Loesungsfiles mit x=b bis
+x=d enthalten die Umlaute und das sz mittels der Sondertasten einer deutschen
+Tastatur fuer die Betriebssyseme LINUX (x=b), WINDOWSn (x=c) und MSDOS sowie
+OS/2 (x=d). Alle spaeteren Loesungsbeispiele enhalten die Umlaute und das sz
+gemaess german.sty als "u und "s. Diese koennen beim Anwender bei Bedarf
+durch die Sondertasten einer deutschen Tastatur ersetzt werden, wobei fuer
+die verschiedenen Betriebssysteme in
+   \usepackage[zzz]{inputenc}
+fuer zzz latin1, ansinew bzw. cp850 entsprechend den Loesungsbeispielen
+ueb2-1x.tex und ueb2-2x.tex mit x=b bis x=d zu waehlen ist.
+
+Die beiden Loesungsbeispiele ueb2-3a.tex und ueb2-3b.tex entsprechen den
+beiden Uebungsalternativen der Uebung 2.3 aus Kapitel 2 der LaTeX-Einfuehrung,
+wobei ueb2-3b.tex das beigefuegte Ergaenzungspaket a4.sty benutzt.
+
+Die Loesungsbeispiele ueb2-n sind identisch mit denen fuer ueb2-na, was zur
+Uebereinstimmung mit der Namensgebung bei den Aufgabenstellungen fuer die
+Uebungen des Buches fuehrt. Der Anwender moege ggf. diese Namen zum
+Uebungsbeginn verwenden und deren Eingabefiles entsprechend den gestellten
+Aufgabeerweiterungen oder Ergaenzungen entsprechend abaendern oder erweitern,
+wozu die Loesungsbeispiele aus ueb2-nx herangezogen werden koennen.  
+ 

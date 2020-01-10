@@ -1,0 +1,22 @@
+\documentclass{article}
+\usepackage{german}
+\newlength{\breite}
+\newenvironment{varpage}[1]
+   {\settowidth{\breite}{#1}\begin{minipage}{\breite}}
+   {\end{minipage}}
+\begin{document}
+\noindent
+\begin{varpage}{``So breit wie dieser Mustertext''}
+  Die Breite dieser \texttt{minipage}-Um"-gebung entspricht dem "ubergebenen
+  Text\\
+  ``So breit wie dieser Mustertext''\\
+  wie  hier zu erkennen ist.
+\end{varpage}\quad
+\begin{varpage}{``schmaler Mustertext''}
+  Hier folgt die schmalere \texttt{minipage}-Um"-gebung der Breite\\
+  ``schmaler Mustertext''\\
+  wie man sieht.
+\end{varpage}
+\end{document}  
+  
+

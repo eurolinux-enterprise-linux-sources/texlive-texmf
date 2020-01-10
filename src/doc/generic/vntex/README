@@ -1,0 +1,67 @@
+vntex-3.1.5
+
+Copyright 2005 Reinhard Kotucha <Reinhard.Kotucha@web.de>.
+This file is part of vntex.  License: LPPL, version 1.3 or newer,
+according to http://www.latex-project.org/lppl.txt
+
+
+Description
+===========
+VnTeX is a package which supports typesetting Vietnamese.  It provides
+macro packages for LaTeX and plain TeX as well as fonts.
+
+---------------------------------------------------------
+The primary site of VnTeX is
+
+     http://vntex.org
+---------------------------------------------------------
+
+Author
+======
+The author of VnTeX is Han The Thanh <HanTheThanh@gmx.net>.
+
+
+Contributors
+=============
+LaTeX support (input encoding files, font encoding file, babel support
+and vietnam.sty) is provided by Werner Lemberg.
+
+tex4ht support is provided by Han The Thanh and Eitan Gurari. The fonts
+are now part of the tex4ht distribution and maintained by Eitan Gurari. 
+
+plnfss has been removed from VnTeX because it supports many other
+languages as well.  You can download it from
+
+    http://ctan.tug.org/tex-archive/macros/plain/plnfss
+
+
+License
+=======
+The URW and Bitstream Type1 fonts are copyrighted under the GNU GPL,
+.map files are public domain, varioref-vi.sty is under LGPL, Vntopia 
+is under the Adobe/TUG Utopia license agreement, all other files are 
+under LPPL, version 1.3 or newer.
+
+See:
+     http://www.gnu.org/licenses/gpl.txt
+     http://www.gnu.org/licenses/lgpl.txt
+     http://www.latex-project.org/lppl.txt
+     http://tug.org/fonts/utopia/LICENSE-utopia.txt
+
+
+Support
+=======
+The current maintainers are:
+
+    Han The Thanh <HanTheThanh@gmx.net>
+    Werner Lemberg <WL@gnu.org>
+    Reinhard Kotucha <Reinhard.Kotucha@web.de>
+
+The Vietnamese fonts for tex4ht are now part of tex4ht and maintained by
+Eitan Gurari <Gurari@cse.ohio-state.edu>.
+
+There is also a mailing list (very low traffic) for questions about
+VnTeX and typesetting Vietnamese.  To subscribe to the list, visit
+
+    http://lists.sourceforge.net/lists/listinfo/vntex-users
+

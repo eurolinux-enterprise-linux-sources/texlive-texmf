@@ -1,0 +1,16 @@
+%% Package `pst-vue3d.tex'
+%%
+%% 2005-02-21
+%%
+
+Save the files
+
+pst-vue3.sty   
+pst-vue3.tex
+3d.pro -> texmf/dvips/pstricks/
+
+in any place, where latex or any other TeX program will find it.
+Pay attention, that you cannot run the documentation with
+pdflatex, PSTricks is PosTScript Tricks.
+Use latex->dvips->ps2pdf or have a look at
+http://PSTricks.de/pdf/pdfoutput.phtml

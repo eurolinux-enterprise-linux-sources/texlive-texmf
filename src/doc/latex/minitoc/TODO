@@ -1,0 +1,12 @@
+Problem FAQ 34: should this strategy for fonts be implemented?
+Problem of allowing secttocs for the book and report classes:
+   needs a lot of rewrite. Delayed.
+Mini-table entries in ``paragraph'' format:
+   not a minitoc problem, but a problem of the \l@... commands.
+Problem of ``numwidth'' (width of the section number)
+   in \mtcsetformat. Use the tocloft package.
+Compatibility with the float package.
+Compatibility with the floatrow package.
+Compatibility with the fltpage package.
+Mini-tables on 2 columns. New ``features''?
+Pb. with indexing the environments.

@@ -1,0 +1,46 @@
+\documentclass{article}
+
+\usepackage{pstricks} % To use the standard "color" package with PSTricks
+\usepackage{multido}
+\input{random.tex}         % From Donald Arseneau (on macros/generic on CTAN)
+
+\newdimen\dX
+\newdimen\dY
+\newdimen\Coor
+
+% Random walk in the unit square (#1 = number of steps)
+\def\RandomWalk#1{%
+  \setrandim\dX{0pt}{1pt}
+  \setrandim\dY{0pt}{1pt}
+  \psdot[dotstyle=*,dotsize=6pt](\pointless\dX,\pointless\dY) % Initial point
+  \pscustom{%
+    \moveto(\pointless\dX,\pointless\dY)      % Move to initial point
+    \multido{\i=1+1}{#1}{%
+      \MoveCoordinate{\dX}
+      \MoveCoordinate{\dY}
+      \lineto(\pointless\dX,\pointless\dY)}}} % Line between old and new position
+
+% Computation of new horizontal or vertical position of point
+\def\MoveCoordinate#1{%
+  \setrandim\Coor{-0.06pt}{0.06pt}          % The move
+  \advance #1 by \Coor                      % New position
+% To stay in the square...
+  \ifdim#1>1pt #1=1pt\fi
+  \ifdim#1<0pt #1=0pt\fi}
+
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\psset{unit=7,dimen=middle,linewidth=0.5pt}
+\begin{pspicture}(1,1.01)
+  \psframe[linewidth=0.1pt](1,1)
+  \RandomWalk{300}
+  \psset{linecolor=red}
+  \RandomWalk{300}
+  \psset{linecolor=green}
+  \RandomWalk{300}
+\end{pspicture}
+
+\end{document}

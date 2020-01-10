@@ -1,0 +1,62 @@
+\input fontinst.sty
+
+\edef\spacecatcode{\the\catcode`\ }
+\edef\nlcatcode{\the\catcode`\^^M}
+\edef\atcatcode{\the\catcode`\@}
+\edef\underscorecatcode{\the\catcode`\_}
+\edef\tildecatcode{\the\catcode`\~}
+\catcode`\ =9
+\catcode`\^^M=9
+\catcode`\@=11
+\catcode`\_=11
+\catcode`\~=10
+
+\def\Mtxtopl#1#2{{
+   \open_out{#2.pl}
+   \top_of_pl_hook
+   \out_line{(COMMENT~raw~font~#2~created~by~fontinst~
+      v\fontinstversion)}
+   \out_line{}
+   \out_line{(COMMENT~Filename:~#2.pl)}
+   \out_line{(COMMENT~Created~by:~tex~\jobname)}
+   \out_line{(COMMENT~Created~using:~\string\mtxtopl{#1}{#2})}
+   \out_line{}
+   \out_line{(COMMENT~This~file~can~be~turned~into~a~ligless~TeX~font~
+      with)}
+   \out_line{(COMMENT~pltotfm~#2.pl~#2.tfm)}
+   \out_line{}
+   \out_line{(COMMENT~THIS~FILE~CAN~THEN~BE~DELETED.)}
+   \out_line{}
+   \out_line{(DESIGNSIZE~R~10.0)}
+   \out_line{}
+   \let\setglyph=\iffalse
+   \let\endsetglyph=\fi
+   \let\setkern=\gobble_three
+   \let\setrawglyph=\Pl_raw_glyph
+   \inputmtx{#1}
+   \out_line{}
+   \out_line{(COMMENT~END~OF~FILE~#2.pl)}
+   \close_out{Raw~font}
+}}
+\def\Pl_raw_glyph#1#2#3#4#5#6#7#8{
+   \a_count=#4
+   \out_line{(CHARACTER~\vpl_int\a_count\space(COMMENT~#1)}
+   \out_lline{(CHARWD~R~\make_factor{#5})}
+   \out_lline{(CHARHT~R~\make_factor{#6})}
+   \out_lline{(CHARDP~R~\make_factor{#7})}
+   \out_lline{(CHARIC~R~\make_factor{#8})}
+   \out_lline{)}
+}
+
+
+\catcode`\@=\atcatcode
+\catcode`\^^M=\nlcatcode
+\catcode`\ =\spacecatcode
+\catcode`\~=\tildecatcode
+\catcode`\_=\underscorecatcode
+
+\batchmode
+\for(n){1}{500}{1}\Mtxtopl{cmr5}{cmr5.new}\endfor(n)
+
+\bye
+

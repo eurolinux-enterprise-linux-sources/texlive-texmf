@@ -1,0 +1,14 @@
+22.01.2007: no version change
+* Lithuanian *.fd file corrected (reported by Sigitas Tolusis): L7X -> L7x
+
+Ver. 1.001, 14.01.2007:
+* LM-compatible corrections: `[Ll]dotaccent' renamed to `[Ll]dot'
+  (in both PS and OTF), [SsTt]commaaccent renamed to uni0218, uni0219,
+  uni021A, and uni021B, respectively (in OTF only), `[gklnr]commaaccent'
+  duplicated to `[gklnr]cedilla', combining accents supplemented
+  (`commaaccentcomb', `Breveinvertedcomb'), AFDKO's Glyph Order
+  and Alias DB file (GOADB) modified (now both Latin Modern and
+  TeX Gyre engines fonts share the same GOADB)
+* OTF feature locl fixed
+
+Ver. 1.000: 18.12.2006

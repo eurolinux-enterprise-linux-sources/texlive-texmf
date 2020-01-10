@@ -1,0 +1,18 @@
+\documentclass{article}
+\usepackage{german}
+\newenvironment{varscript}[2]
+   {\begin{list}{}{%
+      \settowidth{\labelwidth}{#2{#1}}
+      \setlength{\leftmargin}{\labelwidth}
+         \addtolength{\leftmargin}{\labelsep}
+      \setlength{\parsep}{0.5ex plus0.2ex minus0.2ex}
+      \setlength{\itemsep}{0.3ex}
+      \renewcommand{\makelabel}[1]{#2{##1}\hfill}}}
+   {\end{list}}
+\begin{document}
+\begin{varscript}{Mustertext}{\textsc}
+\item[Marke 1] Erster Erl"auterungstext
+\item[Marke 2] Zweiter Erl"auterungstext
+\item[Folgemarke] Weiterer Erl"auterungstext
+\end{varscript}
+\end{document}

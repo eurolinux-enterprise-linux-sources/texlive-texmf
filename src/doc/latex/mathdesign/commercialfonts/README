@@ -1,0 +1,50 @@
+The Math Design fonts
+~~~~~~~~~~~~~~~~~~~~~
+
+This directory contains mathdesign fonts which fits with commercial
+text fonts.
+
+The mathdesign fonts themselves are free, but you have to obtain the
+corresponding text fonts from your favorite reseller.
+
+By now only one family is available:
+
+* mdfga family     corresponds to    Fontsite Garamond      text fonts
+
+These text fonts are a creation of the Fontsite : http://www.fontsite.com/
+
+The fonts provided by the Math Design project are free; you
+can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation;
+either version 2 of the License, or (at your option) any later
+version.
+
+Please read the generic README file of the mathdesign package for
+informations on installation, upgrading, etc.
+
+
+SMALL CAPITALS
+~~~~~~~~~~~~~~
+
+The generic instructions about the installation and usage of small caps
+stand also for these fonts.
+
+The commercial fonts you'll need are: 
+
+   FontSite Garamond : FSGaramondSmallCaps-Regular (fgarc8a.pfb)
+                       FSGaramondSmallCaps-Bold    (fgarc8a.pfb)         
+
+You need the Windows Postscript versions of the fonts. You must rename
+the files: I have indicated between parentheses the new name of each
+file.
+
+
+Thank you for using the Math Design fonts and happy TeXing :-)
+
+
+Paul Pichaureau, paul.pichaureau@alcandre.net
+
+
+                                                    Paris, January 2006
+
+

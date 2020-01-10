@@ -1,0 +1,67 @@
+% titletoc 1.5, patch
+% (c) Javier Bezos 2005, as stated in titletoc.sty
+% 
+% Level 1
+
+\def\ttl@a{2005/01/22 v1.5 TOC entries}
+\expandafter\ifx\csname ver@titletoc.sty\endcsname\ttl@a
+ \message{*** titletoc 1.5, loading patch level 1 ***}
+\else
+ \PackageError{titletoc}{Wrong patch version}
+   {This patch is intended for titletoc v1.5\MessageBreak
+    and you are using a different version. If you have 
+    installed a later release, please remove titletoc.new}
+\fi
+
+% 1. 2005/05/03
+% Partial tocs didn't work properly with \include's.
+% If, say, a chapter was removed from the includeonly
+% list, its partial toc was grouped with that of the
+% next included chapter. The fix (found like the bug
+% by F. Mittlebach) is to replace \newcount by
+% \newcounter when using partial list counters, so
+% that they are properly saved in the aux files.
+
+\renewcommand\startlist[2][default]{%
+  \expandafter\ttl@xstartlist\csname ttl@partial#2\endcsname
+  \@ifundefined{c@ttl@#2@#1}%
+    {\newcounter{ttl@#2@#1}}%
+    {\stoplist[#1]{#2}}%  
+  \stepcounter{ttl@#2@#1}%
+  \resumelist[#1]{#2}}
+
+\renewcommand\stoplist[2][default]{%
+  \protected@write\@auxout{}{%
+    \string\ttl@writefile{\csname ttl@partial#2\endcsname}{%
+       \string\ttl@stoptoc{#1@\arabic{ttl@#2@#1}}}}}
+
+\renewcommand\resumelist[2][default]{%
+  \protected@write\@auxout{}{%
+    \string\ttl@writefile{\csname ttl@partial#2\endcsname}{%
+       \string\ttl@starttoc{#1@\arabic{ttl@#2@#1}}}}}
+
+\renewcommand\ttl@printlist[5][default]{%
+  \begingroup
+    \@ifundefined{c@ttl@#2@#1}%
+      {\PackageError{titletoc}{No partial #2 named #1}%
+          {You must start before a partial toc/list\MessageBreak
+          with \string/startcontents/\string\startlist.}}{}%
+    \edef\ttl@ptoc{#1@\arabic{ttl@#2@#1}}%
+    \def\ttl@toctop{#4}%
+    #5%
+    \let\ttl@xcontentsline\contentsline
+    \let\contentsline\ttl@gobblecontents
+    \def\ttl@contentsline##1{%
+      \@ifundefined{ttll@#3##1}%
+        {\expandafter\let\csname ttll@#3##1\expandafter\endcsname
+           \csname ttll@##1\endcsname}{}%
+      \@ifundefined{l@#3##1}%
+        {\ttl@xcontentsline{##1}}%
+        {\ttl@xcontentsline{#3##1}}}%
+    \makeatletter
+    \@input{\jobname.\csname ttl@partial#2\endcsname}%
+    \makeatother
+    \@nobreakfalse
+  \endgroup}
+
+\endinput

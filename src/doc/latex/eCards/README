@@ -1,0 +1,29 @@
+eCards Pacakge: Version 1.0
+
+The eCards package for LaTeX enables you to create a series of
+electronic (flash) cards. The demo file for this package is named
+eCardstst.pdf. The document author provides questions, hints and
+answers to a series of questions. Users can test their knowledge
+by responding to the questions. The questions are delivered in
+random order.
+
+The distribution:
+    eCards.zip : All the files you need except for
+        the manuals.
+    eCardsman.pdf : An onscreen version of the manual.
+        The manual is somewhat terse, most concepts are
+        illustrated in the demo file eCardstst.tex, provided
+        in eCards.zip.
+    eCardsman_p.pdf : a printable version of eCardsman.pdf.
+    eCardstst.pdf : The pdf version of the demo file.
+
+Note: This package requires the AcroTeX eDucation Bundle.
+
+Enjoy!
+
+D. P. Story
+05/20/03
+
+This material is subject to the LaTeX Project Public License. See
+http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html
+for the details of that license.

@@ -1,0 +1,37 @@
+Welcome to SplitIndex, the TeX index splitter. SplitIndex creates
+multiple index files from one raw index. See manifest.txt if you want
+to know the files SplitIndex exists of.
+
+There are a lot of alternatives in using SplitIndex, because I wanted
+solutions at every platform. Not all of the programs are distributed
+in binary form. But splitindex.tex will work at every platform. And you
+need only TeX (even not LaTeX) to run it.
+
+Currently I support binaries for the following platforms:
+
+	  Linux ELF i386, OpenBSD 3.0 i386, CygWIN Windows 32 Bit i386
+
+If you need support, you can write me a mail. Use
+
+   To: splitindex <komascript(at)gmx.info>
+   Subject: SPLITINDEX: <YourProblem>
+
+And replace <YourProblem> by a short (at least 60 chars) description
+of your problem.
+
+
+See file install.txt for a description how to install this
+distribution and how to get the manual, which describes how to use
+SplitIndex.
+
+LEGALESE: This package is freely distributable software; you can
+          redistribute it and/or modify it under the conditions of the
+          LaTeX Project Public License, either version 1.2 of this
+          license or (at your option) any later version. 
+	  The latest version of this license is in
+          http://www.latex-project.org/lppl.txt and version 1.2 or
+          later is part of all distributions of LaTeX version
+          1999/12/01 or later.
+
+
+Enjoy, Markus.

@@ -1,0 +1,742 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>probsoln.sty v2.02: LATEX2e Package to help create problem sheets</TITLE>
+<META NAME="description" CONTENT="probsoln.sty v2.02: LATEX2e Package to help create problem sheets">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+
+</HEAD>
+
+<BODY >
+<A NAME="tex2html1"
+  HREF="http://theoval.cmp.uea.ac.uk/~nlct/">Dr Nicola Talbot</A>
+|
+<A NAME="tex2html2"
+  HREF="http://www.cmp.uea.ac.uk/">School of Computing Sciences</A>
+|
+<A NAME="tex2html3"
+  HREF="http://www.uea.ac.uk/">University of East Anglia</A>
+
+<P>
+
+ <H1 ALIGN="CENTER">probsoln.sty v2.02: L<SUP><SMALL>A</SMALL></SUP>T<SMALL>E</SMALL>X2<SUB>e</SUB> Package to help create problem sheets</H1>
+<DIV>
+
+<P ALIGN="CENTER"><STRONG>Nicola L.C. Talbot</STRONG></P>
+<P ALIGN="CENTER"><STRONG>2nd March 2006</STRONG></P>
+</DIV>
+ <BR>
+
+<H2><A NAME="SECTION00010000000000000000">
+Contents</A>
+</H2>
+<!--Table of Contents-->
+
+<UL>
+<LI><A NAME="tex2html21"
+  HREF="manual.html#SECTION00020000000000000000">Introduction</A>
+<LI><A NAME="tex2html22"
+  HREF="manual.html#SECTION00030000000000000000">Package Options</A>
+<LI><A NAME="tex2html23"
+  HREF="manual.html#SECTION00040000000000000000">Creating a New Problem</A>
+<LI><A NAME="tex2html24"
+  HREF="manual.html#SECTION00050000000000000000">Creating a Database</A>
+<LI><A NAME="tex2html25"
+  HREF="manual.html#SECTION00060000000000000000">Displaying a Problem</A>
+<LI><A NAME="tex2html26"
+  HREF="manual.html#SECTION00070000000000000000">Selecting All Problems</A>
+<LI><A NAME="tex2html27"
+  HREF="manual.html#SECTION00080000000000000000">Selecting Problems at Random</A>
+<LI><A NAME="tex2html28"
+  HREF="manual.html#SECTION00090000000000000000">Other Commands</A>
+<LI><A NAME="tex2html29"
+  HREF="manual.html#SECTION000100000000000000000">Troubleshooting</A>
+<UL>
+<LI><A NAME="tex2html30"
+  HREF="manual.html#SECTION000101000000000000000">Unexpected Output</A>
+<LI><A NAME="tex2html31"
+  HREF="manual.html#SECTION000102000000000000000">Error Messages</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html32"
+  HREF="manual.html#SECTION000110000000000000000">Contact Details</A>
+<LI><A NAME="tex2html33"
+  HREF="manual.html#SECTION000120000000000000000">Index</A>
+</UL>
+<!--End of Table of Contents-->
+<P>
+
+<H1><A NAME="SECTION00020000000000000000">
+Introduction</A>
+</H1>
+The <TT>probsoln</TT> package is designed for teachers or
+lecturers who want to create problem sheets for their 
+students.  This package was designed with specifically 
+mathematics problems in mind, but can be used for other 
+subjects as well.  The idea is to create a file containing a
+large number of problems with their solutions which can be 
+read in by L<SUP><SMALL>A</SMALL></SUP>T<SMALL>E</SMALL>X, and then select a number of problems to
+typeset.  This means that once the database has been set up,
+each year you can easily create a new problem sheet that is
+sufficiently different from the previous year, thus
+preventing the temptation of current students seeking out
+the previous year's students, and checking out their
+answers.  There is also an option that can be passed to the
+package to determine whether or not the solutions should be
+printed.  In this way, one file can either produce the
+student's version or the teacher's version.
+
+<P>
+
+<H1><A NAME="SECTION00030000000000000000">
+Package Options</A>
+</H1>
+The following options may be passed to this package:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT"><TT></TD><TD ALIGN="LEFT">answers </TT></TD>
+<TD ALIGN="LEFT">Show the answers</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT></TD><TD ALIGN="LEFT">noanswers </TT></TD>
+<TD ALIGN="LEFT">Don't show the answers (default)</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<H1><A NAME="SECTION00040000000000000000">
+Creating a New Problem</A>
+</H1>
+
+<A NAME="newproblem"></A><TT>&#92;newproblem</TT><A NAME="393"></A><code>[</code><I>nargs</I><code>]{</code><I>label</I><code>}{</code><I>problem</I><code>}{</code><I>solution</I><code>}</code>
+<BR>
+<BR>
+A new problem is defined using the command 
+<TT>&#92;newproblem</TT><A NAME="397"></A>.  This does not print anything,
+but merely stores the problem.  The argument <I>label</I> is
+a unique string that is assigned to this problem so that it
+can be used later.  The argument <I>problem</I> is normal 
+L<SUP><SMALL>A</SMALL></SUP>T<SMALL>E</SMALL>X code that should be used to typeset the problem.  
+The argument <I>solution</I> is normal L<SUP><SMALL>A</SMALL></SUP>T<SMALL>E</SMALL>X code that
+should be used to typeset the solution, if required.  For
+example, the following defines a problem with the label 
+<A NAME="quaddiff"></A><TT>quaddiff</TT>:
+<PRE>
+ \newproblem{quaddiff}{%
+ %This is the problem
+ \begin{displaymath}
+ f(x) = x^2 + 3x + 4
+ \end{displaymath}
+ }{%
+ %This is the solution
+ \begin{displaymath}
+ f'(x) = 2x + 3
+ \end{displaymath}
+ }
+</PRE>
+
+<P>
+The optional argument <I>nargs</I> specifies the number of
+parameters this problem will take.  By default this value is
+0, but any value from 1 to 9 may be used.  Each parameter is
+referred to by <code>#1</code>, <code>#2</code>, ..., <code>#9</code>.
+For example, the following problem, labelled <A NAME="sindiff"></A><TT>sindiff</TT>, 
+takes one parameter:
+<PRE>
+\newproblem[1]{sindiff}{%
+\(f(x) = \sin(#1x)\)
+}{%
+\(f'(x) = #1\cos(#1x)\)
+}
+</PRE>
+
+<P>
+The <A HREF="#quaddiff"><TT>quaddiff</TT></A> problem shown above can be made more
+generic by using parameters<A NAME="diff:quad"></A>:
+<PRE>
+\newcount\ctr
+\newproblem[3]{diff:quad}{%
+\(f(x) = 
+\ifnum#1=0
+\else
+\ifnum#1=1\else#1\fi x^2 
+\fi
+\ifnum#2=0
+\else
+\ifnum#2&gt;0 \ifnum#1=0 \else + \fi \fi
+\ifnum#2=1\else#2\fi x 
+\fi
+\ifnum#3=0
+\else
+\ifnum#3&gt;0 \ifnum#2=0 \ifnum#1=0 \else + \fi \else + \fi\fi
+#3
+\fi\)
+}{%
+\(f'(x) = 
+\ifnum#1=0
+\else
+\ctr=2
+\multiply\ctr by #1
+\the\ctr x 
+\fi
+\ifnum#2=0
+\else
+\ifnum#2&gt;0 \ifnum#1=0 \else + \fi \fi
+#2
+\fi
+ % print 0 if both #1 and #2 are 0
+\ifnum#1=0 \ifnum#2=0 0 \fi\fi 
+\)
+}
+</PRE>
+The three parameters correspond to the coefficients.  Note
+that they must all be integers since T<SMALL>E</SMALL>X only performs
+integer arithmetic.
+
+<P>
+
+<H1><A NAME="SECTION00050000000000000000">
+Creating a Database</A>
+</H1>
+
+<P>
+To generate a database, simply create a <TT>.tex</TT> file
+where all the problems are defined using <A HREF="#newproblem"><TT>&#92;newproblem</TT><A NAME="412"></A></A>,
+and either <TT>&#92;input</TT><A NAME="416"></A> it at the start of your document if
+you want to use <A HREF="#sec:useprob">specific problems</A>, or pass it to 
+<A HREF="#sec:selran"><TT>&#92;selectrandomly</TT><A NAME="424"></A></A>. This package
+comes with some sample databases, along with some sample documents
+that use these databases.
+
+<P>
+
+<H1><A NAME="SECTION00060000000000000000"></A>
+<A NAME="sec:useprob"></A>
+<BR>
+Displaying a Problem
+</H1>
+ 
+<A NAME="useproblem"></A><TT>&#92;useproblem</TT><A NAME="429"></A><code>{</code><I>label</I><code>}</code>
+<BR>
+<BR>
+Once a problem has been defined using <A HREF="#newproblem"><TT>&#92;newproblem</TT><A NAME="435"></A></A>, it 
+can be typeset using the command <TT>&#92;useproblem</TT><A NAME="439"></A>.  If the
+problem was defined to take arguments, the arguments to the
+problem should come after the label.  In the case of the
+<A HREF="#sindiff"><TT>sindiff</TT></A> example above, the command 
+<code>\useproblem{sindiff}{2}</code> would produce the following:
+<BR>
+<BR> <I>f</I>(<I>x</I>) = sin(2<I>x</I>)
+ 
+<H4><A NAME="SECTION00060010000000000000">
+Solution:</A>
+</H4> <I>f'</I>(<I>x</I>) = 2cos(2<I>x</I>)
+<BR>
+<BR>
+whereas the command <code>\useproblem{diff:quad}{3}{0}{-2}</code> would produce:
+<BR>
+<BR> <I>f</I>(<I>x</I>) = 3<I>x</I><SUP>2</SUP> - 2
+ 
+<H4><A NAME="SECTION00060020000000000000">
+Solution:</A>
+</H4> <I>f'</I>(<I>x</I>) = 6<I>x</I>
+<BR>
+<BR>
+
+<P>
+Suppose all the above problems are defined in the file 
+<TT>probs.tex</TT>, then the following code will create a
+problem sheet with four questions in it:
+<PRE>
+\documentclass{article}
+
+\usepackage{probsoln}
+\input{probs}
+
+\begin{document}
+Differentiate the following functions with respect to $x$:
+\begin{enumerate}
+\item \useproblem{quaddiff}
+\item \useproblem{sindiff}{4}
+\item \useproblem{diff:quad}{2}{3}{1}
+\item \useproblem{diff:quad}{0}{1}{2}
+\end{enumerate}
+\end{document}
+</PRE>
+The answer sheet can then be generated by passing the option
+<TT>answers</TT> to the <TT>probsoln</TT> package.
+
+<P>
+
+<H1><A NAME="SECTION00070000000000000000">
+Selecting All Problems</A>
+</H1>
+
+<P>
+To select all problems defined in a database, in the order in
+which they were defined, use the command:
+
+<A NAME="selectallproblems"></A><TT>&#92;selectallproblems</TT><A NAME="447"></A><code>{</code><I>filename</I><code>}</code>
+For example, suppose the problems are defined in the file
+<TT>easy.tex</TT>, then the following will create a problem sheet 
+which uses all these problems:
+<PRE>
+\documentclass[a4paper]{article}
+
+\usepackage{probsoln}
+
+\begin{document}
+Differentiate the following functions:
+\begin{enumerate}
+\selectallproblems{easy}
+\end{enumerate}
+\end{document}
+</PRE>
+
+<P>
+
+<H1><A NAME="SECTION00080000000000000000"></A>
+<A NAME="sec:selran"></A>
+<BR>
+Selecting Problems at Random
+</H1>
+ 
+<A NAME="selectrandomly"></A><TT>&#92;selectrandomly</TT><A NAME="452"></A><code>{</code><I>filename</I><code>}{</code><I>n</I><code>}</code>
+<BR>
+<BR>
+The command <TT>&#92;selectrandomly</TT><A NAME="456"></A> will select <I>n</I>
+problems that are defined in the file <I>filename</I>.  Each
+problem is proceeded by 
+<A NAME="PSitem"></A><TT>&#92;PSitem</TT><A NAME="461"></A> which is
+defined to be <TT>&#92;item</TT><A NAME="465"></A>, so the command 
+<TT>&#92;selectrandomly</TT><A NAME="469"></A> should occur within one of the
+list-like environments, such as <TT>enumerate</TT>.  
+For example:
+<PRE>
+\begin{enumerate}
+\selectrandomly{easy.tex}{4}
+\end{enumerate}
+</PRE>
+will result in four numbered problems, selected at random
+from the file <TT>easy.tex</TT>. (The <TT>.tex</TT> extension
+may be omitted.) Each problem is followed by the command
+<A NAME="endPSNitem"></A><TT>&#92;endPSNitem</TT><A NAME="474"></A> which by default does nothing.
+
+<P>
+Multiple <TT>&#92;selectrandomly</TT><A NAME="478"></A> commands may be used, however a
+different file must be used each time.  For
+example:
+<PRE>
+\begin{enumerate}
+\item Differentiate the following functions with respect to $x$:
+
+\begin{enumerate}
+\selectrandomly{samples/easy.tex}{3}
+\selectrandomly{samples/args.tex}{1}
+\end{enumerate}
+
+\selectrandomly{samples/implicit.tex}{1}
+\selectrandomly{samples/1stprncpl.tex}{1}
+
+\end{enumerate}
+</PRE>
+This will result in a total of 6 problems, numbered 1(a),
+1(b), 1(c), 1(d), 2 and 3.
+
+<P>
+If a randomly selected problem requires arguments, a message
+similar to the following will be displayed:
+<PRE>
+Problem diff:quad requires 3 argument(s), please specify (e.g. {5}{3}):
+</PRE>
+Enter the required arguments, where each argument is
+enclosed in braces ({ }).
+
+<P>
+
+<H1><A NAME="SECTION00090000000000000000">
+Other Commands</A>
+</H1>
+
+The command <A NAME="PSNrandseed"></A><TT>&#92;PSNrandseed</TT><A NAME="483"></A><code>{</code><I>n</I><code>}</code> specifies 
+the seed for the random number generator.  For example,
+if you are using <A HREF="#selectrandomly"><TT>&#92;selectrandomly</TT><A NAME="489"></A></A>,
+<code>\PSNrandseed{\year}</code> will produce a different set of
+problems each year, whereas <code>\PSNrandseed{\time}</code>
+will produce a different set of problems each time you 
+L<SUP><SMALL>A</SMALL></SUP>T<SMALL>E</SMALL>X the problem sheet (as long as you leave at least a
+minute between runs.)
+
+<P>
+The command <A NAME="random"></A><TT>&#92;random</TT><A NAME="494"></A><code>{</code><I>counter</I><code>}{</code><I>a</I><code>}{</code><I>b</I><code>}</code>
+generates a random number from <I>a</I> to <I>b</I> and
+stores it in the L<SUP><SMALL>A</SMALL></SUP>T<SMALL>E</SMALL>X counter <I>counter</I>. For example,
+to select 2, 3 or 4 problems from the file
+<TT>implicit.tex</TT>:
+<PRE>
+\newcounter{numproblems}
+\begin{enumerate}
+\random{numproblems}{2}{4}
+\selectrandomly{implicit.tex}{\value{numproblems}}
+\end{enumerate}
+</PRE>
+(Note the use of <TT>&#92;value</TT><A NAME="498"></A>.)
+
+<P>
+This command can also be used to generate random values for
+problems that take arguments. Consider the problem <A HREF="#diff:quad"><TT>diff:quad</TT></A>
+defined earlier. Three counters can be defined to represent the
+three coefficients:
+<PRE>
+\newcounter{A}
+\newcounter{B}
+\newcounter{C}
+</PRE>
+Random values can now be assigned to these counters:
+<PRE>
+\random{A}{-5}{5}
+\random{B}{-5}{5}
+\random{C}{-5}{5}
+</PRE>
+Finally, the problem can be used (note the use of <TT>&#92;arabic</TT><A NAME="505"></A>):
+<PRE>
+\useproblem{diff:quad}{\arabic{A}}{\arabic{B}}{\arabic{C}}
+</PRE> 
+
+<P>
+The command 
+<A NAME="doforrandN"></A><TT>&#92;doforrandN</TT><A NAME="510"></A><code>{</code><I>n</I><code>}{</code><I>cmd</I><code>}{</code><I>list</I><code>}{</code><I>text</I><code>}</code> will apply
+<I>text</I> for a random selection of <I>n</I> items in the
+comma separated <I>list</I>. In each iteration the list
+item is denoted by <I>cmd</I>. For example, suppose you 
+have three files called <TT>file1.tex</TT>, 
+<TT>file2.tex</TT> and <TT>file3.tex</TT>, and you want to
+select 1 problem from two of the three files, then you can
+do:
+<PRE>
+\doforrandN{2}{\file}{file1,file2,file3}{\selectrandomly{\file}{1}}
+</PRE>
+Note that it is also possible to do
+<PRE>
+\newcounter{numproblems}
+\random{numproblems}{1}{3}
+\selectrandomly{file\arabic{numproblems}}{1}
+\random{numproblems}{1}{3}
+\selectrandomly{file\arabic{numproblems}}{1}
+</PRE>
+however there is a possibility that the same file may be
+selected twice which will cause an error.
+
+<P>
+The command <A NAME="showanswers"></A><TT>&#92;showanswers</TT><A NAME="515"></A> will show the solutions from
+that point on.  May be localised by placing within a group.
+
+<P>
+The command <A NAME="hideanswers"></A><TT>&#92;hideanswers</TT><A NAME="520"></A> will hide the solutions from
+that point on.  May be localised by placing within a group.
+
+<P>
+The solution is placed inside the solution<TT>solution</TT> 
+environment. By default this environment simply does
+<code>\paragraph{\solutionname:}</code> at the start, where 
+<A NAME="solutionname"></A><TT>&#92;solutionname</TT><A NAME="526"></A>
+has the value: Solution. See the file <TT>sample3.tex</TT>, which
+comes with this package, for an illustration of how to 
+customise the way in which the randomly selected problems are
+displayed. This sample file randomly selects multiple choice
+problems stored in the file <TT>tabmchoice.tex</TT>, and displays them
+in a longtable <TT>environment</TT>.
+
+<P>
+The boolean variable <TT>showanswers</TT> is defined to be
+true if the answers are shown and false otherwise.  You can
+therefore do something like:
+<PRE>
+\ifthenelse{\boolean{showanswers}}{\textbf{Solution Sheet}}{}
+</PRE>
+and <B>Solution Sheet</B> will be printed only if the
+answers are displayed.  (For more information on 
+<TT>&#92;ifthenelse</TT><A NAME="531"></A> and <TT>&#92;boolean</TT><A NAME="535"></A> see the 
+documentation for the <TT>ifthen</TT> package by 
+David Carlisle.)
+
+<P>
+The <TT>showanswers</TT> switch can also be used within the definition
+of a problem, if you want the question to appear differently if the
+solution is displayed. For example:
+<PRE>
+\newproblem{mc:prod}{%
+Which of the following is the derivative of $x\sin(x)$?
+(Circle the correct answer.)
+\ifthenelse{\boolean{showanswers}}{}%
+{\begin{description}
+\item[A] $\sin(x)$
+\item[B] $x\cos(x)$
+\item[C] $\sin(x) + x\cos(x)$
+\end{description}
+}}{%
+\begin{description}
+\item[A] $\sin(x)$
+\item[B] $x\cos(x)$
+\item[\textcircled{C}] $\sin(x) + x\cos(x)$ (product rule).
+\end{description}
+}
+</PRE>
+If the solutions are not displayed, the question will appear
+as
+<DL>
+<DT></DT>
+<DD>Which of the following is the derivative of 
+<I>x</I>sin(<I>x</I>)? 
+(Circle the correct answer.)
+<DL>
+<DT><STRONG>A</STRONG></DT>
+<DD>sin(<I>x</I>)
+</DD>
+<DT><STRONG>B</STRONG></DT>
+<DD><I>x</I>cos(<I>x</I>)
+</DD>
+<DT><STRONG>C</STRONG></DT>
+<DD>sin(<I>x</I>)+<I>x</I>cos(<I>x</I>)
+</DD>
+</DL>
+</DD>
+</DL>
+otherwise it will appear as:
+<DL>
+<DT></DT>
+<DD>Which of the following is the derivative of 
+<I>x</I>sin(<I>x</I>)?
+(Circle the correct answer.)
+<DL>
+<DT><STRONG>A</STRONG></DT>
+<DD>sin(<I>x</I>)
+</DD>
+<DT><STRONG>B</STRONG></DT>
+<DD><I>x</I>cos(<I>x</I>)
+</DD>
+<DT><STRONG><FONT SIZE="+2">&#169;</FONT></STRONG></DT>
+<DD>sin(<I>x</I>) + <I>x</I>cos(<I>x</I>) (product rule)
+</DD>
+</DL>
+</DD>
+</DL>
+
+<P>
+
+<H1><A NAME="SECTION000100000000000000000">
+Troubleshooting</A>
+</H1>
+
+<H2><A NAME="SECTION000101000000000000000">
+Unexpected Output</A>
+</H2>
+
+<UL>
+<LI>I have lots of blank space before the first problem when
+using <A HREF="#selectrandomly"><TT>&#92;selectrandomly</TT><A NAME="541"></A></A>.
+
+<P>
+This is probably because you have lots of extraneous white space
+in your database. <A HREF="#selectrandomly"><TT>&#92;selectrandomly</TT><A NAME="547"></A></A> will input the entire
+file, so any extra space will be included. Try commenting out the
+extra space using %.
+</LI>
+</UL>
+
+<P>
+
+<H2><A NAME="SECTION000102000000000000000">
+Error Messages</A>
+</H2>
+
+<UL>
+<LI><TT>! Package probsoln Error: Label ... already used.
+</TT>
+
+<P>
+Each label identifier used in <A HREF="#newproblem"><TT>&#92;newproblem</TT><A NAME="553"></A></A> must be
+unique.  Check to make sure you haven't used the same label 
+more than once.  Also check to make sure you haven't 
+<TT>&#92;input</TT><A NAME="557"></A>ed or randomly selected from the same file more
+than once. (Or <TT>&#92;input</TT><A NAME="561"></A>ed and randomly selected from
+the same file.)
+
+<P>
+</LI>
+<LI><TT>! Package probsoln Error: Label ... undefined.
+</TT>
+
+<P>
+You need to define a problem before you can use it.  Check to
+make sure you haven't mis-spelt it, and check to make sure you
+have <TT>&#92;input</TT><A NAME="565"></A>ed the file in which it is defined.
+
+<P>
+</LI>
+<LI><TT>! Package probsoln Error: Requested number too large.
+</TT>
+
+<P>
+You have asked for more problems than are defined within the
+specified file.  All problems in that file will be selected.
+
+<P>
+</LI>
+<LI><TT>! Package probsoln Error: Can't randomly select <I>n</I>
+item(s)
+</TT>
+
+<P>
+You have asked to randomly select <I>n</I> items from a list
+that has less than <I>n</I> elements. For example, the
+following will generate this error:
+<PRE>
+\doforrandN{10}{\file}{file1,file2,file3}{%
+\selectrandomly{\file}{1}}
+</PRE>
+In this case the list, <TT>file1,file2,file3</TT> has only 3
+elements, but the user has asked for 10 elements. If you type
+`h' at the L<SUP><SMALL>A</SMALL></SUP>T<SMALL>E</SMALL>X prompt it will tell you how many items it thinks
+there are in the list. Remember that each item must be separated by a
+comma.
+
+<P>
+</LI>
+<LI><TT>! LaTeX Error: Lonely <TT>&#92;item</TT><A NAME="569"></A>-perhaps missing list
+environment.
+</TT>
+
+<P>
+Each problem selected using <A HREF="#selectrandomly"><TT>&#92;selectrandomly</TT><A NAME="575"></A></A> is
+proceeded by <A HREF="#PSNitem"><TT>&#92;PSNitem</TT><A NAME="581"></A></A> which by default is defined
+as <TT>&#92;item</TT><A NAME="585"></A>, and should therefore be 
+placed in one of the list environments, such as 
+<TT>enumerate</TT>. Alternatively, redefine <A HREF="#PSNitem"><TT>&#92;PSNitem</TT><A NAME="591"></A></A>.
+
+<P>
+</LI>
+<LI>I get an error when I put a command definition in my database
+when using <TT>&#92;selectrandomly</TT><A NAME="595"></A>.
+
+<P>
+<A HREF="#selectrandomly"><TT>&#92;selectrandomly</TT><A NAME="601"></A></A> inputs the database twice, so any 
+command definition will be read twice, causing an error. You
+can use the switch <TT>&#92;iffirstpass</TT><A NAME="605"></A> to prevent the error. For
+example:
+<PRE>
+\iffirstpass
+\newcommand{\mycmd}{}
+\fi
+</PRE>
+It is generally not a good idea to put anything other than
+<A HREF="#newproblem"><TT>&#92;newproblem</TT><A NAME="611"></A></A> commands within the database.
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<H1><A NAME="SECTION000110000000000000000">
+Contact Details</A>
+</H1>
+Dr Nicola Talbot
+<BR>
+School of Computing Sciences
+<BR>
+University of East Anglia
+<BR>
+Norwich. NR4 7TJ
+<BR><TT><A NAME="tex2html4"
+  HREF="http://theoval.cmp.uea.ac.uk/~nlct/">http://theoval.cmp.uea.ac.uk/~nlct/</A></TT>
+<P>
+<BR>
+
+<H2><A NAME="SECTION000120000000000000000">
+Index</A>
+</H2><DL COMPACT>
+<DT><STRONG><TT>&#92;arabic</TT></STRONG>
+<DD><A HREF="manual.html#505">Other Commands</A>
+<DT><STRONG><TT>&#92;boolean</TT></STRONG>
+<DD><A HREF="manual.html#535">Other Commands</A>
+<DT><STRONG><TT>&#92;doforrandN</TT></STRONG>
+<DD><A HREF="manual.html#510">Other Commands</A>
+<DT><STRONG><TT>&#92;endPSNitem</TT></STRONG>
+<DD><A HREF="manual.html#474">Selecting Problems at Random</A>
+<DT><STRONG><TT>&#92;hideanswers</TT></STRONG>
+<DD><A HREF="manual.html#520">Other Commands</A>
+<DT><STRONG><TT>&#92;iffirstpass</TT></STRONG>
+<DD><A HREF="manual.html#605">Error Messages</A>
+<DT><STRONG><TT>&#92;ifthenelse</TT></STRONG>
+<DD><A HREF="manual.html#531">Other Commands</A>
+<DT><STRONG><TT>&#92;input</TT></STRONG>
+<DD><A HREF="manual.html#416">Creating a Database</A>
+ | <A HREF="manual.html#557">Error Messages</A>
+ | <A HREF="manual.html#561">Error Messages</A>
+ | <A HREF="manual.html#565">Error Messages</A>
+<DT><STRONG><TT>&#92;item</TT></STRONG>
+<DD><A HREF="manual.html#465">Selecting Problems at Random</A>
+ | <A HREF="manual.html#569">Error Messages</A>
+ | <A HREF="manual.html#585">Error Messages</A>
+<DT><STRONG><TT>&#92;newproblem</TT></STRONG>
+<DD><A HREF="manual.html#393">Creating a New Problem</A>
+ | <A HREF="manual.html#397">Creating a New Problem</A>
+ | <A HREF="manual.html#412">Creating a Database</A>
+ | <A HREF="manual.html#435">Displaying a Problem</A>
+ | <A HREF="manual.html#553">Error Messages</A>
+ | <A HREF="manual.html#611">Error Messages</A>
+<DT><STRONG><TT>&#92;PSitem</TT></STRONG>
+<DD><A HREF="manual.html#461">Selecting Problems at Random</A>
+<DT><STRONG><TT>&#92;PSNitem</TT></STRONG>
+<DD><A HREF="manual.html#581">Error Messages</A>
+ | <A HREF="manual.html#591">Error Messages</A>
+<DT><STRONG><TT>&#92;PSNrandseed</TT></STRONG>
+<DD><A HREF="manual.html#483">Other Commands</A>
+<DT><STRONG><TT>&#92;random</TT></STRONG>
+<DD><A HREF="manual.html#494">Other Commands</A>
+<DT><STRONG><TT>&#92;selectallproblems</TT></STRONG>
+<DD><A HREF="manual.html#447">Selecting All Problems</A>
+<DT><STRONG><TT>&#92;selectrandomly</TT></STRONG>
+<DD><A HREF="manual.html#420">Creating a Database</A>
+ | <A HREF="manual.html#424">Creating a Database</A>
+ | <A HREF="manual.html#452">Selecting Problems at Random</A>
+ | <A HREF="manual.html#456">Selecting Problems at Random</A>
+ | <A HREF="manual.html#469">Selecting Problems at Random</A>
+ | <A HREF="manual.html#478">Selecting Problems at Random</A>
+ | <A HREF="manual.html#489">Other Commands</A>
+ | <A HREF="manual.html#541">Unexpected Output</A>
+ | <A HREF="manual.html#547">Unexpected Output</A>
+ | <A HREF="manual.html#575">Error Messages</A>
+ | <A HREF="manual.html#601">Error Messages</A>
+ | <A HREF="manual.html#595">Error Messages</A>
+<DT><STRONG><TT>&#92;showanswers</TT></STRONG>
+<DD><A HREF="manual.html#515">Other Commands</A>
+<DT><STRONG><TT>&#92;solutionname</TT></STRONG>
+<DD><A HREF="manual.html#526">Other Commands</A>
+<DT><STRONG><TT>&#92;useproblem</TT></STRONG>
+<DD><A HREF="manual.html#429">Displaying a Problem</A>
+ | <A HREF="manual.html#439">Displaying a Problem</A>
+<DT><STRONG><TT>&#92;value</TT></STRONG>
+<DD><A HREF="manual.html#498">Other Commands</A>
+
+</DL>
+<BR><HR>
+<ADDRESS>
+<a href=http://theoval.cmp.uea.ac.uk/~nlct/>Nicola L. C. Talbot</a>. <a href=http://www.cmp.uea.ac.uk/>School of Computing Sciences</a>. <a href=http://www.uea.ac.uk/>University of East Anglia.</a> Last Modified: 2006-03-02
+</ADDRESS>
+</BODY>
+</HTML>

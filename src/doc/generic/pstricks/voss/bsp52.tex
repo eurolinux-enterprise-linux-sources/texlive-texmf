@@ -1,0 +1,38 @@
+\documentclass[]{article}
+\usepackage{pstricks}
+\usepackage{pst-3dplot}
+\pagestyle{empty}
+\parindent=0pt
+
+\begin{document}
+
+\begin{center}
+\begin{pspicture}(-4,-2.5)(4,5)
+\psset{unit=5cm,drawCoor=true}
+\def\oA{\pstThreeDLine[linecolor=blue,linewidth=3pt,%
+    SphericalCoor=true,arrows=c->](0,0,0)(1,60,70)}
+\def\oB{\pstThreeDLine[linecolor=red,linewidth=3pt,%
+  SphericalCoor=true,arrows=c->](0,0,0)(1,10,50)}
+\def\oAB{\pstThreeDEllipse[beginAngle=90,endAngle=122,fillcolor=green,%
+  SphericalCoor=true](0,0,0)(1,140,40)(1,10,50)}
+\pstThreeDCoor[drawing=true,linewidth=1pt,linecolor=black,%
+  xMin=0,xMax=1.1,yMin=0,yMax=1.1,zMin=0,zMax=1.1]
+\pstThreeDEllipse[beginAngle=0,endAngle=90,linestyle=dashed]%
+  (0,0,0)(-1,0,0)(0,1,0)
+\pstThreeDEllipse[beginAngle=0,endAngle=90,linestyle=dashed]%
+  (0,0,0)(-1,0,0)(0,0,1)
+\pstThreeDEllipse[beginAngle=180,endAngle=90,linestyle=dashed]%
+  (0,0,0)(0,0,1)(0,1,0)
+\psset{SphericalCoor=true}
+\pstThreeDDot[dotstyle=none](1,10,50)
+\pstThreeDDot[dotstyle=none](1,60,70)
+\pscustom[fillstyle=crosshatch,hatchcolor=yellow,linestyle=none]{\oA\oB\oAB}
+\oA \oB \oAB
+\pstThreeDPut(1.1,60,70){\Large $\vec\Omega_1$}
+\pstThreeDPut(1.2,10,50){\Large $\vec\Omega_2 \,$}
+\pstThreeDPut(1,10,65){\Large $\gamma_{12}$}
+\end{pspicture}
+\end{center}
+
+\end{document}
+

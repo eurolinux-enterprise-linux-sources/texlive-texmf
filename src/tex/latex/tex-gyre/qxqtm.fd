@@ -1,0 +1,24 @@
+% This file belongs to the TeX Gyre collection of fonts. The work is released
+% under the GUST Font License. See the MANIFEST-TeX-Gyre-Termes.txt
+% and README-TeX-Gyre-Termes.txt files for the details.
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+\ProvidesFile{qxqtm.fd}[2006/11/01 v1.0 font definition file for QX/qtm]
+
+\DeclareFontFamily{QX}{qtm}{}
+\DeclareFontShape{QX}{qtm}{b}{sc}{<->qx-qtmb-sc}{}
+\DeclareFontShape{QX}{qtm}{b}{n}{<->qx-qtmb}{}
+\DeclareFontShape{QX}{qtm}{b}{scit}{<->qx-qtmbi-sc}{}
+\DeclareFontShape{QX}{qtm}{b}{it}{<->qx-qtmbi}{}
+\DeclareFontShape{QX}{qtm}{m}{sc}{<->qx-qtmr-sc}{}
+\DeclareFontShape{QX}{qtm}{m}{n}{<->qx-qtmr}{}
+\DeclareFontShape{QX}{qtm}{m}{scit}{<->qx-qtmri-sc}{}
+\DeclareFontShape{QX}{qtm}{m}{it}{<->qx-qtmri}{}
+\DeclareFontShape{QX}{qtm}{bx}{n}{<->ssub * qtm/b/n}{}
+\DeclareFontShape{QX}{qtm}{bx}{it}{<->ssub * qtm/b/it}{}
+\DeclareFontShape{QX}{qtm}{bx}{sc}{<->ssub * qtm/b/sc}{}
+\DeclareFontShape{QX}{qtm}{bx}{scit}{<->ssub * qtm/b/scit}{}
+\endinput
+% End of qxqtm

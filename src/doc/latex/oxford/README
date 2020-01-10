@@ -1,0 +1,112 @@
+	OXFORD STYLE PACKAGE
+	
+This is the oxford bst style package, version 0.4. It is a bibtex style geared
+at citations for the humanities.
+
+	STYLE
+The oxford style implements the oxford style interpreted through the eye of
+a swede working in the fields of the history of ideas. 
+
+The style is based on Harvard.sty and a heavily hacked bst-file generated with
+custom-bib. It currently only supports
+
+\cite[]{}
+
+and
+
+\cite{}
+
+and only in abrevation mode.
+
+The form of the bibitem entries is
+\harvarditem[Jones, STITLE]{Jones, TITLE .... (PUBLISH:ADRESS, YEAR)}{1990}{key}
+	Brian Jones, TITLE ... (PUBLISH:ADRESS, YEAR).
+
+The style gives the full reference att the first citation and then an
+abrevated one.
+
+The file suports an additional entry in the bib-file, stitle (short title). It
+is used in the abrevated citation.
+
+The abrevated citation follows these rules:
+
+If (lastname == UNIQ) {
+	lastname
+} elsif (stitle == EXIST) {
+	lastname, stitle
+} else {
+	lastname, title
+}
+ 
+oxford.sty also inserts an "ibid." if the current citation is the same
+as the last one.
+
+
+	USAGE
+
+\usepackage[default, none]{oxford}
+.
+.
+.
+\bibliographystyle{oxford_xx}
+
+where xx stands for chosen language
+
+
+	INSTALL
+
+In the distibution there are only two languages directly supported:
+swedish
+english
+
+You install the oxford package either by putting the files in places you alreday
+know are supported by latex, eg.:
+
+cp oxford.sty /usr/lib/texfm/texfm/tex/latex/base
+cp oxford_se.bst /usr/lib/texfm/texfm/bibtex/bst/base
+cp oxford_en.bst /usr/lib/texfm/texfm/bibtex/bst/base
+
+Or you shose another location and then has to set som environmental variables,
+eg.:
+
+The place you put oxford.sty have to be exported with TEXINPUTS:
+export TEXINPUTS=/usr/lib/texmf/texmf/tex/latex/local:
+
+The place where you put the bst-files have to be exported with BSTINPUTS:
+
+BSTINPUTS=/usr/lib/texmf/texmf/bibtex/bst/oxford:
+
+(Don´t forget the trailing colon (:)
+
+	LANGUAGE
+
+The oxford_in.bst has support for any kind of languages. But you have to create
+a language version of oxford_in.bst yourself. In the directory "lang" there are
+translations for english, finnish, german, norsk, svenska,
+esperant, french, italian and spanish.
+
+All you have to do is open "oxford_in.bst" and substitute all bbl.CODE and MACRO
+entries with the right translations (which can be found in the mbs-files) and 
+name the file oxford_LANG.bst
+
+
+	BUGS
+None known of.
+
+	COPYRIGHT
+The copyrigt is Peter Antman, 1997, where marked in the files. These parts are
+distributed under GNU/GPL. All other copyright is hold by the respective authors
+mentioned in the files. 
+
+	THANKS
+Thanks to Oren Patashnik for helping me solve the pop$ bug in version 0.3
+
+Send comments and bugreports to:
+peter antman@abc.se
+
+oxford can be found at:
+
+ftp.mc.hik.se/pub/users/mia95anp/tex/
+http://www.abc.se/~m9339/prog/oxford-0.4.tar.gz
+
+

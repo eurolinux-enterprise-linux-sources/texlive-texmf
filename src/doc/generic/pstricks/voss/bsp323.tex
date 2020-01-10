@@ -1,0 +1,108 @@
+\documentclass[a4paper]{article}% 
+\usepackage{pstricks,pst-node,pst-grad,pst-math,multido}
+\SpecialCoor 
+
+\parindent0pt
+\pagestyle{empty}
+\begin{document}
+\centering
+\psframebox[fillcolor=black!45,fillstyle=solid]{%
+\begin{pspicture*}(-6,0)(7,7.5)     % dieser code wird irgendwann nach
+\pnode(0,0){O}                      % nach pst-optic wandern
+\pnode(!
+    /AnglePrisme 30 def
+    /AnglePlan1 19 def
+    /AnglePlan2 54 def
+% le point C1 sur la droite 1
+    /C1x -8 def
+    /C1y 7 def
+% le point C2 sur la droite 2
+    /C2x 11 def
+    /C2y 5 def
+% donne la distance C1E1
+    /u 1.5 def
+%
+    /g1x AnglePrisme sin neg def % -sin(A/2)
+    /g1y AnglePrisme cos def     %  cos(A/2)
+    /u1x AnglePlan1 sin neg def
+    /u1y AnglePlan1 cos neg def
+% le point E émetteur
+    /E1x C1x u u1x mul add def
+    /E1y C1y u u1y mul add def
+    %
+    /n1x AnglePlan1 cos def
+    /n1y AnglePlan1 sin neg def
+    /Lambda {E1x g1y mul E1y g1x mul neg add
+             n1y g1x mul neg n1x g1y mul add
+             div neg} bind def
+% point I1
+    /i1x {E1x Lambda n1x mul add} bind def
+    /i1y {E1y Lambda n1y mul add} bind def
+    0 0){Stockage_parametres_prisme}
+\pspolygon[fillstyle=gradient,gradbegin=cyan,gradend=white,gradangle=60,gradmidpoint=0.5](O)%
+        (! 7 90 AnglePrisme add cos mul 7 90 AnglePrisme add sin mul)
+        (! 7 90 AnglePrisme sub cos mul 7 90 AnglePrisme sub sin mul)
+\multido{\iLAMBDA=400+3}{115}{%
+  \pstVerb{
+    /lambda \iLAMBDA\space def
+  }%
+\definecolor{prisme}{wave}{\iLAMBDA}%
+\pnode(!
+% Les datas
+% Sellmeier's
+% glass sf15 : verre flint lourd
+% n=sqrt(1+B1*L^2/(l^2-C1)+B2*L^2/(l^2-C2)+B3*L^2/(l^2-C3))
+% Cauchy : /N {1.606 6545 1 mul lambda dup mul div add} bind def
+    /L2 {lambda 1e-3 mul dup mul} bind def
+    /N {1
+        1.539259 L2 mul L2 0.011931 sub div
+         add
+         0.247621 L2 mul L2 0.055608 sub div
+         add
+         1.038164 L2 mul L2 116.416755 sub div
+         add
+         sqrt} bind def
+    /alpha1 AnglePlan1 AnglePrisme add def
+    /sinB1 alpha1 sin N div def
+    /B1 sinB1 ASIN RadtoDeg def
+    /Delta1 AnglePrisme B1 sub def
+%%%
+    /g2x AnglePrisme sin def
+    /g2y AnglePrisme cos def
+    /d12x Delta1 cos def % d12x
+    /d12y Delta1 sin def % d12y
+    /Lambda2 {i1x g2y mul i1y g2x mul sub
+            d12y g2x mul d12x g2y mul sub
+            div} bind def
+% point I2
+    /i2x {i1x Lambda2 d12x mul add} bind def
+    /i2y {i1y Lambda2 d12y mul add} bind def
+%
+    /B2  AnglePrisme 2 mul B1 sub def
+    /sinA2 N B2 sin mul def
+    /alpha2 sinA2 ASIN RadtoDeg def
+    /u2x AnglePlan2 sin def
+    /u2y AnglePlan2 cos neg def
+    /Delta2 alpha2 AnglePrisme sub def
+    /d2x Delta2 cos def
+    /d2y Delta2 sin def
+    /s2x i2x C2x sub def
+    /s2y i2y C2y sub def
+    /dA d2x u2y mul d2y u2x mul sub def
+    /dM d2x s2y mul d2y s2x mul sub def
+% le point R2
+    /r2x C2x dM dA div u2x mul add def
+    /r2y C2y dM dA div u2y mul add def
+0 0){factice}
+\pnode(! C1x C1y){C1}
+\pnode(! C2x C2y){C2}
+\pnode(! E1x E1y){E1}
+\pnode(! i1x i1y){I1}
+\pnode(! i2x i2y){I2}
+\pnode(! r2x r2y){R2}
+\psline[linecolor=prisme](I1)(I2)(R2)}
+\psline[linecolor=white,linewidth=0.5mm](E1)(I1)
+\psline[linecolor=white,linewidth=0.5mm,arrowscale=2]{->}(E1)(!i1x E1x add 2 div i1y E1y add 2 div)
+\end{pspicture*}}
+
+\end{document}

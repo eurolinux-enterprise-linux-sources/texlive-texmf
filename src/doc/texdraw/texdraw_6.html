@@ -1,0 +1,183 @@
+<HTML>
+<HEAD>
+<!-- Created by texi2html 1.56k from texdraw.texi on 10 March 2004 -->
+
+<TITLE>TeXdraw - A. PostScript Commands</TITLE>
+</HEAD>
+<BODY>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_5.html">previous</A>, <A HREF="texdraw_7.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+<P><HR><P>
+
+
+<H1><A NAME="SEC30" HREF="texdraw_toc.html#TOC30">A. PostScript Commands</A></H1>
+<P>
+<A NAME="IDX137"></A>
+
+
+<P>
+This appendix describes a set of macros for accessing some of the
+PostScript builtin functions.  Each of these macros issues a single
+PostScript command.  The extra services provided by TeXdraw are the
+interpretation of coordinates in user units relative to the current
+drawing segment and the writing of a pending TeXdraw move to the
+PostScript file.  This last operation establishes the current point in
+PostScript.  The user of these commands should be familiar with the
+concepts of path construction and filling in PostScript.  Further
+details on the PostScript functions used can found in the
+<CITE>PostScript Language Reference Manual, Second Edition</CITE>, Adobe
+Systems, Addison-Wesley, 1990.
+
+
+<P>
+These macros are distributed in file <TT>`txdps.tex'</TT>.
+
+
+<P>
+The <CODE>\PSsetlinecap</CODE> and <CODE>\PSsetlinejoin</CODE> commands control the
+way line ends and line joins are rendered.  The default values set by
+TeXdraw (round caps and round join) are appropriate for most
+drawings.  Changes to these parameters apply to the current and
+subsequent paths.
+
+
+<P>
+<A NAME="IDX138"></A>
+<A NAME="IDX139"></A>
+<DL COMPACT>
+
+<DT><CODE>\PSsetlinecap <VAR>type</VAR></CODE>
+<DD>
+<A NAME="IDX140"></A>
+ <A NAME="IDX141"></A>
+ 
+Set the line cap parameter.  The value <CODE>0</CODE> gives a butt cap;
+<CODE>1</CODE> gives a round cap; and <CODE>2</CODE> gives a projecting square cap.
+The initial value is corresponds to a round cap.
+<A NAME="IDX142"></A>
+<A NAME="IDX143"></A>
+<DT><CODE>\PSsetlinejoin <VAR>type</VAR></CODE>
+<DD>
+Set the line join parameter.  The value <CODE>0</CODE> gives a miter join;
+<CODE>1</CODE> gives a round join; and <CODE>2</CODE> gives a bevel join.  The
+initial value corresponds to a round join.
+</DL>
+
+<P>
+<A NAME="IDX144"></A>
+<A NAME="IDX145"></A>
+<A NAME="IDX146"></A>
+<A NAME="IDX147"></A>
+PostScript paths and fill operations can be controlled by a number of
+functions.  By design, TeXdraw always maintains a defined PostScript
+current point.  Some of the following macros cause the PostScript
+current point to become undefined.  The PostScript current point must be
+set again (say with a <CODE>\PSmoveto</CODE> command) before invoking basic
+TeXdraw commands.
+<DL COMPACT>
+
+<DT><CODE>\PSstroke</CODE>
+<DD>
+<A NAME="IDX148"></A>
+ <A NAME="IDX149"></A>
+ 
+Stroke a PostScript path.  The current path is stroked with the current
+gray level (set with <CODE>\setgray</CODE>) and the current line pattern (set
+with <CODE>\lpatt</CODE>).  The PostScript current point becomes undefined.
+<A NAME="IDX150"></A>
+<A NAME="IDX151"></A>
+<DT><CODE>\PSnewpath</CODE>
+<DD>
+Establish a new path.  The PostScript current point becomes undefined.
+<A NAME="IDX152"></A>
+<A NAME="IDX153"></A>
+<DT><CODE>\PSclosepath</CODE>
+<DD>
+Close a subpath.  A new subpath is started.
+<A NAME="IDX154"></A>
+<A NAME="IDX155"></A>
+<DT><CODE>\PSfill</CODE>
+<DD>
+Fill a region defined by a path.  Each subpath is closed and the
+enclosed regions painted with the current gray level.  The PostScript
+current point becomes undefined.  The gray level can be set with the
+TeXdraw command <CODE>\setgray</CODE>.
+</DL>
+
+<P>
+The following line commands interpret coordinates relative to the
+current TeXdraw scaling and drawing segment.  The specified
+coordinate affects the drawing size as determined by TeXdraw.
+<A NAME="IDX156"></A>
+<A NAME="IDX157"></A>
+<DL COMPACT>
+
+<DT><CODE>\PSlineto (<VAR>x</VAR> <VAR>y</VAR>)</CODE>
+<DD>
+<A NAME="IDX158"></A>
+ <A NAME="IDX159"></A>
+ 
+Add a line segment to the current path.  This command is identical to
+the TeXdraw command <CODE>\lvec</CODE>.  The PostScript current point must
+be defined before this command is issued.
+<A NAME="IDX160"></A>
+<A NAME="IDX161"></A>
+<DT><CODE>\PSmoveto (<VAR>x</VAR> <VAR>y</VAR>)</CODE>
+<DD>
+Move to the coordinate specified by <CODE>(<VAR>x</VAR> <VAR>y</VAR>)</CODE>.  The
+PostScript current point becomes defined.
+</DL>
+
+<P>
+The following macros provide access to the general arc commands in
+PostScript.  The coordinates are interpreted relative to the current
+TeXdraw scaling and drawing segment.  The specified coordinate
+affects the drawing size as determined by TeXdraw.
+<A NAME="IDX162"></A>
+<DL COMPACT>
+
+<DT><CODE>\PSarc r:<VAR>radius</VAR> sd:<VAR>start-angle</VAR> ed:<VAR>end-angle</VAR> (<VAR>x</VAR> <VAR>y</VAR>)</CODE>
+<DD>
+<A NAME="IDX163"></A>
+ <A NAME="IDX164"></A>
+ 
+Draw a counterclockwise arc.  The center of the arc is at the given
+position.  The radius is specified by <VAR>radius</VAR>.  The start and end
+angles (in degrees) are specified by <VAR>start-angle</VAR> and
+<VAR>end-angle</VAR>.  If the PostScript current point is defined, this
+command also draws the line from the current point to the beginning of
+the arc.  The line and arc become part of the current path. The current
+point becomes defined.
+<A NAME="IDX165"></A>
+<A NAME="IDX166"></A>
+<DT><CODE>\PSarcn r:<VAR>radius</VAR> sd:<VAR>start-angle</VAR> ed:<VAR>end-angle</VAR> (<VAR>x</VAR> <VAR>y</VAR>)</CODE>
+<DD>
+Draw a clockwise arc.  The center of the arc is at the given position.
+The radius is specified by <VAR>radius</VAR>.  The start and end angles (in
+degrees) are specified by <VAR>start-angle</VAR> and <VAR>end-angle</VAR>.  If the
+PostScript current point is defined, this command also draws the line
+from the current point to the beginning of the arc.  The line and arc
+become part of the current path.  The current point becomes defined.
+</DL>
+
+<P>
+The macro <CODE>\writeps</CODE> provides the general facility to write
+arbitrary PostScript commands to the PostScript file.  This macro is
+used by the preceding commands and by the TeXdraw commands
+themselves.  This facility has to be used with care since changes in
+position or scaling resulting from the PostScript commands are not known
+to TeXdraw.
+<DL COMPACT>
+
+<DT><CODE>\writeps {<VAR>&#60;ps-commands&#62;</VAR>}</CODE>
+<DD>
+<A NAME="IDX167"></A>
+ 
+Write PostScript commands to the intermediate PostScript file.  Before
+the commands are inserted, any pending TeXdraw move is written to the
+PostScript file.  The PostScript scaling gives 300 units/inch.
+</DL>
+
+<P><HR><P>
+Go to the <A HREF="texdraw_1.html">first</A>, <A HREF="texdraw_5.html">previous</A>, <A HREF="texdraw_7.html">next</A>, <A HREF="texdraw_11.html">last</A> section, <A HREF="texdraw_toc.html">table of contents</A>.
+</BODY>
+</HTML>

@@ -1,0 +1,30 @@
+\documentclass[a4paper,12pt]{article}% voss _at_ pstricks.de 2004-05-06
+\usepackage{pstricks-add} % at least ver. 1.30
+ 
+ \def\Data{%
+ 0  0    20 0     40 0   % P0 P1 P2
+ 10 2    30 2.5   50 1.8 % P3 P4 P5
+ 30 4   48.5 3.7  70 4   % P6 P7 P8
+ 10 5.3  30 5    50 5.1  % P9 P10 P11
+}
+\begin{document}
+
+\psset{xunit=0.1cm, yunit=0.5cm}
+\begin{pspicture}(0,-1)(70,7.5)
+  \psaxes[Dx=10,Dy=2]{->}(0,0)(0,-0.5)(70,7.5)
+  \psset{linewidth=1pt}
+% horizontal  
+  \listplot[nStart=0,nEnd=2]{\Data}
+  \listplot[linecolor=red,nStart=3,nEnd=5]{\Data}
+  \listplot[linecolor=blue,nStart=6,nEnd=8]{\Data}
+  \listplot[linecolor=green,nStart=9,nEnd=11]{\Data}
+% vertikal
+  \psset{nStep=3}
+  \listplot[nStart=0,nEnd=9]{\Data}
+  \listplot[linecolor=red,nStart=1,nEnd=10]{\Data}
+  \listplot[linecolor=blue,nStart=2,nEnd=11]{\Data}
+\end{pspicture}
+
+%\Data
+
+\end{document}

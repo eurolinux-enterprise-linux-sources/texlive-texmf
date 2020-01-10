@@ -1,0 +1,27 @@
+\documentclass[a4paper]{article} % From Michael Sharpe
+
+\usepackage{pstricks}
+\SpecialCoor
+\usepackage{pst-plot}
+\pagestyle{empty}
+\begin{document}
+
+\newcommand\drawseg[2]{%
+  \pscustom[linecolor=red]{%
+    \translate(#1,#2)
+    \rotate{(#2,#1)}    % Vector in direction of field at x=#1,y=#2
+  \psline(-.25,0)(.25,0)}}
+
+\begin{pspicture}(-6,-6)(6,6)
+  \psset{arrows=->}
+  \psaxes[linestyle=dashed,linewidth=0.1pt,arrowscale=3](0,0)(-6,-6)(6,6)
+  \multido{\n=-5+1}{11}{%
+    \multido{\N=-5+1}{11}{%
+      \ifnum\N=0
+        \ifnum\n=0 \else\drawseg{\n}{\N}\fi
+      \else
+        \drawseg{\n}{\N}
+      \fi}}
+\end{pspicture}
+
+\end{document}
