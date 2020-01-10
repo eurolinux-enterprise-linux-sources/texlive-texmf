@@ -14,7 +14,7 @@
 
 Name:		texlive-texmf
 Version:	2007
-Release:	38%{?dist}
+Release:	39%{?dist}
 Summary:	Architecture independent parts of the TeX formatting system
 
 Group:		Applications/Publishing
@@ -69,6 +69,7 @@ Patch6:		texlive-2007-beamerblocks.patch
 Patch7:		texlive-2007-latin.patch
 Patch8:		texlive-2007-5yr-old.patch
 Patch9:		texlive-2007-nolatex.patch
+Patch10:	texlive-texmf-bz#699575.patch
 
 # Patch1000-: Japanese pTeX
 Patch1001: texlive-2007-texmf.cnf-ptex.patch
@@ -210,6 +211,7 @@ install -p -m644 %{SOURCE50} texmf-var/dvips/config/config.generic
 %patch7  -p1
 %patch8  -p1
 %patch9  -p1
+%patch10 -p1
 
 cp -p %{SOURCE91} .
 
@@ -892,6 +894,9 @@ fi
 %doc %{_texmf_main}/doc/
 
 %changelog
+* Mon Aug 24 2015 Than Ngo <than@redhat.com> 2007-39
+- Resolves: bz#1256868
+
 * Thu Aug 04 2011 Jindrich Novy <jnovy@redhat.com> 2007-38
 - do not use latex at all at build time, use prebuilt sources
 

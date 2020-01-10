@@ -1,0 +1,54 @@
+diff -up texlive-texmf-2007/texmf/web2c/pdftex.pool.bz#699575 texlive-texmf-2007/texmf/web2c/pdftex.pool
+--- texlive-texmf-2007/texmf/web2c/pdftex.pool.bz#699575	2007-01-08 12:44:33.000000000 +0100
++++ texlive-texmf-2007/texmf/web2c/pdftex.pool	2015-08-24 22:23:58.947493732 +0200
+@@ -675,6 +675,8 @@
+ 23I can't write on file `
+ 02'.
+ 04.tex
++43(Press Enter to retry, or Control-D to exit
++29; default file extension is `
+ 20Please type another 
+ 45*** (job aborted, file error in nonstop mode)
+ 04.dvi
+@@ -1763,4 +1765,4 @@
+ 17substitution for 
+ 43Missing character: Incomplete substitution 
+ 30Using character substitution: 
+-*344499639
++*041021194
+diff -up texlive-texmf-2007/texmf/web2c/tex.pool.bz#699575 texlive-texmf-2007/texmf/web2c/tex.pool
+--- texlive-texmf-2007/texmf/web2c/tex.pool.bz#699575	2006-01-03 00:54:12.000000000 +0100
++++ texlive-texmf-2007/texmf/web2c/tex.pool	2015-08-24 22:24:19.565187042 +0200
+@@ -545,6 +545,8 @@
+ 23I can't write on file `
+ 02'.
+ 04.tex
++43(Press Enter to retry, or Control-D to exit
++29; default file extension is `
+ 20Please type another 
+ 45*** (job aborted, file error in nonstop mode)
+ 04.dvi
+@@ -1081,4 +1083,4 @@
+ 17substitution for 
+ 43Missing character: Incomplete substitution 
+ 30Using character substitution: 
+-*128540375
++*232308495
+diff -up texlive-texmf-2007/texmf/web2c/xetex.pool.bz#699575 texlive-texmf-2007/texmf/web2c/xetex.pool
+--- texlive-texmf-2007/texmf/web2c/xetex.pool.bz#699575	2006-12-11 22:05:31.000000000 +0100
++++ texlive-texmf-2007/texmf/web2c/xetex.pool	2015-08-24 22:23:35.836837752 +0200
+@@ -581,6 +581,8 @@
+ 23I can't write on file `
+ 02'.
+ 04.tex
++43(Press Enter to retry, or Control-D to exit
++29; default file extension is `
+ 20Please type another 
+ 45*** (job aborted, file error in nonstop mode)
+ 20file name for output
+@@ -1313,4 +1315,4 @@
+ 12' not found.
+ 43Missing character: Incomplete substitution 
+ 30Using character substitution: 
+-*335076013
++*424150555
